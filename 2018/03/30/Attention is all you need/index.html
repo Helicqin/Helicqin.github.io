@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="Helic">
 <meta property="og:description" content="来自Google的一篇神经翻译的文章，在这篇文章中作者们抛弃了传统Encoder-Decoder中经典的卷积和循环结构，仅保留了attention的结构，在减少了训练成本的同时在数个数据集上取得了最优的BLEU.paper link">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
-<meta property="og:updated_time" content="2018-03-31T04:58:28.890Z">
+<meta property="og:image" content="http://ws2.sinaimg.cn/large/006tGRI6ly1fpvzlen1vpj30g50k8mze.jpg">
+<meta property="og:updated_time" content="2018-03-31T07:03:13.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attention is all you need">
 <meta name="twitter:description" content="来自Google的一篇神经翻译的文章，在这篇文章中作者们抛弃了传统Encoder-Decoder中经典的卷积和循环结构，仅保留了attention的结构，在减少了训练成本的同时在数个数据集上取得了最优的BLEU.paper link">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
+<meta name="twitter:image" content="http://ws2.sinaimg.cn/large/006tGRI6ly1fpvzlen1vpj30g50k8mze.jpg">
     
 
     
@@ -176,7 +176,12 @@
 <p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fputoqecq1j30fs080ac4.jpg" alt="attention"></p>
 <p>在计算 Attention 时主要分为三步，第一步是将 query 和每个 key 进行相似度计算得到权重，常用的相似度函数有点积，拼接，感知机等；然后第二步一般是使用一个 softmax 函数对这些权重进行归一化；最后将权重和相应的键值 value 进行加权求和得到最后的 Attention。</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fputt9cbq3j30fs07ogoe.jpg" alt=""></p>
-<h2 id="Transformer-Model-Architecture"><a href="#Transformer-Model-Architecture" class="headerlink" title="Transformer Model  Architecture"></a>Transformer Model  Architecture</h2><h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><h4 id="Scaled-Dot-Product-Attention"><a href="#Scaled-Dot-Product-Attention" class="headerlink" title="Scaled  Dot-Product  Attention"></a>Scaled  Dot-Product  Attention</h4><p><img src="http://wx1.sinaimg.cn/large/006tGRI6ly1fputyei123j30860a674p.jpg" alt=""></p>
+<h2 id="Transformer-Model-Architecture"><a href="#Transformer-Model-Architecture" class="headerlink" title="Transformer Model  Architecture"></a>Transformer Model  Architecture</h2><p><img src="http://ws2.sinaimg.cn/large/006tGRI6ly1fpvzlen1vpj30g50k8mze.jpg" alt="The  Transformer  -  model  architecture"></p>
+<p><strong>Encoder</strong></p>
+<p>Encoder部分由6个相同的layer堆叠而成，其中，每个layer由两个sub-layer构成（上图中的左半部分，N=6）。第一个sub-layer使用multi-head self-attention机制实现，第二个sub-layer则是一个简单的全连接前馈神经网络。在每个sub-layer上都使用了残差连接以及layer normalization，即每个sub-layer的输出为 $LayerNorm(x+Sublayer(x))$ 。</p>
+<p><strong>Decoder</strong></p>
+<p>Decoder同样由6个相同的layer堆叠而成。其中，每个layer由三个sub-layer构成：其中两个与encoder相同，另外一个则是masked multi-head self-attention sub-layer，用于在训练时过滤掉不合法的连接（当前的生成过程不应当依赖于将来生成的值）。类似于encoder，decoder的每个sub-layer上也使用了残差连接与layer normalization。</p>
+<h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><h4 id="Scaled-Dot-Product-Attention"><a href="#Scaled-Dot-Product-Attention" class="headerlink" title="Scaled  Dot-Product  Attention"></a>Scaled  Dot-Product  Attention</h4><p><img src="http://wx1.sinaimg.cn/large/006tGRI6ly1fputyei123j30860a674p.jpg" alt=""></p>
 <p>输入是$d_{k}$维的query和key，value的维度为$d_{v}$。其操作步骤为：首先计算query与所有key的内积，然后再除以$\sqrt{d_{k}}$,并使用softmax获取value的权值，最后加权求和得到相应的输出。在Scaled Dot-Product Attention上加上一个Mask（仅在decoder的Masked Multi-head Attention中使用）单元，可以用于处理训练时的一些不合法信息流动的问题。</p>
 <p>计算公式：<br><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fputzk8h4qj307z01aa9v.jpg" alt=""></p>
 <p>在实际操作里，通常Q是一系列query vectors的组合,$Q \in R^{ m \times d_{k}}$中的每一行对应于一个query；Q与$K^{T}\in\mathbb{R}^{d_{v}\times n}$相乘并进行scale之后，即可得到$m \times n$ 的矩阵，其中每一行都对应着一个 query vector的attention score；之后进行softmax归一化；然后，再将这个attention matrix与$V\in{\mathbb{R}^{n\times d_{v}}}$相乘，即可得到一个 $m \times d_{v}$ 维的attention output，其中每一行对应一个query output。</p>
@@ -190,14 +195,20 @@
 <h4 id="Applications-of-Attention-in-Transformer-Model"><a href="#Applications-of-Attention-in-Transformer-Model" class="headerlink" title="Applications  of  Attention  in  Transformer  Model"></a>Applications  of  Attention  in  Transformer  Model</h4><p>1）在encoder-decoder attention层，query来自于先前的解码层，key与value来自于encoder的输出。</p>
 <p>2）在encoder上单独使用了self-attention。这里的key，value，query都来自于encoder中上一层的输出。</p>
 <p>3）在decoder上也单独使用了self-attention。这里的key，value，query来自于decoder中当前时间步及之前的输出。为了避免信息向左流动，在scaled dot-product attention中增加了一个屏蔽层（mask），用以屏蔽掉那些softmax中的不合法连接（仅在训练时发挥作用）。</p>
+<h4 id="Attention-visualization"><a href="#Attention-visualization" class="headerlink" title="Attention  visualization"></a>Attention  visualization</h4><p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fpw026kltwj30fs07fdhx.jpg" alt=""></p>
 <h3 id="Position-wise-Feed-Forward-Networks"><a href="#Position-wise-Feed-Forward-Networks" class="headerlink" title="Position-wise  Feed-Forward  Networks"></a>Position-wise  Feed-Forward  Networks</h3><p>Position-wise Feed-Forward Networks使用两层线性变换与一个ReLU激活函数实现：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fpuwvhlaz4j307600ta9u.jpg" alt=""></p>
 <h3 id="Positional-Encoding"><a href="#Positional-Encoding" class="headerlink" title="Positional  Encoding"></a>Positional  Encoding</h3><blockquote>
 <p>Since  our  model  contains  no  recurrence  and  no  convolution,  in  order  for  the  model  to  make  use  of  the order  of  the  sequence,  we  must  inject  some  information  about  the  relative  or  absolute  position  of  the tokens  in  the  sequence. To  this  end,  we  add  “positional  encodings”  to  the  input  embeddings  at  the bottoms  of  the  encoder  and  decoder  stacks.  The  positional  encodings  have  the  same  dimension  $d_{model}$ as  the  embeddings,  so  that  the  two  can  be  summed.</p>
 </blockquote>
+<p><img src="http://ws2.sinaimg.cn/large/006tGRI6ly1fpvz3swotdj30l9032jro.jpg" alt=""></p>
+<p>其中，<em>pos</em>表示position，$2i$ 或 $2i+1$ 表示对应的维度。这种PE的特点在于，对于相对位置偏移 $k$ 来说，$PE_{pos+k}$ 可以表示为 $PE_{pos}$ 的线性函数，这提供了表达相对位置信息的可能性。</p>
+<p>Google 在论文中说到他们比较过直接训练出来的位置向量和上述公式计算出来的位置向量，效果是接近的。</p>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fpw08s72xjj30gx07jgmj.jpg" alt=""></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a href="https://arxiv.org/pdf/1706.03762.pdf" target="_blank" rel="noopener">Attention is all you need</a></li>
-<li></li>
+<li><a href="https://zhuanlan.zhihu.com/p/27464080" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27464080</a></li>
+<li><a href="http://web.stanford.edu/class/cs224n/lectures/lecture12.pdf" target="_blank" rel="noopener">http://web.stanford.edu/class/cs224n/lectures/lecture12.pdf</a></li>
 </ul>
 
         </div>
@@ -361,7 +372,7 @@
                             <a href="/2018/03/30/Attention is all you need/" class="thumbnail">
     
     
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
+        <span style="background-image:url(http://ws2.sinaimg.cn/large/006tGRI6ly1fpvzlen1vpj30g50k8mze.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
     
     
 </a>
