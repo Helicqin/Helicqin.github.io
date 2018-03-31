@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>google_object_detection | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Object Detection,CV" />
+    
+    <meta name="description" content="The TensorFlow Object Detection API is an open source framework built on top of TensorFlow that makes it easy to construct, train and deploy object detection models.github link">
+<meta name="keywords" content="Object Detection,CV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="google_object_detection">
+<meta property="og:url" content="https://helic.github.io/2017/11/20/google-object-detection/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="The TensorFlow Object Detection API is an open source framework built on top of TensorFlow that makes it easy to construct, train and deploy object detection models.github link">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg">
+<meta property="og:updated_time" content="2018-03-22T06:37:45.194Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="google_object_detection">
+<meta name="twitter:description" content="The TensorFlow Object Detection API is an open source framework built on top of TensorFlow that makes it easy to construct, train and deploy object detection models.github link">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/CV/Object-Detection/">Object Detection</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-google-object-detection" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        google_object_detection
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/20/google-object-detection/" class="article-date">
+            <time datetime="2017-11-19T16:03:54.000Z" itemprop="datePublished">2017-11-20</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/CV/">CV</a>, <a class="tag-link" href="/tags/Object-Detection/">Object Detection</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>The TensorFlow Object Detection API is an open source framework built on top of TensorFlow that makes it easy to construct, train and deploy object detection models.<a href="https://github.com/tensorflow/models/tree/master/research/object_detection" target="_blank" rel="noopener">github link</a><br><a id="more"></a><br><strong>Note</strong> : tf在Github上的主页是：<a href="https://github.com/tensorflow" target="_blank" rel="noopener">tensorflow</a>，然后这个主页下又有两个比较重要的repo，分别是TensorFlow的源代码repo：<a href="https://github.com/tensorflow/tensorflow" target="_blank" rel="noopener">tensorflow/tensorflow</a>，还有一个<a href="https://github.com/tensorflow/models" target="_blank" rel="noopener">tensorflow/models</a>。后者tensorflow/models是Google官方用TensorFlow做的各种各样的模型，相当于示例代码，比如用于图像分类的Slim，深度文字OCR，以及用于NLP任务的句法分析模型syntaxnet，Seq2Seq with Attention等等等等。这次公布的Object Detection API同样是放在了tensorflow/models里。主要公布了5个在COCO上训练的网络。网络结构分别是SSD+MobileNet、SSD+Inception、R-FCN+ResNet101、Faster RCNN+ResNet101、Faster RCNN+Inception_ResNet、faster_rcnn_nas。后期应该还会有更多的模型加入进来。</p>
+<h2 id="Installation-in-Ubuntu"><a href="#Installation-in-Ubuntu" class="headerlink" title="Installation in Ubuntu"></a>Installation in Ubuntu</h2><h4 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h4><ul>
+<li>Tensorflow</li>
+<li>Protobuf 2.6</li>
+<li>Pillow 1.0</li>
+<li>lxml</li>
+<li>tf Slim (which is included in the “tensorflow/models/research/“ checkout)</li>
+<li>Jupyter notebook</li>
+<li>Matplotlib<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install tensorflow   <span class="comment"># or pip install tensorflow</span></span><br><span class="line">sudo apt-get install protobuf-compiler python-pil python-lxml</span><br><span class="line">sudo pip install jupyter</span><br><span class="line">sudo pip install matplotlib</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Protobuf-Compilation"><a href="#Protobuf-Compilation" class="headerlink" title="Protobuf Compilation"></a>Protobuf Compilation</h4><p>The Tensorflow Object Detection API uses Protobufs to configure model and training parameters. Before the framework can be used, the Protobuf libraries must be compiled. This should be done by running the following command from the tensorflow/models/research/ directory:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># just need to git clone tensorflow/models</span></span><br><span class="line"><span class="comment"># From models/research/</span></span><br><span class="line">protoc object_detection/protos/*.proto --python_out=.</span><br></pre></td></tr></table></figure></p>
+<h4 id="Add-Libraries-to-PYTHONPATH"><a href="#Add-Libraries-to-PYTHONPATH" class="headerlink" title="Add Libraries to PYTHONPATH"></a>Add Libraries to PYTHONPATH</h4><p>When running locally, the tensorflow/models/research/ and slim directories should be appended to PYTHONPATH. This can be done by running the following from tensorflow/models/research/:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># From models/research/</span></span><br><span class="line">export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim</span><br></pre></td></tr></table></figure></p>
+<p><strong>Note</strong>: This command needs to run from every new terminal you start. If you wish to avoid running this manually, you can add it as a new line to the end of your ~/.bashrc file.</p>
+<h4 id="Testing-the-Installation-optional"><a href="#Testing-the-Installation-optional" class="headerlink" title="Testing the Installation(optional)"></a>Testing the Installation(optional)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># From models/research/</span></span><br><span class="line">python object_detection/builders/model_builder_test.py</span><br></pre></td></tr></table></figure>
+<h2 id="Run-a-Demo"><a href="#Run-a-Demo" class="headerlink" title="Run a Demo"></a>Run a Demo</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># From models</span></span><br><span class="line">jupyter-notebook</span><br></pre></td></tr></table></figure>
+<p>访问文件夹object_detection，运行object_detection_tutorial.ipynb：<a href="https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb" target="_blank" rel="noopener">object_detection_tutorial</a><br>依次shift+enter运行,这个Demo会自动下载并执行最快的模型ssd+mobilenet(coco dataset pre-trained)，最后会出来两张图片：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlbjcqbj30k00co166.jpg" alt="Figure 1"><br><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg" alt="Figure 2"></p>
+<p><strong>Note</strong>:  wait for a while ,then you will the images</p>
+<h2 id="Test-Your-Images-with-Pre-trained-Model"><a href="#Test-Your-Images-with-Pre-trained-Model" class="headerlink" title="Test Your Images with Pre-trained Model"></a>Test Your Images with Pre-trained Model</h2><h4 id="Model-Selection"><a href="#Model-Selection" class="headerlink" title="Model Selection"></a>Model Selection</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">MODEL_NAME = <span class="string">'ssd_mobilenet_v1_coco_11_06_2017'</span></span><br><span class="line"></span><br><span class="line">MODEL_NAME = <span class="string">'ssd_inception_v2_coco_11_06_2017'</span></span><br><span class="line"></span><br><span class="line">MODEL_NAME = <span class="string">'rfcn_resnet101_coco_11_06_2017'</span></span><br><span class="line"></span><br><span class="line">MODEL_NAME = <span class="string">'faster_rcnn_resnet101_coco_11_06_2017'</span></span><br><span class="line"></span><br><span class="line">MODEL_NAME = <span class="string">'faster_rcnn_inception_resnet_v2_atrous_coco_11_06_2017'</span></span><br><span class="line"></span><br><span class="line">MODEL_NAME = <span class="string">'faster_rcnn_nas_coco_24_10_2017'</span></span><br></pre></td></tr></table></figure>
+<p>模型比较：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fl3u1zkbi0j30hd078glw.jpg" alt=""></p>
+<p><strong>Note</strong>: download the models from <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md" target="_blank" rel="noopener">link</a> to local directory “models/research/object_detection/ “, then unzip so that you can save  time.</p>
+<h4 id="Modify-Demo-Code"><a href="#Modify-Demo-Code" class="headerlink" title="Modify Demo Code"></a>Modify Demo Code</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> six.moves.urllib <span class="keyword">as</span> urllib</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> tarfile</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> StringIO</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="comment"># This is needed since the notebook is stored in the object_detection folder.</span></span><br><span class="line">sys.path.append(<span class="string">".."</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> label_map_util</span><br><span class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> visualization_utils <span class="keyword">as</span> vis_util</span><br><span class="line"></span><br><span class="line"><span class="comment"># What model to download.</span></span><br><span class="line">MODEL_NAME = <span class="string">'rfcn_resnet101_coco_11_06_2017'</span>   <span class="comment"># replace your chosen model</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Path to frozen detection graph. This is the actual model that is used for the object detection.</span></span><br><span class="line">PATH_TO_CKPT = MODEL_NAME + <span class="string">'/frozen_inference_graph.pb'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># List of the strings that is used to add correct label for each box.</span></span><br><span class="line">PATH_TO_LABELS = os.path.join(<span class="string">'data'</span>, <span class="string">'mscoco_label_map.pbtxt'</span>)</span><br><span class="line"></span><br><span class="line">NUM_CLASSES = <span class="number">90</span>   <span class="comment"># 90类object,details in models\research\object_detection\data\mscoco_label_map.pbtxt</span></span><br><span class="line"></span><br><span class="line">detection_graph = tf.Graph()</span><br><span class="line"><span class="keyword">with</span> detection_graph.as_default():</span><br><span class="line">    od_graph_def = tf.GraphDef()</span><br><span class="line">    <span class="keyword">with</span> tf.gfile.GFile(PATH_TO_CKPT, <span class="string">'rb'</span>) <span class="keyword">as</span> fid:</span><br><span class="line">        serialized_graph = fid.read()</span><br><span class="line">        od_graph_def.ParseFromString(serialized_graph)</span><br><span class="line">        tf.import_graph_def(od_graph_def, name=<span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">label_map = label_map_util.load_labelmap(PATH_TO_LABELS)</span><br><span class="line">categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=<span class="keyword">True</span>)</span><br><span class="line">category_index = label_map_util.create_category_index(categories)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_image_into_numpy_array</span><span class="params">(image)</span>:</span></span><br><span class="line">      (im_width, im_height) = image.size</span><br><span class="line">      <span class="keyword">return</span> np.array(image.getdata()).reshape(</span><br><span class="line">          (im_height, im_width, <span class="number">3</span>)).astype(np.uint8)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># test images: notice images should be in test_images directory</span></span><br><span class="line">PATH_TO_TEST_IMAGES_DIR = <span class="string">'test_images'</span></span><br><span class="line">TEST_IMAGE_PATHS = [os.path.join(PATH_TO_TEST_IMAGES_DIR, <span class="string">'&#123;&#125;.png'</span>.format(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">10</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Size, in inches, of the output images.</span></span><br><span class="line">IMAGE_SIZE = (<span class="number">12</span>, <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> detection_graph.as_default():</span><br><span class="line">    <span class="keyword">with</span> tf.Session(graph=detection_graph) <span class="keyword">as</span> sess:</span><br><span class="line">        <span class="comment"># Definite input and output Tensors for detection_graph</span></span><br><span class="line">        image_tensor = detection_graph.get_tensor_by_name(<span class="string">'image_tensor:0'</span>)</span><br><span class="line">        <span class="comment"># Each box represents a part of the image where a particular object was detected.</span></span><br><span class="line">        detection_boxes = detection_graph.get_tensor_by_name(<span class="string">'detection_boxes:0'</span>)</span><br><span class="line">        <span class="comment"># Each score represent how level of confidence for each of the objects.</span></span><br><span class="line">        <span class="comment"># Score is shown on the result image, together with the class label.</span></span><br><span class="line">        detection_scores = detection_graph.get_tensor_by_name(<span class="string">'detection_scores:0'</span>)</span><br><span class="line">        detection_classes = detection_graph.get_tensor_by_name(<span class="string">'detection_classes:0'</span>)</span><br><span class="line">        num_detections = detection_graph.get_tensor_by_name(<span class="string">'num_detections:0'</span>)</span><br><span class="line">        <span class="keyword">for</span> image_path <span class="keyword">in</span> TEST_IMAGE_PATHS:</span><br><span class="line">	        current_time = time.time()</span><br><span class="line">            image = Image.open(image_path)</span><br><span class="line">            <span class="comment"># the array based representation of the image will be used later in order to prepare the result image with boxes and labels on it.</span></span><br><span class="line">            image_np = load_image_into_numpy_array(image)</span><br><span class="line">            <span class="comment"># Expand dimensions since the model expects images to have shape: [1, None, None, 3]</span></span><br><span class="line">            image_np_expanded = np.expand_dims(image_np, axis=<span class="number">0</span>)</span><br><span class="line">            <span class="comment"># Actual detection</span></span><br><span class="line">            (boxes, scores, classes, num) = sess.run(</span><br><span class="line">		                      [detection_boxes, detection_scores, detection_classes, num_detections], feed_dict=&#123;image_tensor: image_np_expanded&#125;)</span><br><span class="line">            print(<span class="string">"time: &#123;&#125;"</span>.format(time.time() - current_time))</span><br><span class="line">            print(<span class="string">"box:&#123;&#125;"</span>.format(boxes), boxes.shape)</span><br><span class="line">            print(<span class="string">"score:&#123;&#125;"</span>.format(scores))</span><br><span class="line">            print(<span class="string">"class:&#123;&#125;"</span>.format(classes))</span><br><span class="line">            print(<span class="string">"num:&#123;&#125;"</span>.format(num))</span><br><span class="line">            <span class="comment"># Visualization of the results of a detection.</span></span><br><span class="line">            vis_util.visualize_boxes_and_labels_on_image_array(</span><br><span class="line">                       image_np,</span><br><span class="line">                       np.squeeze(boxes),</span><br><span class="line">                       np.squeeze(classes).astype(np.int32),</span><br><span class="line">                       np.squeeze(scores),</span><br><span class="line">                       category_index,</span><br><span class="line">                       use_normalized_coordinates=<span class="keyword">True</span>,</span><br><span class="line">                       line_thickness=<span class="number">1</span>)</span><br><span class="line">             plt.figure(figsize=IMAGE_SIZE)</span><br><span class="line">             plt.imshow(image_np)</span><br><span class="line">             plt.show()   <span class="comment"># you need to shut down the image window to keep running the code</span></span><br></pre></td></tr></table></figure>
+<h4 id="Main-Parameters"><a href="#Main-Parameters" class="headerlink" title="Main Parameters"></a>Main Parameters</h4><p><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.squeeze.html" target="_blank" rel="noopener">numpy.squeeze()</a>: 去除维度为1</p>
+<ul>
+<li>boxes: a numpy array of shape [N, 4],相对坐标</li>
+<li>scores: a numpy array of shape [N] or None.概率（从高往低排序）  If scores=None, then<pre><code>this function assumes that the boxes to be plotted are groundtruth
+boxes and plot all boxes as black with no classes or scores.
+</code></pre></li>
+<li>classes: a numpy array of shape [N]. Note that class indices are 1-based,<pre><code>and match the keys in the label map.类别（总有90类 in coco dataset）
+</code></pre></li>
+<li>num: N=100，最多识别N个object</li>
+</ul>
+<p><em>More details in vis_util.visualize_boxes_and_labels_on_image_array()</em></p>
+<h4 id="Get-Object-Coordinate"><a href="#Get-Object-Coordinate" class="headerlink" title="Get Object Coordinate"></a>Get Object Coordinate</h4><p><strong>boxes</strong>为object相对坐标，图片左上角为原点1，横向为x,纵向为y：boxes每一项是一个object坐标，含义[ymin, xmin, ymax, xmax]，转换成绝对坐标需要乘以输入原始图片的width or height。</p>
+<p><strong>Note</strong>: 默认概率低于0.5，不会被显示在原始图片上，可以通过visualize_boxes_and_labels_on_image_array()的min_score_thresh参数调整。</p>
+<h4 id="Extra"><a href="#Extra" class="headerlink" title="Extra"></a>Extra</h4><p>获得坐标后，可以通过opencv提取object图片：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">img = cv2.imread(<span class="string">'0.png'</span>)</span><br><span class="line"></span><br><span class="line">patch_tree = img[<span class="number">565</span>:<span class="number">620</span>, <span class="number">180</span>:<span class="number">260</span>]</span><br><span class="line">cv2.imwrite(<span class="string">'cropped_image.png'</span>, patch_tree)</span><br></pre></td></tr></table></figure></p>
+<p><em>install opencv : not to use conda install opencv(cannot use third-party),download opencv-2.4.13.4-vc14.exe and run, you will get a file named opencv. Then copy opencv\build\python\2.7\x64\cv2.pyd to python path.And you need to copy some third-party dlls to python path too if you want to use them. Details in <a href="https://stackoverflow.com/questions/11699298/opencv-2-4-videocapture-not-working-on-windows/11703998#11703998" target="_blank" rel="noopener">link</a></em>.</p>
+<h2 id="Train-Your-Dataset"><a href="#Train-Your-Dataset" class="headerlink" title="Train Your Dataset"></a>Train Your Dataset</h2><h4 id="Configure"><a href="#Configure" class="headerlink" title="Configure"></a>Configure</h4><p>The Tensorflow Object Detection API uses protobuf files to configure the training and evaluation process. The schema for the training pipeline can be found in object_detection/protos/pipeline.proto. At a high level, the config file is split into 5 parts:</p>
+<ul>
+<li>The <strong>model</strong> configuration. This defines what type of model will be trained (ie. meta-architecture, feature extractor).</li>
+<li>The <strong>train_config</strong>, which decides what parameters should be used to train model parameters (ie. SGD parameters, input preprocessing and feature extractor initialization values).</li>
+<li>The <strong>eval_config</strong>, which determines what set of metrics will be reported for evaluation (currently we only support the PASCAL VOC metrics).</li>
+<li>The <strong>train_input_config</strong>, which defines what dataset the model should be trained on.</li>
+<li>The <strong>eval_input_config</strong>, which defines what dataset the model will be evaluated on. Typically this should be different than the training input dataset.</li>
+</ul>
+<p>A skeleton configuration file is shown below:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">model &#123;</span><br><span class="line">(... Add model config here...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">train_config : &#123;</span><br><span class="line">(... Add train_config here...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">train_input_reader: &#123;</span><br><span class="line">(... Add train_input configuration here...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eval_config: &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eval_input_reader: &#123;</span><br><span class="line">(... Add eval_input configuration here...)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Faster_RCNN_resnet101_coco config:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Faster R-CNN with Resnet-101 (v1) configuration for MSCOCO Dataset.</span></span><br><span class="line"><span class="comment"># Users should configure the fine_tune_checkpoint field in the train config as</span></span><br><span class="line"><span class="comment"># well as the label_map_path and input_path fields in the train_input_reader and</span></span><br><span class="line"><span class="comment"># eval_input_reader. Search for "PATH_TO_BE_CONFIGURED" to find the fields that</span></span><br><span class="line"><span class="comment"># should be configured.</span></span><br><span class="line"></span><br><span class="line">model &#123;</span><br><span class="line">  faster_rcnn &#123;</span><br><span class="line">    num_classes: <span class="number">3</span></span><br><span class="line">    image_resizer &#123;</span><br><span class="line">      keep_aspect_ratio_resizer &#123;</span><br><span class="line">        min_dimension: <span class="number">600</span></span><br><span class="line">        max_dimension: <span class="number">1024</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    feature_extractor &#123;</span><br><span class="line">      type: <span class="string">'faster_rcnn_resnet101'</span></span><br><span class="line">      first_stage_features_stride: <span class="number">16</span></span><br><span class="line">    &#125;</span><br><span class="line">    first_stage_anchor_generator &#123;</span><br><span class="line">      grid_anchor_generator &#123;</span><br><span class="line">        scales: [<span class="number">0.25</span>, <span class="number">0.5</span>, <span class="number">1.0</span>, <span class="number">2.0</span>]</span><br><span class="line">        aspect_ratios: [<span class="number">0.5</span>, <span class="number">1.0</span>, <span class="number">2.0</span>]</span><br><span class="line">        height_stride: <span class="number">16</span></span><br><span class="line">        width_stride: <span class="number">16</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    first_stage_box_predictor_conv_hyperparams &#123;</span><br><span class="line">      op: CONV</span><br><span class="line">      regularizer &#123;</span><br><span class="line">        l2_regularizer &#123;</span><br><span class="line">          weight: <span class="number">0.0</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      initializer &#123;</span><br><span class="line">        truncated_normal_initializer &#123;</span><br><span class="line">          stddev: <span class="number">0.01</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    first_stage_nms_score_threshold: <span class="number">0.0</span></span><br><span class="line">    first_stage_nms_iou_threshold: <span class="number">0.7</span></span><br><span class="line">    first_stage_max_proposals: <span class="number">300</span></span><br><span class="line">    first_stage_localization_loss_weight: <span class="number">2.0</span></span><br><span class="line">    first_stage_objectness_loss_weight: <span class="number">1.0</span></span><br><span class="line">    initial_crop_size: <span class="number">14</span></span><br><span class="line">    maxpool_kernel_size: <span class="number">2</span></span><br><span class="line">    maxpool_stride: <span class="number">2</span></span><br><span class="line">    second_stage_box_predictor &#123;</span><br><span class="line">      mask_rcnn_box_predictor &#123;</span><br><span class="line">        use_dropout: false</span><br><span class="line">        dropout_keep_probability: <span class="number">1.0</span></span><br><span class="line">        fc_hyperparams &#123;</span><br><span class="line">          op: FC</span><br><span class="line">          regularizer &#123;</span><br><span class="line">            l2_regularizer &#123;</span><br><span class="line">              weight: <span class="number">0.0</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          initializer &#123;</span><br><span class="line">            variance_scaling_initializer &#123;</span><br><span class="line">              factor: <span class="number">1.0</span></span><br><span class="line">              uniform: true</span><br><span class="line">              mode: FAN_AVG</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    second_stage_post_processing &#123;</span><br><span class="line">      batch_non_max_suppression &#123;</span><br><span class="line">        score_threshold: <span class="number">0.0</span></span><br><span class="line">        iou_threshold: <span class="number">0.6</span></span><br><span class="line">        max_detections_per_class: <span class="number">10</span></span><br><span class="line">        max_total_detections: <span class="number">30</span></span><br><span class="line">      &#125;</span><br><span class="line">      score_converter: SOFTMAX</span><br><span class="line">    &#125;</span><br><span class="line">    second_stage_localization_loss_weight: <span class="number">2.0</span></span><br><span class="line">    second_stage_classification_loss_weight: <span class="number">1.0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">train_config: &#123;</span><br><span class="line">  batch_size: <span class="number">1</span></span><br><span class="line">  optimizer &#123;</span><br><span class="line">    momentum_optimizer: &#123;</span><br><span class="line">      learning_rate: &#123;</span><br><span class="line">        manual_step_learning_rate &#123;</span><br><span class="line">          initial_learning_rate: <span class="number">0.0003</span></span><br><span class="line">          schedule &#123;</span><br><span class="line">            step: <span class="number">0</span></span><br><span class="line">            learning_rate: <span class="number">.0003</span></span><br><span class="line">          &#125;</span><br><span class="line">          schedule &#123;</span><br><span class="line">            step: <span class="number">900000</span></span><br><span class="line">            learning_rate: <span class="number">.00003</span></span><br><span class="line">          &#125;</span><br><span class="line">          schedule &#123;</span><br><span class="line">            step: <span class="number">1200000</span></span><br><span class="line">            learning_rate: <span class="number">.000003</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      momentum_optimizer_value: <span class="number">0.9</span></span><br><span class="line">    &#125;</span><br><span class="line">    use_moving_average: false</span><br><span class="line">  &#125;</span><br><span class="line">  gradient_clipping_by_norm: <span class="number">10.0</span></span><br><span class="line">  fine_tune_checkpoint: <span class="string">"helic_fasterrcnn_20171217/model.ckpt-30000"</span></span><br><span class="line">  from_detection_checkpoint: true</span><br><span class="line">  <span class="comment"># Note: The below line limits the training process to 200K steps, which we</span></span><br><span class="line">  <span class="comment"># empirically found to be sufficient enough to train the pets dataset. This</span></span><br><span class="line">  <span class="comment"># effectively bypasses the learning rate schedule (the learning rate will</span></span><br><span class="line">  <span class="comment"># never decay). Remove the below line to train indefinitely.</span></span><br><span class="line">  num_steps: <span class="number">20000</span></span><br><span class="line">  data_augmentation_options &#123;</span><br><span class="line">    random_horizontal_flip &#123;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">train_input_reader: &#123;</span><br><span class="line">  tf_record_input_reader &#123;</span><br><span class="line">    input_path: <span class="string">"badminton.record"</span></span><br><span class="line">  &#125;</span><br><span class="line">  label_map_path: <span class="string">"object_detection/data/badminton_label_map.pbtxt"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eval_config: &#123;</span><br><span class="line">  num_examples: <span class="number">8000</span></span><br><span class="line">  <span class="comment"># Note: The below line limits the evaluation process to 10 evaluations.</span></span><br><span class="line">  <span class="comment"># Remove the below line to evaluate indefinitely.</span></span><br><span class="line">  max_evals: <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eval_input_reader: &#123;</span><br><span class="line">  tf_record_input_reader &#123;</span><br><span class="line">    input_path: <span class="string">"PATH_TO_BE_CONFIGURED/mscoco_val.record"</span></span><br><span class="line">  &#125;</span><br><span class="line">  label_map_path: <span class="string">"PATH_TO_BE_CONFIGURED/mscoco_label_map.pbtxt"</span></span><br><span class="line">  shuffle: false</span><br><span class="line">  num_readers: <span class="number">1</span></span><br><span class="line">  num_epochs: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>More model configure template files in <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md" target="_blank" rel="noopener">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md</a></p>
+<p><em>More details in <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md" target="_blank" rel="noopener">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md</a></em></p>
+<h4 id="Create-Our-Own-Dataset"><a href="#Create-Our-Own-Dataset" class="headerlink" title="Create Our Own Dataset"></a>Create Our Own Dataset</h4><p>Tensorflow Object Detection API reads data using the <strong>TFRecord</strong> file format. Two sample scripts (create_pascal_tf_record.py and create_pet_tf_record.py) are provided to convert from the PASCAL VOC dataset and Oxford-IIIT Pet dataset to TFRecords.</p>
+<p>To use your own dataset in Tensorflow Object Detection API, you must convert it into the TFRecord file format. <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md" target="_blank" rel="noopener">This document</a> outlines how to write a script to generate the TFRecord file.</p>
+<h4 id="Run-Locally"><a href="#Run-Locally" class="headerlink" title="Run Locally"></a>Run Locally</h4><p>This page walks through the steps required to train an object detection model on a local machine. It assumes the reader has completed the following prerequisites:</p>
+<ul>
+<li>The Tensorflow Object Detection API has been installed as documented in the installation <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md" target="_blank" rel="noopener">instructions</a>. This includes installing library dependencies, compiling the configuration protobufs and setting up the Python environment.</li>
+<li>A valid data set has been created. See <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/preparing_inputs.md" target="_blank" rel="noopener">this page</a> for instructions on how to generate a dataset for the PASCAL VOC challenge or the Oxford-IIIT Pet dataset.</li>
+<li>A Object Detection pipeline configuration has been written. See <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/configuring_jobs.md" target="_blank" rel="noopener">this page</a> for details on how to write a pipeline configuration.</li>
+</ul>
+<p><em>More details in <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md" target="_blank" rel="noopener">https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_locally.md</a></em></p>
+<h2 id="Extras"><a href="#Extras" class="headerlink" title="Extras"></a>Extras</h2><ul>
+<li>Tensorflow detection model zoo</li>
+<li>Exporting a trained model for inference</li>
+<li>Defining your own model architecture</li>
+<li>Bringing in your own dataset</li>
+</ul>
+<p><em>Details in <a href="https://github.com/tensorflow/models/tree/master/research/object_detection" target="_blank" rel="noopener">https://github.com/tensorflow/models/tree/master/research/object_detection</a></em></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/01/02/ResNet/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            ResNet
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/19/Frame/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Frame</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/30/Attention is all you need/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/30/Attention is all you need/" class="title">Attention is all you need</a></p>
+                            <p class="item-date"><time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/20/Eager_Execution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_Eager" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></p>
+                            <p class="item-title"><a href="/2018/03/20/Eager_Execution/" class="title">Tensorflow_Eager</a></p>
+                            <p class="item-date"><time datetime="2018-03-20T12:40:00.000Z" itemprop="datePublished">2018-03-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ws1.sinaimg.cn/large/006tGRI6ly1fpegt4xc4pj30t00bnabq.jpg)" alt="Advanced Architectures and Memory Networks" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="title">Advanced Architectures and Memory Networks</a></p>
+                            <p class="item-date"><time datetime="2018-03-15T08:57:50.000Z" itemprop="datePublished">2018-03-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/09/matplotlib/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fp01c7ivnhj30f203mq39.jpg)" alt="An Introduction to Matplotlib" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/01/09/matplotlib/" class="title">An Introduction to Matplotlib</a></p>
+                            <p class="item-date"><time datetime="2018-01-09T07:25:50.000Z" itemprop="datePublished">2018-01-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/04/Object Detection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg)" alt="YOLO Object Detection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/CV/Object-Detection/">Object Detection</a></p>
+                            <p class="item-title"><a href="/2018/01/04/Object Detection/" class="title">YOLO Object Detection</a></p>
+                            <p class="item-date"><time datetime="2018-01-04T07:25:50.000Z" itemprop="datePublished">2018-01-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 12.5px;">BUPT</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/Keras/" style="font-size: 12.5px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/NLG/" style="font-size: 12.5px;">NLG</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 12.5px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 12.5px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 12.5px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 20px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 10px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2017/11/20/google-object-detection/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

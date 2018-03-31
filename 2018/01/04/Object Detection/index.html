@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>YOLO Object Detection | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Keras,YOLO,Object Detection" />
+    
+    <meta name="description" content="Object Detection and YOLO">
+<meta name="keywords" content="Keras,YOLO,Object Detection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YOLO Object Detection">
+<meta property="og:url" content="https://helic.github.io/2018/01/04/Object Detection/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="Object Detection and YOLO">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg">
+<meta property="og:updated_time" content="2018-03-03T15:27:27.168Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="YOLO Object Detection">
+<meta name="twitter:description" content="Object Detection and YOLO">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/CV/Object-Detection/">Object Detection</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Object Detection" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        YOLO Object Detection
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/01/04/Object Detection/" class="article-date">
+            <time datetime="2018-01-04T07:25:50.000Z" itemprop="datePublished">2018-01-04</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Keras/">Keras</a>, <a class="tag-link" href="/tags/Object-Detection/">Object Detection</a>, <a class="tag-link" href="/tags/YOLO/">YOLO</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>Object Detection and YOLO<br><a id="more"></a></p>
+<h2 id="What-is-Object-Detection"><a href="#What-is-Object-Detection" class="headerlink" title="What is Object Detection ?"></a>What is Object Detection ?</h2><p><img src="http://wx4.sinaimg.cn/large/006tGRI6ly1fn3fwo9hrpj30qc0bqwl8.jpg" alt="Object Detection"></p>
+<h3 id="Classification-with-localization"><a href="#Classification-with-localization" class="headerlink" title="Classification with localization"></a>Classification with localization</h3><p><img src="http://wx4.sinaimg.cn/large/006tGRI6ly1fn3fz3nwp2j30s9093act.jpg" alt="Classification with localization"></p>
+<h3 id="Defining-the-target-label-y"><a href="#Defining-the-target-label-y" class="headerlink" title="Defining the target label y"></a>Defining the target label y</h3><p><img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4m84w2bmj30vt0eugr9.jpg" alt="image"></p>
+<p>输出：包含图片中存在的对象及定位框</p>
+<ul>
+<li>行人，0 or 1；</li>
+<li>汽车，0 or 1；</li>
+<li>摩托车，0 or 1；</li>
+<li>图片背景，0 or 1；</li>
+<li>定位框：bx、by、bh、bw</li>
+</ul>
+<p>其中，bx、by表示汽车中点，bh、bw分别表示定位框的高和宽。以图片左上角为(0,0)，以右下角为(1,1)，这些数字均为位置或长度所在图片的比例大小。</p>
+<h4 id="Target-Label-Y"><a href="#Target-Label-Y" class="headerlink" title="Target Label Y"></a>Target Label Y</h4><p><img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4mvocwtmj30q60ergm4.jpg" alt="image"></p>
+<h4 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h4><p>如果采用平方误差形式的损失函数：</p>
+<ul>
+<li><p>Pc=1： <img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4my79w2aj30db010a9w.jpg" alt="image"><br>此时，我们需要关注神经网络对所有输出值的准确度；</p>
+</li>
+<li><p>Pc=0： <img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4mzlwvwfj305900ua9u.jpg" alt="image"><br>此时，我们只关注神经网络对背景值的准确度。</p>
+</li>
+</ul>
+<p>当然在实际的目标定位应用中，我们可以使用更好的方式是： </p>
+<ul>
+<li>对c1、c2、c3使用softmax交叉熵损失函数； </li>
+<li>对边界框的四个值应用平方误差或者类似的方法； </li>
+<li>对Pc应用logistic regression损失函数，或者平方预测误差。</li>
+</ul>
+<h2 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h2><h3 id="Sliding-Windows-Detection-Algorithm"><a href="#Sliding-Windows-Detection-Algorithm" class="headerlink" title="Sliding Windows Detection Algorithm"></a>Sliding Windows Detection Algorithm</h3><p><img src="http://wx4.sinaimg.cn/large/006tGRI6ly1fn3g5d2s1pj30my08hn1v.jpg" alt="image"></p>
+<p><img src="http://wx4.sinaimg.cn/large/006tGRI6ly1fn3g5z7imnj30mx09cwjm.jpg" alt="image"></p>
+<p><strong>Weakness : </strong> computational cost</p>
+<h3 id="Improvement-Convolutional-Implementation-of-Sliding-Windows"><a href="#Improvement-Convolutional-Implementation-of-Sliding-Windows" class="headerlink" title="Improvement : Convolutional Implementation of Sliding Windows"></a>Improvement : Convolutional Implementation of Sliding Windows</h3><h4 id="Turning-FC-layer-into-convolutional-layers"><a href="#Turning-FC-layer-into-convolutional-layers" class="headerlink" title="Turning FC layer into convolutional layers"></a>Turning FC layer into convolutional layers</h4><p><img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4md5srvij30sa0crjt9.jpg" alt="image"></p>
+<h4 id="Convolutional-Implementation-of-Sliding-Windows"><a href="#Convolutional-Implementation-of-Sliding-Windows" class="headerlink" title="Convolutional Implementation of Sliding Windows"></a>Convolutional Implementation of Sliding Windows</h4><p><img src="http://wx4.sinaimg.cn/large/006tGRI6ly1fn3g8h5596j30s40e9q8w.jpg" alt="image"></p>
+<h3 id="IoU-Intersection-over-union"><a href="#IoU-Intersection-over-union" class="headerlink" title="IoU (Intersection over union)"></a>IoU (Intersection over union)</h3><p>More generally, IoU is a measure of the overlap between two bounding boxes.</p>
+<p><img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4mlwx4r6j30r009ggoq.jpg" alt="IoU"></p>
+<h3 id="Non-max-Suppression"><a href="#Non-max-Suppression" class="headerlink" title="Non-max Suppression"></a>Non-max Suppression</h3><p><img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4mnrcot7j30b008rwk0.jpg" alt="Non-max Suppression"></p>
+<p><img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4mpgvb7uj30q90ekwkv.jpg" alt="Non-max Suppression"></p>
+<h3 id="Anchor-Box"><a href="#Anchor-Box" class="headerlink" title="Anchor Box"></a>Anchor Box</h3><h4 id="Overlapping-Objects"><a href="#Overlapping-Objects" class="headerlink" title="Overlapping Objects"></a>Overlapping Objects</h4><p><img src="http://ws3.sinaimg.cn/large/006tGRI6ly1fn4nhdv5psj30qe0cmtel.jpg" alt="image"></p>
+<h4 id="Anchor-Box-Algorithm"><a href="#Anchor-Box-Algorithm" class="headerlink" title="Anchor Box Algorithm"></a>Anchor Box Algorithm</h4><blockquote>
+<p>With two anchor boxes: Each object in training image is assigned to grid cell that contains object’s midpoint and anchor box for the grid cell with highest IoU.</p>
+</blockquote>
+<h4 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h4><p><img src="http://img.blog.csdn.net/20171122100010124?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="enter image description here"></p>
+<h4 id="Weakness"><a href="#Weakness" class="headerlink" title="Weakness"></a>Weakness</h4><ul>
+<li>如果我们使用了两个Anchor box，但是同一个格子中却有三个对象的情况，此时只能用一些额外的手段来处理；</li>
+<li>同一个格子中存在两个对象，但它们的Anchor box 形状相同，此时也需要引入一些专门处理该情况的手段。</li>
+</ul>
+<p>但是以上的两种问题出现的可能性不会很大，对目标检测算法不会带来很大的影响。</p>
+<h4 id="How-to-choose-anchor-box"><a href="#How-to-choose-anchor-box" class="headerlink" title="How to choose anchor box ?"></a>How to choose anchor box ?</h4><ul>
+<li><p>一般人工指定Anchor box 的形状，选择5~10个以覆盖到多种不同的形状，可以涵盖我们想要检测的对象的形状；</p>
+</li>
+<li><p>高级方法(K-means 算法)：将不同对象形状进行聚类，用聚类后的结果来选择一组最具代表性的Anchor box，以此来代表我们想要检测对象的形状。</p>
+</li>
+</ul>
+<h2 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h2><p><img src="http://img.blog.csdn.net/20171121214941013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="yolo"></p>
+<ul>
+<li><p>将图片分割成n×n个小的图片；</p>
+</li>
+<li><p>采用图像分类和定位算法，分别应用在图像的n×n个格子中；</p>
+</li>
+<li><p>对于每一个小格子，输出一个预定义标签：yi=[Pc bx by bh bw c1 c2 c3] 对于不同的网格 i 有不同的标签向量yi；</p>
+</li>
+<li><p>将n×n个格子标签合并在一起，最终的目标输出Y的大小为：n×n×8（这里8是因为例子中的目标值有8个）</p>
+</li>
+</ul>
+<p>YOLO notation：</p>
+<ul>
+<li>将对象分配到一个格子的过程是：观察对象的中点，将该对象分配到其中点所在的格子中，（即使对象横跨多个格子，也只分配到中点所在的格子中，其他格子记为无该对象，即标记为“0”）；</li>
+<li>YOLO显式地输出边界框，使得其可以具有任意宽高比，并且能输出更精确的坐标，不受滑动窗口算法滑动步幅大小的限制；</li>
+<li>YOLO是一次卷积实现，并不是在n×n网格上进行n^2次运算，而是单次卷积实现，算法实现效率高，运行速度快，可以实现实时识别。</li>
+</ul>
+<h3 id="Training-Set"><a href="#Training-Set" class="headerlink" title="Training Set"></a>Training Set</h3><ul>
+<li>输入X：同样大小的完整图片;</li>
+<li>目标Y：使用3×3网格划分，输出大小3×3×16(假设使用2个anchor boxes);</li>
+<li>对不同格子中的小图，定义目标输出向量y。</li>
+</ul>
+<p><img src="http://img.blog.csdn.net/20171122103235203?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="yolo"></p>
+<h3 id="Prediction"><a href="#Prediction" class="headerlink" title="Prediction"></a>Prediction</h3><p>输入与训练集中相同大小的图片，同时得到每个格子中不同的输出结果：3×3×16。</p>
+<p><img src="http://img.blog.csdn.net/20171122103504594?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="enter image description here"></p>
+<h3 id="Non-max-Suppression-1"><a href="#Non-max-Suppression-1" class="headerlink" title="Non-max Suppression"></a>Non-max Suppression</h3><p>假设使用了2个Anchor box，那么对于每一个网格，我们都会得到预测输出的2个bounding boxes，其中一个Pc比较高； </p>
+<p><img src="http://img.blog.csdn.net/20171122104933723?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="enter image description here"></p>
+<p>抛弃概率Pc值低的预测bounding boxes； </p>
+<p><img src="http://img.blog.csdn.net/20171122105045292?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="enter image description here"></p>
+<p>对每个对象（如行人、汽车、摩托车）分别使用NMS算法得到最终的预测边界框。 </p>
+<p><img src="http://img.blog.csdn.net/20171122105102514?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="enter image description here"></p>
+<h2 id="YOLO-Practice-for-Car-Detection"><a href="#YOLO-Practice-for-Car-Detection" class="headerlink" title="YOLO Practice for Car Detection"></a>YOLO Practice for Car Detection</h2><h3 id="Problem-Statement"><a href="#Problem-Statement" class="headerlink" title="Problem Statement"></a>Problem Statement</h3><p>Here’s an example of what your bounding boxes look like:</p>
+<p><img src="http://img.blog.csdn.net/20171201193036385?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="enter image description here"></p>
+<p>If you have 80 classes that you want YOLO to recognize, you can represent the class label c either as an integer from 1 to 80, or as an 80-dimensional vector (with 80 numbers) one component of which is 1 and the rest of which are 0. The video lectures had used the latter representation; in this notebook, we will use both representations, depending on which is more convenient for a particular step.</p>
+<p>Because the YOLO model is very computationally expensive to train, we will load pre-trained weights for you to use.</p>
+<h3 id="YOLO-Model-Details"><a href="#YOLO-Model-Details" class="headerlink" title="YOLO Model Details"></a>YOLO Model Details</h3><p>YOLO (“you only look once”) is a popular algoritm because it achieves high accuracy while also being able to run in real-time. This algorithm “only looks once” at the image in the sense that it requires only one forward propagation pass through the network to make predictions. After non-max suppression, it then outputs recognized objects together with the bounding boxes.</p>
+<p>First things to know: </p>
+<ul>
+<li>The input is a batch of images of shape <code>(m, 608, 608, 3)</code> </li>
+<li>The output is a list of bounding boxes along with the recognized classes. Each bounding box is represented by 6 numbers <code>(pc,bx,by,bh,bw,c)</code> as explained above. If you expand c into an 80-dimensional vector, each bounding box is then represented by 85 numbers.</li>
+</ul>
+<p>We will use 5 anchor boxes. So you can think of the YOLO architecture as the following: IMAGE (m, 608, 608, 3) -&gt; DEEP CNN -&gt; ENCODING (m, 19, 19, 5, 85).</p>
+<p>Lets look in greater detail at what this encoding represents.</p>
+<p><img src="http://img.blog.csdn.net/20171201194056662?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Encoding architecture for YOLO"></p>
+<p>If the center/midpoint of an object falls into a grid cell, that grid cell is responsible for detecting that object.</p>
+<p>Since we are using 5 anchor boxes, each of the 19 x19 cells thus encodes information about 5 boxes. Anchor boxes are defined only by their width and height.</p>
+<p>For simplicity, we will flatten the last two last dimensions of the shape <code>(19, 19, 5, 85)</code> encoding. So the output of the Deep CNN is <code>(19, 19, 425)</code>.</p>
+<p><img src="http://img.blog.csdn.net/20171201194255451?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Flattening the last two last dimensions"></p>
+<p>Now, for each box (of each cell) we will compute the following elementwise product and extract a probability that the box contains a certain class.</p>
+<p><img src="http://img.blog.csdn.net/20171201195041939?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Find the class detected by each box"></p>
+<p>Here’s one way to visualize what YOLO is predicting on an image: </p>
+<ul>
+<li>For each of the 19x19 grid cells, find the maximum of the probability scores (taking a max across both the 5 anchor boxes and across different classes). </li>
+<li>Color that grid cell according to what object that grid cell considers the most likely.</li>
+</ul>
+<p>Doing this results in this picture:</p>
+<p><img src="http://img.blog.csdn.net/20171201195332213?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Each of the 19x19 grid cells colored according to which class has the largest predicted probability in that cell"></p>
+<p>Note that this visualization isn’t a core part of the YOLO algorithm itself for making predictions; it’s just a nice way of visualizing an intermediate result of the algorithm.</p>
+<p>Another way to visualize YOLO’s output is to plot the bounding boxes that it outputs. Doing that results in a visualization like this:</p>
+<p><img src="http://img.blog.csdn.net/20171201195643084?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="enter image description here"></p>
+<p>In the figure above, we plotted only boxes that the model had assigned a high probability to, but this is still too many boxes. You’d like to filter the algorithm’s output down to a much smaller number of detected objects. To do so, you’ll use non-max suppression. Specifically, you’ll carry out these steps: </p>
+<ul>
+<li>Get rid of boxes with a low score (meaning, the box is not very confident about detecting a class) </li>
+<li>Select only one box when several boxes overlap with each other and detect the same object.</li>
+</ul>
+<h3 id="Filtering-with-a-threshold-on-class-scores"><a href="#Filtering-with-a-threshold-on-class-scores" class="headerlink" title="Filtering with a threshold on class scores"></a>Filtering with a threshold on class scores</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: yolo_filter_boxes</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">yolo_filter_boxes</span><span class="params">(box_confidence, boxes, box_class_probs, threshold = <span class="number">.6</span>)</span>:</span></span><br><span class="line">    <span class="string">"""Filters YOLO boxes by thresholding on object and class confidence.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    box_confidence -- tensor of shape (19, 19, 5, 1)</span></span><br><span class="line"><span class="string">    boxes -- tensor of shape (19, 19, 5, 4)</span></span><br><span class="line"><span class="string">    box_class_probs -- tensor of shape (19, 19, 5, 80)</span></span><br><span class="line"><span class="string">    threshold -- real value, if [ highest class probability score &lt; threshold], then get rid of the corresponding box</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    scores -- tensor of shape (None,), containing the class probability score for selected boxes</span></span><br><span class="line"><span class="string">    boxes -- tensor of shape (None, 4), containing (b_x, b_y, b_h, b_w) coordinates of selected boxes</span></span><br><span class="line"><span class="string">    classes -- tensor of shape (None,), containing the index of the class detected by the selected boxes</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Note: "None" is here because you don't know the exact number of selected boxes, as it depends on the threshold. </span></span><br><span class="line"><span class="string">    For example, the actual output size of scores would be (10,) if there are 10 boxes.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Step 1: Compute box scores</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 1 line)</span></span><br><span class="line">    box_scores = box_confidence * box_class_probs</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Step 2: Find the box_classes thanks to the max box_scores, keep track of the corresponding score</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 2 lines)</span></span><br><span class="line">    box_classes = K.argmax(box_scores, axis=<span class="number">-1</span>)</span><br><span class="line">    box_class_scores = K.max(box_scores, axis=<span class="number">-1</span>, keepdims=<span class="keyword">False</span>)</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Step 3: Create a filtering mask based on "box_class_scores" by using "threshold". The mask should have the</span></span><br><span class="line">    <span class="comment"># same dimension as box_class_scores, and be True for the boxes you want to keep (with probability &gt;= threshold)</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 1 line)</span></span><br><span class="line">    filtering_mask = box_class_scores &gt;= threshold</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Step 4: Apply the mask to scores, boxes and classes</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 3 lines)</span></span><br><span class="line">    scores = tf.boolean_mask(box_class_scores, filtering_mask)</span><br><span class="line">    boxes = tf.boolean_mask(boxes, filtering_mask)</span><br><span class="line">    classes = tf.boolean_mask(box_classes, filtering_mask)</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> scores, boxes, classes</span><br></pre></td></tr></table></figure>
+<h3 id="Non-max-suppression"><a href="#Non-max-suppression" class="headerlink" title="Non-max suppression"></a>Non-max suppression</h3><p>Even after filtering by thresholding over the classes scores, you still end up a lot of overlapping boxes. A second filter for selecting the right boxes is called non-maximum suppression (NMS).</p>
+<p><img src="http://img.blog.csdn.net/20171201195830885?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Non-max suppression"></p>
+<p>Non-max suppression uses the very important function called “Intersection over Union”, or IoU.</p>
+<p><img src="http://img.blog.csdn.net/20171201195930675?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Definition of “Intersection over Union”"></p>
+<p>Hints :</p>
+<ul>
+<li>In this exercise only, we define a box using its two corners (upper left and lower right): (x1, y1, x2, y2) rather than the midpoint and height/width. </li>
+</ul>
+<ul>
+<li>To calculate the area of a rectangle you need to multiply its height (y2 - y1) by its width (x2 - x1) </li>
+<li>You’ll also need to find the coordinates (xi1, yi1, xi2, yi2) of the intersection of two boxes. Remember that: <ul>
+<li>xi1 = maximum of the x1 coordinates of the two boxes </li>
+<li>yi1 = maximum of the y1 coordinates of the two boxes </li>
+<li>xi2 = minimum of the x2 coordinates of the two boxes </li>
+<li>yi2 = minimum of the y2 coordinates of the two boxes</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: iou</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">iou</span><span class="params">(box1, box2)</span>:</span></span><br><span class="line">    <span class="string">"""Implement the intersection over union (IoU) between box1 and box2</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    box1 -- first box, list object with coordinates (x1, y1, x2, y2)</span></span><br><span class="line"><span class="string">    box2 -- second box, list object with coordinates (x1, y1, x2, y2)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Calculate the (y1, x1, y2, x2) coordinates of the intersection of box1 and box2. Calculate its Area.</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 5 lines)</span></span><br><span class="line">    xi1 = max(box1[<span class="number">0</span>], box2[<span class="number">0</span>])</span><br><span class="line">    yi1 = max(box1[<span class="number">1</span>], box2[<span class="number">1</span>])</span><br><span class="line">    xi2 = min(box1[<span class="number">2</span>], box2[<span class="number">2</span>])</span><br><span class="line">    yi2 = min(box1[<span class="number">3</span>], box2[<span class="number">3</span>])</span><br><span class="line">    inter_area = (xi2 - xi1) * (yi2 - yi1)</span><br><span class="line">    <span class="comment">### END CODE HERE ###    </span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Calculate the Union area by using Formula: Union(A,B) = A + B - Inter(A,B)</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 3 lines)</span></span><br><span class="line">    box1_area = (box1[<span class="number">2</span>] - box1[<span class="number">0</span>]) * (box1[<span class="number">3</span>] - box1[<span class="number">1</span>])</span><br><span class="line">    box2_area = (box2[<span class="number">2</span>] - box2[<span class="number">0</span>]) * (box2[<span class="number">3</span>] - box2[<span class="number">1</span>])</span><br><span class="line">    union_area = box1_area + box2_area - inter_area</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># compute the IoU</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 1 line)</span></span><br><span class="line">    iou = inter_area / union_area</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> iou</span><br></pre></td></tr></table></figure>
+<p>You are now ready to implement non-max suppression. The key steps are: </p>
+<ol>
+<li>Select the box that has the highest score. </li>
+<li>Compute its overlap with all other boxes, and remove boxes that overlap it more than iou_threshold. </li>
+<li>Go back to step 1 and iterate until there’s no more boxes with a lower score than the current selected box.</li>
+</ol>
+<p>This will remove all boxes that have a large overlap with the selected boxes. Only the “best” boxes remain.</p>
+<p> TensorFlow has two built-in functions that are used to implement non-max suppression (so you don’t actually need to use your iou() implementation): </p>
+<ul>
+<li><a href="https://www.tensorflow.org/api_docs/python/tf/image/non_max_suppression" target="_blank" rel="noopener">tf.image.non_max_suppression()</a> </li>
+<li><a href="https://www.tensorflow.org/api_docs/python/tf/gather" target="_blank" rel="noopener">K.gather()</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: yolo_non_max_suppression</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">yolo_non_max_suppression</span><span class="params">(scores, boxes, classes, max_boxes = <span class="number">10</span>, iou_threshold = <span class="number">0.5</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Applies Non-max suppression (NMS) to set of boxes</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    scores -- tensor of shape (None,), output of yolo_filter_boxes()</span></span><br><span class="line"><span class="string">    boxes -- tensor of shape (None, 4), output of yolo_filter_boxes() that have been scaled to the image size (see later)</span></span><br><span class="line"><span class="string">    classes -- tensor of shape (None,), output of yolo_filter_boxes()</span></span><br><span class="line"><span class="string">    max_boxes -- integer, maximum number of predicted boxes you'd like</span></span><br><span class="line"><span class="string">    iou_threshold -- real value, "intersection over union" threshold used for NMS filtering</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    scores -- tensor of shape (, None), predicted score for each box</span></span><br><span class="line"><span class="string">    boxes -- tensor of shape (4, None), predicted box coordinates</span></span><br><span class="line"><span class="string">    classes -- tensor of shape (, None), predicted class for each box</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Note: The "None" dimension of the output tensors has obviously to be less than max_boxes. Note also that this</span></span><br><span class="line"><span class="string">    function will transpose the shapes of scores, boxes, classes. This is made for convenience.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    max_boxes_tensor = K.variable(max_boxes, dtype=<span class="string">'int32'</span>)     <span class="comment"># tensor to be used in tf.image.non_max_suppression()</span></span><br><span class="line">    K.get_session().run(tf.variables_initializer([max_boxes_tensor])) <span class="comment"># initialize variable max_boxes_tensor</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Use tf.image.non_max_suppression() to get the list of indices corresponding to boxes you keep</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 1 line)</span></span><br><span class="line">    nms_indices = tf.image.non_max_suppression(boxes, scores, max_boxes, iou_threshold, name=<span class="keyword">None</span>)</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Use K.gather() to select only nms_indices from scores, boxes and classes</span></span><br><span class="line">    <span class="comment">### START CODE HERE ### (≈ 3 lines)</span></span><br><span class="line">    scores = K.gather(scores, nms_indices)</span><br><span class="line">    boxes = K.gather(boxes, nms_indices)</span><br><span class="line">    classes = K.gather(classes, nms_indices)</span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> scores, boxes, classes</span><br></pre></td></tr></table></figure>
+<h3 id="Wrapping-up-the-filtering"><a href="#Wrapping-up-the-filtering" class="headerlink" title="Wrapping up the filtering"></a>Wrapping up the filtering</h3><p>It’s time to implement a function taking the output of the deep CNN (the 19x19x5x85 dimensional encoding) and filtering through all the boxes using the functions you’ve just implemented.</p>
+<p>Exercise: Implement yolo_eval() which takes the output of the YOLO encoding and filters the boxes using score threshold and NMS. There’s just one last implementational detail you have to know. There’re a few ways of representing boxes, such as via their corners or via their midpoint and height/width. YOLO converts between a few such formats at different times, using the following functions (which we have provided):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boxes = yolo_boxes_to_corners(box_xy, box_wh)</span><br></pre></td></tr></table></figure></p>
+<p>which converts the yolo box coordinates (x,y,w,h) to box corners’ coordinates (x1, y1, x2, y2) to fit the input of yolo_filter_boxes<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boxes = scale_boxes(boxes, image_shape)</span><br></pre></td></tr></table></figure></p>
+<p>YOLO’s network was trained to run on 608x608 images. If you are testing this data on a different size image–for example, the car detection dataset had 720x1280 images–this step rescales the boxes so that they can be plotted on top of the original 720x1280 image.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: yolo_eval</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">yolo_eval</span><span class="params">(yolo_outputs, image_shape = <span class="params">(<span class="number">720.</span>, <span class="number">1280.</span>)</span>, max_boxes=<span class="number">10</span>, score_threshold=<span class="number">.6</span>, iou_threshold=<span class="number">.5</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Converts the output of YOLO encoding (a lot of boxes) to your predicted boxes along with their scores, box coordinates and classes.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    yolo_outputs -- output of the encoding model (for image_shape of (608, 608, 3)), contains 4 tensors:</span></span><br><span class="line"><span class="string">                    box_confidence: tensor of shape (None, 19, 19, 5, 1)</span></span><br><span class="line"><span class="string">                    box_xy: tensor of shape (None, 19, 19, 5, 2)</span></span><br><span class="line"><span class="string">                    box_wh: tensor of shape (None, 19, 19, 5, 2)</span></span><br><span class="line"><span class="string">                    box_class_probs: tensor of shape (None, 19, 19, 5, 80)</span></span><br><span class="line"><span class="string">    image_shape -- tensor of shape (2,) containing the input shape, in this notebook we use (608., 608.) (has to be float32 dtype)</span></span><br><span class="line"><span class="string">    max_boxes -- integer, maximum number of predicted boxes you'd like</span></span><br><span class="line"><span class="string">    score_threshold -- real value, if [ highest class probability score &lt; threshold], then get rid of the corresponding box</span></span><br><span class="line"><span class="string">    iou_threshold -- real value, "intersection over union" threshold used for NMS filtering</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    scores -- tensor of shape (None, ), predicted score for each box</span></span><br><span class="line"><span class="string">    boxes -- tensor of shape (None, 4), predicted box coordinates</span></span><br><span class="line"><span class="string">    classes -- tensor of shape (None,), predicted class for each box</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">### START CODE HERE ### </span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Retrieve outputs of the YOLO model (≈1 line)</span></span><br><span class="line">    box_confidence, box_xy, box_wh, box_class_probs = yolo_outputs</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Convert boxes to be ready for filtering functions </span></span><br><span class="line">    boxes = yolo_boxes_to_corners(box_xy, box_wh)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Use one of the functions you've implemented to perform Score-filtering with a threshold of score_threshold (≈1 line)</span></span><br><span class="line">    scores, boxes, classes = yolo_filter_boxes(box_confidence, boxes, box_class_probs, score_threshold)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Scale boxes back to original image shape.</span></span><br><span class="line">    boxes = scale_boxes(boxes, image_shape)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Use one of the functions you've implemented to perform Non-max suppression with a threshold of iou_threshold (≈1 line)</span></span><br><span class="line">    scores, boxes, classes = yolo_non_max_suppression(scores, boxes, classes, max_boxes, iou_threshold)</span><br><span class="line"></span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> scores, boxes, classes</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://mooc.study.163.com/learn/2001281004?tid=2001392030#/learn/content?type=detail&amp;id=2001729334" target="_blank" rel="noopener">https://mooc.study.163.com/learn/2001281004?tid=2001392030#/learn/content?type=detail&amp;id=2001729334</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/01/09/matplotlib/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            An Introduction to Matplotlib
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/01/02/ResNet/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">ResNet</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/30/Attention is all you need/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/30/Attention is all you need/" class="title">Attention is all you need</a></p>
+                            <p class="item-date"><time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/20/Eager_Execution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_Eager" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></p>
+                            <p class="item-title"><a href="/2018/03/20/Eager_Execution/" class="title">Tensorflow_Eager</a></p>
+                            <p class="item-date"><time datetime="2018-03-20T12:40:00.000Z" itemprop="datePublished">2018-03-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ws1.sinaimg.cn/large/006tGRI6ly1fpegt4xc4pj30t00bnabq.jpg)" alt="Advanced Architectures and Memory Networks" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="title">Advanced Architectures and Memory Networks</a></p>
+                            <p class="item-date"><time datetime="2018-03-15T08:57:50.000Z" itemprop="datePublished">2018-03-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/09/matplotlib/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fp01c7ivnhj30f203mq39.jpg)" alt="An Introduction to Matplotlib" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/01/09/matplotlib/" class="title">An Introduction to Matplotlib</a></p>
+                            <p class="item-date"><time datetime="2018-01-09T07:25:50.000Z" itemprop="datePublished">2018-01-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/04/Object Detection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg)" alt="YOLO Object Detection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/CV/Object-Detection/">Object Detection</a></p>
+                            <p class="item-title"><a href="/2018/01/04/Object Detection/" class="title">YOLO Object Detection</a></p>
+                            <p class="item-date"><time datetime="2018-01-04T07:25:50.000Z" itemprop="datePublished">2018-01-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 12.5px;">BUPT</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/Keras/" style="font-size: 12.5px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/NLG/" style="font-size: 12.5px;">NLG</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 12.5px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 12.5px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 12.5px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 20px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 10px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2018/01/04/Object Detection/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Numpy_Note | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Numpy" />
+    
+    <meta name="description" content="Python Numpy Tutorial based on http://cs231n.github.io/python-numpy-tutorial/.主要内容：Arrays,Array Indexing,Datatypes,Array Math,Broadcasting">
+<meta name="keywords" content="Numpy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Numpy_Note">
+<meta property="og:url" content="https://helic.github.io/2017/09/29/Numpy-Note/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="Python Numpy Tutorial based on http://cs231n.github.io/python-numpy-tutorial/.主要内容：Arrays,Array Indexing,Datatypes,Array Math,Broadcasting">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="data:image/jpeg;base64,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">
+<meta property="og:updated_time" content="2017-11-19T14:30:02.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Numpy_Note">
+<meta name="twitter:description" content="Python Numpy Tutorial based on http://cs231n.github.io/python-numpy-tutorial/.主要内容：Arrays,Array Indexing,Datatypes,Array Math,Broadcasting">
+<meta name="twitter:image" content="data:image/jpeg;base64,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">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Programming/Python/">Python</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="blog-Numpy-Note" class="article article-single article-type-blog" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Numpy_Note
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/09/29/Numpy-Note/" class="article-date">
+            <time datetime="2017-09-29T02:12:24.000Z" itemprop="datePublished">2017-09-29</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Numpy/">Numpy</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>Python Numpy Tutorial based on <a href="http://cs231n.github.io/python-numpy-tutorial/" target="_blank" rel="noopener">http://cs231n.github.io/python-numpy-tutorial/</a>.<br>主要内容：Arrays,Array Indexing,Datatypes,Array Math,Broadcasting<br><a id="more"></a></p>
+<h2 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h2><blockquote>
+<p>A numpy array is a grid of values, all of the same type, and is indexed by a tuple of nonnegative integers. The number of dimensions is the rank of the array; the shape of an array is a tuple of integers giving the size of the array along each dimension.</p>
+</blockquote>
+<p>我们可以使用嵌套Python列表来初始化一个numpy数组，使用方括号来访问元素。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])  <span class="comment"># Create a rank 1 array</span></span><br><span class="line"><span class="keyword">print</span> type(a)            <span class="comment"># Prints "&lt;type 'numpy.ndarray'&gt;"</span></span><br><span class="line"><span class="keyword">print</span> a.shape            <span class="comment"># Prints "(3,)"</span></span><br><span class="line"><span class="keyword">print</span> a[<span class="number">0</span>], a[<span class="number">1</span>], a[<span class="number">2</span>]   <span class="comment"># Prints "1 2 3"</span></span><br><span class="line">a[<span class="number">0</span>] = <span class="number">5</span>                 <span class="comment"># Change an element of the array</span></span><br><span class="line"><span class="keyword">print</span> a                  <span class="comment"># Prints "[5, 2, 3]"</span></span><br><span class="line"></span><br><span class="line">b = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]])   <span class="comment"># Create a rank 2 array</span></span><br><span class="line"><span class="keyword">print</span> b.shape                     <span class="comment"># Prints "(2, 3)"</span></span><br><span class="line">print(b[<span class="number">0</span>])                       <span class="comment"># print [1, 2, 3]</span></span><br><span class="line"><span class="keyword">print</span> b[<span class="number">0</span>, <span class="number">0</span>], b[<span class="number">0</span>, <span class="number">1</span>], b[<span class="number">1</span>, <span class="number">0</span>]   <span class="comment"># Prints "1 2 4"</span></span><br></pre></td></tr></table></figure></p>
+<p>Numpy还提供很多方法来创建array<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.zeros((<span class="number">2</span>,<span class="number">2</span>))  <span class="comment"># Create an array of all zeros</span></span><br><span class="line"><span class="keyword">print</span> a              <span class="comment"># Prints "[[ 0.  0.]</span></span><br><span class="line">                     <span class="comment">#          [ 0.  0.]]"</span></span><br><span class="line"><span class="keyword">print</span> np.zeros(<span class="number">5</span>)    <span class="comment"># print [ 0.  0.  0.  0.  0.],无需加括号，表示一维数组</span></span><br><span class="line"></span><br><span class="line">b = np.ones((<span class="number">1</span>,<span class="number">2</span>))   <span class="comment"># Create an array of all ones</span></span><br><span class="line"><span class="keyword">print</span> b              <span class="comment"># Prints "[[ 1.  1.]]"</span></span><br><span class="line"></span><br><span class="line">c = np.full((<span class="number">2</span>,<span class="number">2</span>), <span class="number">7</span>) <span class="comment"># Create a constant array</span></span><br><span class="line"><span class="keyword">print</span> c               <span class="comment"># Prints "[[ 7.  7.]</span></span><br><span class="line">                      <span class="comment">#          [ 7.  7.]]"</span></span><br><span class="line"></span><br><span class="line">d = np.eye(<span class="number">2</span>)        <span class="comment"># Create a 2x2 identity matrix</span></span><br><span class="line"><span class="keyword">print</span> d              <span class="comment"># Prints "[[ 1.  0.]</span></span><br><span class="line">                     <span class="comment">#          [ 0.  1.]]"</span></span><br><span class="line"></span><br><span class="line">e = np.random.random((<span class="number">2</span>,<span class="number">2</span>)) <span class="comment"># Create an array filled with random values</span></span><br><span class="line"><span class="keyword">print</span> e                     <span class="comment"># Might print "[[ 0.91940167  0.08143941]</span></span><br><span class="line">                            <span class="comment">#               [ 0.68744134  0.87236687]]"</span></span><br></pre></td></tr></table></figure></p>
+<p><em>More details about numpy.random in <a href="https://docs.scipy.org/doc/numpy/reference/routines.random.html" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/routines.random.html</a></em><br><em>More details about numpy array creation in <a href="https://docs.scipy.org/doc/numpy/user/basics.creation.html#arrays-creation" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/user/basics.creation.html#arrays-creation</a></em></p>
+<h2 id="Array-Indexing"><a href="#Array-Indexing" class="headerlink" title="Array Indexing"></a>Array Indexing</h2><p>Numpy提供了多种方法来索引数组。</p>
+<h4 id="Slicing"><a href="#Slicing" class="headerlink" title="Slicing"></a>Slicing</h4><p>和Python的列表一样Numpy数组也是可以被切片的。因为数组可能是多维的，所以对数组的每一个元素都要指定slice。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the following rank 2 array with shape (3, 4)</span></span><br><span class="line"><span class="comment"># [[ 1  2  3  4]</span></span><br><span class="line"><span class="comment">#  [ 5  6  7  8]</span></span><br><span class="line"><span class="comment">#  [ 9 10 11 12]]</span></span><br><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>], [<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use slicing to pull out the subarray consisting of the first 2 rows</span></span><br><span class="line"><span class="comment"># and columns 1 and 2; b is the following array of shape (2, 2):</span></span><br><span class="line"><span class="comment"># [[2 3]</span></span><br><span class="line"><span class="comment">#  [6 7]]</span></span><br><span class="line">b = a[:<span class="number">2</span>, <span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># A slice of an array is a view into the same data, so modifying it</span></span><br><span class="line"><span class="comment"># will modify the original array.</span></span><br><span class="line"><span class="keyword">print</span> a[<span class="number">0</span>, <span class="number">1</span>]   <span class="comment"># Prints "2"</span></span><br><span class="line">b[<span class="number">0</span>, <span class="number">0</span>] = <span class="number">77</span>    <span class="comment"># b[0, 0] is the same piece of data as a[0, 1]</span></span><br><span class="line"><span class="keyword">print</span> a[<span class="number">0</span>, <span class="number">1</span>]   <span class="comment"># Prints "77"</span></span><br></pre></td></tr></table></figure></p>
+<p>你也可以混合整型索引和slice索引。然而这样做将会得到一个相比原始数组rank更低的数组。<br>注意这和MATLAB处理数组slicing的方法有很大的不同。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the following rank 2 array with shape (3, 4)</span></span><br><span class="line"><span class="comment"># [[ 1  2  3  4]</span></span><br><span class="line"><span class="comment">#  [ 5  6  7  8]</span></span><br><span class="line"><span class="comment">#  [ 9 10 11 12]]</span></span><br><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>], [<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Two ways of accessing the data in the middle row of the array.</span></span><br><span class="line"><span class="comment"># Mixing integer indexing with slices yields an array of lower rank,</span></span><br><span class="line"><span class="comment"># while using only slices yields an array of the same rank as the</span></span><br><span class="line"><span class="comment"># original array:</span></span><br><span class="line">row_r1 = a[<span class="number">1</span>, :]    <span class="comment"># Rank 1 view of the second row of a  </span></span><br><span class="line">row_r2 = a[<span class="number">1</span>:<span class="number">2</span>, :]  <span class="comment"># Rank 2 view of the second row of a</span></span><br><span class="line"><span class="keyword">print</span> row_r1, row_r1.shape  <span class="comment"># Prints "[5 6 7 8] (4,)"</span></span><br><span class="line"><span class="keyword">print</span> row_r2, row_r2.shape  <span class="comment"># Prints "[[5 6 7 8]] (1, 4)"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># We can make the same distinction when accessing columns of an array:</span></span><br><span class="line">col_r1 = a[:, <span class="number">1</span>]</span><br><span class="line">col_r2 = a[:, <span class="number">1</span>:<span class="number">2</span>]</span><br><span class="line"><span class="keyword">print</span> col_r1, col_r1.shape  <span class="comment"># Prints "[ 2  6 10] (3,)"</span></span><br><span class="line"><span class="keyword">print</span> col_r2, col_r2.shape  <span class="comment"># Prints "[[ 2]</span></span><br><span class="line">                            <span class="comment">#          [ 6]</span></span><br><span class="line">                            <span class="comment">#          [10]] (3, 1)"</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="整型矩阵索引"><a href="#整型矩阵索引" class="headerlink" title="整型矩阵索引"></a>整型矩阵索引</h4><blockquote>
+<p>When you index into numpy arrays using slicing, the resulting array view will always be a subarray of the original array. In contrast, integer array indexing allows you to construct arbitrary arrays using the data from another array. Here is an example:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># An example of integer array indexing.</span></span><br><span class="line"><span class="comment"># The returned array will have shape (3,) and</span></span><br><span class="line"><span class="keyword">print</span> a[[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>]]  <span class="comment"># Prints "[1 4 5]",可以看成[a[0, 0], a[1, 1], a[2, 0]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The above example of integer array indexing is equivalent to this:</span></span><br><span class="line"><span class="keyword">print</span> np.array([a[<span class="number">0</span>, <span class="number">0</span>], a[<span class="number">1</span>, <span class="number">1</span>], a[<span class="number">2</span>, <span class="number">0</span>]])  <span class="comment"># Prints "[1 4 5]"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># When using integer array indexing, you can reuse the same</span></span><br><span class="line"><span class="comment"># element from the source array:</span></span><br><span class="line"><span class="keyword">print</span> a[[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]]  <span class="comment"># Prints "[2 2]"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Equivalent to the previous integer array indexing example</span></span><br><span class="line"><span class="keyword">print</span> np.array([a[<span class="number">0</span>, <span class="number">1</span>], a[<span class="number">0</span>, <span class="number">1</span>]])  <span class="comment"># Prints "[2 2]"</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>整型数组索引的一个实用技巧是用来选择或变换矩阵的每一行的一个元素。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a new array from which we will select elements</span></span><br><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>], [<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>], [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]])</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> a  <span class="comment"># prints "array([[ 1,  2,  3],</span></span><br><span class="line">         <span class="comment">#                [ 4,  5,  6],</span></span><br><span class="line">         <span class="comment">#                [ 7,  8,  9],</span></span><br><span class="line">         <span class="comment">#                [10, 11, 12]])"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create an array of indices</span></span><br><span class="line">b = np.array([<span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line"><span class="keyword">print</span> a[np.arange(<span class="number">4</span>), b]  <span class="comment"># Prints "[ 1  6  7 11]"</span></span><br><span class="line">a[np.arange(<span class="number">4</span>), b] += <span class="number">10</span></span><br><span class="line"><span class="keyword">print</span> a  <span class="comment"># prints "array([[11,  2,  3],</span></span><br><span class="line">         <span class="comment">#                [ 4,  5, 16],</span></span><br><span class="line">         <span class="comment">#                [17,  8,  9],</span></span><br><span class="line">         <span class="comment">#                [10, 21, 12]])</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="Boolean-Array-Indexing"><a href="#Boolean-Array-Indexing" class="headerlink" title="Boolean Array Indexing"></a>Boolean Array Indexing</h4><p>Boolean array indexing可以取得一个矩阵中的任意元素。通常这种索引方式用来选择符合一定条件的元素。例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]])</span><br><span class="line"></span><br><span class="line">bool_idx = (a &gt; <span class="number">2</span>)  <span class="comment"># Find the elements of a that are bigger than 2;</span></span><br><span class="line">                    <span class="comment"># this returns a numpy array of Booleans of the same</span></span><br><span class="line">                    <span class="comment"># shape as a, where each slot of bool_idx tells</span></span><br><span class="line">                    <span class="comment"># whether that element of a is &gt; 2.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> bool_idx      <span class="comment"># Prints "[[False False]</span></span><br><span class="line">                    <span class="comment">#          [ True  True]</span></span><br><span class="line">                    <span class="comment">#          [ True  True]]"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># We use boolean array indexing to construct a rank 1 array</span></span><br><span class="line"><span class="comment"># consisting of the elements of a corresponding to the True values</span></span><br><span class="line"><span class="comment"># of bool_idx</span></span><br><span class="line"><span class="keyword">print</span> a[bool_idx]  <span class="comment"># Prints "[3 4 5 6]"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># We can do all of the above in a single concise statement:</span></span><br><span class="line"><span class="keyword">print</span> a[a &gt; <span class="number">2</span>]     <span class="comment"># Prints "[3 4 5 6]"</span></span><br></pre></td></tr></table></figure></p>
+<p><em>More details in <a href="https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html</a></em></p>
+<h4 id="Datatypes"><a href="#Datatypes" class="headerlink" title="Datatypes"></a>Datatypes</h4><blockquote>
+<p>Every numpy array is a grid of elements of the same type. Numpy provides a large set of numeric datatypes that you can use to construct arrays. Numpy tries to guess a datatype when you create an array, but functions that construct arrays usually also include an optional argument to explicitly specify the datatype.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>])   <span class="comment"># Let numpy choose the datatype</span></span><br><span class="line">print(x.dtype)         <span class="comment"># Prints "int32"</span></span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1.0</span>, <span class="number">2.0</span>])   <span class="comment"># Let numpy choose the datatype</span></span><br><span class="line">print(x.dtype)             <span class="comment"># Prints "float64"</span></span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>], dtype=np.int64)   <span class="comment"># Force a particular datatype</span></span><br><span class="line">print(x.dtype)                         <span class="comment"># Prints "int64"</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><em>More detailsi in <a href="https://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/arrays.dtypes.html</a></em></p>
+<h4 id="Array-Math"><a href="#Array-Math" class="headerlink" title="Array Math"></a>Array Math</h4><p>基本数学计算函数会对数组中元素逐个进行计算，既可以利用操作符重载，也可以使用函数方式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]], dtype=np.float64)</span><br><span class="line">y = np.array([[<span class="number">5</span>,<span class="number">6</span>],[<span class="number">7</span>,<span class="number">8</span>]], dtype=np.float64)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Elementwise sum; both produce the array</span></span><br><span class="line"><span class="comment"># [[ 6.0  8.0]</span></span><br><span class="line"><span class="comment">#  [10.0 12.0]]</span></span><br><span class="line">print(x + y)</span><br><span class="line">print(np.add(x, y))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Elementwise difference; both produce the array</span></span><br><span class="line"><span class="comment"># [[-4.0 -4.0]</span></span><br><span class="line"><span class="comment">#  [-4.0 -4.0]]</span></span><br><span class="line">print(x - y)</span><br><span class="line">print(np.subtract(x, y))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Elementwise product; both produce the array</span></span><br><span class="line"><span class="comment"># [[ 5.0 12.0]</span></span><br><span class="line"><span class="comment">#  [21.0 32.0]]</span></span><br><span class="line">print(x * y)</span><br><span class="line">print(np.multiply(x, y))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Elementwise division; both produce the array</span></span><br><span class="line"><span class="comment"># [[ 0.2         0.33333333]</span></span><br><span class="line"><span class="comment">#  [ 0.42857143  0.5       ]]</span></span><br><span class="line">print(x / y)</span><br><span class="line">print(np.divide(x, y))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Elementwise square root; produces the array</span></span><br><span class="line"><span class="comment"># [[ 1.          1.41421356]</span></span><br><span class="line"><span class="comment">#  [ 1.73205081  2.        ]]</span></span><br><span class="line">print(np.sqrt(x))</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note that unlike MATLAB, * is elementwise multiplication, not matrix multiplication. We instead use the dot function to compute inner products of vectors, to multiply a vector by a matrix, and to multiply matrices. dot is available both as a function in the numpy module and as an instance method of array objects.More details in <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dot.html" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/generated/numpy.dot.html</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]])</span><br><span class="line">y = np.array([[<span class="number">5</span>,<span class="number">6</span>],[<span class="number">7</span>,<span class="number">8</span>]])</span><br><span class="line"></span><br><span class="line">v = np.array([<span class="number">9</span>,<span class="number">10</span>])</span><br><span class="line">w = np.array([<span class="number">11</span>, <span class="number">12</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Inner product of vectors; both produce 219;向量内积</span></span><br><span class="line">print(v.dot(w))</span><br><span class="line">print(np.dot(v, w))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Matrix / vector product; both produce the rank 1 array [29 67]</span></span><br><span class="line">print(x.dot(v))</span><br><span class="line">print(np.dot(x, v))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Matrix / matrix product; both produce the rank 2 array；矩阵乘法</span></span><br><span class="line"><span class="comment"># [[19 22]</span></span><br><span class="line"><span class="comment">#  [43 50]]</span></span><br><span class="line">print(x.dot(y))</span><br><span class="line">print(np.dot(x, y))</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>Numpy provides many useful functions for performing computations on arrays; one of the most useful is sum:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]])</span><br><span class="line"></span><br><span class="line">print(np.sum(x))  <span class="comment"># Compute sum of all elements; prints "10"</span></span><br><span class="line">print(np.sum(x, axis=<span class="number">0</span>))  <span class="comment"># Compute sum of each column; prints "[4 6]"</span></span><br><span class="line">print(np.sum(x, axis=<span class="number">1</span>))  <span class="comment"># Compute sum of each row; prints "[3 7]"</span></span><br></pre></td></tr></table></figure></p>
+<p><em>More details in <a href="https://docs.scipy.org/doc/numpy/reference/routines.math.html" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/routines.math.html</a></em></p>
+<h4 id="Broadcasting"><a href="#Broadcasting" class="headerlink" title="Broadcasting"></a>Broadcasting</h4><p>Broadcasting is a powerful mechanism that allows numpy to work with arrays of different shapes when performing arithmetic operations. Frequently we have a smaller array and a larger array, and we want to use the smaller array multiple times to perform some operation on the larger array.</p>
+<p>For example, suppose that we want to add a constant vector to each row of a matrix. We could do it like this:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># We will add the vector v to each row of the matrix x,</span></span><br><span class="line"><span class="comment"># storing the result in the matrix y</span></span><br><span class="line">x = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>], [<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>], [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]])</span><br><span class="line">v = np.array([<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">y = np.empty_like(x)   <span class="comment"># Create an empty matrix with the same shape as x</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Add the vector v to each row of the matrix x with an explicit loop</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</span><br><span class="line">    y[i, :] = x[i, :] + v</span><br><span class="line"></span><br><span class="line"><span class="comment"># Now y is the following</span></span><br><span class="line"><span class="comment"># [[ 2  2  4]</span></span><br><span class="line"><span class="comment">#  [ 5  5  7]</span></span><br><span class="line"><span class="comment">#  [ 8  8 10]</span></span><br><span class="line"><span class="comment">#  [11 11 13]]</span></span><br><span class="line">print(y)</span><br></pre></td></tr></table></figure></p>
+<p>This works; however when the matrix x is very large, computing an explicit loop in Python could be slow. Note that adding the vector v to each row of the matrix x is equivalent to forming a matrix vv by stacking multiple copies of v vertically, then performing elementwise summation of x and vv. We could implement this approach like this:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># We will add the vector v to each row of the matrix x,</span></span><br><span class="line"><span class="comment"># storing the result in the matrix y</span></span><br><span class="line">x = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>], [<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>], [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]])</span><br><span class="line">v = np.array([<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">vv = np.tile(v, (<span class="number">4</span>, <span class="number">1</span>))   <span class="comment"># Stack 4 copies of v on top of each other</span></span><br><span class="line">print(vv)                 <span class="comment"># Prints "[[1 0 1]</span></span><br><span class="line">                          <span class="comment">#          [1 0 1]</span></span><br><span class="line">                          <span class="comment">#          [1 0 1]</span></span><br><span class="line">                          <span class="comment">#          [1 0 1]]"</span></span><br><span class="line">y = x + vv  <span class="comment"># Add x and vv elementwise</span></span><br><span class="line">print(y)  <span class="comment"># Prints "[[ 2  2  4</span></span><br><span class="line">          <span class="comment">#          [ 5  5  7]</span></span><br><span class="line">          <span class="comment">#          [ 8  8 10]</span></span><br><span class="line">          <span class="comment">#          [11 11 13]]"</span></span><br></pre></td></tr></table></figure></p>
+<p>Numpy broadcasting allows us to perform this computation without actually creating multiple copies of v. Consider this version, using broadcasting:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># We will add the vector v to each row of the matrix x,</span></span><br><span class="line"><span class="comment"># storing the result in the matrix y</span></span><br><span class="line">x = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>], [<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>], [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]])</span><br><span class="line">v = np.array([<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">y = x + v  <span class="comment"># Add v to each row of x using broadcasting</span></span><br><span class="line">print(y)  <span class="comment"># Prints "[[ 2  2  4]</span></span><br><span class="line">          <span class="comment">#          [ 5  5  7]</span></span><br><span class="line">          <span class="comment">#          [ 8  8 10]</span></span><br><span class="line">          <span class="comment">#          [11 11 13]]"</span></span><br></pre></td></tr></table></figure></p>
+<p>The line y = x + v works even though x has shape (4, 3) and v has shape (3,) due to broadcasting; this line works as if v actually had shape (4, 3), where each row was a copy of v, and the sum was performed elementwise.</p>
+<blockquote>
+<p>The term broadcasting describes how numpy treats arrays with different shapes during arithmetic operations. Subject to certain constraints, the smaller array is “broadcast” across the larger array so that they have compatible shapes. Broadcasting provides a means of vectorizing array operations so that looping occurs in C instead of Python. It does this without making needless copies of data and usually leads to efficient algorithm implementations. There are, however, cases where broadcasting is a bad idea because it leads to inefficient use of memory that slows computation.</p>
+</blockquote>
+<p>Numpy对数组进行运算时，最基本的情况是两个数组的维度相同，例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.array([<span class="number">2.0</span>, <span class="number">2.0</span>, <span class="number">2.0</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a * b</span><br><span class="line">array([ <span class="number">2.</span>,  <span class="number">4.</span>,  <span class="number">6.</span>])</span><br></pre></td></tr></table></figure></p>
+<p>当两个数组的维度不同时，但又满足一定的约束，亦可以进行运算，即为广播。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = <span class="number">2.0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a * b</span><br><span class="line">array([ <span class="number">2.</span>,  <span class="number">4.</span>,  <span class="number">6.</span>])</span><br></pre></td></tr></table></figure></p>
+<p><em>Note: The result is equivalent to the previous example where b was an array. We can think of the scalar b being stretched during the arithmetic operation into an array with the same shape as a. The new elements in b are simply copies of the original scalar. The stretching analogy is only conceptual. NumPy is smart enough to use the original scalar value without actually making copies, so that broadcasting operations are as memory and computationally efficient as possible.</em><br><strong>Rules:</strong><br>When operating on two arrays, NumPy compares their shapes element-wise.Two dimensions are compatible when</p>
+<ul>
+<li>they are equal, or(某个维度上的shape相等)</li>
+<li>one of them is 1(某个维度上的shape=1)</li>
+<li>所有的维度都应该满足以上条件之一<br>If these conditions are not met, a ValueError: frames are not aligned exception is thrown, indicating that the arrays have incompatible shapes.<br>The size of the resulting array is the maximum size along each dimension of the input arrays.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">A      (<span class="number">4</span>d array):  <span class="number">8</span> x <span class="number">1</span> x <span class="number">6</span> x <span class="number">1</span></span><br><span class="line">B      (<span class="number">3</span>d array):      <span class="number">7</span> x <span class="number">1</span> x <span class="number">5</span></span><br><span class="line">Result (<span class="number">4</span>d array):  <span class="number">8</span> x <span class="number">7</span> x <span class="number">6</span> x <span class="number">5</span></span><br><span class="line"></span><br><span class="line">A      (<span class="number">2</span>d array):  <span class="number">5</span> x <span class="number">4</span></span><br><span class="line">B      (<span class="number">1</span>d array):      <span class="number">1</span></span><br><span class="line">Result (<span class="number">2</span>d array):  <span class="number">5</span> x <span class="number">4</span></span><br><span class="line"></span><br><span class="line">A      (<span class="number">2</span>d array):  <span class="number">5</span> x <span class="number">4</span></span><br><span class="line">B      (<span class="number">1</span>d array):      <span class="number">4</span></span><br><span class="line">Result (<span class="number">2</span>d array):  <span class="number">5</span> x <span class="number">4</span></span><br><span class="line"></span><br><span class="line">A      (<span class="number">3</span>d array):  <span class="number">15</span> x <span class="number">3</span> x <span class="number">5</span></span><br><span class="line">B      (<span class="number">3</span>d array):  <span class="number">15</span> x <span class="number">1</span> x <span class="number">5</span></span><br><span class="line">Result (<span class="number">3</span>d array):  <span class="number">15</span> x <span class="number">3</span> x <span class="number">5</span></span><br><span class="line"></span><br><span class="line">A      (<span class="number">3</span>d array):  <span class="number">15</span> x <span class="number">3</span> x <span class="number">5</span></span><br><span class="line">B      (<span class="number">2</span>d array):       <span class="number">3</span> x <span class="number">5</span></span><br><span class="line">Result (<span class="number">3</span>d array):  <span class="number">15</span> x <span class="number">3</span> x <span class="number">5</span></span><br><span class="line"></span><br><span class="line">A      (<span class="number">3</span>d array):  <span class="number">15</span> x <span class="number">3</span> x <span class="number">5</span></span><br><span class="line">B      (<span class="number">2</span>d array):       <span class="number">3</span> x <span class="number">1</span></span><br><span class="line">Result (<span class="number">3</span>d array):  <span class="number">15</span> x <span class="number">3</span> x <span class="number">5</span></span><br><span class="line"></span><br><span class="line">A      (<span class="number">1</span>d array):  <span class="number">3</span></span><br><span class="line">B      (<span class="number">1</span>d array):  <span class="number">4</span> <span class="comment"># trailing dimensions do not match</span></span><br><span class="line"></span><br><span class="line">A      (<span class="number">2</span>d array):      <span class="number">2</span> x <span class="number">1</span></span><br><span class="line">B      (<span class="number">3</span>d array):  <span class="number">8</span> x <span class="number">4</span> x <span class="number">3</span> <span class="comment"># second from last dimensions mismatched</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>An example of broadcasting in practice:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.arange(<span class="number">4</span>)        <span class="comment"># [0,1,2,3]</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>xx = x.reshape(<span class="number">4</span>,<span class="number">1</span>)     <span class="comment"># [[0],[1],[2],[3]]</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = np.ones(<span class="number">5</span>)          <span class="comment"># [1,1,1,1,1]</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>z = np.ones((<span class="number">3</span>,<span class="number">4</span>))      </span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.shape</span><br><span class="line">(<span class="number">4</span>,)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.shape</span><br><span class="line">(<span class="number">5</span>,)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x + y</span><br><span class="line">&lt;type <span class="string">'exceptions.ValueError'</span>&gt;: shape mismatch: objects cannot be broadcast to a single shape</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>xx.shape</span><br><span class="line">(<span class="number">4</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.shape</span><br><span class="line">(<span class="number">5</span>,)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(xx + y).shape</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>xx + y</span><br><span class="line">array([[ <span class="number">1.</span>,  <span class="number">1.</span>,  <span class="number">1.</span>,  <span class="number">1.</span>,  <span class="number">1.</span>],</span><br><span class="line">       [ <span class="number">2.</span>,  <span class="number">2.</span>,  <span class="number">2.</span>,  <span class="number">2.</span>,  <span class="number">2.</span>],</span><br><span class="line">       [ <span class="number">3.</span>,  <span class="number">3.</span>,  <span class="number">3.</span>,  <span class="number">3.</span>,  <span class="number">3.</span>],</span><br><span class="line">       [ <span class="number">4.</span>,  <span class="number">4.</span>,  <span class="number">4.</span>,  <span class="number">4.</span>,  <span class="number">4.</span>]])</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.shape</span><br><span class="line">(<span class="number">4</span>,)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>z.shape</span><br><span class="line">(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(x + z).shape</span><br><span class="line">(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x + z</span><br><span class="line">array([[ <span class="number">1.</span>,  <span class="number">2.</span>,  <span class="number">3.</span>,  <span class="number">4.</span>],</span><br><span class="line">       [ <span class="number">1.</span>,  <span class="number">2.</span>,  <span class="number">3.</span>,  <span class="number">4.</span>],</span><br><span class="line">       [ <span class="number">1.</span>,  <span class="number">2.</span>,  <span class="number">3.</span>,  <span class="number">4.</span>]])</span><br><span class="line">Broadcasting provides a convenient way of taking the outer product (<span class="keyword">or</span> any other outer operation) of two arrays. The following example shows an outer addition operation of two <span class="number">1</span>-d arrays:</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">0.0</span>, <span class="number">10.0</span>, <span class="number">20.0</span>, <span class="number">30.0</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.array([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a[:, np.newaxis] + b</span><br><span class="line">array([[  <span class="number">1.</span>,   <span class="number">2.</span>,   <span class="number">3.</span>],</span><br><span class="line">       [ <span class="number">11.</span>,  <span class="number">12.</span>,  <span class="number">13.</span>],</span><br><span class="line">       [ <span class="number">21.</span>,  <span class="number">22.</span>,  <span class="number">23.</span>],</span><br><span class="line">       [ <span class="number">31.</span>,  <span class="number">32.</span>,  <span class="number">33.</span>]])</span><br></pre></td></tr></table></figure></p>
+<p>Broadcasting provides a convenient way of taking the outer product (or any other outer operation) of two arrays. The following example shows an outer addition operation of two 1-d arrays:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">0.0</span>, <span class="number">10.0</span>, <span class="number">20.0</span>, <span class="number">30.0</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.array([<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a[:, np.newaxis] + b</span><br><span class="line">array([[  <span class="number">1.</span>,   <span class="number">2.</span>,   <span class="number">3.</span>],</span><br><span class="line">       [ <span class="number">11.</span>,  <span class="number">12.</span>,  <span class="number">13.</span>],</span><br><span class="line">       [ <span class="number">21.</span>,  <span class="number">22.</span>,  <span class="number">23.</span>],</span><br><span class="line">       [ <span class="number">31.</span>,  <span class="number">32.</span>,  <span class="number">33.</span>]])</span><br></pre></td></tr></table></figure></p>
+<p>Here the <strong>newaxis</strong> index operator inserts a new axis into a, making it a two-dimensional 4x1 array. Combining the 4x1 array with b, which has shape (3,), yields a 4x3 array.<br><em>Functions that support broadcasting are known as universal functions. You can find the list of all universal functions in <a href="https://docs.scipy.org/doc/numpy/reference/ufuncs.html#available-ufuncs" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/ufuncs.html#available-ufuncs</a>.</em></p>
+<h4 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h4><p>1.numpy.argmax(a, axis=None, out=None) : 返回沿轴axis最大值的索引<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.arange(<span class="number">6</span>).reshape(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.argmax(a)</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.argmax(a, axis=<span class="number">0</span>)<span class="comment">#0代表列</span></span><br><span class="line">array([<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.argmax(a, axis=<span class="number">1</span>)<span class="comment">#1代表行</span></span><br><span class="line">array([<span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.arange(<span class="number">6</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">1</span>] = <span class="number">5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b</span><br><span class="line">array([<span class="number">0</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.argmax(b) <span class="comment"># 只返回第一次出现的最大值的索引</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"></span><br><span class="line">b = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>] )</span><br><span class="line">b.max()           <span class="comment">#   4   	</span></span><br><span class="line">b.mean()          <span class="comment">#   2.5</span></span><br><span class="line"></span><br><span class="line">c = [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]]  	<span class="comment"># 二维列表</span></span><br><span class="line">d = np.array(c)         	<span class="comment"># 二维numpy数组</span></span><br><span class="line">d.shape                   	<span class="comment"># (2, 2)</span></span><br><span class="line">d.size                   	<span class="comment"># 4</span></span><br><span class="line">d.max(axis=<span class="number">0</span>)            	<span class="comment"># 找维度0，也就是最后一个维度上的最大值，array([3, 4])</span></span><br><span class="line">d.max(axis=<span class="number">1</span>)            	<span class="comment"># 找维度1，也就是倒数第二个维度上的最大值，array([2, 4])</span></span><br><span class="line">d.mean(axis=<span class="number">0</span>)          	<span class="comment"># 找维度0，也就是第一个维度上的均值，array([ 2.,  3.])</span></span><br><span class="line">d.flatten()              	<span class="comment"># 展开一个numpy数组为1维数组，array([1, 2, 3, 4])</span></span><br><span class="line">np.ravel(c)               <span class="comment"># 展开一个可以解析的结构为1维数组，array([1, 2, 3, 4])</span></span><br><span class="line"></span><br><span class="line">l = np.arange(<span class="number">10</span>)      	<span class="comment"># 类似range，array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span></span><br><span class="line">m = np.linspace(<span class="number">0</span>, <span class="number">6</span>, <span class="number">5</span>)<span class="comment"># 等差数列，0到6之间5个取值，array([ 0., 1.5, 3., 4.5, 6.])</span></span><br><span class="line"><span class="comment"># 创建一个一维数组，元素值是把3重复4次，array([3, 3, 3, 3])</span></span><br><span class="line">f = np.repeat(<span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure></p>
+<p>2.保存为npy文件</p>
+<p>以NumPy专用的二进制类型保存数据，这两个函数会自动处理元素类型和shape等信息，使用它们读写数组就方便多了，但是numpy.save输出的文件很难和其它语言编写的程序读入：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p = np.array(</span><br><span class="line">    [[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</span><br><span class="line">     [<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">np.save(<span class="string">'p.npy'</span>, p)     <span class="comment"># 保存到文件</span></span><br><span class="line">q = np.load(<span class="string">'p.npy'</span>)    <span class="comment"># 从文件读取</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>numpy.savez函数</strong></p>
+<p>如果你想将多个数组保存到一个文件中的话，可以使用numpy.savez函数。savez函数的第一个参数是文件名，其后的参数都是需要保存的数组，也可以使用关键字参数为数组起一个名字，非关键字参数传递的数组会自动起名为arr_0, arr_1, …。savez函数输出的是一个压缩文件(扩展名为npz)，其中每个文件都是一个save函数保存的npy文件，文件名对应于数组名。load函数自动识别npz文件，并且返回一个类似于字典的对象，可以通过数组名作为关键字获取数组的内容：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = np.arange(<span class="number">0</span>, <span class="number">1.0</span>, <span class="number">0.1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = np.sin(b)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.savez(<span class="string">"result.npz"</span>, a, b, sin_array = c)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r = np.load(<span class="string">"result.npz"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r[<span class="string">"arr_0"</span>] <span class="comment"># 数组a</span></span><br><span class="line">array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">       [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r[<span class="string">"arr_1"</span>] <span class="comment"># 数组b</span></span><br><span class="line">array([ <span class="number">0.</span> ,  <span class="number">0.1</span>,  <span class="number">0.2</span>,  <span class="number">0.3</span>,  <span class="number">0.4</span>,  <span class="number">0.5</span>,  <span class="number">0.6</span>,  <span class="number">0.7</span>,  <span class="number">0.8</span>,  <span class="number">0.9</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r[<span class="string">"sin_array"</span>] <span class="comment"># 数组c</span></span><br><span class="line">array([ <span class="number">0.</span>        ,  <span class="number">0.09983342</span>,  <span class="number">0.19866933</span>,  <span class="number">0.29552021</span>,  <span class="number">0.38941834</span>,</span><br><span class="line">        <span class="number">0.47942554</span>,  <span class="number">0.56464247</span>,  <span class="number">0.64421769</span>,  <span class="number">0.71735609</span>,  <span class="number">0.78332691</span>])</span><br></pre></td></tr></table></figure></p>
+<p>如果你用解压软件打开result.npz文件的话，会发现其中有三个文件：arr_0.npy， arr_1.npy， sin_array.npy，其中分别保存着数组a, b, c的内容。</p>
+<p>3.reshape</p>
+<blockquote>
+<p>It is not always possible to change the shape of an array without copying the data. If you want an error to be raise if the data is copied, you should assign the new shape to the shape attribute of the array:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.arange(<span class="number">6</span>).reshape((<span class="number">3</span>, <span class="number">2</span>))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">array([[<span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">       [<span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">       [<span class="number">4</span>, <span class="number">5</span>]])</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.reshape(a, (<span class="number">2</span>, <span class="number">3</span>)) <span class="comment"># C-like index ordering</span></span><br><span class="line">array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">        [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.reshape(np.ravel(a), (<span class="number">2</span>, <span class="number">3</span>)) <span class="comment"># equivalent to C ravel then C reshape</span></span><br><span class="line">array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">    [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.reshape(a, (<span class="number">2</span>, <span class="number">3</span>), order=<span class="string">'F'</span>) <span class="comment"># Fortran-like index ordering</span></span><br><span class="line">array([[<span class="number">0</span>, <span class="number">4</span>, <span class="number">3</span>],</span><br><span class="line">    [<span class="number">2</span>, <span class="number">1</span>, <span class="number">5</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.reshape(np.ravel(a, order=<span class="string">'F'</span>), (<span class="number">2</span>, <span class="number">3</span>), order=<span class="string">'F'</span>)</span><br><span class="line">array([[<span class="number">0</span>, <span class="number">4</span>, <span class="number">3</span>],</span><br><span class="line">    [<span class="number">2</span>, <span class="number">1</span>, <span class="number">5</span>]])</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><em>More details in <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.reshape.html" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/generated/numpy.reshape.html</a></em></p>
+<p>4.hstack and vstack<br>函数原型：hstack(tup) ，参数tup可以是元组，列表，或者numpy数组，返回结果为numpy的数组.它其实就是水平(按列顺序)把数组给堆叠起来，vstack()函数正好和它相反。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">b=[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">print(np.hstack((a,b)))</span><br><span class="line">输出：[<span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> ]</span><br><span class="line"></span><br><span class="line">a=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">b=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">c=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">d=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">print(np.hstack((a,b,c,d)))</span><br><span class="line">输出：</span><br><span class="line">[[<span class="number">1</span> <span class="number">1</span> <span class="number">1</span> <span class="number">1</span>]</span><br><span class="line"> [<span class="number">2</span> <span class="number">2</span> <span class="number">2</span> <span class="number">2</span>]</span><br><span class="line"> [<span class="number">3</span> <span class="number">3</span> <span class="number">3</span> <span class="number">3</span>]]</span><br><span class="line"></span><br><span class="line"> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"> b=[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line"> print(np.vstack((a,b)))</span><br><span class="line"> 输出：</span><br><span class="line"> [[<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>]</span><br><span class="line">  [<span class="number">4</span> <span class="number">5</span> <span class="number">6</span>]]</span><br><span class="line"></span><br><span class="line">  a=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">  b=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">  c=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">  d=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">  print(np.vstack((a,b,c,d)))</span><br><span class="line">  输出：</span><br><span class="line">  [[<span class="number">1</span>]</span><br><span class="line">   [<span class="number">2</span>]</span><br><span class="line">   [<span class="number">3</span>]</span><br><span class="line">   [<span class="number">1</span>]</span><br><span class="line">   [<span class="number">2</span>]</span><br><span class="line">   [<span class="number">3</span>]</span><br><span class="line">   [<span class="number">1</span>]</span><br><span class="line">   [<span class="number">2</span>]</span><br><span class="line">   [<span class="number">3</span>]</span><br><span class="line">   [<span class="number">1</span>]</span><br><span class="line">   [<span class="number">2</span>]</span><br><span class="line">   [<span class="number">3</span>]]</span><br></pre></td></tr></table></figure></p>
+<p><em>More details in <a href="http://blog.csdn.net/csdn15698845876/article/details/73380803" target="_blank" rel="noopener">http://blog.csdn.net/csdn15698845876/article/details/73380803</a></em></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/04/Tensorflow_note_4/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Tensorflow_note_4
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/09/08/Tensorflow-note-3 (1)/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Tensorflow_note_3</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/30/Attention is all you need/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/30/Attention is all you need/" class="title">Attention is all you need</a></p>
+                            <p class="item-date"><time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/20/Eager_Execution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_Eager" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></p>
+                            <p class="item-title"><a href="/2018/03/20/Eager_Execution/" class="title">Tensorflow_Eager</a></p>
+                            <p class="item-date"><time datetime="2018-03-20T12:40:00.000Z" itemprop="datePublished">2018-03-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ws1.sinaimg.cn/large/006tGRI6ly1fpegt4xc4pj30t00bnabq.jpg)" alt="Advanced Architectures and Memory Networks" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="title">Advanced Architectures and Memory Networks</a></p>
+                            <p class="item-date"><time datetime="2018-03-15T08:57:50.000Z" itemprop="datePublished">2018-03-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/09/matplotlib/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fp01c7ivnhj30f203mq39.jpg)" alt="An Introduction to Matplotlib" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/01/09/matplotlib/" class="title">An Introduction to Matplotlib</a></p>
+                            <p class="item-date"><time datetime="2018-01-09T07:25:50.000Z" itemprop="datePublished">2018-01-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/04/Object Detection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg)" alt="YOLO Object Detection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/CV/Object-Detection/">Object Detection</a></p>
+                            <p class="item-title"><a href="/2018/01/04/Object Detection/" class="title">YOLO Object Detection</a></p>
+                            <p class="item-date"><time datetime="2018-01-04T07:25:50.000Z" itemprop="datePublished">2018-01-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 12.5px;">BUPT</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/Keras/" style="font-size: 12.5px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/NLG/" style="font-size: 12.5px;">NLG</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 12.5px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 12.5px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 12.5px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 20px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 10px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2017/09/29/Numpy-Note/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

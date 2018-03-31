@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Tensorflow_note_4 | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Tensorflow" />
+    
+    <meta name="description" content="How to structure your model in TensorFlow">
+<meta name="keywords" content="Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow_note_4">
+<meta property="og:url" content="https://helic.github.io/2017/11/04/Tensorflow_note_4/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="How to structure your model in TensorFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
+<meta property="og:updated_time" content="2018-03-22T06:21:37.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow_note_4">
+<meta name="twitter:description" content="How to structure your model in TensorFlow">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Tensorflow_note_4" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Tensorflow_note_4
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/04/Tensorflow_note_4/" class="article-date">
+            <time datetime="2017-11-04T14:57:00.000Z" itemprop="datePublished">2017-11-04</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Tensorflow/">Tensorflow</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>How to structure your model in TensorFlow<br><a id="more"></a></p>
+<h2 id="Overall-structure-of-a-model-in-TensorFlow"><a href="#Overall-structure-of-a-model-in-TensorFlow" class="headerlink" title="Overall structure of a model in TensorFlow"></a>Overall structure of a model in TensorFlow</h2><h4 id="Assemble-graph"><a href="#Assemble-graph" class="headerlink" title="Assemble graph"></a>Assemble graph</h4><ul>
+<li>Define placeholders for input and output</li>
+<li>Define the weights</li>
+<li>Define the inference model</li>
+<li>Define loss function</li>
+<li>Define optimizer<h4 id="Compute"><a href="#Compute" class="headerlink" title="Compute"></a>Compute</h4></li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/006tGRI6ly1fl6gsw0z8qj30qg096goh.jpg" alt=""></p>
+<h2 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h2><blockquote>
+<p>Skip​-​gram vs CBOW​ (Continuous Bag-of-Words)<br>Algorithmically, these models are similar, except that CBOW predicts center words from context words, while the skip-gram does the inverse and predicts source context-words from the center words. For example, if we have the sentence: “”The quick brown fox jumps””, then CBOW tries to predict “”brown”” from “”the””, “”quick””, “”fox””, and “”jumps””, while skip-gram tries to predict “”the””, “”quick””, “”fox””, and “”jumps”” from “”brown””.</p>
+</blockquote>
+<blockquote>
+<p>Statistically it has the effect that CBOW smoothes over a lot of the distributional information (by treating an entire context as one observation). For the most part, this turns out to be a useful thing for smaller datasets. However, skip-gram treats each context-target pair as a new observation, and this tends to do better when we have larger datasets.</p>
+</blockquote>
+<p>Vector representations of words projected on a 3D space:</p>
+<p><img src="https://ws1.sinaimg.cn/mw690/006tGRI6ly1fl6hkyalw9j30pf0nu47f.jpg" alt=""></p>
+<h4 id="Word2Vec-Tutorial-The-Skip-Gram-Model"><a href="#Word2Vec-Tutorial-The-Skip-Gram-Model" class="headerlink" title="Word2Vec Tutorial - The Skip-Gram Model"></a>Word2Vec Tutorial - The Skip-Gram Model</h4><p><em>More details in <a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">The Skip-Gram Model</a></em></p>
+<h2 id="How-to-structure-your-TensorFlow-model"><a href="#How-to-structure-your-TensorFlow-model" class="headerlink" title="How to structure your TensorFlow model"></a>How to structure your TensorFlow model</h2><h4 id="Phase-1-assemble-your-graph"><a href="#Phase-1-assemble-your-graph" class="headerlink" title="Phase 1: assemble your graph"></a>Phase 1: assemble your graph</h4><ol>
+<li>Define placeholders for input and output</li>
+<li>Define the weights</li>
+<li>Define the inference model</li>
+<li>Define loss function</li>
+<li>Define optimizer</li>
+</ol>
+<h4 id="Phase-2-execute-the-computation"><a href="#Phase-2-execute-the-computation" class="headerlink" title="Phase 2: execute the computation"></a>Phase 2: execute the computation</h4><p>Which is basically training your model. There are a few steps:</p>
+<ol>
+<li>Initialize all model variables for the first time.</li>
+<li>Feed in the training data. Might involve randomizing the order of data samples.</li>
+<li>Execute the inference model on the training data, so it calculates for each training input<br>example the output with the current model parameters.</li>
+<li>Compute the cost</li>
+<li>Adjust the model parameters to minimize/maximize the cost depending on the model.</li>
+</ol>
+<p>Let’s apply these steps to creating our word2vec, skip-gram model.</p>
+<h3 id="Phase-1-Assemble-the-graph"><a href="#Phase-1-Assemble-the-graph" class="headerlink" title="Phase 1: Assemble the graph"></a>Phase 1: Assemble the graph</h3><h4 id="1-Define-placeholders-for-input-and-output"><a href="#1-Define-placeholders-for-input-and-output" class="headerlink" title="1.  Define placeholders for input and output"></a>1.  Define placeholders for input and output</h4><p>Input is the center word and output is the target (context) word. Instead of using one-hot<br>vectors, we input the index of those words directly. For example, if the center word is the 1001th<br>word in the vocabulary, we input the number 1001.</p>
+<p>Each sample input is a scalar, the placeholder for BATCH_SIZE sample inputs with have shape<br>[BATCH_SIZE].</p>
+<p>Similar, the placeholder for BATCH_SIZE sample outputs with have shape [BATCH_SIZE].训练时模型输出为one-hot vector，表示与input word在同一个windows里的context word;而当预测时，输出是概率分布。此处简化为index of context word.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">center_words = tf.placeholder(tf.int32, shape=[BATCH_SIZE])</span><br><span class="line">target_words = tf.placeholder(tf.int32, shape=[BATCH_SIZE])</span><br></pre></td></tr></table></figure></p>
+<p><em>Note that our center_words and target_words being fed in are both scalars – we feed in their<br>corresponding indices in our vocabulary.</em></p>
+<h4 id="2-Define-the-weight-in-this-case-embedding-matrix"><a href="#2-Define-the-weight-in-this-case-embedding-matrix" class="headerlink" title="2. Define the weight (in this case, embedding matrix)"></a>2. Define the weight (in this case, embedding matrix)</h4><p>Each row corresponds to the representation vector of one word. If one word is represented with<br>a vector of size EMBED_SIZE, then the embedding matrix will have shape [VOCAB_SIZE,<br>EMBED_SIZE]. We initialize the embedding matrix to value from a random distribution. In this<br>case, let’s choose uniform distribution(均匀分布).<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">embed_matrix = tf.Variable(tf.random_uniform([VOCAB_SIZE, EMBED_SIZE], <span class="number">-1.0</span>, <span class="number">1.0</span>))</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-Inference-compute-the-forward-path-of-the-graph"><a href="#3-Inference-compute-the-forward-path-of-the-graph" class="headerlink" title="3. Inference (compute the forward path of the graph)"></a>3. Inference (compute the forward path of the graph)</h4><p>Our goal is to get the vector representations of words in our dictionary. Remember that the<br>embed_matrix has dimension VOCAB_SIZE x EMBED_SIZE, with each row of the embedding<br>matrix corresponds to the vector representation of the word at that index. So to get the<br>representation of all the center words in the batch, we get the slice of all corresponding rows in<br>the embedding matrix. TensorFlow provides a convenient method to do so called<br>tf.nn.embedding_lookup().<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tf.nn.embedding_lookup(params, ids, partition_strategy=<span class="string">'mod'</span>, name=<span class="keyword">None</span>,</span><br><span class="line">validate_indices=<span class="keyword">True</span>, max_norm=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure></p>
+<p>This method is really useful when it comes to matrix multiplication with one-hot vectors because<br>it saves us from doing a bunch of unnecessary computation that will return 0 anyway. An<br>illustration from <a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">Chris McCormick</a> for multiplication of a one-hot vector with a matrix.<br><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fluozf7btoj30qf06smxx.jpg" alt="matrix multiplication with one-hot vectors"></p>
+<p>So, to get the embedding (or vector representation) of the input center words, we use this:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">embed = tf.nn.embedding_lookup(embed_matrix, center_words)</span><br></pre></td></tr></table></figure></p>
+<p><em>More details about tf.nn.embedding_lookup in <a href="https://www.tensorflow.org/api_docs/python/tf/nn/embedding_lookup" target="_blank" rel="noopener">https://www.tensorflow.org/api_docs/python/tf/nn/embedding_lookup</a></em></p>
+<h4 id="4-Define-the-loss-function"><a href="#4-Define-the-loss-function" class="headerlink" title="4. Define the loss function"></a>4. Define the loss function</h4><p>While NCE is cumbersome to implement in pure Python, TensorFlow already implemented it for<br>us.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tf.nn.nce_loss(weights, biases, labels, inputs, num_sampled, num_classes, num_true=<span class="number">1</span>,</span><br><span class="line">sampled_values=<span class="keyword">None</span>, remove_accidental_hits=<span class="keyword">False</span>, partition_strategy=<span class="string">'mod'</span>,</span><br><span class="line">name=<span class="string">'nce_loss'</span>)</span><br></pre></td></tr></table></figure></p>
+<p><strong>Note that by the way the function is implemented, the third argument is actually inputs, and the<br>fourth is labels. </strong></p>
+<p>For nce_loss, we need weights and biases for the hidden layer to calculate NCE loss.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nce_weight = tf.Variable(tf.truncated_normal([VOCAB_SIZE, EMBED_SIZE],</span><br><span class="line">						 stddev=<span class="number">1.0</span> / EMBED_SIZE ** <span class="number">0.5</span>))</span><br><span class="line">nce_bias = tf.Variable(tf.zeros([VOCAB_SIZE]))</span><br><span class="line"></span><br><span class="line">loss = tf.reduce_mean(tf.nn.nce_loss(	weights=nce_weight,</span><br><span class="line">										biases=nce_bias,</span><br><span class="line">										labels=target_words,</span><br><span class="line">										num_sampled=NUM_SAMPLED,</span><br><span class="line">										num_classes=VOCAB_SIZE))</span><br></pre></td></tr></table></figure></p>
+<h4 id="5-Define-optimizer"><a href="#5-Define-optimizer" class="headerlink" title="5. Define optimizer"></a>5. Define optimizer</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)</span><br></pre></td></tr></table></figure>
+<h3 id="Phase-2-Execute-the-computation"><a href="#Phase-2-Execute-the-computation" class="headerlink" title="Phase 2: Execute the computation"></a>Phase 2: Execute the computation</h3><p>We will create a session then within the session, use the good old feed_dict to feed inputs and<br>outputs into the placeholders, run the optimizer to minimize the loss, and fetch the loss value to<br>report back to us.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	 sess.run(tf.global_variables_initializer())</span><br><span class="line">	 average_loss = <span class="number">0.0</span></span><br><span class="line">	 <span class="keyword">for</span> index <span class="keyword">in</span> xrange(NUM_TRAIN_STEPS):</span><br><span class="line">		 batch = batch_gen.next()</span><br><span class="line">		 loss_batch, _ = sess.run([loss, optimizer],</span><br><span class="line">								  feed_dict=&#123;center_words: batch[<span class="number">0</span>], target_words: batch[<span class="number">1</span>]&#125;)</span><br><span class="line">		 average_loss += loss_batch</span><br><span class="line">		 <span class="keyword">if</span> (index + <span class="number">1</span>) % <span class="number">2000</span> == <span class="number">0</span>:</span><br><span class="line">		 print(<span class="string">'Average loss at step &#123;&#125;: &#123;:5.1f&#125;'</span>.format(index + <span class="number">1</span>,</span><br><span class="line">				 average_loss / (index + <span class="number">1</span>)))</span><br></pre></td></tr></table></figure></p>
+<h4 id="Name-Scope域"><a href="#Name-Scope域" class="headerlink" title="Name Scope域"></a>Name Scope域</h4><p>Let’s give the tensors name and see how our model looks like in TensorBoard.</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1flurrbf9gdj30qo0hjn1b.jpg" alt="tensorboard"></p>
+<p>This doesn’t look very readable, as you can see in the graph, the nodes are scattering all over.<br>TensorBoard doesn’t know which nodes are similar to which nodes and should be grouped<br>together. This setback can grow to be extremely daunting when you build complex models with<br>hundreds of ops.</p>
+<p>Then, how can we tell TensorBoard to know which nodes should be grouped together? For<br>example, we would like to group all ops related to input/output together, and all ops related to<br>NCE loss together. Thankfully, TensorFlow lets us do that with name scope. You can just put all<br>the ops that you want to group together under the block:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.name_scope(name_of_that_scope):</span><br><span class="line">	<span class="comment"># declare op_1</span></span><br><span class="line">	<span class="comment"># declare op_2</span></span><br><span class="line">	<span class="comment"># ...</span></span><br></pre></td></tr></table></figure></p>
+<p>When you visualize that on TensorBoard, you will see your nodes are grouped into neat blocks:</p>
+<p><img src="https://ws1.sinaimg.cn/mw690/006tGRI6ly1fluru1zq4ej30n90jj42y.jpg" alt="tensorboard"></p>
+<p>You can click on the plus sign on top of each name scope block to see all the ops inside that<br>block.</p>
+<p>Question: how do we make our model most easy to reuse?<br>Hint: take advantage of Python’s object-oriented-ness.<br>Answer: build our model as a class!   ==&gt;<a href="https://github.com/chiphuyen/stanford-tensorflow-tutorials/blob/master/examples/04_word2vec_visualize.py" target="_blank" rel="noopener">link</a></p>
+<h2 id="More-about-Tensorboard"><a href="#More-about-Tensorboard" class="headerlink" title="More about Tensorboard"></a>More about Tensorboard</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">"summaries"</span>):</span><br><span class="line">       tf.summary.scalar(<span class="string">"loss"</span>, self.loss)   <span class="comment"># loss折线图</span></span><br><span class="line">       tf.summary.histogram(<span class="string">"histogram loss"</span>, self.loss)  <span class="comment"># 直方图</span></span><br><span class="line">       <span class="comment"># because you have several summaries, we should merge them all</span></span><br><span class="line">       <span class="comment"># into one op to make it easier to manage</span></span><br><span class="line">       self.summary_op = tf.summary.merge_all()</span><br><span class="line">...</span><br><span class="line">writer = tf.summary.FileWriter(<span class="string">'improved_graph/lr'</span> + str(LEARNING_RATE), sess.graph)</span><br><span class="line">...</span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> range(initial_step, initial_step + num_train_steps):</span><br><span class="line">    centers, targets = next(batch_gen)</span><br><span class="line">    feed_dict = &#123;model.center_words: centers, model.target_words: targets&#125;</span><br><span class="line">    loss_batch, _, summary = sess.run([model.loss, model.optimizer, model.summary_op],feed_dict=feed_dict)</span><br><span class="line">    writer.add_summary(summary, global_step=index)</span><br></pre></td></tr></table></figure>
+<p>Display:</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1flwx9pwdpuj30zj0h3mzi.jpg" alt="loss"></p>
+<p><em>More details in <a href="http://blog.csdn.net/sinat_33761963/article/details/62433234" target="_blank" rel="noopener">http://blog.csdn.net/sinat_33761963/article/details/62433234</a></em></p>
+<h2 id="Saving-and-Restoring"><a href="#Saving-and-Restoring" class="headerlink" title="Saving and Restoring"></a>Saving and Restoring</h2><p>The tf.train.Saver class provides methods for saving and restoring models. The tf.train.Saver constructor adds save and restore ops to the graph for all, or a specified list, of the variables in the graph. The Saver object provides methods to run these ops, specifying paths for the checkpoint files to write to or read from.</p>
+<p>The saver will restore all variables already defined in your model.</p>
+<p>TensorFlow saves variables in binary checkpoint files that, roughly speaking, map variable names to tensor values.</p>
+<h4 id="Saving-variables"><a href="#Saving-variables" class="headerlink" title="Saving variables"></a>Saving variables</h4><p>Create a Saver with tf.train.Saver() to manage all variables in the model. For example, the following snippet demonstrates how to call the tf.train.Saver.save method to save variables to a checkpoint file:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create some variables.</span></span><br><span class="line">v1 = tf.get_variable(<span class="string">"v1"</span>, shape=[<span class="number">3</span>], initializer = tf.zeros_initializer)</span><br><span class="line">v2 = tf.get_variable(<span class="string">"v2"</span>, shape=[<span class="number">5</span>], initializer = tf.zeros_initializer)</span><br><span class="line"></span><br><span class="line">inc_v1 = v1.assign(v1+<span class="number">1</span>)</span><br><span class="line">dec_v2 = v2.assign(v2<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add an op to initialize the variables.</span></span><br><span class="line">init_op = tf.global_variables_initializer()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add ops to save and restore all the variables.</span></span><br><span class="line">saver = tf.train.Saver()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Later, launch the model, initialize the variables, do some work, and save the</span></span><br><span class="line"><span class="comment"># variables to disk.</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">  sess.run(init_op)</span><br><span class="line">  <span class="comment"># Do some work with the model.</span></span><br><span class="line">  inc_v1.op.run()</span><br><span class="line">  dec_v2.op.run()</span><br><span class="line">  <span class="comment"># Save the variables to disk.</span></span><br><span class="line">  save_path = saver.save(sess, <span class="string">"/tmp/model.ckpt"</span>)</span><br><span class="line">  print(<span class="string">"Model saved in file: %s"</span> % save_path)</span><br></pre></td></tr></table></figure></p>
+<p>You number checkpoint filenames by passing a value to the optional global_step argument to save():<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">saver.save(sess, 'my-model', global_step=0) ==&gt; filename: 'my-model-0'</span><br><span class="line">...</span><br><span class="line">saver.save(sess, 'my-model', global_step=1000) ==&gt; filename: 'my-model-1000'</span><br></pre></td></tr></table></figure></p>
+<p>Additionally, optional arguments to the Saver() constructor let you control the proliferation of checkpoint files on disk:</p>
+<ul>
+<li><p>max_to_keep : indicates the maximum number of recent checkpoint files to keep. As new files are created, older files are deleted. If None or 0, all checkpoint files are kept. Defaults to 5 (that is, the 5 most recent checkpoint files are kept.)</p>
+</li>
+<li><p>keep_checkpoint_every_n_hours: In addition to keeping the most recent max_to_keep checkpoint files, you might want to keep one checkpoint file for every N hours of training. This can be useful if you want to later analyze how a model progressed during a long training session. For example, passing keep_checkpoint_every_n_hours=2 ensures that you keep one checkpoint file for every 2 hours of training. The default value of 10,000 hours effectively disables the feature.</p>
+</li>
+</ul>
+<p>Note that you still have to call the save() method to save the model. Passing these arguments to the constructor will not save variables automatically for you.</p>
+<h4 id="Restoring-variables"><a href="#Restoring-variables" class="headerlink" title="Restoring variables"></a>Restoring variables</h4><p>The tf.train.Saver object not only saves variables to checkpoint files, it also restores variables. Note that when you restore variables from a file you do not have to initialize them beforehand. For example, the following snippet demonstrates how to call the tf.train.Saver.restore method to restore variables from a checkpoint file:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">tf.reset_default_graph()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create some variables.</span></span><br><span class="line">v1 = tf.get_variable(<span class="string">"v1"</span>, shape=[<span class="number">3</span>])</span><br><span class="line">v2 = tf.get_variable(<span class="string">"v2"</span>, shape=[<span class="number">5</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add ops to save and restore all the variables.</span></span><br><span class="line">saver = tf.train.Saver()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Later, launch the model, use the saver to restore variables from disk, and</span></span><br><span class="line"><span class="comment"># do some work with the model.</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">  <span class="comment"># Restore variables from disk.</span></span><br><span class="line">  saver.restore(sess, <span class="string">"/tmp/model.ckpt"</span>)</span><br><span class="line">  print(<span class="string">"Model restored."</span>)</span><br><span class="line">  <span class="comment"># Check the values of the variables</span></span><br><span class="line">  print(<span class="string">"v1 : %s"</span> % v1.eval())</span><br><span class="line">  print(<span class="string">"v2 : %s"</span> % v2.eval())</span><br></pre></td></tr></table></figure></p>
+<h4 id="Choosing-which-variables-to-save-and-restore"><a href="#Choosing-which-variables-to-save-and-restore" class="headerlink" title="Choosing which variables to save and restore"></a>Choosing which variables to save and restore</h4><p>If you do not pass any arguments to tf.train.Saver(), the saver handles all variables in the graph. Each variable is saved under the name that was passed when the variable was created.</p>
+<p>It is sometimes useful to explicitly specify names for variables in the checkpoint files. For example, you may have trained a model with a variable named “weights” whose value you want to restore into a variable named “params”.</p>
+<p>It is also sometimes useful to only save or restore a subset of the variables used by a model. For example, you may have trained a neural net with five layers, and you now want to train a new model with six layers that reuses the existing weights of the five trained layers. You can use the saver to restore the weights of just the first five layers.</p>
+<p>You can easily specify the names and variables to save or load by passing to the tf.train.Saver() constructor either of the following:</p>
+<ul>
+<li>A list of variables (which will be stored under their own names).</li>
+<li>A Python dictionary in which keys are the names to use and the values are the variables to manage.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">tf.reset_default_graph()</span><br><span class="line"><span class="comment"># Create some variables.</span></span><br><span class="line">v1 = tf.get_variable(<span class="string">"v1"</span>, [<span class="number">3</span>], initializer = tf.zeros_initializer)</span><br><span class="line">v2 = tf.get_variable(<span class="string">"v2"</span>, [<span class="number">5</span>], initializer = tf.zeros_initializer)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add ops to save and restore only `v2` using the name "v2"</span></span><br><span class="line">saver = tf.train.Saver(&#123;<span class="string">"v2"</span>: v2&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use the saver object normally after that.</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">  <span class="comment"># Initialize v1 since the saver will not.</span></span><br><span class="line">  v1.initializer.run()</span><br><span class="line">  saver.restore(sess, <span class="string">"/tmp/model.ckpt"</span>)</span><br><span class="line"></span><br><span class="line">  print(<span class="string">"v1 : %s"</span> % v1.eval())</span><br><span class="line">  print(<span class="string">"v2 : %s"</span> % v2.eval())</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>You can create as many Saver objects as you want if you need to save and restore different subsets of the model variables. The same variable can be listed in multiple saver objects; its value is only changed when the Saver.restore() method is run.</li>
+<li>If you only restore a subset of the model variables at the start of a session, you have to run an initialize op for the other variables. See tf.variables_initializer for more information.</li>
+<li>To inspect the variables in a checkpoint, you can use the inspect_checkpoint library, particularly the print_tensors_in_checkpoint_file function.</li>
+<li>By default, Saver uses the value of the tf.Variable.name property for each variable. However, when you create a Saver object, you may optionally choose names for the variables in the checkpoint files.</li>
+</ul>
+<p><em>More details in <a href="https://www.tensorflow.org/programmers_guide/saved_model" target="_blank" rel="noopener">https://www.tensorflow.org/programmers_guide/saved_model</a></em></p>
+<h2 id="Why-should-we-still-learn-gradients"><a href="#Why-should-we-still-learn-gradients" class="headerlink" title="Why should we still learn gradients?"></a>Why should we still learn gradients?</h2><p>You’ve probably noticed that in all the models we’ve built so far, we haven’t taken a single<br>gradient. All we need to do is to build a forward pass and TensorFlow takes care of the<br>backward path for us. So, the question is: why should we still learn to take gradient? Why are<br>Chris Manning and Richard Socher making us take gradients of cross entropy and softmax?<br>Shouldn’t taking gradients by hands one day be as obsolete as trying to take square root by<br>hands since the invention of calculator?</p>
+<p>Well, maybe. But for now, TensorFlow can take gradients for us, but it can’t give us intuition<br>about what functions to use. It doesn’t tell us if a function will suffer from exploding or vanishing<br>gradients. We still need to know about gradients to get an understanding of why a model works<br>while another doesn’t.</p>
+<p>By default, the optimizer trains all the trainable variables its objective function depends on. If there are variables that you do not want to train, you can set the keyword trainable=False when you declare a variable. One example of a variable you don’t want to train is the variable global_step, a common variable you will see in many TensorFlow model to keep track of how many times you’ve run your model.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">global_step = tf.Variable(0, trainable=False, dtype=tf.int32)</span><br><span class="line">learning_rate =  0.01  *  0.99  ** tf.cast(global_step, tf.float32)</span><br></pre></td></tr></table></figure></p>
+<p>You can also ask your optimizer to take gradients of specific variables. You can also modify the gradients calculated by your optimizer.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># create an optimizer.</span><br><span class="line">optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.1)</span><br><span class="line"></span><br><span class="line"># compute the gradients for a list of variables.</span><br><span class="line">grads_and_vars = optimizer.compute_gradients(loss,  &lt;list of variables&gt;)</span><br><span class="line"></span><br><span class="line"># grads_and_vars is a list of tuples (gradient, variable). Do whatever you</span><br><span class="line"># need to the &apos;gradient&apos; part, for example, subtract each of them by 1.</span><br><span class="line">subtracted_grads_and_vars =  [(gv[0]  -  1.0, gv[1])  for gv in grads_and_vars]</span><br><span class="line"></span><br><span class="line"># ask the optimizer to apply the subtracted gradients.</span><br><span class="line">optimizer.apply_gradients(subtracted_grads_and_vars)</span><br></pre></td></tr></table></figure></p>
+<p>You can also prevent certain tensors from contributing to the calculation of the derivatives with respect to a specific loss with tf.stop_gradient.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop_gradient( input, name=None )</span><br></pre></td></tr></table></figure></p>
+<p>This is very useful in situations when you want to freeze certain variables during training. Here are some examples given by TensorFlow’s official documentation.</p>
+<ul>
+<li>When you train a GAN (Generative Adversarial Network) where no backprop should happen through the adversarial example generation process.</li>
+<li>The EM algorithm where the M-step should not involve backpropagation through the output of the E-step.</li>
+</ul>
+<p>The optimizer classes automatically compute derivatives on your graph, but you can explicitly ask TensorFlow to calculate certain gradients with tf.gradients.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tf.gradients(</span><br><span class="line">			ys,</span><br><span class="line">			xs,</span><br><span class="line">			grad_ys=None,</span><br><span class="line">			name=&apos;gradients&apos;,</span><br><span class="line">			colocate_gradients_with_ops=False,</span><br><span class="line">			gate_gradients=False,</span><br><span class="line">			aggregation_method=None,</span><br><span class="line">			stop_gradients=None</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>This method constructs symbolic partial derivatives of sum of ys w.r.t. x in xs. ys and xs are each a Tensor or a list of tensors. grad_ys is a list of Tensor, holding the gradients received by the ys. The list must be the same length as ys.</p>
+<p><strong>Technical detail</strong>: This is especially useful when training only parts of a model. For example, we can use tf.gradients() to take the derivative G of the loss w.r.t. to the middle layer. Then we use an optimizer to minimize the difference between the middle layer output M and M + G. This only updates the lower half of the network.</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/19/Frame/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Frame
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/09/29/Numpy-Note/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Numpy_Note</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/30/Attention is all you need/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/30/Attention is all you need/" class="title">Attention is all you need</a></p>
+                            <p class="item-date"><time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/20/Eager_Execution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_Eager" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></p>
+                            <p class="item-title"><a href="/2018/03/20/Eager_Execution/" class="title">Tensorflow_Eager</a></p>
+                            <p class="item-date"><time datetime="2018-03-20T12:40:00.000Z" itemprop="datePublished">2018-03-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ws1.sinaimg.cn/large/006tGRI6ly1fpegt4xc4pj30t00bnabq.jpg)" alt="Advanced Architectures and Memory Networks" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="title">Advanced Architectures and Memory Networks</a></p>
+                            <p class="item-date"><time datetime="2018-03-15T08:57:50.000Z" itemprop="datePublished">2018-03-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/09/matplotlib/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fp01c7ivnhj30f203mq39.jpg)" alt="An Introduction to Matplotlib" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/01/09/matplotlib/" class="title">An Introduction to Matplotlib</a></p>
+                            <p class="item-date"><time datetime="2018-01-09T07:25:50.000Z" itemprop="datePublished">2018-01-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/04/Object Detection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg)" alt="YOLO Object Detection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/CV/Object-Detection/">Object Detection</a></p>
+                            <p class="item-title"><a href="/2018/01/04/Object Detection/" class="title">YOLO Object Detection</a></p>
+                            <p class="item-date"><time datetime="2018-01-04T07:25:50.000Z" itemprop="datePublished">2018-01-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 12.5px;">BUPT</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/Keras/" style="font-size: 12.5px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/NLG/" style="font-size: 12.5px;">NLG</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 12.5px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 12.5px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 12.5px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 20px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 10px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2017/11/04/Tensorflow_note_4/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>ResNet | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Keras" />
+    
+    <meta name="description" content="Introduction to Residual Network.">
+<meta name="keywords" content="Keras">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ResNet">
+<meta property="og:url" content="https://helic.github.io/2018/01/02/ResNet/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="Introduction to Residual Network.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fp01i9t2qxj30ig0a6js1.jpg">
+<meta property="og:updated_time" content="2018-03-03T15:21:23.860Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ResNet">
+<meta name="twitter:description" content="Introduction to Residual Network.">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fp01i9t2qxj30ig0a6js1.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/CV/CNN/">CNN</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-ResNet" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        ResNet
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/01/02/ResNet/" class="article-date">
+            <time datetime="2018-01-02T02:28:50.000Z" itemprop="datePublished">2018-01-02</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Keras/">Keras</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>Introduction to Residual Network.<br><a id="more"></a></p>
+<h2 id="The-problem-of-very-deep-neural-networks"><a href="#The-problem-of-very-deep-neural-networks" class="headerlink" title="The problem of very deep neural networks"></a>The problem of very deep neural networks</h2><p>The main benefit of a very deep network is that it can represent very complex functions. It can also learn features at many different levels of abstraction, from edges (at the lower layers) to very complex features (at the deeper layers).</p>
+<p>However, using a deeper network doesn’t always help. A huge barrier to training them is vanishing gradients: very deep networks often have a gradient signal that goes to zero quickly, thus making gradient descent unbearably slow. More specifically, during gradient descent, as you backprop from the final layer back to the first layer, you are multiplying by the weight matrix on each step, and thus the gradient can decrease exponentially quickly to zero (or, in rare cases, grow exponentially quickly and “explode” to take very large values).</p>
+<p>During training, you might therefore see the magnitude (or norm) of the gradient for the earlier layers descrease to zero very rapidly as training proceeds:</p>
+<p><img src="http://img.blog.csdn.net/20171120193841704?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Vanishing gradient"></p>
+<h2 id="Building-a-Residual-Network"><a href="#Building-a-Residual-Network" class="headerlink" title="Building a Residual Network"></a>Building a Residual Network</h2><p>In ResNets, a “shortcut” or a “skip connection” allows the gradient to be directly backpropagated to earlier layers:</p>
+<p><img src="http://img.blog.csdn.net/20171120193951055?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="A ResNet block showing a skip-connection"></p>
+<p>The image on the left shows the “main path” through the network. The image on the right adds a shortcut to the main path. By stacking these ResNet blocks on top of each other, you can form a very deep network.</p>
+<p>ResNet blocks with the shortcut also makes it very easy for one of the blocks to learn an identity function. This means that you can stack on additional ResNet blocks with little risk of harming training set performance. (There is also some evidence that the ease of learning an identity function–even more than skip connections helping with vanishing gradients–accounts for ResNets’ remarkable performance.)</p>
+<p>Two main types of blocks are used in a ResNet, depending mainly on whether the input/output dimensions are same or different.</p>
+<h4 id="Identity-Block"><a href="#Identity-Block" class="headerlink" title="Identity Block"></a>Identity Block</h4><p>The identity block is the standard block used in ResNets, and corresponds to the case where the input activation (say a[l]) has the same dimension as the output activation (say a[l+2]).</p>
+<p>To flesh out the different steps of what happens in a ResNet’s identity block, here is an alternative diagram showing the individual steps:</p>
+<p><img src="http://img.blog.csdn.net/20171120194221637?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Identity block. Skip connection “skips over” 3 layers"></p>
+<p>The upper path is the “shortcut path.” The lower path is the “main path.” In this diagram, we have also made explicit the CONV2D and ReLU steps in each layer. To speed up training we have also added a BatchNorm step.</p>
+<p>Here’re the individual steps.</p>
+<ul>
+<li><p>First component of main path: </p>
+<ul>
+<li>The first CONV2D has F1 filters of shape (1,1) and a stride of (1,1). Its padding is “valid” and its name should be conv_name_base + ‘2a’. Use 0 as the seed for the random initialization. </li>
+<li>The first BatchNorm is normalizing the channels axis. Its name should be bn_name_base + ‘2a’. </li>
+<li>Then apply the ReLU activation function. This has no name and no hyperparameters.</li>
+</ul>
+</li>
+<li><p>Second component of main path: </p>
+<ul>
+<li>The second CONV2D has F2 filters of shape (f,f) and a stride of (1,1). Its padding is “same” and its name should be conv_name_base + ‘2b’. Use 0 as the seed for the random initialization. </li>
+<li>The second BatchNorm is normalizing the channels axis. Its name should be bn_name_base + ‘2b’. </li>
+<li>Then apply the ReLU activation function. This has no name and no hyperparameters.</li>
+</ul>
+</li>
+<li><p>Third component of main path: </p>
+<ul>
+<li>The third CONV2D has F3 filters of shape (1,1) and a stride of (1,1). Its padding is “valid” and its name should be conv_name_base + ‘2c’. Use 0 as the seed for the random initialization. </li>
+<li>The third BatchNorm is normalizing the channels axis. Its name should be bn_name_base + ‘2c’. Note that there is no ReLU activation function in this component.</li>
+</ul>
+</li>
+<li><p>Final step: </p>
+<ul>
+<li>The shortcut and the input are added together. </li>
+<li>Then apply the ReLU activation function. This has no name and no hyperparameters.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">identity_block</span><span class="params">(X, f, filters, stage, block)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implementation of the identity block as defined in Figure 3</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    X -- input tensor of shape (m, n_H_prev, n_W_prev, n_C_prev)</span></span><br><span class="line"><span class="string">    f -- integer, specifying the shape of the middle CONV's window for the main path</span></span><br><span class="line"><span class="string">    filters -- python list of integers, defining the number of filters in the CONV layers of the main path</span></span><br><span class="line"><span class="string">    stage -- integer, used to name the layers, depending on their position in the network</span></span><br><span class="line"><span class="string">    block -- string/character, used to name the layers, depending on their position in the network</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    X -- output of the identity block, tensor of shape (m, n_H, n_W, n_C)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># defining name basis</span></span><br><span class="line">    conv_name_base = <span class="string">'res'</span> + str(stage) + block + <span class="string">'_branch'</span></span><br><span class="line">    bn_name_base = <span class="string">'bn'</span> + str(stage) + block + <span class="string">'_branch'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Retrieve Filters</span></span><br><span class="line">    F1, F2, F3 = filters</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Save the input value. You'll need this later to add back to the main path. </span></span><br><span class="line">    X_shortcut = X</span><br><span class="line"></span><br><span class="line">    <span class="comment"># First component of main path</span></span><br><span class="line">    X = Conv2D(filters = F1, kernel_size = (<span class="number">1</span>, <span class="number">1</span>), strides = (<span class="number">1</span>,<span class="number">1</span>), padding = <span class="string">'valid'</span>, name = conv_name_base + <span class="string">'2a'</span>, kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X)</span><br><span class="line">    X = BatchNormalization(axis = <span class="number">3</span>, name = bn_name_base + <span class="string">'2a'</span>)(X)</span><br><span class="line">    X = Activation(<span class="string">'relu'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment">### START CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Second component of main path (≈3 lines)</span></span><br><span class="line">    X = Conv2D(filters = F2, kernel_size = (f, f), strides = (<span class="number">1</span>,<span class="number">1</span>), padding = <span class="string">'same'</span>, name = conv_name_base + <span class="string">'2b'</span>, kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X)</span><br><span class="line">    X = BatchNormalization(axis = <span class="number">3</span>, name = bn_name_base + <span class="string">'2b'</span>)(X)</span><br><span class="line">    X = Activation(<span class="string">'relu'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Third component of main path (≈2 lines)</span></span><br><span class="line">    X = Conv2D(filters = F3, kernel_size = (<span class="number">1</span>, <span class="number">1</span>), strides = (<span class="number">1</span>,<span class="number">1</span>), padding = <span class="string">'valid'</span>, name = conv_name_base + <span class="string">'2c'</span>, kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X)</span><br><span class="line">    X = BatchNormalization(axis = <span class="number">3</span>, name = bn_name_base + <span class="string">'2c'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Final step: Add shortcut value to main path, and pass it through a RELU activation (≈2 lines)</span></span><br><span class="line">    X = Add()([X, X_shortcut])</span><br><span class="line">    X = Activation(<span class="string">'relu'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> X</span><br></pre></td></tr></table></figure>
+<h4 id="Convolutional-Block"><a href="#Convolutional-Block" class="headerlink" title="Convolutional Block"></a>Convolutional Block</h4><p>The ResNet “convolutional block” is the other type of block. You can use this type of block when the input and output dimensions don’t match up. The difference with the identity block is that there is a CONV2D layer in the shortcut path : </p>
+<p><img src="http://img.blog.csdn.net/20171120195332005?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Convolutional block"></p>
+<p>The CONV2D layer in the shortcut path is used to resize the input x to a different dimension, so that the dimensions match up in the final addition needed to add the shortcut value back to the main path. (This plays a similar role as the matrix Ws discussed in lecture.) </p>
+<p>For example, to reduce the activation dimensions’s height and width by a factor of 2, you can use a 1x1 convolution with a stride of 2. The CONV2D layer on the shortcut path does not use any non-linear activation function. Its main role is to just apply a (learned) linear function that reduces the dimension of the input, so that the dimensions match up for the later addition step.</p>
+<p>The details of the convolutional block are as follows.</p>
+<ul>
+<li><p>First component of main path:</p>
+<ul>
+<li>The first CONV2D has F1 filters of shape (1,1) and a stride of (s,s). Its padding is “valid” and its name should be conv_name_base + ‘2a’. </li>
+<li>The first BatchNorm is normalizing the channels axis. Its name should be bn_name_base + ‘2a’. </li>
+<li>Then apply the ReLU activation function. This has no name and no hyperparameters.</li>
+</ul>
+</li>
+<li><p>Second component of main path: </p>
+<ul>
+<li>The second CONV2D has F2 filters of (f,f) and a stride of (1,1). Its padding is “same” and it’s name should be conv_name_base + ‘2b’. </li>
+<li>The second BatchNorm is normalizing the channels axis. Its name should be bn_name_base + ‘2b’. </li>
+<li>Then apply the ReLU activation function. This has no name and no hyperparameters.</li>
+</ul>
+</li>
+<li><p>Third component of main path: </p>
+<ul>
+<li>The third CONV2D has F3 filters of (1,1) and a stride of (1,1). Its padding is “valid” and it’s name should be conv_name_base + ‘2c’. </li>
+<li>The third BatchNorm is normalizing the channels axis. Its name should be bn_name_base + ‘2c’. Note that there is no ReLU activation function in this component.</li>
+</ul>
+</li>
+<li><p>Shortcut path: </p>
+<ul>
+<li>The CONV2D has F3 filters of shape (1,1) and a stride of (s,s). Its padding is “valid” and its name should be conv_name_base + ‘1’. </li>
+<li>The BatchNorm is normalizing the channels axis. Its name should be bn_name_base + ‘1’.</li>
+</ul>
+</li>
+<li><p>Final step: </p>
+<ul>
+<li>The shortcut and the main path values are added together. </li>
+<li>Then apply the ReLU activation function. This has no name and no hyperparameters.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: convolutional_block</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convolutional_block</span><span class="params">(X, f, filters, stage, block, s = <span class="number">2</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implementation of the convolutional block as defined in Figure 4</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    X -- input tensor of shape (m, n_H_prev, n_W_prev, n_C_prev)</span></span><br><span class="line"><span class="string">    f -- integer, specifying the shape of the middle CONV's window for the main path</span></span><br><span class="line"><span class="string">    filters -- python list of integers, defining the number of filters in the CONV layers of the main path</span></span><br><span class="line"><span class="string">    stage -- integer, used to name the layers, depending on their position in the network</span></span><br><span class="line"><span class="string">    block -- string/character, used to name the layers, depending on their position in the network</span></span><br><span class="line"><span class="string">    s -- Integer, specifying the stride to be used</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    X -- output of the convolutional block, tensor of shape (m, n_H, n_W, n_C)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># defining name basis</span></span><br><span class="line">    conv_name_base = <span class="string">'res'</span> + str(stage) + block + <span class="string">'_branch'</span></span><br><span class="line">    bn_name_base = <span class="string">'bn'</span> + str(stage) + block + <span class="string">'_branch'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Retrieve Filters</span></span><br><span class="line">    F1, F2, F3 = filters</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Save the input value</span></span><br><span class="line">    X_shortcut = X</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">##### MAIN PATH #####</span></span><br><span class="line">    <span class="comment"># First component of main path </span></span><br><span class="line">    X = Conv2D(F1, (<span class="number">1</span>, <span class="number">1</span>), strides = (s,s), name = conv_name_base + <span class="string">'2a'</span>, kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X)</span><br><span class="line">    X = BatchNormalization(axis = <span class="number">3</span>, name = bn_name_base + <span class="string">'2a'</span>)(X)</span><br><span class="line">    X = Activation(<span class="string">'relu'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment">### START CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Second component of main path (≈3 lines)</span></span><br><span class="line">    X = Conv2D(F2, (f, f), strides = (<span class="number">1</span>,<span class="number">1</span>), name = conv_name_base + <span class="string">'2b'</span>, padding = <span class="string">'same'</span>, kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X)</span><br><span class="line">    X = BatchNormalization(axis = <span class="number">3</span>, name = bn_name_base + <span class="string">'2b'</span>)(X)</span><br><span class="line">    X = Activation(<span class="string">'relu'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Third component of main path (≈2 lines)</span></span><br><span class="line">    X = Conv2D(F3, (<span class="number">1</span>, <span class="number">1</span>), strides = (<span class="number">1</span>,<span class="number">1</span>), name = conv_name_base + <span class="string">'2c'</span>, kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X)</span><br><span class="line">    X = BatchNormalization(axis = <span class="number">3</span>, name = bn_name_base + <span class="string">'2c'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment">##### SHORTCUT PATH #### (≈2 lines)</span></span><br><span class="line">    X_shortcut = Conv2D(F3, (<span class="number">1</span>, <span class="number">1</span>), strides = (s,s), name = conv_name_base + <span class="string">'1'</span>, kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X_shortcut)</span><br><span class="line">    X_shortcut = BatchNormalization(axis = <span class="number">3</span>, name = bn_name_base + <span class="string">'1'</span>)(X_shortcut)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Final step: Add shortcut value to main path, and pass it through a RELU activation (≈2 lines)</span></span><br><span class="line">    X = Add()([X, X_shortcut])</span><br><span class="line">    X = Activation(<span class="string">'relu'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> X</span><br></pre></td></tr></table></figure>
+<h2 id="Building-your-first-ResNet-model-50-layers"><a href="#Building-your-first-ResNet-model-50-layers" class="headerlink" title="Building your first ResNet model (50 layers)"></a>Building your first ResNet model (50 layers)</h2><p>You now have the necessary blocks to build a very deep ResNet. The following figure describes in detail the architecture of this neural network. “ID BLOCK” in the diagram stands for “Identity block,” and “ID BLOCK x3” means you should stack 3 identity blocks together.</p>
+<p><img src="http://img.blog.csdn.net/20171120195600725?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvS29hbGFfVHJlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="ResNet-50 model"></p>
+<p>The details of this ResNet-50 model are: </p>
+<ul>
+<li>Zero-padding pads the input with a pad of (3,3) </li>
+<li>Stage 1: <ul>
+<li>The 2D Convolution has 64 filters of shape (7,7) and uses a stride of (2,2). Its name is “conv1”. </li>
+<li>BatchNorm is applied to the channels axis of the input. </li>
+<li>MaxPooling uses a (3,3) window and a (2,2) stride. </li>
+</ul>
+</li>
+<li>Stage 2: <ul>
+<li>The convolutional block uses three set of filters of size [64,64,256], “f” is 3, “s” is 1 and the block is “a”. </li>
+<li>The 2 identity blocks use three set of filters of size [64,64,256], “f” is 3 and the blocks are “b” and “c”. </li>
+</ul>
+</li>
+<li>Stage 3: <ul>
+<li>The convolutional block uses three set of filters of size [128,128,512], “f” is 3, “s” is 2 and the block is “a”. </li>
+<li>The 3 identity blocks use three set of filters of size [128,128,512], “f” is 3 and the blocks are “b”, “c” and “d”. </li>
+</ul>
+</li>
+<li>Stage 4: <ul>
+<li>The convolutional block uses three set of filters of size [256, 256, 1024], “f” is 3, “s” is 2 and the block is “a”. </li>
+<li>The 5 identity blocks use three set of filters of size [256, 256, 1024], “f” is 3 and the blocks are “b”, “c”, “d”, “e” and “f”. </li>
+</ul>
+</li>
+<li>Stage 5: <ul>
+<li>The convolutional block uses three set of filters of size [512, 512, 2048], “f” is 3, “s” is 2 and the block is “a”. </li>
+<li>The 2 identity blocks use three set of filters of size [512, 512, 2048], “f” is 3 and the blocks are “b” and “c”. </li>
+<li>The 2D Average Pooling uses a window of shape (2,2) and its name is “avg_pool”. </li>
+<li>The flatten doesn’t have any hyperparameters or name. </li>
+<li>The Fully Connected (Dense) layer reduces its input to the number of classes using a softmax activation. Its name should be ‘fc’ + str(classes).</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GRADED FUNCTION: ResNet50</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ResNet50</span><span class="params">(input_shape = <span class="params">(<span class="number">64</span>, <span class="number">64</span>, <span class="number">3</span>)</span>, classes = <span class="number">6</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implementation of the popular ResNet50 the following architecture:</span></span><br><span class="line"><span class="string">    CONV2D -&gt; BATCHNORM -&gt; RELU -&gt; MAXPOOL -&gt; CONVBLOCK -&gt; IDBLOCK*2 -&gt; CONVBLOCK -&gt; IDBLOCK*3</span></span><br><span class="line"><span class="string">    -&gt; CONVBLOCK -&gt; IDBLOCK*5 -&gt; CONVBLOCK -&gt; IDBLOCK*2 -&gt; AVGPOOL -&gt; TOPLAYER</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    input_shape -- shape of the images of the dataset</span></span><br><span class="line"><span class="string">    classes -- integer, number of classes</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    model -- a Model() instance in Keras</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Define the input as a tensor with shape input_shape</span></span><br><span class="line">    X_input = Input(input_shape)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Zero-Padding</span></span><br><span class="line">    X = ZeroPadding2D((<span class="number">3</span>, <span class="number">3</span>))(X_input)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Stage 1</span></span><br><span class="line">    X = Conv2D(<span class="number">64</span>, (<span class="number">7</span>, <span class="number">7</span>), strides = (<span class="number">2</span>, <span class="number">2</span>), name = <span class="string">'conv1'</span>, kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X)</span><br><span class="line">    X = BatchNormalization(axis = <span class="number">3</span>, name = <span class="string">'bn_conv1'</span>)(X)</span><br><span class="line">    X = Activation(<span class="string">'relu'</span>)(X)</span><br><span class="line">    X = MaxPooling2D((<span class="number">3</span>, <span class="number">3</span>), strides=(<span class="number">2</span>, <span class="number">2</span>))(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Stage 2</span></span><br><span class="line">    X = convolutional_block(X, f = <span class="number">3</span>, filters = [<span class="number">64</span>, <span class="number">64</span>, <span class="number">256</span>], stage = <span class="number">2</span>, block=<span class="string">'a'</span>, s = <span class="number">1</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">64</span>, <span class="number">64</span>, <span class="number">256</span>], stage=<span class="number">2</span>, block=<span class="string">'b'</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">64</span>, <span class="number">64</span>, <span class="number">256</span>], stage=<span class="number">2</span>, block=<span class="string">'c'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">### START CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Stage 3 (≈4 lines)</span></span><br><span class="line">    X = convolutional_block(X, f = <span class="number">3</span>, filters = [<span class="number">128</span>, <span class="number">128</span>, <span class="number">512</span>], stage = <span class="number">3</span>, block=<span class="string">'a'</span>, s = <span class="number">2</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">128</span>, <span class="number">128</span>, <span class="number">512</span>], stage=<span class="number">3</span>, block=<span class="string">'b'</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">128</span>, <span class="number">128</span>, <span class="number">512</span>], stage=<span class="number">3</span>, block=<span class="string">'c'</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">128</span>, <span class="number">128</span>, <span class="number">512</span>], stage=<span class="number">3</span>, block=<span class="string">'d'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Stage 4 (≈6 lines)</span></span><br><span class="line">    X = convolutional_block(X, f = <span class="number">3</span>, filters = [<span class="number">256</span>, <span class="number">256</span>, <span class="number">1024</span>], stage = <span class="number">4</span>, block=<span class="string">'a'</span>, s = <span class="number">2</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">256</span>, <span class="number">256</span>, <span class="number">1024</span>], stage=<span class="number">4</span>, block=<span class="string">'b'</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">256</span>, <span class="number">256</span>, <span class="number">1024</span>], stage=<span class="number">4</span>, block=<span class="string">'c'</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">256</span>, <span class="number">256</span>, <span class="number">1024</span>], stage=<span class="number">4</span>, block=<span class="string">'d'</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">256</span>, <span class="number">256</span>, <span class="number">1024</span>], stage=<span class="number">4</span>, block=<span class="string">'e'</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">256</span>, <span class="number">256</span>, <span class="number">1024</span>], stage=<span class="number">4</span>, block=<span class="string">'f'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Stage 5 (≈3 lines)</span></span><br><span class="line">    X = convolutional_block(X, f = <span class="number">3</span>, filters = [<span class="number">512</span>, <span class="number">512</span>, <span class="number">2048</span>], stage = <span class="number">5</span>, block=<span class="string">'a'</span>, s = <span class="number">2</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">512</span>, <span class="number">512</span>, <span class="number">2048</span>], stage=<span class="number">5</span>, block=<span class="string">'b'</span>)</span><br><span class="line">    X = identity_block(X, <span class="number">3</span>, [<span class="number">512</span>, <span class="number">512</span>, <span class="number">2048</span>], stage=<span class="number">5</span>, block=<span class="string">'c'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># AVGPOOL (≈1 line). Use "X = AveragePooling2D(...)(X)"</span></span><br><span class="line">    X = AveragePooling2D((<span class="number">2</span>, <span class="number">2</span>), name=<span class="string">'avg_pool'</span>)(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment">### END CODE HERE ###</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># output layer</span></span><br><span class="line">    X = Flatten()(X)</span><br><span class="line">    X = Dense(classes, activation=<span class="string">'softmax'</span>, name=<span class="string">'fc'</span> + str(classes), kernel_initializer = glorot_uniform(seed=<span class="number">0</span>))(X)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create model</span></span><br><span class="line">    model = Model(inputs = X_input, outputs = X, name=<span class="string">'ResNet50'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">model = ResNet50(input_shape = (<span class="number">64</span>, <span class="number">64</span>, <span class="number">3</span>), classes = <span class="number">6</span>)</span><br><span class="line">model.compile(optimizer=<span class="string">'adam'</span>, loss=<span class="string">'categorical_crossentropy'</span>, metrics=[<span class="string">'accuracy'</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://mooc.study.163.com/learn/2001281004?tid=2001392030#/learn/content?type=detail&amp;id=2001728692" target="_blank" rel="noopener">https://mooc.study.163.com/learn/2001281004?tid=2001392030#/learn/content?type=detail&amp;id=2001728692</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/01/04/Object Detection/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            YOLO Object Detection
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/20/google-object-detection/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">google_object_detection</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/30/Attention is all you need/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/30/Attention is all you need/" class="title">Attention is all you need</a></p>
+                            <p class="item-date"><time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/20/Eager_Execution/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_Eager" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></p>
+                            <p class="item-title"><a href="/2018/03/20/Eager_Execution/" class="title">Tensorflow_Eager</a></p>
+                            <p class="item-date"><time datetime="2018-03-20T12:40:00.000Z" itemprop="datePublished">2018-03-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ws1.sinaimg.cn/large/006tGRI6ly1fpegt4xc4pj30t00bnabq.jpg)" alt="Advanced Architectures and Memory Networks" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="title">Advanced Architectures and Memory Networks</a></p>
+                            <p class="item-date"><time datetime="2018-03-15T08:57:50.000Z" itemprop="datePublished">2018-03-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/09/matplotlib/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fp01c7ivnhj30f203mq39.jpg)" alt="An Introduction to Matplotlib" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/01/09/matplotlib/" class="title">An Introduction to Matplotlib</a></p>
+                            <p class="item-date"><time datetime="2018-01-09T07:25:50.000Z" itemprop="datePublished">2018-01-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/04/Object Detection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fozzlx6jhkj30k00digz4.jpg)" alt="YOLO Object Detection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/CV/Object-Detection/">Object Detection</a></p>
+                            <p class="item-title"><a href="/2018/01/04/Object Detection/" class="title">YOLO Object Detection</a></p>
+                            <p class="item-date"><time datetime="2018-01-04T07:25:50.000Z" itemprop="datePublished">2018-01-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 12.5px;">BUPT</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/Keras/" style="font-size: 12.5px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 15px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/NLG/" style="font-size: 12.5px;">NLG</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 12.5px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 12.5px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 12.5px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 20px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 10px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2018/01/02/ResNet/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
