@@ -3,25 +3,16 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Tensorflow_Eager | Helic</title>
+    <title>Archive: 2018/9 | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Tensorflow,Eager" />
-    
-    <meta name="description" content="Eager execution is a feature that makes TensorFlow execute operations immediately: concrete values are returned, instead of a computational graph to be executed later.">
-<meta name="keywords" content="Tensorflow,Eager">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Tensorflow_Eager">
-<meta property="og:url" content="https://helic.github.io/2018/03/20/Eager_Execution/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Helic">
+<meta property="og:url" content="https://helic.github.io/archives/2018/09/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="Eager execution is a feature that makes TensorFlow execute operations immediately: concrete values are returned, instead of a computational graph to be executed later.">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
-<meta property="og:updated_time" content="2018-03-22T06:21:53.759Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tensorflow_Eager">
-<meta name="twitter:description" content="Eager execution is a feature that makes TensorFlow execute operations immediately: concrete values are returned, instead of a computational graph to be executed later.">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
+<meta name="twitter:title" content="Helic">
     
 
     
@@ -133,145 +124,73 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a>
+    <i class="icon fa fa-archive"></i>Archive: 2018/9
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Eager_Execution" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+                            
+
+    
+    
         
-            <header class="article-header">
-                
+        
+        <section class="archives-wrap">
+            <div class="archive-year-wrap">
+                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
+            </div>
+            <div class="archives">
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/09/25/Universal Sentence Encoder/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ws2.sinaimg.cn/large/006tGRI6ly1fpvzlen1vpj30g50k8mze.jpg)" alt="Universal  Sentence  Encoder" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helic.github.io/2018/09/25/Universal Sentence Encoder/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/NLP/">NLP</a>
+            </div>
+            <div class="date"><time datetime="2018-09-25T00:30:00.000Z" itemprop="datePublished">2018-09-25</time></div>
+        </div>
+        
     
         <h1 class="article-title" itemprop="name">
-        Tensorflow_Eager
+        <a href="/2018/09/25/Universal Sentence Encoder/">Universal  Sentence  Encoder</a>
         </h1>
     
 
-            </header>
-        
-        
-            <div class="article-meta">
-                
-    <div class="article-date">
-        <a href="/2018/03/20/Eager_Execution/" class="article-date">
-            <time datetime="2018-03-20T12:40:00.000Z" itemprop="datePublished">2018-03-20</time>
-        </a>
-    </div>
-
-                
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Eager/">Eager</a>, <a class="tag-link" href="/tags/Tensorflow/">Tensorflow</a>
-    </div>
-
-            </div>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-            <p>Eager execution is a feature that makes TensorFlow execute operations immediately: concrete values are returned, instead of a computational graph to be executed later.<br><a id="more"></a></p>
-<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><p>Eager execution is a NumPy-like library for numerical computation with support for GPU acceleration and automatic differentiation, and a flexible platform for machine learning research and experimentation. It’s available as  tf.contrib.eager, starting with version 1.50 of TensorFlow.</p>
-<p>In particular, not all TensorFlow APIs currently work with eager execution enabled, and some models may be slow to execute, compared to models defined without using eager execution.</p>
-<p>With TensorFlow installed, eager execution is enabled via a single call:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf   # version &gt;= 1.50</span><br><span class="line">import tensorflow.contrib.eager as tfe</span><br><span class="line">tfe.enable_eager_execution()</span><br></pre></td></tr></table></figure></p>
-<p>Enabling eager execution changes how TensorFlow functions behave (in particular, <code>Tensor</code> objects will reference concrete values instead of being symbolic handles to nodes in a computational graph). As a result, eager execution should be enabled at the beginning of a program and cannot be disabled afterwards in the same program.</p>
-<h2 id="Eager-execution-simplifies-your-code"><a href="#Eager-execution-simplifies-your-code" class="headerlink" title="Eager execution simplifies your code"></a>Eager execution simplifies your code</h2><p>You no longer need to worry about …:</p>
-<ol>
-<li>placeholders</li>
-<li>sessions</li>
-<li>control dependencies</li>
-<li>“lazy loading”</li>
-<li>{name, variable, op} scopes</li>
-</ol>
-<h3 id="Boilerplate"><a href="#Boilerplate" class="headerlink" title="Boilerplate"></a>Boilerplate</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">x = tf.placeholder(tf.float32, shape=[1,  1])  </span><br><span class="line">m = tf.matmul(x, x)  </span><br><span class="line">  </span><br><span class="line">print(m)  </span><br><span class="line"># Tensor(&quot;MatMul:0&quot;, shape=(1, 1), dtype=float32)  </span><br><span class="line">  </span><br><span class="line">with tf.Session()  as sess:  </span><br><span class="line">	m_out = sess.run(m, feed_dict=&#123;x:  \[\[2.\]\]&#125;)  </span><br><span class="line">	print(m_out)  </span><br><span class="line">	# [[4.]]</span><br><span class="line"></span><br><span class="line"># *************Eager**************</span><br><span class="line">x =  [[2.]] # No need for placeholders!  </span><br><span class="line">m = tf.matmul(x, x)  </span><br><span class="line">print(m) # No sessions!  </span><br><span class="line"># tf.Tensor([[4.]], shape=(1, 1), dtype=float32)</span><br></pre></td></tr></table></figure>
-<h3 id="Lazy-Loading"><a href="#Lazy-Loading" class="headerlink" title="Lazy Loading"></a>Lazy Loading</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">x = tf.random_uniform([2,  2])  </span><br><span class="line">with tf.Session()  as sess:  </span><br><span class="line">	for i in range(x.shape[0]):  </span><br><span class="line">		for j in range(x.shape[1]):  </span><br><span class="line">			print(sess.run(x[i, j])) # =&gt; Each iteration adds nodes to the graph</span><br><span class="line"></span><br><span class="line"># *************Eager**************</span><br><span class="line">x = tf.random_uniform([2,  2])  </span><br><span class="line">for i in range(x.shape[0]):  </span><br><span class="line">	for j in range(x.shape[1]):  </span><br><span class="line">		print(x[i, j])</span><br></pre></td></tr></table></figure>
-<h3 id="Tensors-Act-Like-NumPy-Arrays"><a href="#Tensors-Act-Like-NumPy-Arrays" class="headerlink" title="Tensors Act Like NumPy Arrays"></a>Tensors Act Like NumPy Arrays</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = tf.constant([1.0,  2.0, 3.0])  </span><br><span class="line"># Tensors are backed by NumPy arrays</span><br><span class="line">assert  type(x.numpy()) == np.ndarray  # `numpy()` method of a `Tensor` object to obtain its NumPy `ndarray` value</span><br><span class="line">squared = np.square(x)     # Tensors are compatible with NumPy functions</span><br><span class="line"># Tensors are iterable!          Caveat: use tf.equal to compare Tensors, not ==</span><br><span class="line">for i in x:</span><br><span class="line">	print(i)</span><br></pre></td></tr></table></figure>
-<h2 id="Gradients"><a href="#Gradients" class="headerlink" title="Gradients"></a>Gradients</h2><p>TensorFlow eager execution provides an <a href="https://github.com/HIPS/autograd" target="_blank" rel="noopener">autograd</a>-style API for automatic differentiation.</p>
-<ul>
-<li>tfe.gradients_function()</li>
-<li>tfe.value_and_gradients_function()</li>
-<li>tfe.implicit_gradients()</li>
-<li>tfe.implicit_value_and_gradients()<h3 id="tfe-gradients-function"><a href="#tfe-gradients-function" class="headerlink" title="tfe.gradients_function()"></a>tfe.gradients_function()</h3>Returns a Python function that computes the derivatives of the Python function <code>f</code> with respect to its arguments. <code>f</code> must return a scalar value. When the returned function is invoked, it returns a list of <code>Tensor</code>objects (one element for each argument of <code>f</code>).<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def f(x, y):</span><br><span class="line">    return x ** 2 + y ** 2</span><br><span class="line">g = tfe.gradients_function(f)</span><br><span class="line">g(2., 3.)  # [&lt;tf.Tensor: id=36, shape=(), dtype=float32, numpy=4.0&gt;, &lt;tf.Tensor: id=17, shape=(), dtype=float32, numpy=6.0&gt;]</span><br><span class="line"></span><br><span class="line">def f(x):</span><br><span class="line">  return tf.multiply(x, x)  # Or x * x</span><br><span class="line">assert 9 == f(3.).numpy()</span><br><span class="line"></span><br><span class="line">df = tfe.gradients_function(f)</span><br><span class="line">assert 6 == df(3.)[0].numpy()</span><br><span class="line"></span><br><span class="line"># Second order deriviative.</span><br><span class="line">d2f = tfe.gradients_function(lambda x: df(x)[0])</span><br><span class="line">assert 2 == d2f(3.)[0].numpy()</span><br><span class="line"></span><br><span class="line"># Third order derivative.</span><br><span class="line">d3f = tfe.gradients_function(lambda x : d2f(x)\[0\])</span><br><span class="line">assert 0 == d3f(3.)[0].numpy()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><code>tfe.value_and_gradients_function(f)</code>: Similar to  <code>tfe.gradients_function</code>, except that when the returned function is invoked, it returns the value of  <code>f</code>  in addition to the list of derivatives of  <code>f</code>  with respect to its arguments.</p>
-<h3 id="tfe-implicit-gradients"><a href="#tfe-implicit-gradients" class="headerlink" title="tfe.implicit_gradients()"></a>tfe.implicit_gradients()</h3><p>tfe.gradients_function的功能是<strong>对函数的输入参数求导，</strong>但在实际使用中，我们往往更希望<strong>对TensorFlow中的变量（Variable）求导</strong>，因为变量中保存的是模型的参数，这才是我们真正要优化、做梯度下降的部分。tfe.implicit_gradients的功能就是，可以对“计算过程中所有用到的变量”求导。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vx = tfe.Variable(initial_value=1.0, name=&quot;vx&quot;)</span><br><span class="line">vy = tfe.Variable(initial_value=1.0, name=&quot;vy&quot;)</span><br><span class="line">def f(x):</span><br><span class="line">    return 2 * vx * x</span><br><span class="line">g = tfe.implicit_gradients(f)</span><br><span class="line">g(2.)</span><br></pre></td></tr></table></figure>
-<p>我们定义了两个变量vx和vy，<strong>但在f在计算过程中，只用到了vx这个变量，所以只会对vx求导</strong>，相应的导数为2 * x ，这就是g所要做的计算。g的返回值是一个列表，列表中以(梯度，变量)的形式存储了所有计算的梯度的值和变量的值。这里就应当是[(4, 1)]。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def loss_fn(...):</span><br><span class="line">    ....</span><br><span class="line">optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.1)</span><br><span class="line">value_and_gradients_fn = tfe.implicit_value_and_gradients(loss_fn)</span><br><span class="line">empirical_loss, gradients_and_variables = value_and_gradients_fn(.....)</span><br><span class="line">optimizer.apply_gradients(gradients_and_variables)</span><br></pre></td></tr></table></figure>
-<p>For example, the linear regression model described above can be written into a class:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">class Model(object):</span><br><span class="line">  def __init__(self):</span><br><span class="line">    self.W = tfe.Variable(5., name=&apos;weight&apos;)</span><br><span class="line">    self.B = tfe.Variable(10., name=&apos;bias&apos;)</span><br><span class="line"></span><br><span class="line">  def predict(self, inputs):</span><br><span class="line">    return inputs * self.W + self.B</span><br><span class="line"></span><br><span class="line"># The loss function to be optimized</span><br><span class="line">def loss(model, inputs, targets):</span><br><span class="line">  error = model.predict(inputs) - targets</span><br><span class="line">  return tf.reduce_mean(tf.square(error))</span><br><span class="line"></span><br><span class="line"># A toy dataset of points around 3 * x + 2</span><br><span class="line">NUM_EXAMPLES = 1000</span><br><span class="line">training_inputs = tf.random_normal([NUM_EXAMPLES])</span><br><span class="line">noise = tf.random_normal([NUM_EXAMPLES])</span><br><span class="line">training_outputs = training_inputs * 3 + 2 + noise</span><br><span class="line"></span><br><span class="line"># Define:</span><br><span class="line"># 1. A model</span><br><span class="line"># 2. Derivatives of a loss function with respect to model parameters</span><br><span class="line"># 3. A strategy for updating the variables based on the derivatives</span><br><span class="line">model = Model()</span><br><span class="line">grad = tfe.implicit_gradients(loss)</span><br><span class="line">optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)</span><br><span class="line"></span><br><span class="line"># The training loop</span><br><span class="line">print(&quot;Initial loss: %f&quot; % loss(model, training_inputs, training_outputs).numpy())</span><br><span class="line">for i in range(201):</span><br><span class="line">  optimizer.apply_gradients(grad(model, training_inputs, training_outputs))</span><br><span class="line">  if i % 20 == 0:</span><br><span class="line">    print(&quot;Loss at step %d: %f&quot; %</span><br><span class="line">          (i, loss(model, training_inputs, training_outputs).numpy()))</span><br><span class="line">print(&quot;Final loss: %f&quot; % loss(model, training_inputs, training_outputs).numpy())</span><br><span class="line">print(&quot;W, B = %s, %s&quot; % (model.W.numpy(), model.B.numpy()))</span><br></pre></td></tr></table></figure></p>
-
-        </div>
-        <footer class="article-footer">
-            
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-
-        </footer>
+        <p class="article-excerpt">
+            来自Google  Research的一篇文章，在这篇文章中作者们提出了一种通用句子编码器，相比于传统的word embedding，该编码器在多个不同的NLP任务上都取得了更好的准确率，可以用来做迁移学习。paper linkcode link
+        </p>
     </div>
 </article>
-
-    <section id="comments">
     
-        
-    <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-
+        </div>
     
-    </section>
+
+
+    </div></section>
+
 
 
                         </div>
@@ -332,29 +251,6 @@
             
         </ul>
     </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/03/22/Semi-Supervised Learning for NLP/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Semi-Supervised Learning for NLP
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
-    
-    
-        <a href="/2018/03/15/Advanced Architectures and Memory Networks/" id="article-nav-older" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Advanced Architectures and Memory Networks</p>
-        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
-        </a>
-    
-</nav>
-
     
     <div class="widgets-container">
         
@@ -556,13 +452,11 @@
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2018/03/20/Eager_Execution/';
-    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
