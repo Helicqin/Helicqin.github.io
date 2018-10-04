@@ -3,25 +3,16 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Semi-Supervised Learning for NLP | Helic</title>
+    <title>Tag: CNN | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="NLP" />
-    
-    <meta name="description" content="Semi-Supervised Learning for NLP. CS224n lecture 17.">
-<meta name="keywords" content="NLP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Semi-Supervised Learning for NLP">
-<meta property="og:url" content="https://helic.github.io/2018/03/22/Semi-Supervised Learning for NLP/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Helic">
+<meta property="og:url" content="https://helic.github.io/tags/CNN/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="Semi-Supervised Learning for NLP. CS224n lecture 17.">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmr2ghes7j30lt0e6t9i.jpg">
-<meta property="og:updated_time" content="2018-03-31T07:39:28.823Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Semi-Supervised Learning for NLP">
-<meta name="twitter:description" content="Semi-Supervised Learning for NLP. CS224n lecture 17.">
-<meta name="twitter:image" content="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmr2ghes7j30lt0e6t9i.jpg">
+<meta name="twitter:title" content="Helic">
     
 
     
@@ -133,251 +124,73 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    <i class="icon fa fa-tag"></i>Tag: <em>CNN</em>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Semi-Supervised Learning for NLP" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+                            
+
+    
+    
         
-            <header class="article-header">
-                
+        
+        <section class="archives-wrap">
+            <div class="archive-year-wrap">
+                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
+            </div>
+            <div class="archives">
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBBZVpLZElXRnpYNHpNcUMzVGc5bVMyWDkwVFZrOEZWemNDUndQOTZtS2dnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Xception-Deep  Learning  with  Depthwise  Separable  Convolutions" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helic.github.io/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/CV/CNN/">CNN</a>
+            </div>
+            <div class="date"><time datetime="2018-10-02T01:56:00.000Z" itemprop="datePublished">2018-10-02</time></div>
+        </div>
+        
     
         <h1 class="article-title" itemprop="name">
-        Semi-Supervised Learning for NLP
+        <a href="/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/">Xception-Deep  Learning  with  Depthwise  Separable  Convolutions</a>
         </h1>
     
 
-            </header>
-        
-        
-            <div class="article-meta">
-                
-    <div class="article-date">
-        <a href="/2018/03/22/Semi-Supervised Learning for NLP/" class="article-date">
-            <time datetime="2018-03-22T12:11:50.000Z" itemprop="datePublished">2018-03-22</time>
-        </a>
-    </div>
-
-                
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/NLP/">NLP</a>
-    </div>
-
-            </div>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-            <p>Semi-Supervised Learning for NLP. CS224n lecture 17.<br><a id="more"></a></p>
-<h2 id="Why-use-semi-supervised-learning-for-NLP"><a href="#Why-use-semi-supervised-learning-for-NLP" class="headerlink" title="Why use semi-supervised learning for NLP?"></a>Why use semi-supervised learning for NLP?</h2><p>Why has deep learning been so successful recently?</p>
-<ul>
-<li>Better “tricks” (dropout, improved optimizers (e.g., Adam), batch norm, attention) </li>
-<li>Better hardware (thanks video games!) -&gt; larger models </li>
-<li>Larger datasets</li>
-</ul>
-<p><code>NLP Dataset Sizes</code> :</p>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplv00q04vj30l30anq45.jpg" alt="NLP datasets"></p>
-<p><code>Semi-Supervised Learning</code> :</p>
-<ul>
-<li>Use unlabeled examples during training </li>
-<li><p>Easy to find for NLP!</p>
-<h2 id="Semi-supervised-learning-algorithms"><a href="#Semi-supervised-learning-algorithms" class="headerlink" title="Semi-supervised learning algorithms"></a>Semi-supervised learning algorithms</h2><p>We will cover three semi-supervised learning techniques :</p>
-</li>
-<li>Pre-training <ul>
-<li>One of the tricks that started to make NNs successful </li>
-<li>You learned about this in week 1 (word2vec)! </li>
-</ul>
-</li>
-<li>Self-training <ul>
-<li>One of the oldest and simplest semi-supervised learning algorithms (1960s) </li>
-</ul>
-</li>
-<li><p>Consistency regularization </p>
-<ul>
-<li>Recent idea (2014, lots of active research) </li>
-<li>Great results for both computer vision and NLP </li>
-</ul>
-<h3 id="Pre-training"><a href="#Pre-training" class="headerlink" title="Pre-training"></a>Pre-training</h3></li>
-</ul>
-<ol>
-<li>First train an unsupervised model on unlabeled data </li>
-<li>Then incorporate the model’s learned weights into a supervised model and train it on the labeled data                <ul>
-<li>Optional: continue fine-tuning the unsupervised weights.</li>
-</ul>
-</li>
-</ol>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplv8cfphhj30m60bt0ui.jpg" alt="pre-training"></p>
-<p>Pre-training Example : Word2Vec </p>
-<ul>
-<li>Shared part is word embeddings </li>
-<li>No unsupervised-only part </li>
-<li>Supervised-only part is the rest of the model </li>
-<li>Unsupervised learning: skip-gram/cbow/glove/etc </li>
-<li>Supervised learning: training on some NLP task</li>
-</ul>
-<p><em>Why does pre-training work?</em> </p>
-<ul>
-<li>”Smart” initialization for the model </li>
-<li>More meaningful representations in the model <ul>
-<li>e.g., GloVe vectors capture a lot about word meaning, our model no longer has to learn the meanings itself</li>
-</ul>
-</li>
-</ul>
-<p><strong>Pre-Training for NLP</strong> :</p>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplvobi1s9j30r90gawfz.jpg" alt="Pre-Training for NLP"></p>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplvq5igiuj30rj0gtmym.jpg" alt=""></p>
-<p>Pre-Training Strategies: <strong>Auto-Encoder</strong> (Dai &amp; Le, 2015) </p>
-<ul>
-<li>For pre-training, train an autoencoder: <ul>
-<li>seq2seq model (without attention) where the target sequence is the input sequence </li>
-<li>the encoder converts the input into a vector that contains enough information that the input can be recovered </li>
-</ul>
-</li>
-<li>Initialize the LSTM for a sentence classification model with the encoder<br><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplvub08upj30k709w0to.jpg" alt=""></li>
-</ul>
-<p>More :</p>
-<ul>
-<li>CoVe (McCann et al., 2017) : <a href="http://papers.nips.cc/paper/7209-learned-in-translation-contextualized-word-vectors.pdf" target="_blank" rel="noopener">Learned in Translation: Contextualized Word Vectors</a></li>
-<li><p>ELMo (Peters et al., 2017) : <a href="https://arxiv.org/pdf/1705.00108.pdf" target="_blank" rel="noopener">Semi-supervised sequence tagging with bidirectional language models</a> </p>
-<h3 id="Self-training"><a href="#Self-training" class="headerlink" title="Self-training"></a>Self-training</h3><ul>
-<li>Use unlabeled data without a giant model or long pretraining phase </li>
-<li>Old (1960s) and simple semi-supervised algorithm </li>
-<li>Algorithm: <ol>
-<li>Train the model on the labeled data. </li>
-<li>Have the model label the unlabeled data. <ul>
-<li>Take some of examples the model is most confident about (i.e., the model gives them high probability). Add those examples with the model’s labels to the training set <ol start="3">
-<li>Go back to 1.</li>
-</ol>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplwq9fhpfj30qe0bh76n.jpg" alt=""></p>
-<h4 id="Online-Self-Training"><a href="#Online-Self-Training" class="headerlink" title="Online Self-Training"></a>Online Self-Training</h4><p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplx305k9hj30r00diq5i.jpg" alt="Online Self-Training"></p>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplx9tcw1sj30bv014jrd.jpg" alt=""><br>    note : convert model-produced label to one-hot vector, [0.1,0.5,0.4] =&gt;[0,1,0]</p>
-<p><code>Hard vs Soft Targets</code> : </p>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fplx4azaerj30py0hwac6.jpg" alt=""></p>
-<h3 id="Consistency-regularization"><a href="#Consistency-regularization" class="headerlink" title="Consistency regularization"></a>Consistency regularization</h3><p> <img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmqp8hpwvj30of0b3dhb.jpg" alt=""></p>
-<ul>
-<li>Train the model so a bit of noise doesn’t mess up its predictions </li>
-<li>Equivalently, the model must give consistent predictions to nearby data points</li>
-</ul>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmqr9kuy7j30ha082t9e.jpg" alt=""></p>
-<p><code>Example</code> :<br> <img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmr2ghes7j30lt0e6t9i.jpg" alt=""></p>
-<p><code>Amazing Results for Computer Vision!</code><br><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmr57k6lej30oz0ej765.jpg" alt=""></p>
-<h4 id="How-to-Apply-Consistency-Regularization-to-NLP"><a href="#How-to-Apply-Consistency-Regularization-to-NLP" class="headerlink" title="How to Apply Consistency Regularization to NLP?"></a>How to Apply Consistency Regularization to NLP?</h4><p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmr90168hj30qg0ehdhw.jpg" alt=""></p>
-<h5 id="Virtual-Adversarial-Training-Miyato-et-al-2017"><a href="#Virtual-Adversarial-Training-Miyato-et-al-2017" class="headerlink" title="Virtual Adversarial Training (Miyato et al., 2017)"></a>Virtual Adversarial Training (Miyato et al., 2017)</h5><ul>
-<li>Apply consistency regularization to text classification <ul>
-<li>First embed the words </li>
-<li>Add the noise to the word embeddings </li>
-<li>Have to constrain the word embeddings (e.g., make them have zero mean and unit variance) <ul>
-<li>Otherwise the model could just make them have really large magnitude so the noise doesn’t change anything </li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Noise added to the word embeddings is not chosen randomly: it is chosen adversarially</li>
-</ul>
-<p><strong>Adversarial Examples</strong><br><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmrlwn205j30ku08fk0v.jpg" alt=""></p>
-<p>Small (imperceptible to humans) tweak to neural network inputs can change its output.<br>Creating an adversarial example: </p>
-<ul>
-<li>Compute the gradient of the loss with respect to the input </li>
-<li>Add epsilon times the gradient to the input <ul>
-<li>Possibly repeat multiple times</li>
-</ul>
-</li>
-</ul>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmrq5f60wj30qt0hjmyn.jpg" alt=""></p>
-<p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmrrvky60j30lg0ayjsb.jpg" alt=""></p>
-<h5 id="Word-Dropout"><a href="#Word-Dropout" class="headerlink" title="Word Dropout"></a>Word Dropout</h5><p><img src="http://ws1.sinaimg.cn/large/006tGRI6ly1fpmrxk6iybj30qm0c976h.jpg" alt=""></p>
-<h5 id="Cross-View-Consistency-Clark-et-al-2018"><a href="#Cross-View-Consistency-Clark-et-al-2018" class="headerlink" title="Cross-View Consistency (Clark et al., 2018)"></a>Cross-View Consistency (Clark et al., 2018)</h5><p><img src="http://ws2.sinaimg.cn/large/006tGRI6ly1fpw0zum6q2j30t80fggow.jpg" alt=""></p>
-<p><img src="http://ws2.sinaimg.cn/large/006tGRI6ly1fpw138cpumj30q10e5acu.jpg" alt=""></p>
-<p><img src="http://ws2.sinaimg.cn/large/006tGRI6ly1fpw17xqum5j30si0h1tbo.jpg" alt=""></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://web.stanford.edu/class/cs224n/lectures/lecture17.pdf" target="_blank" rel="noopener">http://web.stanford.edu/class/cs224n/lectures/lecture17.pdf</a></li>
-<li><a href="https://arxiv.org/abs/1511.01432" target="_blank" rel="noopener">Semi-Supervised Sequence Learning</a></li>
-<li><a href="https://arxiv.org/pdf/1708.00107.pdf" target="_blank" rel="noopener">Learned in Translation: Contextualized Word Vectors</a></li>
-<li><a href="https://arxiv.org/pdf/1802.05365.pdf" target="_blank" rel="noopener">Deep Contextualized Word Representations</a></li>
-<li><a href="https://arxiv.org/pdf/1605.07725.pdf" target="_blank" rel="noopener">Adversarial Training Methods for Semi-Supervised Text Classification</a></li>
-</ul>
-
-        </div>
-        <footer class="article-footer">
-            
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-
-        </footer>
+        <p class="article-excerpt">
+            Xception是google继Inception后提出的对Inception v3的另一种改进，主要是采用depthwise separable convolution来替换原来Inception v3中的卷积操作。paper link
+        </p>
     </div>
 </article>
-
-    <section id="comments">
     
-        
-    <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-
+        </div>
     
-    </section>
+
+
+    </div></section>
+
 
 
                         </div>
@@ -438,29 +251,6 @@
             
         </ul>
     </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/03/30/Attention is all you need/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Attention is all you need
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
-    
-    
-        <a href="/2018/03/20/Eager_Execution/" id="article-nav-older" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Tensorflow_Eager</p>
-        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
-        </a>
-    
-</nav>
-
     
     <div class="widgets-container">
         
@@ -662,13 +452,11 @@
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2018/03/22/Semi-Supervised Learning for NLP/';
-    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
