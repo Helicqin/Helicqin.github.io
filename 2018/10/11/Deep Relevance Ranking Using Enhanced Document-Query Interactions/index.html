@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="NLP,Information Retrieval" />
+    
+    <meta name="description" content="本文提出了几种针对于文档相关性排序问题的新模型，这些模型基于已有的DRMM模型：A Deep Relevance Matching Model for Ad-hoc Retrieval) 。不同之处在于，DRMM模型使用上下文无关的term encoding编码方式，而本文提出的改进模型则借鉴自PACRR的思想，融合n-grams和不同方式编码的上下文信息。实验证明，本文提出的模型优于BM25-b">
+<meta name="keywords" content="NLP,Information Retrieval">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions">
+<meta property="og:url" content="https://helic.github.io/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文提出了几种针对于文档相关性排序问题的新模型，这些模型基于已有的DRMM模型：A Deep Relevance Matching Model for Ad-hoc Retrieval) 。不同之处在于，DRMM模型使用上下文无关的term encoding编码方式，而本文提出的改进模型则借鉴自PACRR的思想，融合n-grams和不同方式编码的上下文信息。实验证明，本文提出的模型优于BM25-b">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBqeWNaMGF4WWhOWlJaM0g5eGl4K2ZxYmtHT3BSeVBlc2dqOHFXbWFRMUxBPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg">
+<meta property="og:updated_time" content="2018-10-15T08:54:51.479Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions">
+<meta name="twitter:description" content="本文提出了几种针对于文档相关性排序问题的新模型，这些模型基于已有的DRMM模型：A Deep Relevance Matching Model for Ad-hoc Retrieval) 。不同之处在于，DRMM模型使用上下文无关的term encoding编码方式，而本文提出的改进模型则借鉴自PACRR的思想，融合n-grams和不同方式编码的上下文信息。实验证明，本文提出的模型优于BM25-b">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBqeWNaMGF4WWhOWlJaM0g5eGl4K2ZxYmtHT3BSeVBlc2dqOHFXbWFRMUxBPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Deep Relevance Ranking Using Enhanced Document-Query Interactions" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/" class="article-date">
+            <time datetime="2018-10-11T06:32:00.000Z" itemprop="datePublished">2018-10-11</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Information-Retrieval/">Information Retrieval</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文提出了几种针对于文档相关性排序问题的新模型，这些模型基于已有的DRMM模型：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1711.08611" target="_blank" rel="noopener">A Deep Relevance Matching Model for Ad-hoc Retrieval</a>) 。不同之处在于，DRMM模型使用上下文无关的term encoding编码方式，而本文提出的改进模型则借鉴自PACRR的思想，融合n-grams和不同方式编码的上下文信息。实验证明，本文提出的模型优于BM25-baseline，DRMM和PACRR。<br><a href="https://github.com/nlpaueb/deep-relevance-ranking" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>作者首先介绍了文档相关性排序问题的定义，也即本文研究的主要对象：</p>
+<blockquote>
+<p>Document  relevance  ranking,  also  known  as  ad-hoc  retrieval  (Harman,  2005),  is  the  task  of  ranking  documents  from  a  large  collection  using  the query  and  the  text  of  each  document  only.</p>
+</blockquote>
+<p>针对于 ad-hoc  retrieval 问题，现有的深度模型可以分为两种（参考自<a href="https://drive.google.com/open?id=1dXG5p266YD6Pzy9krhdRR5ZUCXuTIhzu" target="_blank" rel="noopener"><br>A  Deep  Relevance  Matching  Model  for  Ad-hoc  Retrieval</a>）：</p>
+<ul>
+<li><code>representation-focused  model</code> ：构建一个深度神经网络来获得文本的向量表示，进而做匹配，例如DSSM ,  C-DSSM  and  ARC-I </li>
+<li><code>interaction-focused  model</code> ： 首先在两段文本上构建local  interactions  (i.e.,  local  matching  signals)，然后使用深度神经网络去学习分级匹配模式（hierarchical  interaction  patterns  for  matching）</li>
+</ul>
+<blockquote>
+<p> One  is  the  representation-focused  model,  which tries  to  build  a  good  representation  for  a  single  text  with  a deep  neural  network,  and  then  conducts  matching  between the  compositional  and  abstract  text  representations.  Examples  include  DSSM  [12],  C-DSSM  [23,  8]  and  ARC-I  [11]. The  other  is  the  interaction-focused  model,  which  first  builds local  interactions  (i.e.,  local  matching  signals)  between  two pieces  of  text,  and  then  uses  deep  neural  networks  to  learn hierarchical  interaction  patterns  for  matching.  Examples include  DeepMatch  [17],  ARC-II  [11]  and  MatchPyramid  [19].</p>
+</blockquote>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFEZitIQ2NLNThRaHpsTVRpTk1yeVk0UDNnaE5vQUVnUkgzQzY0Szl0ZVdnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Two  types  of  deep  matching  models:  (a)  Representation-focused  models  employ  a  Siamese  (symmetric)  architecture  over  the  text  inputs;  (b)  Interaction-focused  models  employ  a  hierarchical  deep  architecture over  the  local  interaction  matrix."></p>
+<p>本文主要研究的是第二种模型中的<a href="https://arxiv.org/abs/1711.08611" target="_blank" rel="noopener">Deep Relevance  Matching  Model  (DRMM)</a> ，下图是DRMM的结构图。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFEZitIQ2NLNThRbWlWOExXbWVZUHpScEd0ZmtxZmZsbDBCdzlZUXNoZXJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Architecture  of  the  Deep  Relevance  Matching  Model."></p>
+<p>针对于query和document中的每个词，DRMM 使用预训练的词向量。首先对query中的每个词与doc所有词计算相似度（论文中使用了cos距离），此处没有使用位置信息，而是将一个query对应的所有相似度进行分级（即文中说的直方图：<strong>document-aware  q-term  encoding</strong>）。 </p>
+<blockquote>
+<p>直方图是指：例如将余弦相似度[-1, 1]分为五个区间{[-1,-0.5), [-0.5,-0), [0,0.5), [0.5,1), [1,1]} 。给定query中的一个词“car”以及一篇文档（car, rent, truck, bump, injunction, runway）, 得到对应的局部交互空间为(1, 0.2, 0.7, 0.3, -0.1, 0.1)，最后我们用基于计数的直方图方法得到的直方图为[0,1, 3, 1, 1]</p>
+</blockquote>
+<p>原始的<a href="https://arxiv.org/abs/1711.08611" target="_blank" rel="noopener">Deep Relevance  Matching  Model  (DRMM)</a> 论文中，直方图的生成方式有三种：</p>
+<ul>
+<li><p><code>Count-based  Histogram  (CH)</code>:  This  is  the  simplest  way of  transformation  as  described  above  which  directly takes  the  count  of  local  interactions  in  each  bin  as  the histogram  value. </p>
+</li>
+<li><p><code>Normalized  Histogram  (NH)</code>:  We  normalize  the  count value  in  each  bin  by  the  total  count  to  focus  on  the relative  rather  than  the  absolute  number  of  different levels  of  interactions.</p>
+</li>
+<li><p><code>LogCount-based  Histogram  (LCH)</code>:  We  apply  logarithm over  the  count  value  in  each  bin,  both  to  reduce  the range,  and  to  allow  our  model  to  more  easily  learn multiplicative  relationships. (实际的实验证明LCH效果最好)</p>
+</li>
+</ul>
+<p>得到直方图后，将其组合成一个向量输入到一个全连接网络中，得到一个query词针对于一个doc的相关性分数。然后使用Term  Gating  Network得到权重分布（不同的词重要程度不同），在原始论文中，作者直接使用了softmax计算权重：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFEZitIQ2NLNThRZ2lHOUZWWkJzR1JXVFNyK3NUck9ERmhmZzV3SDB1RkJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中，$w_{g}$代表weight vector，与$x_{i}^{(q)}$维度相同，是一个训练参数；$x_{i}^{(q)}$是query中的每个词的embedding。原始论文尝试了两种方案：</p>
+<ul>
+<li>Term  Vector  (TV):  Inspired  by  the  work  where term  embeddings  can  be  leveraged  to  learn  the  term  weights in  queries,  we  use  query  term  vectors  as  the  input  of  the gating  function.  In  this  method,  $x_{i}^{(q)}$ denotes  the  i-th  query term  vector,  and  $w_{g}$ is  a  weight  vector  with  the  same  dimensionality  of  term  vectors.</li>
+<li>Inverse  Document  Frequency  (IDF):  An  important signal  of  term  importance  in  ad-hoc  retrieval  is  the  inverse document  frequency.  We  also  tried  this  simple  but  powerful signal  in  the  gating  function.  In  this  method,  $x_{i}^{(q)}$ denotes the  inverse  document  frequency  of  the  i-th  query  term,  and $w_{g}$ reduces  to  a  single  parameter.</li>
+</ul>
+<p>得到权重分布后，对每个query词针对于一个doc的相关性分数计算加权和得到最终的相关性得分：<br>$$s=\sum_{i=1}^{M}g_{i}z_{i}^{L}$$</p>
+<p>简要的说明一下训练过程：</p>
+<blockquote>
+<p>Since  the  ad-hoc  retrieval  task  is  fundamentally  a  ranking problem,  we  employ  a  pairwise  ranking  loss  such  as  hinge loss  to  train  our  deep  relevance  matching  model.  Given  a triple  $(q,d^{+},d^{-})$,  where  document  $d^{+}$ is  ranked  higher  than document  $d^{-}$ with  respect  to  query  q,  the  loss  function  is $$\zeta(q,d^{+},d^{-};\Theta)=max(0,1-s(q,d^{+})+s(q,d^{-}))$$<br>where $s(q,  d)$  denotes  the  predicted  matching  score  for  $(q,  d)$ , and  $Θ$  includes  the  parameters  for  the  feed  forward  matching  network  and  those  for  the  term  gating  network.  The  optimization  is  relatively  straightforward  with  standard  back-propagation.  We  apply  stochastic  gradient  descent  method Adagrad  with  mini-batches  (20  in  size),  which  can  be easily  parallelized  on  single  machine  with  multi-cores.  For regularization,  we  find  that  the  early  stopping  strategy works  well  for  our  model.</p>
+</blockquote>
+<p>DRMM模型的缺点在于完全忽略了每个词的上下文信息，而一些新的position-aware模型例如 PACRR  (Hui  et  al.,  2017) 和基于循环神经网络的模型(Palangi  et  al.,  2016)则考虑到这点。</p>
+<p>本文的主要贡献在于给DRMM模型增加了上下文信息。因为原始DRMM模型中直方图的构建方式并不是可微的，所以DRMM不支持端到端的训练方式。本文总共提出了以下几种基于DRMM模型的拓展方法：</p>
+<ul>
+<li>PACRR-like  convolutional  n-gram  matching  features  (x3.1)</li>
+<li>context-sensitive term  encodings  (x3.2)</li>
+<li>query-focused  attention-based  document  representations  (x3.3)</li>
+<li>pooling  to reward  denser  term  matches  and  turn  rich  term representations  into  fixed-width  vectors  (x3.4)</li>
+<li>multiple  views  of  terms,  e.g.,  context  sensitive,  insensitive,  exact  matches  (x3.5)</li>
+</ul>
+<p>作者在BIOASQ生物医药QA问答集 (Tsatsaronis  et  al.,  2015)  and  TREC  ROBUST  2004 (Voorhees,  2005)做测试，结果表明改进后的模型比效果优于BM25-based  baselines  (Robertson  and Zaragoza,  2009),  DRMM,  and  PACRR.</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related  Work"></a>Related  Work</h2><p><em>很值得一看，相当于总结了深度学习在检索中的各种应用，是一个很好的概述。</em></p>
+<h2 id="Previous-Model"><a href="#Previous-Model" class="headerlink" title="Previous Model"></a>Previous Model</h2><h3 id="DRMM"><a href="#DRMM" class="headerlink" title="DRMM"></a>DRMM</h3><p>Introduction中已经介绍了DRMM的整体结构，这里对一些细节再做详细解释。</p>
+<p>对于Figure 2中的Term  Gating  Network，本文作者认为是一种线性self-attention：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFkRzdNWjIxKzhnb244TG55QWdzVlJXVzZoSzFPRkVpNU9qeVlCdFR5TXlBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中，$\phi _{g}(q_{i})$是第i个query词语的词向量$e(q_{i})$或者IDF $idf(q_{i})$，$w_{g}$是一个weight vector（训练参数）。目的是基于每个词的重要程度来赋予不同的权重。作者发现$\phi _{g}(q_{i})=[e(q_{i});idf(q_{i})]$对于所有DRMM-based模型是最优的。</p>
+<p>原始DRMM模型中最核心的是相似度直方图，原始论文中选取的是固定的相似度分数范围，导致固定维度的全连接网络输入，直方图的计算方式会使DRMM模型不受不同文档和query长度的影响，这是DRMM模型的核心优点。缺点是不能考虑词序和上下文。</p>
+<h3 id="PACRR"><a href="#PACRR" class="headerlink" title="PACRR"></a><a href="https://drive.google.com/open?id=1Dje7tOYTcDzmPx2rbpcT0WjpI5jkJQDo" target="_blank" rel="noopener">PACRR</a></h3><p>PACRR模型则提出了一种新的计算相似度分数的方法，以下为其结构：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJ3NXdWaGtVa0p0M3o3MFpoVVUzaFlXbTArT085cVlSbUZUakJvK0NJYm9RPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  3:  PACRR  (Hui  et  al.,  2017)  and  PACRR-DRMM."></p>
+<ol>
+<li><p>首先根据每一个query term embedding和doc term embedding得到余弦相似度得分矩阵，矩阵的维度为$|q| \times |d|$，<br>矩阵元素(i,  j)代表第i个query词语和第j个document词语的余弦相似度分数。为了保证对于不同长度的query和doc矩阵维度相同，论文中采取了以下方式：</p>
+<ul>
+<li>对于不同长度的query : 直接选取所有queries的最大长度，然后zero-padding =&gt;矩阵的行固定为$l_{d}$；</li>
+<li>对于不同长度的doc：本文使用PACRR-firstk模型，即选择一个固定的k值，只取相似度矩阵的前k列；如果$k&gt;|d|$，采取zero-padding。</li>
+</ul>
+</li>
+<li><p>上述方法能够得到一个固定维度大小的相似度矩阵，然后分别使用卷积大小为 $n \times n(n=2,…,l_{g})$的卷积核去捕获n-grams的query-document similarities，对于每一类 $n \times n$ 的卷积核，使用$n_{f}$个卷积核进行二维卷积。为了保证不同的的卷积核大小输出的结果维度一致，设置卷积步长为1，调整padding使得输出的矩阵大小相同（与原始的相似度矩阵相同）。最终卷积后的输出为：对于每一类 $n \times n$ 的卷积核，对应的输出结果为 $n_{f}$ 个 $l_{q} \times l_{d}$  的矩阵；总共有 $l_{g}-1$ 类卷积核，所以共有 $(l_{g}-1) \times n_{f}$ 个输出矩阵，矩阵的维度都是 $l_{q} \times l_{d}$ 。</p>
+</li>
+<li><p>之后经过两个pooling层。首先是对the  dimension  of  the  filters做max-pooling，也即对每一类 $n \times n$ 大小的卷积核，取$n_{f}$个激活图的最大值（channel dimension），max-pooling后的输出是 $l_{g}-1$ 个矩阵，矩阵维度为 $l_{q} \times l_{d}$ ；最后将原始的相似度矩阵直接拿过来堆叠在一起，所以最终输出的是 $l_{g}$ 个矩阵，矩阵维度为 $l_{q} \times l_{d}$ 。之后是对 $l_{g}$ 个矩阵的每行（query dimension）进行k-max  pooling，目的是获得每个query term与所有的doc terms最强的前k个关联信息特征，得到的输出为 $l_{g}$ 个矩阵，矩阵维度为 $l_{q} \times k$ 。</p>
+</li>
+<li><p>然后将上一步中的 $l_{g}$ 个矩阵按照query dimension拼接在一起，得到一个矩阵，维度为 $l_{q} \times (l_{g}k)$，再加入softmax归一化后的query IDF列向量，最终得到 $l_{q} \times (l_{g}k+1)$ 的矩阵。</p>
+<ul>
+<li><p>在原始的PACRR模型论文中，得到 $l_{q} \times (l_{g}k+1)$ 的矩阵之后，使用一个LSTM神经网络，以 $l_{q} \times (l_{g}k+1)$ 矩阵的每一行作为LSTM的one step input，LSTM最终输出query与doc的相关性得分 $rel(q, d)$。</p>
+<p>  <img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJXbEl6Z0N1eVF1emYzWmdYZnQ4YlZmOFJmdW1WZk9DZWNlbXlScWFObDF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  4:  The  pipeline  of  PACRR from origin paper"></p>
+</li>
+<li><p>而本文采取了一种新的方式（来自于Co-PACRR:  A  context-aware  neural IR  model  for  ad-hoc  retrieval）：直接将$l_{q} \times (l_{g}k+1)$ 的矩阵拼接成一个向量，然后再输入到全连接网络中，最终得到query与doc的相关性得分 $rel(q, d)$。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>与DRMM模型相比，PACRR模型最大的优点在于通过n-grams的卷积对上下文建模，尽管获取的上下文信息不够直接（作者认为直接对terms embedding进行卷积比对相似度得分矩阵能够得到更强的上下文信息），而且PACRR模型是端到端可训练的。</p>
+<h2 id="New-Relevance-Ranking-Models"><a href="#New-Relevance-Ranking-Models" class="headerlink" title="New  Relevance  Ranking  Models"></a>New  Relevance  Ranking  Models</h2><h3 id="PACRR-DRMM"><a href="#PACRR-DRMM" class="headerlink" title="PACRR-DRMM"></a>PACRR-DRMM</h3><p>Fig 3.B是PACRR-DRMM模型的结构图，与PACRR模型不同的是，第四步并没有将all  the  (document-aware)  q-term encodings矩阵拼接成一个向量，而是使用相同的MLP网络独立地计算每一个q-term encoding（矩阵的每一行）的分数，再通过一个线性层得到query与doc的相关性得分 $rel(q, d)$ 。</p>
+<p>与DRMM相比，PACRR-DRMM没有采用其gating mechanism方式，而是直接将IDFs的值拼接到term encoding，再通过MLP计算q-term的分数，这相当于是另一种term-gating的方式（作者认为这是一种shortcut  passing  on  information  about  the  terms,  here  their  IDFs,  to  upper  layers）。</p>
+<p>实验证明，PACRR-DRMM效果优于PACRR，作者认为可能是因为前者的MLP网络具有更少的参数（MLP层数相同的情况下），更不容易过拟合。</p>
+<h3 id="Context-sensitive-Term-Encodings"><a href="#Context-sensitive-Term-Encodings" class="headerlink" title="Context-sensitive  Term  Encodings"></a>Context-sensitive  Term  Encodings</h3><p>DRMM和PACRR模型都使用的是预训练的词向量作为term encoding，这种方式没有考虑到query term的上下文。</p>
+<p>信息检索领域，context-sensitivity有两种方式：</p>
+<ul>
+<li><code>term  proximity</code> :  侧重于上下文，the  context  around  a  term  match  is  also  relevant</li>
+<li><code>term  dependency</code>：侧重于n-grams，aims  to  capture  when  multiple terms  (e.g.,  an  n-gram)  must  be  matched together</li>
+</ul>
+<p>在接下来介绍的模型中，都是通过编码器对q-term和d-term进行上下文编码，使用的是BILSTM网络，然后在每个位置上拼接前向和后向的LSTM的隐层状态。同时，将原始的term embedding与隐层状态结合，相当于残差结构，如下所示：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNnMjM1UGZsZVBUMzhDbEJUaHFKcDBOSDBEdTR4TmVBWGpTOWNRdU9sWnZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中，$\underset{h(t_{i})}{\rightarrow}$ 和 $\underset{h(t_{i})}{\leftarrow}$ 为顶层LSTM的隐层状态，$e(t_{i})$ 是term的词向量，$c(t_{i})$ 是第i个term的encoding。作者也尝试过将这些向量输入到MLP中得到一个encoding，但实验效果并没有改善。</p>
+<p>与PACRR模型相比，最大的区别在于Context-sensitive  Term  Encodings直接对term encoding进行上下文建模，计算的相似度分数已经包含上下文信息，而PACRR模型对相关性分数矩阵（直接由词向量得到）做n-grams卷积得到上下文信息。</p>
+<h3 id="ABEL-DRMM（Attention-Based-ELement-wise-DRMM）"><a href="#ABEL-DRMM（Attention-Based-ELement-wise-DRMM）" class="headerlink" title="ABEL-DRMM（Attention-Based  ELement-wise  DRMM）"></a>ABEL-DRMM（Attention-Based  ELement-wise  DRMM）</h3><p>ABEL-DRMM是在DRMM模型的基础上将原始DRMM模型中的直方图计算变为Attention，使得从term输入到最后计算query-document相关性得分整个过程可微，可以进行端到端的训练。结构如下：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjNnMjM1UGZsZVBUOGlhU3pLclpnTUNYSk41S0tRQUJYVHVWa1FEaFQ3em13PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  5:  ABEL-DRMM  sub-net.  From  context-aware q-term  and  d-term  encodings  (Eq.  1),  it  generates  fixed-dimension  document-aware  q-term  encodings  to  be used  in  DRMM  (代替直方图的计算)"></p>
+<ol>
+<li><p>首先计算每个q-term相对于所有d-terms的注意力分数（内积dot-product attention）：</p>
+<p> <img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNnMjM1UGZsZVBUeXRpSk5IYzlaWHg2eVBkdUl3VFFUMjROY3FnQzdFQTZnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""><br> 其中：$c(t)$是t的上下文编码（Eq. 1）</p>
+</li>
+<li><p>然后对d-terms encoding进行加权求和：</p>
+<p> <img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNnMjM1UGZsZVBUMGp0am9hNk5aN1VoVzYxc1QwbTRuQzlObnlCOXVjV1NBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+</li>
+<li><p>接着使用 L2正则化后的 $d_{q_{i}}$ 与L2正则化的q-term encoding进行Hadamard运算(element-wise  multiplication)，得到<strong>document-aware q-term encoding</strong>，代替DRMM模型中的直方图：  </p>
+<p> <img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjEydDdxNmNPeURnZHVuSGNpYjBBdkRWcEhtVEZxZFlqeGJKQUxjKyt1OXhBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+</li>
+</ol>
+<blockquote>
+<p>Other  element-wise  functions  can  also  be  used to  compare  $d_{q_{i}}$ to $c(q_{i})$,  instead  of  the  Hadamard product  (Eq.  4).  For  example,  a  vector  containing  the  squared  terms  of  the  Euclidean  distance between  $d_{q_{i}}$ and  $c(q_{i})$  could  be  used  instead  of $\phi _{H}(q_{i})$.  This  change  had  no  effect  on  ABEL-DRMM’s  performance  on  development  data.  We also  tried  using  $[d_{q_{i}};c(q_{i})]$  instead  of  $\phi _{H}(q_{i})$,  but performance  on  development  data  deteriorated.</p>
+</blockquote>
+<p>和DRMM模型一样，ABEL-DRMM模型与文档长度无关，但是可以端到端训练。但是两种模型都不能 <code>reward  higher  density  matches</code>.</p>
+<blockquote>
+<p>Still,  both models  do  not  reward  higher  density  matches.</p>
+</blockquote>
+<h3 id="POSIT-DRMM-Pooled-Similarity-DRMM"><a href="#POSIT-DRMM-Pooled-Similarity-DRMM" class="headerlink" title="POSIT-DRMM (Pooled  Similarity  DRMM)"></a>POSIT-DRMM (Pooled  Similarity  DRMM)</h3><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjEydDdxNmNPeURnZEpmQjN2bENWdVpzOWlJeHluazRMZUQ5U1o4aU1idzBRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  6:  POSIT-DRMM  with  multiple  views  (+MV). Three  two-dimensional  document-aware  q-term  encodings,  one  from  each  view,  are  produced,  concatenated, and  used  in  DRMM  (代替直方图的计算)"></p>
+<ol>
+<li><p>与ABEL-DRMM不同，POSIT-DRMM使用余弦相似度计算每个q-term相对于所有d-terms的注意力分数：</p>
+<p> <img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjEydDdxNmNPeURnY2E1SXM5UUxIalNlUktJQWZvejdKODJsUHZiWEFwSXpRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+</li>
+<li><p>然而在ABEL-DRMM模型中并没有使用加权求和，而是直接将所有的$a_{i,j}$直接拼接在一起：</p>
+<p> <img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjEydDdxNmNPeURnZkRWZTBlaWljZDZlWjNmSEVvMnVhNFFBSXk0R2x1bXd3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+</li>
+<li><p>之后通过两个pooling层，max-pooling返回的是 $q_{i}$ 与doc最相关匹配的信息，而avg-pooling返回的是 $q_{i}$ 与doc前top-k最相关匹配的平均信息：</p>
+<p> <img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjEydDdxNmNPeURnUU9XL1JLRktldFBYN1BSeVN0dHUzZmRVbTV4UW96ZVl3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p> 其中 $\phi _{P}(q_{i})$ 即为<strong>document-aware q-term encoding</strong>，代替DRMM模型中的直方图。</p>
+</li>
+</ol>
+<p>POSIT-DRMM模型比其他模型的参数更少，因为全连接网络的输入维度只是一个长度为2的向量，而ABEL-DRMM与term embedding的长度相同。因此，POSIT-DRMM模型的全连接网络只需要一层，更多训练超参数见 <a href="https://drive.google.com/open?id=1oW4i2PNcvzxrCOnLX_HpoFXdSheBO0md" target="_blank" rel="noopener">Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions Supplementary  Material</a> 。</p>
+<blockquote>
+<p>POSIT-DRMM  is  closely  related  to  PACRR  (and PACRR-DRMM).  Like  POSIT-DRMM,  PACRR  first computes  cosine  similarities  between  all  q-terms and  d-terms  (Fig.  3).  It  then  applies  n-gram  convolutions  to  the  similarity  matrix  to  inject  context-awareness,  and  then  pooling  to  create  document-aware  q-term  representations.  Instead,  POSIT-DRMM  relies  on  the  fact  that  the  term  encodings are  now  already  context  sensitive  (Eq.  1)  and  thus skips  the  n-gram  convolutions.  Again,  this  is  a choice  of  when  context  is  injected  –  during  term encoding  or  after  computing similarity  scores.</p>
+</blockquote>
+<h3 id="Multiple-Views-of-Terms-MV"><a href="#Multiple-Views-of-Terms-MV" class="headerlink" title="Multiple  Views  of  Terms  (+MV)"></a>Multiple  Views  of  Terms  (+MV)</h3><p>基于ABEL-DRMM和POSIT-DRMM模型的一种改进方案是结合多种term encoding，例如term embedding, term context-sensitive  encoding, context-insensitive  encoding等信息。具体实例见Fig. 6。</p>
+<p><em>这种思想其实可以用到所有的深度模型中，值得学习</em></p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>作者在做实验时，为了避免待匹配的文档数过多，先使用了一个传统的基于BM25算法的IR系统（<a href="http://www.lemurproject.org/galago.php" target="_blank" rel="noopener">Galago</a>）选取前topN个文档，之后再用深度模型对这前topN个文档进行重排序。</p>
+<p>作者在BioASQ和TREC  Robust  2004两个数据集上做实验，结果如下：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFVUmQ4eExTT2x2VHZMN1VTbG5YZDgrbUt1R2tyVmRxRktQUFpqT1Eza0JBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>本文所使用的评价指标（参考自<a href="https://blog.csdn.net/u010138758/article/details/69936041）：" target="_blank" rel="noopener">https://blog.csdn.net/u010138758/article/details/69936041）：</a></p>
+<ol>
+<li><strong>Precision</strong>：准确率(精确度)是指检索得到的文档中相关文档所占的比例，公式如下：<br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBqeWNaMGF4WWhOYXlVTjlqRm1HazkvbEhjQXB6WldFNWNmaVdsOFBTa3BnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br>precision@20表示检索20个文档中包含相关所占的比例，即：|{retrieved documents}| = 20。</li>
+<li><p><strong>Mean average precision(MAP)</strong>：通常会用多个查询语句来衡量检索系统的性能，所以应该对多个查询语句的AveP求均值，即：<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBqeWNaMGF4WWhOU2pPajI1OS9JSWViWWRkYkFmQW1CWG1zRUh4YzdaMU9BPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+</li>
+<li><p><strong>Discounted cumulative gain(DCG)</strong>：在MAP计算公式中，文档只有相关不相关两种，而在nDCG中，文档的相关度可以分多个等级进行打分。<br> <img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBqeWNaMGF4WWhOU3hvTlpYZlhZNlU0bzM3TmNObVA5SEM1TlZEVk5jNXJnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+</li>
+</ol>
+<p>从实验结果可以看出：</p>
+<ul>
+<li>本文中提出的几种改进模型均比原始的DRMM，PACRR更优；</li>
+<li>基于context-sensitive  encoding的ABEL-DRMM和POSIT-DRMM优于DRMM-PACRR模型；</li>
+<li>MV方法能够改善模型效果。</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://drive.google.com/open?id=1VmJMFyaBbVEBA9jYvcPlI4ZVS_sJ69yi" target="_blank" rel="noopener">Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions</a></li>
+<li><a href="https://drive.google.com/open?id=1oW4i2PNcvzxrCOnLX_HpoFXdSheBO0md" target="_blank" rel="noopener">Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions Supplementary  Material</a></li>
+<li><a href="https://drive.google.com/open?id=1dXG5p266YD6Pzy9krhdRR5ZUCXuTIhzu" target="_blank" rel="noopener">A  Deep  Relevance  Matching  Model  for  Ad-hoc  Retrieval</a></li>
+<li><a href="https://drive.google.com/open?id=1Dje7tOYTcDzmPx2rbpcT0WjpI5jkJQDo" target="_blank" rel="noopener">PACRR: A Position-Aware Neural IR Model for Relevance Matching</a></li>
+<li><a href="https://github.com/nlpaueb/deep-relevance-ranking" target="_blank" rel="noopener">https://github.com/nlpaueb/deep-relevance-ranking</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/07/Deep contextualized word representations/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Deep contextualized word representations</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBqeWNaMGF4WWhOWlJaM0g5eGl4K2ZxYmtHT3BSeVBlc2dqOHFXbWFRMUxBPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/" class="title">Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T06:32:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/07/Deep contextualized word representations/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjIwNXdJRFJydzBiYy9CMUtrZUZ4cHJsUStNWDJvdTVSTFErOTVtZG9ObmFBPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Deep contextualized word representations" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/07/Deep contextualized word representations/" class="title">Deep contextualized word representations</a></p>
+                            <p class="item-date"><time datetime="2018-10-07T01:40:00.000Z" itemprop="datePublished">2018-10-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBBZVpLZElXRnpYNHpNcUMzVGc5bVMyWDkwVFZrOEZWemNDUndQOTZtS2dnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Xception-Deep  Learning  with  Depthwise  Separable  Convolutions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/CV/CNN/">CNN</a></p>
+                            <p class="item-title"><a href="/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/" class="title">Xception-Deep  Learning  with  Depthwise  Separable  Convolutions</a></p>
+                            <p class="item-date"><time datetime="2018-10-02T01:56:00.000Z" itemprop="datePublished">2018-10-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/25/Universal Sentence Encoder/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ws2.sinaimg.cn/large/006tGRI6ly1fpvzlen1vpj30g50k8mze.jpg)" alt="Universal  Sentence  Encoder" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/09/25/Universal Sentence Encoder/" class="title">Universal  Sentence  Encoder</a></p>
+                            <p class="item-date"><time datetime="2018-09-25T00:30:00.000Z" itemprop="datePublished">2018-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/30/Attention is all you need/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ws2.sinaimg.cn/large/006tGRI6ly1fpvzlen1vpj30g50k8mze.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/03/30/Attention is all you need/" class="title">Attention is all you need</a></p>
+                            <p class="item-date"><time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 13.33px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 13.33px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/NLG/" style="font-size: 13.33px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 13.33px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.33px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16.67px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 20px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 10px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
