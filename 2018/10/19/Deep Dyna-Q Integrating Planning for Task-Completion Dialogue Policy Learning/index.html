@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Python处理excel | Helic</title>
+    <title>Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Excel Python" />
+        <meta name="keywords" content="NLP,Task Oriented Dialogue,Reinforcement Learning" />
     
-    <meta name="description" content="摘要：本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter">
-<meta name="keywords" content="Excel Python">
+    <meta name="description" content="本文提出了一种新的通过与真实用户交互来学习对话策略的方法Deep Dyna-Q，与之前的工作相比，只需要少量的真实对话数据，通过world model对用户建模，结合model-free和model-based，该方法能够高效的学习对话策略。">
+<meta name="keywords" content="NLP,Task Oriented Dialogue,Reinforcement Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python处理excel">
-<meta property="og:url" content="https://helic.github.io/2017/07/15/Python处理excel (1)/index.html">
+<meta property="og:title" content="Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning">
+<meta property="og:url" content="https://helic.github.io/2018/10/19/Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="摘要：本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter">
+<meta property="og:description" content="本文提出了一种新的通过与真实用户交互来学习对话策略的方法Deep Dyna-Q，与之前的工作相比，只需要少量的真实对话数据，通过world model对用户建模，结合model-free和model-based，该方法能够高效的学习对话策略。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://s14.sinaimg.cn/mw690/0039gk0jzy6PEJ1eByt6d&690">
-<meta property="og:updated_time" content="2017-07-28T08:27:26.000Z">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJ3M1NiTEwwV3NvbXRhRmxIUW53QkJNcWdsVWg4SjFnYjJOTGJSUFpTYUl3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2018-10-28T13:05:55.782Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python处理excel">
-<meta name="twitter:description" content="摘要：本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter">
-<meta name="twitter:image" content="http://s14.sinaimg.cn/mw690/0039gk0jzy6PEJ1eByt6d&690">
+<meta name="twitter:title" content="Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning">
+<meta name="twitter:description" content="本文提出了一种新的通过与真实用户交互来学习对话策略的方法Deep Dyna-Q，与之前的工作相比，只需要少量的真实对话数据，通过world model对用户建模，结合model-free和model-based，该方法能够高效的学习对话策略。">
+<meta name="twitter:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJ3M1NiTEwwV3NvbXRhRmxIUW53QkJNcWdsVWg4SjFnYjJOTGJSUFpTYUl3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
     
 
     
@@ -133,18 +133,18 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Python处理excel (1)" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Python处理excel
+        Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning
         </h1>
     
 
@@ -154,45 +154,169 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2017/07/15/Python处理excel (1)/" class="article-date">
-            <time datetime="2017-07-15T11:37:32.000Z" itemprop="datePublished">2017-07-15</time>
+        <a href="/2018/10/19/Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning/" class="article-date">
+            <time datetime="2018-10-19T08:11:00.000Z" itemprop="datePublished">2018-10-19</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Excel-Python/">Excel Python</a>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a>, <a class="tag-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>摘要：本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter<br><a id="more"></a></p>
-<h3 id="1-xlrd"><a href="#1-xlrd" class="headerlink" title="1. xlrd"></a>1. xlrd</h3><h4 id="note"><a href="#note" class="headerlink" title="note:"></a><strong>note</strong>:</h4><ul>
-<li>xlrd可以读取xls(2003)、xlsx(2007及以上)</li>
-<li>xls的行数限制为65536，最大列数是256列；xlsx的行数限制为1048576，最大列数是1638列</li>
+            <p>本文提出了一种新的通过与真实用户交互来学习对话策略的方法<strong>Deep Dyna-Q</strong>，与之前的工作相比，只需要少量的真实对话数据，通过world model对用户建模，结合model-free和model-based，该方法能够高效的学习对话策略。<br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><blockquote>
+<p>Learning  policies  for  task-completion  dialogue  is often  formulated  as  a  reinforcement  learning  (RL) problem.</p>
+</blockquote>
+<p>但是，与simulation-based的游戏，例如Atari  games  (Mnih  et  al.,  2015)  and  AlphaGo  (Silver  et  al.,  2016a,  2017)相比，任务型对话系统需要真实用户来跟RL_agent进行交互来更新学习对话策略，这在现实情况下是不可接受的。</p>
+<p>解决该问题的一个方法是：基于人类的真实对话数据，构建一个用户模拟器，RL_agent可以跟用户模拟器进行交互来更新学习对话策略。然而缺点在于，用户模拟器缺乏人类对话语言的多样性，agent的性能极大地受模拟器的影响。</p>
+<blockquote>
+<p>Dhingra  et  al.(2017)  demonstrated  a  significant  discrepancy  in a  simulator-trained  dialogue  agent  when  evaluated  with  simulators  and  with  real  users.</p>
+</blockquote>
+<p>同时，目前没有合理的指标来评价用户模拟器的性能。因此，是否采用用户模拟器来训练RL_agent仍然是有争议的。</p>
+<p>本文提出了一种基于Dyna-Q  framework的新方法，在学习策略的时候加入了planning过程。首先简单了解Dyna-Q 算法（from <a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching_files/dyna.pdf" target="_blank" rel="noopener">David Silver</a>）：</p>
+<ul>
+<li>Model-Free RL : No model Learn value function (and/or policy) from real experience </li>
+<li>Model-Based RL (using Sample-Based Planning) : Learn a model from real experience Plan value function (and/or policy) from simulated experience </li>
+<li>Dyna : Learn a model from real experience Learn and plan value function (and/or policy) from real and simulated experience</li>
 </ul>
-<p>基本操作：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开Excel表格</span></span><br><span class="line">workbook = xlrd.open_workbook(<span class="string">r'D:\programming\pycharm\pythonProject\helic\test.xlsx'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取所有sheet  </span></span><br><span class="line"><span class="keyword">print</span> workbook.sheet_names() <span class="comment"># [u'sheet1', u'sheet2']  </span></span><br><span class="line">sheet2_name = workbook.sheet_names()[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据sheet索引或者名称获取sheet内容  </span></span><br><span class="line">sheet2 = workbook.sheet_by_index(<span class="number">1</span>) <span class="comment"># sheet索引从0开始  </span></span><br><span class="line">sheet2 = workbook.sheet_by_name(<span class="string">'sheet2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sheet的名称，行数，列数  </span></span><br><span class="line"><span class="keyword">print</span> sheet2.name,sheet2.nrows,sheet2.ncols</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取整行和整列的值（数组）  </span></span><br><span class="line">rows = sheet2.row_values(<span class="number">3</span>) <span class="comment"># 获取第四行内容  </span></span><br><span class="line">cols = sheet2.col_values(<span class="number">2</span>) <span class="comment"># 获取第三列内容  </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取单元格内容  </span></span><br><span class="line"><span class="keyword">print</span> sheet2.cell(<span class="number">1</span>,<span class="number">0</span>).value.encode(<span class="string">'utf-8'</span>)  </span><br><span class="line"><span class="keyword">print</span> sheet2.cell_value(<span class="number">1</span>,<span class="number">0</span>).encode(<span class="string">'utf-8'</span>)  </span><br><span class="line"><span class="keyword">print</span> sheet2.row(<span class="number">1</span>)[<span class="number">0</span>].value.encode(<span class="string">'utf-8'</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取单元格内容的数据类型，类型 0 empty,1 string, 2 number, 3 date, 4 boolean, 5 error</span></span><br><span class="line"><span class="keyword">print</span> sheet2.cell(<span class="number">1</span>,<span class="number">0</span>).ctype</span><br></pre></td></tr></table></figure>
-<hr>
-<p>python读取excel中单元格类型为date(有的日期是以string格式存储，无需用此方式读取，依照上述基本操作)；date类型的ctype=3，这时需要使用xlrd的xldate_as_tuple来处理为date格式，先判断表格的ctype,如果等于3，则用时间格式处理:</p>
-<pre><code>if sheet.cell(row,col).ctype == 3:         
-    date_value = xlrd.xldate_as_tuple(sheet.cell_value(rows,3),workbook.datemode)      # (1992, 2, 22, 0, 0, 0)
-    date_tmp = date(*date_value[:3]).strftime(&apos;%Y/%m/%d&apos;) # &apos;1992/02/22&apos;
-</code></pre><hr>
-<p>读取合并单元格的内容(合并的单元格只是合并的第一个单元格的有值，其它的为空;只能获取合并单元格的第一个cell的行列索引，才能读到值;合并行单元格读取行的第一个索引，合并列单元格读取列的第一个索引):</p>
-<p><img src="http://files.jb51.net/file_images/article/201501/2015129105612767.jpg?2015029105627" alt="">                   </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> sheet2.col_values(<span class="number">4</span>)[<span class="number">1</span>]  <span class="comment"># 好朋友</span></span><br><span class="line"><span class="keyword">print</span> sheet2.row_values(<span class="number">7</span>)[<span class="number">2</span>]  <span class="comment"># 暂无</span></span><br></pre></td></tr></table></figure>
-<p>获取合并单元格的位置:读取文件的时候需要将formatting_info参数设置为True，默认是False</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">workbook = xlrd.open_workbook(<span class="string">r'F:\demo.xlsx'</span>,formatting_info=<span class="keyword">True</span>)  </span><br><span class="line">sheet2 = workbook.sheet_by_name(<span class="string">'sheet2'</span>)  </span><br><span class="line"><span class="keyword">print</span> sheet2.merged_cells  <span class="comment"># [(7, 8, 2, 5), (1, 3, 4, 5), (3, 6, 4, 5)]</span></span><br></pre></td></tr></table></figure>
-<p>merged_cells返回的这四个参数的含义是：(row,row_range,col,col_range),其中[row,row_range)包括row,不包括row_range,col也是一样，即(1, 3, 4, 5)的含义是：第2到3行（不包括第4行）合并，(7, 8, 2, 5)的含义是：第3到5列合并。<strong>获取merge_cells返回的row和col低位的索引即可</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> sheet2.cell_value(<span class="number">1</span>,<span class="number">4</span>)  <span class="comment">#(1, 3, 4, 5)  好朋友  </span></span><br><span class="line"><span class="keyword">print</span> sheet2.cell_value(<span class="number">3</span>,<span class="number">4</span>)  <span class="comment">#(3, 6, 4, 5)  同学  </span></span><br><span class="line"><span class="keyword">print</span> sheet2.cell_value(<span class="number">7</span>,<span class="number">2</span>)  <span class="comment">#(7, 8, 2, 5)  暂无</span></span><br><span class="line"></span><br><span class="line">merge = []  </span><br><span class="line"><span class="keyword">for</span> (rlow,rhigh,clow,chigh) <span class="keyword">in</span> sheet2.merged_cells:  <span class="comment"># [(7, 8, 2, 5), (1, 3, 4, 5), (3, 6, 4, 5)]</span></span><br><span class="line">    merge.append([rlow,clow])</span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> merge:   <span class="comment"># [[7, 2], [1, 4], [3, 4]]  </span></span><br><span class="line">    <span class="keyword">print</span> sheet2.cell_value(index[<span class="number">0</span>],index[<span class="number">1</span>])</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-xlwt-与-xlsxwriter"><a href="#2-xlwt-与-xlsxwriter" class="headerlink" title="2. xlwt 与 xlsxwriter"></a>2. xlwt 与 xlsxwriter</h3><ul>
-<li>xlwt只能写.xls(2003)文件，xlsxwriter只能写.xlsx(2007及以后)表格</li>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFuSVhJMEdsd05sdHRDRUx5ZWRxNGxhb1h2SnJOOG1DUGM3MnMrSHhVOHFnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Dyna Architecture"></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFuSVhJMEdsd05scHpmQ0dSM1haVGVrWlUyMjdzbyswOUdVTlc4Z3lrRG13PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Dyna-Q Algorithm"></p>
+<p>具体在本文中，提出了world model，用来模拟真实用户。在学习对话策略的过程中，真实的对话数据有两个作用：</p>
+<ul>
+<li>通过监督学习训练和改善world model，使其表现得更像真实用户；</li>
+<li>直接用来训练强化学习</li>
 </ul>
-<h4 id="1-xlwt"><a href="#1-xlwt" class="headerlink" title="( 1 ) xlwt"></a>( 1 ) xlwt</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">style0 = xlwt.easyxf(<span class="string">'font: name 等线, color-index black, bold off, height 220'</span>)</span><br><span class="line">style1 = xlwt.easyxf(<span class="string">'font: name 等线, color-index red, bold off, height 220'</span>)</span><br><span class="line"></span><br><span class="line">f = xlwt.Workbook()                                      <span class="comment"># 创建工作簿</span></span><br><span class="line">female = f.add_sheet(<span class="string">u'female'</span>, cell_overwrite_ok=<span class="keyword">True</span>)  <span class="comment"># 创建sheet</span></span><br><span class="line">female.write(<span class="number">0</span>, <span class="number">0</span>, <span class="string">'test'</span>, style1)</span><br><span class="line">female.write(<span class="number">0</span>, <span class="number">1</span>, <span class="string">'test'</span>, style0)</span><br><span class="line">f.save(<span class="string">"demo.xls"</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="2-xlsxwriter"><a href="#2-xlsxwriter" class="headerlink" title="( 2 ) xlsxwriter"></a>( 2 ) xlsxwriter</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">workbook = xlsxwriter.Workbook(<span class="string">'hello.xlsx'</span>)  <span class="comment"># 建立文件</span></span><br><span class="line"><span class="comment"># Add a bold format to use to highlight cells. 设置粗体，默认是False</span></span><br><span class="line">bold = workbook.add_format(&#123;<span class="string">'bold'</span>: <span class="keyword">False</span>, <span class="string">'color'</span>: <span class="string">'black'</span>, <span class="string">'font_name'</span>: <span class="string">'等线'</span>, <span class="string">'font_size'</span>: <span class="string">'11'</span>&#125;)</span><br><span class="line"><span class="comment"># 建立sheet， 可以work.add_worksheet('employee')来指定sheet名，但中文名会报UnicodeDecodeErro的错误</span></span><br><span class="line">worksheet = workbook.add_worksheet(<span class="string">'female'</span>)</span><br><span class="line">worksheet.write(<span class="number">0</span>, <span class="number">0</span>, <span class="string">'Hello world'</span>, bold)  <span class="comment"># 向A1写入</span></span><br><span class="line">workbook.close()</span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjF6SG5kSi9TR01NYzk5Qk52NmxhVldwWkNXQTdzNmE5NEZ4a05qRVFpWnZnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Three  strategies  of  learning  task-completion  dialogue  policies  via  RL."></p>
+<blockquote>
+<p>Dialogue  policy  can  be  improved  either  using  real  experience  directly  (i.e.,  direct  reinforcement  learning)  or  via  the  world  model  indirectly  (referred  to  as  planning  or  indirect  reinforcement  learning).  The  interaction  between world  model  learning,  direct  reinforcement  learning  and  planning  is  illustrated  in  Figure  1(c),  following  the  Dyna-Q  framework  (Sutton,  1990).</p>
+</blockquote>
+<h2 id="Dialogue-Policy-Learning-via-Deep-Dyna-Q-DDQ"><a href="#Dialogue-Policy-Learning-via-Deep-Dyna-Q-DDQ" class="headerlink" title="Dialogue  Policy  Learning  via  Deep Dyna-Q  (DDQ)"></a>Dialogue  Policy  Learning  via  Deep Dyna-Q  (DDQ)</h2><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJ3M1NiTEwwV3NvbXRhRmxIUW53QkJNcWdsVWg4SjFnYjJOTGJSUFpTYUl3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Illustration  of  the  task-completion  DDQ dialogue  agent"></p>
+<p>本文提出的DDQ共包含以下5个模块：</p>
+<ul>
+<li>an  LSTM-based  natural  language  understanding  (NLU) module  (Hakkani-T ̈  ur  et  al.,  2016)  for  identifying user  intents  and  extracting  associated  slots;</li>
+<li>a state  tracker  (Mrkˇsi ́c  et  al.,  2016)  for  tracking  the dialogue  states;</li>
+<li>a dialogue  policy  which  selects the  next  action based  on  the  current  state;</li>
+<li>a model-based  natural  language  generation  (NLG) module  for  converting  dialogue  actions  to  natural language  response  (Wen  et  al.,  2015);</li>
+<li>a world  model  for  generating  simulated  user  actions and  simulated  rewards.</li>
+</ul>
+<p><strong>Algorithm  ：  Deep  Dyna-Q  for  Dialogue  Policy Learning</strong></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjF6SG5kSi9TR01NZVREL0x4SCtYbng2ODhVdFg1bWVmeVI1cG9ENVZaRk1nPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>As  illustrated  in  Figure  1(c),  starting  with  an initial  dialogue  policy  and  an  initial  world  model (both  trained  with  pre-collected  human  conversational  data),  the  training  of  the  DDQ  agent  consists  of  three  processes:  </p>
+<ol>
+<li>direct  reinforcement learning,  where  the agent  interacts with a  real  user, collects  real  experience  and  improves  the  dialogue policy;  </li>
+<li>world  model  learning,  where  the  world model  is  learned  and  refined  using  real  experience;</li>
+<li>planning,  where  the  agent  improves  the  dialogue  policy  using  simulated  experience.</li>
+</ol>
+<h3 id="Direct-Reinforcement-Learning"><a href="#Direct-Reinforcement-Learning" class="headerlink" title="Direct  Reinforcement  Learning"></a>Direct  Reinforcement  Learning</h3><p>本过程是一个标准的DQN算法，其中值函数近似使用了一个多层MLP网络：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjF6SG5kSi9TR01NUjdDUGJqOGJLWjNqVjZJMXMya3Y4K2lkVUR2MmNRdTZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="value function loss"></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjF6SG5kSi9TR01NVjZsSjNZN2greUNINHFSVnFGOXlzOStRUWp5VWMweWxBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Planning"><a href="#Planning" class="headerlink" title="Planning"></a>Planning</h3><p>在Planning过程中，先用world model产生模拟对话。K代表每一步direct  reinforcement  learning对应多少步planning  steps。如果world model能够充分模拟用户，K可以适当变大来加快训练过程。在DDQ模型中，使用了两个经验池，$D^{u}$ 存储的是真实的对话，$D^{s}$ 存储的是world model模拟对话，使用的是相同的DQN算法，只是在不同阶段操作的经验池不同。</p>
+<p>在这里描述模拟对话产生的过程：</p>
+<ol>
+<li>在每个对话的开始阶段，先随机选择一个user goal $G=(C,R)$ ，C 代表一系列的限制条件（inform slots），R 是request slots的集合。<blockquote>
+<p>For  movie-ticket  booking  dialogues, constraints  are  typically  the  name  and  the  date of  the  movie,  the  number  of  tickets  to  buy,  etc. Requests  can  contain  these  slots  as  well  as  the location  of  the  theater,  its  start  time,  etc.</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFxaHJrMVJVUU5tUms3RTlnd1IrbGxDT2RhV1BrK0JpdU1ORUVLejNaZlJRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="some  sampled  user  goals"></p>
+<ol start="2">
+<li><p>本文提出的模型里，都假定对话是由用户发起，也即用户会说第一句话。第一个user  action 是从 (R, C) 中采样得到，简化为inform或者request diaact。</p>
+<blockquote>
+<p>A  request,  such  as  request(theater;moviename=batman),  consists  of  a  requestvslot  and  multiple  (&gt;  1)  constraint  slots,  uniformly  sampled  from  R  and  C,  respectively. An  inform  contains  constraint  slots  only.  The user  action  can  also  be  converted  to  natural  language  via  NLG,  e.g.,  “which  theater  will show  batman?”</p>
+</blockquote>
+</li>
+<li><p>在每一个对话轮次中，world model 将user state s(agent说完一句话后即进入user state)，上一个agent action a作为输入（均采用one-hot编码），输出user response $a^{u}$ ，奖励 r ，以及一个bool值（代表对话是否终止）。world model实际上是由一个MLP网络实现的，本身是一个监督学习，网络结构如下：</p>
+<p> <img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFxaHJrMVJVUU5tYUFXNERUMWM0ajN5RGNkbGpUR21xYlpnNzhUYTJ2YTF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=" Figure  3:  The  world  model  architecture"></p>
+<p> <img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFxaHJrMVJVUU5tYlVVekhRRDRjN3N5VzM0QmpFYWFQUHJzM1QrWDNkVE93PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p> <em>(s, a) 代表二者拼接</em></p>
+</li>
+</ol>
+<h3 id="World-Model-Learning"><a href="#World-Model-Learning" class="headerlink" title="World  Model  Learning"></a>World  Model  Learning</h3><blockquote>
+<p>In  this  process  (lines  19-22  in  Algorithm  1), $M(s,a;\theta_{M})$  is  refined  via  minibatch  SGD  using real  experience  in  the  replay  buffer  $D^{u}$.  As  shown in  Figure  3,$M(s,a;\theta_{M})$ is  a  multi-task  neural  network  (Liu  et  al.,  2015)  that  combines  two  classification  tasks  of  simulating  $a_{u}$ and  t,  respectively, and  one  regression  task  of  simulating r.  The  lower layers  are  shared  across  all  tasks,  while  the top  layers  are  task-specific. </p>
+</blockquote>
+<h2 id="Experiments-and-Results"><a href="#Experiments-and-Results" class="headerlink" title="Experiments  and  Results"></a>Experiments  and  Results</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><blockquote>
+<p>Raw  conversational  data  in  the  movie-ticket  booking  scenario  was  collected  via  Amazon  Mechanical  Turk.  The  dataset  has  been  manually  labeled based  on  a  schema  defined  by  domain  experts,  as shown  in  Table  4,  which  consists  of  11  dialogue acts  and  16  slots.  In  total,  the  dataset  contains  280 annotated  dialogues,  the  average  length  of  which is  approximately  11  turns.</p>
+</blockquote>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNLQ0xBVXNhRHE1OFQxMGd3Q2xCOW5YVjVaZ3pQTDRtSEg0TlVydVNDbTVBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="The  data  annotation  schema"></p>
+<h3 id="Dialogue-Agents-for-Comparison"><a href="#Dialogue-Agents-for-Comparison" class="headerlink" title="Dialogue  Agents  for  Comparison"></a>Dialogue  Agents  for  Comparison</h3><p>作者共实现了以下几种模型作为对比：</p>
+<ul>
+<li><p>A  <strong>DQN</strong>  agent  is  learned  by  standard  DQN, implemented  with  direct  reinforcement  learning  only  (lines  5-18  in  Algorithm  1)  in  each epoch.</p>
+</li>
+<li><p>The  <strong>DDQ(K)</strong>  agents  are  learned  by  DDQ  of Algorithm  1,  with  an  initial  world  model  pretrained  on  human conversational  data,  as  described  in  Section  3.1.  K  is  the  number  of planning  steps.  We  trained  different  versions of  DDQ(K)  with  different  K’s.</p>
+</li>
+<li><p>The  <strong>DDQ(K,  rand-init  $\theta_{M}$ )</strong>  agents  are learned  by  the  DDQ  method  with  a  randomly initialized  world  model.</p>
+</li>
+<li><p>The  <strong>DDQ(K,  fixed $\theta_{M}$)</strong>  agents  are  learned by  DDQ  with  an  initial  world  model  pretrained  on  human  conversational  data.  But the  world  model  is  not  updated  afterwards. That  is,  the  world  model  learning  part  in  Algorithm  1  (lines  19-22)  is  removed.  The DDQ(K,  fixed  $\theta_{M}$)  agents  are  evaluated  in the  simulation  setting  only.</p>
+</li>
+<li><p>The  <strong>DQN(K)</strong>  agents  are  learned  by  DQN, but  with  K  times  more  real  experiences  than the  DQN  agent.  DQN(K)  is  evaluated  in  the simulation  setting  only.  Its  performance  can be  viewed  as  the  upper  bound  of  its  DDQ(K) counterpart,  assuming  that  the  world  model in  DDQ(K)  perfectly  matches  real  users.</p>
+</li>
+</ul>
+<p><strong>Implementation  Details</strong>：<br>所有的agent $Q(s, a; \theta_{Q})$ ，world model $M(s,a;\theta_{M})$ 都是基于MLP实现的。作者认为Z的数值会影响agent的效果：</p>
+<blockquote>
+<p>We  found  in  our  experiments  that  setting  Z  &gt;  1  improves  the  performance  of  all  agents,  but  does  not  change<br>the  conclusion  of  this  study:  DDQ  consistently  outperforms DQN  by  a  statistically  significant  margin.  Conceptually,  the optimal  value  ofZ  used  in  planning  is  different  from  that  in direct  reinforcement  learning,  and  should  vary  according  to the  quality  of  the  world  model.  The  better  the  world  model is,  the  more  aggressive  update  (thus  bigger  Z)  is  being  used in  planning.  We  leave  it  to  future  work  to  investigate  how  to optimize Z  for  planning  in  DDQ.</p>
+</blockquote>
+<p>在agent训练之前的初始化过程中（代码中称之为warm start），作者并没有直接从真实对话数据中提取填充 $D^{u}$ ，而是基于真实对话构建了一个rule-based agent，然后使用该agent与一个rule-based simulator产生对话填充 $D^{u}$ 。因此，强化学习训练的经验池数据还是依赖于规则产生。</p>
+<h3 id="Simulated-User-Evaluation"><a href="#Simulated-User-Evaluation" class="headerlink" title="Simulated  User  Evaluation"></a>Simulated  User  Evaluation</h3><p>如上所述，因为world model的训练数据来自于rule-based agent和rule-based simulator，所以实际上world model只是在模拟rule-based simulator，dqn-based agent也是在和user simulator进行交互，而非真实用户。这就导致：</p>
+<blockquote>
+<p>Although  the simulator-trained agents  are  sub-optimal  when  applied  to  real  users due  to  the  discrepancy  between  simulators  and  real users,  the  simulation  setting  allows  us  to  perform a  detailed  analysis  of  DDQ  without  much  cost  and to reproduce  the  experimental  results  easily.</p>
+</blockquote>
+<h3 id="User-Simulator"><a href="#User-Simulator" class="headerlink" title="User  Simulator"></a>User  Simulator</h3><p>作者采用了一个公开的user simulator。在训练的过程中，在每一轮对话问答中，user simulator对agent的话生成user response，以及在每个对话结束时生成reward。</p>
+<p>对话成功的条件为（必须同时满足）：</p>
+<ol>
+<li>成功预定电影票</li>
+<li>user的所有限制条件被满足（限制条件是指user goal中的inform slots）</li>
+</ol>
+<p>奖励设置：</p>
+<ol>
+<li>在对话进行的过程中，agent得到的奖励均为-1 （无论最终对话成功与否）</li>
+<li>对于成功的对话， 最后一轮agent得到的奖励为 $2 \times L$ ；对于失败的对话，最后一轮agent得到的奖励为 $- L$ </li>
+</ol>
+<p><em>L is the  maximum  number  of  turns  in  each  dialogue, and  is  set  to 40 in  our  experiments.</em></p>
+<p>在任务型对话系统中，整个对话是基于一个隐式的user goal，agent在对话开始的时候并不知道user goal，它的目的就在于帮助用户完成goal。user goal包含以下方面：</p>
+<ul>
+<li><strong>inform  slots</strong>  contain  a  number  of  slot-value pairs  which  serve  as  constraints  from  the  user.</li>
+<li><strong>request  slots</strong>  contain  a  set  of  slots  that  user has  no  information  about  the  values,  but wants  to  get  the  values  from  the  agent  during  the  conversation.  ticket  is  a  default  slot which  always  appears  in  the  request  slots part  of  user  goal.</li>
+</ul>
+<p>除此之外，作者为了简化问题，还额外增加了一些限制条件：</p>
+<blockquote>
+<p>slots  are  split into  two  groups.  Some  of  slots  must  appear  in  the user  goal,  we  called  these  elements  as  <strong>Required slots</strong>.  In  the  movie-booking  scenario,  it  includes moviename,  theater,  starttime,  date,  numberofpeople;  the  rest  slots  are  <strong>Optional  slots</strong>,  for example,  theater  chain,  video  format  etc.</p>
+</blockquote>
+<p>作者是从真实的对话数据中提取的<strong>user goal</strong>：</p>
+<blockquote>
+<p>We  generated  the  user  goals  from  the  labeled dataset  mentioned  in  Section  3.1,  using  two  mechanisms.  One  mechanism  is  to  extract  all  the  slots (known  and  unknown)  from  the  first  user  turns  (excluding  the  greeting  user  turn)  in  the  data,  since usually  the  first  turn  contains  some  or  all  the  required  information  from  user.  The  other  mechanism  is  to  extract  all  the  slots  (known  and  unknown)  that  first  appear  in  all  the  user  turns,and  then  aggregate  them  into  one  user  goal.  We dump  these  user  goals  into  a  file  as  the  user-goal database.  Every  time  when  running  a  dialogue,we randomly  sample  one  user  goal  from  this  user  goal database.</p>
+</blockquote>
+<h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3><p>评价指标：</p>
+<ul>
+<li>success rate ：对话成功率</li>
+<li>average reward ：平均每个对话得到的奖励</li>
+<li>average number of turns：对话的平均轮次</li>
+</ul>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBXcTV5MkVxNzkzV2dPUWUyWUVDcjZtTFhmQjZwb0xRREFmems4Y2prdFVRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Results  of  different  agents  at  training  epoch  ={100,  200,  300}.  Each  number  is  averaged over  5  runs,  each  run  tested  on  2000  dialogues.  Excluding  DQN(5)  and  DQN(10)  which  serve  as  the upper  bounds,  any  two  groups  of  success  rate  (except  three  groups:  at  epoch  100,  DDQ(5,  rand-init  $\theta_{M}$)  and  DDQ(10,  fixed $\theta_{M}$),  at  epoch  200,  DDQ(5,  rand-init $\theta_{M}$)  and  DDQ(10,  rand-init $\theta_{M}$),  at  epoch 300,  DQN  and  DDQ(10,  fixed $\theta_{M}$))  evaluated  at  the  same  epoch  is  statistically  significant  in  mean  with p  &lt;0:01.  (Success:  success  rate)"></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFsMWl4MnJaK3BRWEk0VVNhcVdRamYzOGYzb0Q0Nnk5eFk4ZzNTa0dKa01nPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  4:  Learning  curves  of  the  DDQ(K)  agents with K=  2;5;10;20.  The  DQN  agent  is  identical to  a  DDQ(K)  agent  with K=  0."></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNjc1hwNFNNY2tsVWllbVZyRTFGdXdLNGxoTTd4T2dVNVBiRklBNmhZNnJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  5:  Learning  curves  of  DQN,  DDQ(10), DDQ(10,  rand-initM),  DDQ(10,  fixedM),  and DQN(10)."></p>
+<p>Figure  4  展示了不同K的DDQ agent的区别。所有的agent都是基于相同的rule-based  agent产生的经验池，因此训练初始阶段的performance类似，之后有所提升，尤其是对于较大的K值。 </p>
+<blockquote>
+<p>Recall  that  the  DDQ(K)  agent  withK=0  is  identical to  the  DQN  agent,  which  does  no  planning  but  relies  on  direct  reinforcement  learning  only.  Without planning,  the  DQN  agent  took  about  180  epochs (real  dialogues)  to  reach  the  success  rate  of  50%, and  DDQ(10)  took  only  50  epochs.</p>
+</blockquote>
+<p>论文中简要地提到关于K值的最优选择：</p>
+<blockquote>
+<p>Intuitively,  the  optimal  value  of  K  needs  to  be determined  by  seeking  the  best  trade-off  between the  quality  of  the  world  model  and  the  amount of  simulated  experience  that  is  useful  for  improving  the  dialogue  agent.  This  is  a  non-trivial  optimization  problem  because  both  the  dialogue  agent and  the  world  model  are  updated  constantly during<br>training  and  the  optimal  K  needs  to  be  adjusted accordingly.  For  example,  we  find  in  our  experiments  that  at  the  early  stages  of  training,  it  is  fine to  perform  planning  aggressively  by  using  large amounts  of  simulated  experience  even  though  they are  of  low  quality,  but  in  the  late  stages  of  training  where  the  dialogue  agent  has  been  significantly  improved,  low-quality  simulated  experience  is  likely  to  hurt  the  performance.  Thus,  in  our implementation  of  Algorithm  1,  we  use  a  heuristic to  reduce  the  value  of  K  in  the  late  stages  of training  (e.g.,  after  150  epochs  in  Figure  4)  to  mitigate  the  negative  impact  of  low-qualify  simulated experience.  We  leave  it  to  future  work  how  to  optimize  the  planning  step  size  during  DDQ  training in  a  principled  way.</p>
+</blockquote>
+<blockquote>
+<p>Figure  5  shows  that  the  quality  of  the  world model  has  a  significant  impact  on  the  agent’s performance.  The  learning  curve  of  DQN(10) indicates  the  best  performance  we  can  expect with  a  perfect  world  model.  With  a  pre-trained world  model,  the  performance  of  the  DDQ  agent improves  more  rapidly,  although  eventually,  the DDQ  and  DDQ(rand-init  M)  agents  reach  the same  success  rate  after  many  epochs.  The  world model  learning  process  is  crucial  to  both  the  efficiency  of  dialogue  policy  learning  and  the  final performance  of  the  agent.  For  example,  in  the early  stages  (before  60  epochs),  the  performances of  DDQ  and  DDQ(fixedM)  remain  very  close  to each  other,  but  DDQ  reaches  a  success  rate  almost 10%  better  than  DDQ(fixedM)  after  400  epochs.</p>
+</blockquote>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><blockquote>
+<p>We  propose  a  new  strategy  for  a  task-completion dialogue  agent  to  learn  its  policy  by  interacting<br>with  real  users.  Compared  to  previous  work,  our agent  learns  in  a  much  more  efficient  way,  using  only  a  small  number  of  real  user  interactions, which  amounts  to  an  affordable  cost  in  many  nontrivial  domains.  Our  strategy  is  based  on  the  Deep Dyna-Q  (DDQ)  framework  where  planning  is  integrated  into  dialogue  policy  learning.  The  effectiveness  of  DDQ  is  validated  by  human-in-the-loop experiments,  demonstrating  that  a  dialogue agent  can  efficiently  adapt  its  policy  on  the  fly  by interacting  with  real  users  via  deep  RL.</p>
+</blockquote>
+<blockquote>
+<p>One  interesting  topic  for  future  research  is  exploration  in  planning.  We  need  to  deal  with  the challenge  of  adapting  the  world  model  in  a  changing  environment,  as  exemplified  by  the  domain  extension  problem  (Lipton  et  al.,  2016).  As  pointed out  by  Sutton  and  Barto  (1998),  the  general  problem  here  is  a  particular  manifestation  of  the  conflict  between  exploration  and  exploitation.  In  a<br>planning  context,  exploration  means  trying  actions that  may  improve  the  world  model,  whereas  ex-<br>ploitation  means  trying  to  behave  in  the  optimal way  given  the  current  model.  To  this  end,  we  want<br>the  agent  to  explore  in  the  environment,  but  not  so much  that  the  performance  would  be  greatly  degraded.</p>
+</blockquote>
 
         </div>
         <footer class="article-footer">
@@ -330,20 +454,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2017/07/15/Python处理excel/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Python处理excel
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2017/07/12/Latent-Intention-Dialogue-Models (1)/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Latent Intention Dialogue Models</p>
+        <p class="article-nav-title">Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -550,7 +664,7 @@
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2017/07/15/Python处理excel (1)/';
+    var disqus_url = 'https://helic.github.io/2018/10/19/Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning/';
     
     (function() {
     var dsq = document.createElement('script');
