@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="NLP" />
+    
+    <meta name="description" content="本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。paper linkcode link">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding">
+<meta property="og:url" content="https://helic.github.io/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。paper linkcode link">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFwUDkxckRVeWtBYTB2dmh2dXFqTFpjVDVvZ1FMZTBsMW5pM3ppMHJkN1FRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2018-11-02T07:33:32.799Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding">
+<meta name="twitter:description" content="本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。paper linkcode link">
+<meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFwUDkxckRVeWtBYTB2dmh2dXFqTFpjVDVvZ1FMZTBsMW5pM3ppMHJkN1FRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-BERT Pre-training of Deep Bidirectional Transformers for Language Understanding" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/" class="article-date">
+            <time datetime="2018-10-30T01:25:00.000Z" itemprop="datePublished">2018-10-30</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。<br><a href="https://drive.google.com/open?id=1TB8r-P5lBdRp7D5pjTHbcGCJaBdnrUd8" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/google-research/bert" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>研究证明语言模型预训练可以有效改进许多自然语言处理任务，包括自然语言推断、复述（paraphrasing）等句子层面的任务，以及命名实体识别、SQuAD 问答等 token 层面的任务。前者通过对句子进行整体分析来预测句子之间的关系，后者则要生成 token 级别的细粒度输出。</p>
+<p>目前将预训练的语言表征应用于下游任务存在两种策略：</p>
+<ul>
+<li>基于特征的策略（feature-based）</li>
+<li>微调策略（fine-tuning）</li>
+</ul>
+<p>基于特征的策略（如 ELMo）使用将预训练表征作为额外特征的任务专用架构（tasks-specific）。微调策略（如Generative  Pre-trained  Transformer(OpenAI GPT)）引入了更少的任务特定参数，通过简单地微调预训练参数在下游任务中进行训练。在之前的研究中，两种策略在预训练期间使用相同的目标函数，利用单向语言模型来学习通用语言表征。</p>
+<p>本论文作者（即 Google AI Language 团队的研究人员）认为现有的技术严重制约了预训练表征的能力，微调策略尤其如此。其主要局限在于标准语言模型是单向的，这限制了可以在预训练期间使用的架构类型。例如，OpenAI GPT 使用的是从左到右的架构，其中每个 token 只能注意 Transformer 自注意力层中的先前 token。这些局限对于句子层面的任务而言不是最佳选择，对于 token 级任务（如 SQuAD 问答）则可能是毁灭性的，因为在这种任务中，结合两个方向的语境至关重要。</p>
+<p>本文通过 BERT（Bidirectional Encoder Representations from Transformers）改进了基于微调的策略。BERT 提出一种新的预训练目标——遮蔽语言模型（masked language model，MLM），来克服上文提到的单向局限。MLM 的灵感来自 Cloze 任务（Taylor, 1953）。MLM 随机遮蔽输入中的一些 token，目标是仅基于遮蔽词的语境来预测遮蔽词本身。与从左到右的语言模型预训练不同，MLM 目标允许表征融合左右两侧的语境，从而预训练一个深度双向 Transformer。除了 MLM，我们还引入了一个「下一句预测」（next sentence prediction）任务，该任务联合预训练文本对表征。</p>
+<p>本文贡献如下：</p>
+<ul>
+<li><p>展示了双向预训练语言表征的重要性。不同于 Radford 等人（2018）使用单向语言模型进行预训练，BERT 使用 MLM 预训练深度双向表征。本研究与 Peters 等人（2018）的研究也不同，后者使用的是独立训练的从左到右和从右到左 LM 的浅层级联。</p>
+</li>
+<li><p>证明了预训练表征可以消除对许多精心设计的任务特定架构的需求。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统。</p>
+</li>
+<li><p>BERT 刷新了 11 项 NLP 任务的当前最优性能记录。本论文还报告了 BERT 的模型简化测试（ablation study），证明该模型的双向特性是最重要的一项新贡献。</p>
+</li>
+</ul>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="Feature-based-Approaches"><a href="#Feature-based-Approaches" class="headerlink" title="Feature-based  Approaches"></a>Feature-based  Approaches</h3><p><a href="https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/" target="_blank" rel="noopener">ELMo</a> 是从语言模型中提取上下文相关的特征，将其移植到特定任务的架构中，在很多NLP任务上得到了提升。注意Feature-based的预训练表征在应用的时候只是被添加到特定任务架构中，作为一个额外的特征。ELMo也是使用的bi-LM，但是两个方向的语言模型是相互独立的，只是在最后将两个方向的语言模型隐层状态拼接在一起，这一点跟本文提出的BERT有本质差异。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNmQVF3RWNkSnRsenc1TTh4ZStnWEpNZHVTeXJzRncyejJISHBzcE9qUHVnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNmQVF3RWNkSnRsL0VNWHpmMzNVSmg3REN1aFpncHB1djRNL2cyT1g2NGxBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Fine-tuning-Approaches"><a href="#Fine-tuning-Approaches" class="headerlink" title="Fine-tuning  Approaches"></a>Fine-tuning  Approaches</h3><p>微调策略（如Generative  Pre-trained  Transformer(OpenAI GPT)）引入了更少的任务特定参数，通过简单地微调预训练参数在下游任务中进行训练。</p>
+<p>OpenAI GPT利用了Transformer网络代替了LSTM作为语言模型来更好的捕获长距离语言结构。然后在进行具体任务有监督微调时使用了语言模型作为附属任务训练目标。最后在 12 个 NLP 任务上进行了实验，9 个任务获得了 SOTA。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFhSjBzQ0pMVVkvbStjNm0zUXZrTWNUY1NGa1NCVFQvbE8raUVSb1MvSE1nPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>OpenAI GPT使用的是标准的语言模型目标函数，即通过前 k 个词预测当前词，但是在语言模型网络上，使用了 Google 团队在 <strong>Attention is all your need</strong> 论文中提出的 Transformer 解码器作为语言模型基础架构。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFhSjBzQ0pMVVkvaWQ1UGErem9zRGV6aU9Ubm8ySWV3VHYwRy9HSm1YeFl3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>然后在具体 NLP 任务上有监督微调时，与 ELMo 当成特征的做法不同，<strong>OpenAI GPT 不需要针对于不同任务构建不同的模型结构</strong>，而是直接在 Transformer 这个语言模型上的最后一层接上 softmax 作为任务输出层，然后再对这整个模型进行微调。论文发现，<strong>如果使用语言模型作为辅助任务，能够提升有监督模型的泛化能力，并且能够加速收敛</strong>。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFhSjBzQ0pMVVkvdXBPSzFuaGJwekJWTkl1dGFLQnF3MFZmMEpzKzV4aWJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>由于不同 NLP 任务的输入有所不同，在 Transformer 模型的输入上针对不同 NLP 任务也有所不同。具体如下图，对于分类任务直接文本输入即可；对于文本蕴涵任务，需要将前提和假设用一个 Delim 分割向量拼接后进行输入；对于文本相似度任务，在两个方向上都使用 Delim 拼接后，进行输入；对于像问答多选择的任务，就是将每个答案和上下文进行拼接进行输入。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFhSjBzQ0pMVVkvaDFtWVJualQ3ampEUGJ5UTJFV0JHdnRGd3ZweVllSkVBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFhSjBzQ0pMVVkvaFJReUFtUnU4UjNNVXRJUjRYMHRwa1VrdnNqSkdzeTNBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="在多项任务上，OpenAI GPT 的效果要比 ELMo 的效果更好"></p>
+<h2 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h2><h3 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model  Architecture"></a>Model  Architecture</h3><p>BERT 的模型架构是一个多层双向 Transformer 编码器，基于 Vaswani 等人 (2017) 描述的原始实现，在 <a href="https://github.com/tensorflow/tensor2tensor" target="_blank" rel="noopener">tensor2tensor</a> 库中发布。由于 Transformer 的使用最近变得很普遍，而且我们的实现与原始版本实际相同，我们将不再赘述模型架构的背景。（<a href="http://nlp.seas.harvard.edu/2018/04/03/attention.html#background" target="_blank" rel="noopener">guide</a>）</p>
+<p>在本文中，我们将层数（即 Transformer 块）表示为 L，将隐藏尺寸表示为 H、自注意力头数表示为 A。在所有实验中，我们将前馈/滤波器尺寸设置为 4H，即 H=768 时为 3072，H=1024 时为 4096。我们主要报告在两种模型尺寸上的结果：</p>
+<ul>
+<li><p>BERTBASE: L=12, H=768, A=12, 总参数=110M</p>
+</li>
+<li><p>BERTLARGE: L=24, H=1024, A=16, 总参数=340M</p>
+</li>
+</ul>
+<p>为了比较，BERTBASE 的模型尺寸与 OpenAI GPT 相当。然而，BERT Transformer 使用双向自注意力机制，而 GPT Transformer 使用受限的自注意力机制，导致每个 token 只能关注其左侧的语境。我们注意到，双向 Transformer 在文献中通常称为「Transformer 编码器」，而只关注左侧语境的版本则因能用于文本生成而被称为「Transformer 解码器」。图 1 直观显示了 BERT、OpenAI GPT 和 ELMo 的比较结果。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFwUDkxckRVeWtBYTB2dmh2dXFqTFpjVDVvZ1FMZTBsMW5pM3ppMHJkN1FRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Differences  in  pre-training  model  architectures.  BERT  uses  a  bidirectional  Transformer.  OpenAI  GPT uses  a  left-to-right  Transformer.  ELMo  uses  the  concatenation  of  independently  trained  left-to-right  and  right-to-left LSTM  to  generate  features  for  downstream  tasks.  Among  three,  only  BERT  representations  are  jointly conditioned  on  both  left  and  right  context  in  all  layers."></p>
+<h3 id="Input-Representation"><a href="#Input-Representation" class="headerlink" title="Input  Representation"></a>Input  Representation</h3><p>模型的输入是单个的文本或者文本对（eg, [Question, Answer]），注意文本不一定是单个句子，有可能是多个句子的集合。<br>输入表示如下：</p>
+<ul>
+<li><p>We  use  WordPiece  embeddings  (Wu  et  al.,2016)  with  a  30,000  token  vocabulary.  We denote  split  word  pieces with  ##.</p>
+</li>
+<li><p>We  use  learned  positional  embeddings  with supported  sequence  lengths  up  to  512  tokens.</p>
+</li>
+<li><p>The  first  token  of  every  sequence  is  always  the  special  classification  embedding ([CLS]).  The  final  hidden  state  (i.e.,  output  of  Transformer)  corresponding  to  this  token  is  used  as  the  aggregate  sequence  representation  for classification  tasks.  For  non-classification  tasks,  this  vector  is  ignored.</p>
+</li>
+<li><p>Sentence  pairs  are  packed  together  into  a  single  sequence.  We  differentiate  the  sentences in  two  ways.  First,  we  separate  them  with a  special  token  ([SEP]).  Second,  we  add  a learned  sentence  A  embedding  to  every  token of  the  first  sentence  and  a  sentence  B  embedding  to  every  token  of  the  second  sentence.</p>
+</li>
+<li><p>For  single-sentence  inputs  we  only  use  the sentence  A  embeddings.</p>
+</li>
+</ul>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBVRHhOTGNkb1RUbkxYTEJnbDhYay9ZN3VQZURDTXgwT2dCdHNTbDUzanZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  BERT  input  representation.  The  input  embeddings  is  the  sum  of  the  token  embeddings,  the  segmentation embeddings  and  the  position  embeddings."></p>
+<h3 id="Pre-training-Tasks"><a href="#Pre-training-Tasks" class="headerlink" title="Pre-training  Tasks"></a>Pre-training  Tasks</h3><h4 id="Task-1-Masked-LM"><a href="#Task-1-Masked-LM" class="headerlink" title="Task  #1:  Masked  LM"></a>Task  #1:  Masked  LM</h4><blockquote>
+<p>Intuitively,  it  is  reasonable  to  believe  that  a deep  bidirectional  model  is  strictly  more  powerful  than  either  a  left-to-right  model  or  the  shallow  concatenation  of  a  left-to-right  and  right-to-left  model.  Unfortunately,  standard  conditional language  models  can  only  be  trained  left-to-right or  right-to-left,  since  bidirectional  conditioning would  allow  each  word  to  indirectly  “see  itself” in  a  multi-layered  context.</p>
+</blockquote>
+<p>为了训练深度双向表征，本文采取了一个直接的方法，随机遮蔽输入 token 序列的某些部分，然后只预测被遮住的 token。将这一步骤称为「masked LM」(MLM)，不过它在文献中通常被称为 Cloze 任务 (Taylor, 1953)。在这种情况下，对应遮蔽 token 的最终隐层向量会输入到 softmax 函数中，并如标准 LM 中那样预测所有词汇的概率。在所做的所有实验中，我们随机遮住了每个序列中 15% 的 WordPiece token。与去噪自编码器 (Vincent et al., 2008) 相反，我们仅预测遮蔽单词而非重建整个输入。</p>
+<p><strong>但是这样做会带来两个缺点：</strong></p>
+<ol>
+<li><p>预训练用 [MASK] 提出挡住的词后，在微调阶段是没有 [MASK] 这个词的，所以会出现不匹配；</p>
+</li>
+<li><p>预测 15% 的词而不是预测整个句子，使得预训练的收敛更慢。但是对于第二点，作者们觉得虽然是慢了，但是效果提升比较明显可以弥补。</p>
+</li>
+</ol>
+<p>对于第一点他们采用了下面的技巧来缓解，即不是总是用 [MASK] 去替换挡住的词，在 10% 的时间用一个随机词取替换，10% 的时间就用这个词本身。</p>
+<p>Rather  than  always  replacing  the  chosen words  with  [MASK],  the  data  generator  will do  the  following:</p>
+<ul>
+<li><p>80%  of  the  time:  Replace  the  word  with  the [MASK]  token,  e.g.,  my  dog  is  hairy  -&gt; my  dog  is  [MASK]</p>
+</li>
+<li><p>10%  of  the  time:  Replace  the  word  with  a random  word,  e.g.,  my  dog  is  hairy  -&gt;  my dog  is  apple</p>
+</li>
+<li><p>10%  of  the  time:  Keep  the  word  unchanged,  e.g.,  my  dog  is  hairy  -&gt;  my  dog is  hairy.  The  purpose  of  this  is  to  bias  the representation  towards  the  actual  observed word.</p>
+</li>
+</ul>
+<h4 id="Task-2-Next-Sentence-Prediction"><a href="#Task-2-Next-Sentence-Prediction" class="headerlink" title="Task  #2:  Next  Sentence  Prediction"></a>Task  #2:  Next  Sentence  Prediction</h4><p>很多重要的下游任务（如问答（QA）和自然语言推断（NLI））基于对两个文本句子之间关系的理解，这种关系并非通过语言建模直接获得。为了训练一个理解句子关系的模型，我们预训练了一个二值化下一句预测任务，该任务可以从任意单语语料库中轻松生成。具体来说，选择句子 A 和 B 作为预训练样本：B 有 50% 的可能是 A 的下一句，也有 50% 的可能是来自语料库的随机句子。</p>
+<p>Input  =  <code>[CLS]  the  man  went  to  [MASK]  store  [SEP]</code>  <code>he  bought  a  gallon  [MASK]  milk  [SEP]</code></p>
+<p>Label  =  <code>IsNext</code></p>
+<p>Input  =  <code>[CLS]  the  man  [MASK]  to  the  store  [SEP]</code>  <code>penguin  [MASK]  are  flight  ##less  birds  [SEP]</code></p>
+<p>Label  =  <code>NotNext</code></p>
+<blockquote>
+<p>We  choose  the  NotNext  sentences  completely  at random,  and  the  final  pre-trained  model  achieves 97%-98%  accuracy  at  this  task.  Despite  its  simplicity,  we  demonstrate  in  Section  5.1  that  pre-training  towards  this  task  is  very  beneficial  to  both QA  and  NLI.</p>
+</blockquote>
+<h3 id="Pre-training-Procedure"><a href="#Pre-training-Procedure" class="headerlink" title="Pre-training  Procedure"></a>Pre-training  Procedure</h3><p>作者使用的语料库是BooksCorpus  (800M  words)  (Zhu  et  al.,2015)  and  English  Wikipedia  (2,500M  words).</p>
+<blockquote>
+<p>To  generate  each  training  input  sequence,  we sample  two  spans  of  text  from  the  corpus,  which we  refer  to  as  “sentences”  even  though  they  are typically  much  longer  than  single  sentences  (but can  be  shorter  also).  The  first  sentence  receives the  A  embedding  and  the  second  receives  the  B embedding.  50%  of  the  time  B  is  the  actual  next sentence  that  follows  A  and  50%  of  the  time  it  is a  random  sentence,  which  is  done  for  the  “next sentence  prediction”  task.  They  are  sampled  such that  the  combined  length  is  &lt;=  512  tokens.  The LM  masking  is  applied  after  WordPiece  tokenization  with  a  uniform  masking  rate  of  15%,  and  no special  consideration  given  to  partial  word  pieces.</p>
+</blockquote>
+<blockquote>
+<p>The training  loss  is  the  sum  of  the  mean  masked  LM likelihood  and  mean  next  sentence  prediction  likelihood.</p>
+</blockquote>
+<h3 id="Fine-tuning-Procedure"><a href="#Fine-tuning-Procedure" class="headerlink" title="Fine-tuning  Procedure"></a>Fine-tuning  Procedure</h3><p>对于sequence-level的分类任务来说，为了得到输入序列的一个固定维度的特征表示，直接将输入CLS token对应的最终的Transformer隐层状态作为输入序列的表示，假定得到的向量为 $C \epsilon R^H$ ，在fune-tuning阶段唯一需要添加的是softmax分类层。</p>
+<blockquote>
+<p>For  span-level  and  token-level  prediction  tasks,  the  above procedure  must  be  modified  slightly  in  a  task-specific  manner.  Details  are  given  in  the  corre- sponding  subsection  of  Section  4.</p>
+</blockquote>
+<p>BERT模型的所有参数和softmax分类层的参数在fune-tuning阶段联合训练，目标是最大化正确标签的似然概率。模型的超参数在fune-tuning阶段大多数保持不变，除了batch_size，learning rate，training epochs。</p>
+<blockquote>
+<p>The  optimal  hyperparameter values  are  task-specific,  but  we  found  the  following  range  of  possible  values  to  work  well  across all  tasks:</p>
+<ul>
+<li>Batch  size:  16,  32</li>
+<li>Learning  rate  (Adam):  5e-5,  3e-5,  2e-5</li>
+<li>Number  of  epochs:  3,  4</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>We  also  observed  that  large  data  sets  (e.g.,100k+  labeled  training  examples)  were  far  less sensitive  to  hyperparameter  choice  than  small  data sets.  Fine-tuning  is  typically  very  fast,  so  it  is  reasonable  to  simply  run  an  exhaustive  search  over the  above  parameters  and  choose  the  model  that performs  best  on  the  development  set.</p>
+</blockquote>
+<h3 id="Comparison-of-BERT-and-OpenAI-GPT"><a href="#Comparison-of-BERT-and-OpenAI-GPT" class="headerlink" title="Comparison  of  BERT  and  OpenAI  GPT"></a>Comparison  of  BERT  and  OpenAI  GPT</h3><p>作者比较了 BERT  and  OpenAI  GPT的差异，试图解释BERT性能改善是否来源于本文提出的两种新奇的预训练任务。</p>
+<ul>
+<li><p>GPT  is  trained  on  the  BooksCorpus  (800M words);  BERT  is  trained  on  the  BooksCorpus  (800M  words)  and Wikipedia  (2,500M words).</p>
+</li>
+<li><p>GPT  uses  a  sentence  separator  ([SEP])  and classifier  token  ([CLS])  which  are  only  introduced  at  fine-tuning  time;  BERT  learns [SEP],  [CLS]  and  sentence  A/B  embeddings  during  pre-training.</p>
+</li>
+<li><p>GPT  was  trained  for  1M  steps  with  a  batch size  of  32,000  words;  BERT  was  trained  for 1M  steps  with  a  batch  size  of  128,000  words.</p>
+</li>
+<li><p>GPT  used  the  same  learning  rate  of  5e-5  for all  fine-tuning  experiments;  BERT  chooses  a task-specific  fine-tuning  learning  rate  which performs  the  best  on  the  development  set.</p>
+</li>
+</ul>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFWTk40Z0FoMC8vZkFvblFwbzhqa0EwL3gramRPVU9Ed2lWK0MrcHVvNTV3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  3:  Our  task  specific  models  are  formed  by  incorporating  BERT  with  one  additional  output  layer,  so  a minimal  number  of  parameters  need  to  be  learned  from  scratch.  Among  the  tasks,  (a)  and  (b)  are  sequence-level
+tasks  while  (c)  and  (d)  are  token-level  tasks.  In  the  figure,  E  represents  the  input  embedding,  Ti  represents  the
+contextual  representation  of  tokeni,  [CLS]  is  the  special  symbol  for  classification  output,  and  [SEP]  is  the  special
+symbol  to  separate  non-consecutive  token  sequences."></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFWTk40Z0FoMC8vUXI4UkFtU240TmRDYXZjWENnclYzRlVlVWd3YS9PZUZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  GLUE  Test  results,  scored  by  the  GLUE  evaluation  server.  The  number  below  each  task  denotes  the number  of  training  examples.  The  “Average”  column  is  slightly  different  than  the  official  GLUE  score,  since we  exclude  the  problematic  WNLI  set.  OpenAI  GPT  =  (L=12,  H=768,  A=12);  BERTBASE  =  (L=12,  H=768,A=12);  BERTLARGE  =  (L=24,  H=1024,  A=16).  BERT  and  OpenAI  GPT  are  single-model,  single  task.  All results  obtained  from  https://gluebenchmark.com/leaderboard  and  https://blog.openai.com/language-unsupervised/."></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFWTk40Z0FoMC8vWnB1R3B5bzJKQXNmQW1RUUdxYW1OTVFJNldQTXpGazF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  SQuAD  results.  The  BERT  ensemble  is  7x systems  which  use  different  pre-training  checkpoints and  fine-tuning  seeds."></p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFWTk40Z0FoMC8vY3dxOHJLU0xKSko5Y0ozUjFRTDQzMmVKdUNKcDNWZGtRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  3:  CoNLL-2003  Named  Entity  Recognition  results.  The  hyperparameters  were  selected  using  the Dev  set,  and  the  reported  Dev  and  Test  scores  are  averaged  over  5  random  restarts  using  those  hyperparameters."></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFWTk40Z0FoMC8vWlhkZnZrNWgyQi9KSFlUME9xZ1QycFJHU1ZlV1ptNnJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  6:  Ablation  over  BERT  model  size.  #L  =  the number  of  layers;  #H  =  hidden  size;  #A  =  number  of  attention  heads.  “LM  (ppl)”  is  the  masked  LM  perplexity of  held-out  training  data."></p>
+<p>作者也做了像 ELMo 当成特征加入的实验，从下图可以看到，当成特征加入最好效果能达到 96.1% 和微调的 96.4% 差不多，说明 BERT 对于基于特征和基于微调这两种方法都是有效的。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFWTk40Z0FoMC8vVXVhMzFjenlpd05yYStQdjJWZFBhSDMxcVExMVk2ZFBnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  7:  Ablation  using  BERT  with  a  feature-based  approach  on  CoNLL-2003  NER.  The  activations  from  the specified  layers  are  combined  and  fed  into  a  two-layer BiLSTM,  without  backpropagation  to  BERT."></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>和传统的词向量相比，使用语言模型预训练其实可以看成是一个句子级别的上下文的词表示，它可以充分利用大规模的单语语料，并且可以对一词多义进行建模。证明了预训练表征可以消除对许多精心设计的任务特定架构的需求。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://drive.google.com/open?id=1TB8r-P5lBdRp7D5pjTHbcGCJaBdnrUd8" target="_blank" rel="noopener">https://drive.google.com/open?id=1TB8r-P5lBdRp7D5pjTHbcGCJaBdnrUd8</a></li>
+<li><a href="https://github.com/google-research/bert" target="_blank" rel="noopener">https://github.com/google-research/bert</a></li>
+<li><a href="https://www.jiqizhixin.com/articles/2018-10-12-13" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2018-10-12-13</a></li>
+<li><a href="https://www.jiqizhixin.com/articles/2018-10-22-3?from=synced&amp;keyword=BERT" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2018-10-22-3?from=synced&amp;keyword=BERT</a></li>
+<li><a href="https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/" target="_blank" rel="noopener">https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/</a></li>
+<li><a href="http://nlp.seas.harvard.edu/2018/04/03/attention.html#background" target="_blank" rel="noopener">http://nlp.seas.harvard.edu/2018/04/03/attention.html#background</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/19/Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFwUDkxckRVeWtBYTB2dmh2dXFqTFpjVDVvZ1FMZTBsMW5pM3ppMHJkN1FRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/" class="title">BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding</a></p>
+                            <p class="item-date"><time datetime="2018-10-30T01:25:00.000Z" itemprop="datePublished">2018-10-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/19/Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJ3M1NiTEwwV3NvbXRhRmxIUW53QkJNcWdsVWg4SjFnYjJOTGJSUFpTYUl3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/19/Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning/" class="title">Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning</a></p>
+                            <p class="item-date"><time datetime="2018-10-19T08:11:00.000Z" itemprop="datePublished">2018-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBqeWNaMGF4WWhOWlJaM0g5eGl4K2ZxYmtHT3BSeVBlc2dqOHFXbWFRMUxBPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/" class="title">Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T06:32:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/07/Deep contextualized word representations/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjIwNXdJRFJydzBiYy9CMUtrZUZ4cHJsUStNWDJvdTVSTFErOTVtZG9ObmFBPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Deep contextualized word representations" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/07/Deep contextualized word representations/" class="title">Deep contextualized word representations</a></p>
+                            <p class="item-date"><time datetime="2018-10-07T01:40:00.000Z" itemprop="datePublished">2018-10-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBBZVpLZElXRnpYNHpNcUMzVGc5bVMyWDkwVFZrOEZWemNDUndQOTZtS2dnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Xception-Deep  Learning  with  Depthwise  Separable  Convolutions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/CV/CNN/">CNN</a></p>
+                            <p class="item-title"><a href="/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/" class="title">Xception-Deep  Learning  with  Depthwise  Separable  Convolutions</a></p>
+                            <p class="item-date"><time datetime="2018-10-02T01:56:00.000Z" itemprop="datePublished">2018-10-02</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 12px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 12px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 14px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/NLG/" style="font-size: 12px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 12px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 12px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 14px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 18px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 10px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
