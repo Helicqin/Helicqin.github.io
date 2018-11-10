@@ -17,7 +17,7 @@
 <meta property="og:description" content="SLU是任务型对话系统的基础，本文提出了一种基于对话历史建模的SLU模型，通过RNN对对话上下文进行建模，进而辅助对当前句子的理解，并且可以用于DST（对话状态追踪）。paper linkdataset link">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2018-11-10T12:39:11.112Z">
+<meta property="og:updated_time" content="2018-11-10T13:53:52.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding">
 <meta name="twitter:description" content="SLU是任务型对话系统的基础，本文提出了一种基于对话历史建模的SLU模型，通过RNN对对话上下文进行建模，进而辅助对当前句子的理解，并且可以用于DST（对话状态追踪）。paper linkdataset link">
@@ -312,6 +312,11 @@
 <li>在slot tagger任务的准确率上，使用 $o^{t-1}$ 与 $a^{t}$ 相比并没有带来提升。这表明：系统act中的slot与用户回复中提到的slot有很强的相关性，用户回复的通常是与上一个系统act直接相关，而与之前的轮次相关性不大。</li>
 </ol>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文提出了一种快速有效的对对话上下文进行编码的SLU模型，避免了memory network低效的运算方式，同时准确率没有受到影响。并且可以应用于对话系统的其它组件中，例如状态追踪。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://drive.google.com/open?id=1H4pEa3sxxe81W7hlNp5mNRyGyF0nrcIS" target="_blank" rel="noopener">https://drive.google.com/open?id=1H4pEa3sxxe81W7hlNp5mNRyGyF0nrcIS</a></li>
+<li><a href="http://github.com/google-research-datasets/simulated-dialogue" target="_blank" rel="noopener">http://github.com/google-research-datasets/simulated-dialogue</a></li>
+<li><a href="https://zhuanlan.zhihu.com/c_129532277" target="_blank" rel="noopener">memory network</a></li>
+</ul>
 
         </div>
         <footer class="article-footer">
