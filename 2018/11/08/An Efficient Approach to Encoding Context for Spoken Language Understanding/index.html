@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="NLP,NLU" />
+    
+    <meta name="description" content="SLU是任务型对话系统的基础，本文提出了一种基于对话历史建模的SLU模型，通过RNN对对话上下文进行建模，进而辅助对当前句子的理解，并且可以用于DST（对话状态追踪）。paper linkdataset link">
+<meta name="keywords" content="NLP,NLU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding">
+<meta property="og:url" content="https://helic.github.io/2018/11/08/An Efficient Approach to Encoding Context for Spoken Language Understanding/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="SLU是任务型对话系统的基础，本文提出了一种基于对话历史建模的SLU模型，通过RNN对对话上下文进行建模，进而辅助对当前句子的理解，并且可以用于DST（对话状态追踪）。paper linkdataset link">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2018-11-10T12:31:58.472Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding">
+<meta name="twitter:description" content="SLU是任务型对话系统的基础，本文提出了一种基于对话历史建模的SLU模型，通过RNN对对话上下文进行建模，进而辅助对当前句子的理解，并且可以用于DST（对话状态追踪）。paper linkdataset link">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/NLP/NLU/">NLU</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-An Efficient Approach to Encoding Context for Spoken Language Understanding" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/11/08/An Efficient Approach to Encoding Context for Spoken Language Understanding/" class="article-date">
+            <time datetime="2018-11-08T08:15:00.000Z" itemprop="datePublished">2018-11-08</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/NLU/">NLU</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>SLU是任务型对话系统的基础，本文提出了一种基于对话历史建模的SLU模型，通过RNN对对话上下文进行建模，进而辅助对当前句子的理解，并且可以用于DST（对话状态追踪）。<br><a href="https://drive.google.com/open?id=1H4pEa3sxxe81W7hlNp5mNRyGyF0nrcIS" target="_blank" rel="noopener">paper link</a><br><a href="http://github.com/google-research-datasets/simulated-dialogue" target="_blank" rel="noopener">dataset link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>任务型对话系统<strong>SLU</strong>模块的作用在于将用户的自然语言解析成语义帧（semantic  frames）的形式，包括<strong>intent , dialogue act and slots</strong>，实例如下：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFERTBhREJmdWl5RSszRmo0WjRQRlpuU0gvOGtGaVU1TlpBRVpiTm02QTZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  An  example  semantic  frame  with  slot,  intent  and  dialogue  act  annotations,  following  the  IOB  tagging  scheme."></p>
+<p>本文采用的是对intent , dialogue act and slots 预测联合建模的方式，这也是现在最通用的做法。</p>
+<p>之前大部分关于SLU的研究集中于单轮的语言理解，此时系统（agent）只接收当前时刻的用户输入，外部的知识库以及基于frame的上下文。然而，任务型对话系统包含多轮的用户与系统交互，以实现user goal。多轮的SLU面临以下挑战：用户和系统可能同时指代在之前对话轮次中出现的实体，这带来了歧义。例如，<code>three</code> 在不同的语境中，可以代表日期、时间、电影票数量以及餐厅评分。来自于之前轮次的用户和系统的输入已经被证实可以解决以上问题。然而大部分的工作只使用了系统前一个输入的信息。<code>memory  networks</code>则是对整个的对话历史进行建模。</p>
+<p>本质上，基于<code>memory  networks</code>的方法会将之前轮次中的用户以及系统输入进行编码，例如使用RNN等。这些<code>memory embeddings</code> 被一起作为 <code>context vector</code> ，进而预测SLU的输出。具体来说，可以通过计算当前时刻用户的输入与<code>memory embeddings</code> 的attention score，或者使用RNN对<code>memory embeddings</code>进行编码。</p>
+<p>尽管<code>memory networks</code>可以提高准确率，但是在计算上并不高效。原因如下：</p>
+<ul>
+<li>对于每个turn，需要处理之前所有的历史输入的自然语言。</li>
+<li>对话上下文可以潜在地通过<strong>dialogue  state  tracker</strong>来获得。使用单独的<strong>SLU-specific</strong>网络而不是复用DST的上下文信息会导致运算加倍。</li>
+<li><code>memory networks</code>是将系统输入的自然语言进行编码，忽略了系统的dialogue act；二者含有同样的信息，但是dialogue act更结构化并且类别更少。</li>
+</ul>
+<p>本文提出了一种更加高效的对话上下文编码方法，主要贡献在以下两方面：</p>
+<ul>
+<li><p>直接对系统的dialogue act进行编码，取代了对系统输入的自然语言编码。这使得我们可以复用DM的输出结果来获取上下文。</p>
+</li>
+<li><p>使用层级RNN对上下文编码，一个时间步长处理一个轮次的输入。减少了计算量同时性能没有下降。</p>
+</li>
+</ul>
+<blockquote>
+<p>Our representation  of  dialogue  context  is  similar  to  those  used  in dialogue  state  tracking  models  [17,  18,  19],  thus  enabling  the sharing  of  context  representation  between  SLU  and  DST.</p>
+</blockquote>
+<h2 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h2><p>模型概述：假定每个对话有T turns，每一轮包括用户输入的自然语言和系统的dialogue acts（注意此处的act最多只能包括一个slot，因此一句话可以对应多个act）。下图是模型整体架构图：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5dFFkRGIvSURSb2RmZzlwSUc1NVpwQnlqd2ZKRGZURjE0ZHhzQmpSSTZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  A  generalized  hierarchical  recurrent  neural  network  for  joint  prediction  of  user  intent,  dialogue  acts  (Section  2.4)  and  slot spans  (Section  2.5).  Context  vectors  can  be  fed  as  additional  RNN  inputs  (positions  A  and  C)  or  can  be  used  to  initialize  the  RNN hidden  states  (positions  B  and  D)."></p>
+<p>对于每一个轮次t，使用<code>system act encoder</code>得到输入的系统dialogue act集合 $A^{t}$ 的Embedding表示 $a^{t}$，使用<code>utterance encoder</code>对用户输入的自然语言做编码，得到 $u^{t}$ 。<code>dialogue encoder</code>是一个RNN网络，当前时间步长的输入为  $a^{t}$ 和 $u^{t}$ ，结合上一个时间步的隐层状态 $s^{t-1}$ ，生成对话上下文表达 $o^{t}$ ，同时更新当前时间步的隐层状态 $s^{t}$ 。$o^{t}$ 被用来做用户intent分类和dialogue act分类。<code>utterance encoder</code>的输出$u^{t}$作为<code>slot tagger</code>的输入，这个模块的作用是从用户输入的自然语言中提取slot的值。</p>
+<p><code>utterance encoder</code>和<code>slot tagger</code>都是用的是双向RNN，除了上述输入之外，都额外增加了上下文向量$o^{t}$作为输入，具体细节见以下详细描述。</p>
+<h3 id="System-Act-Encoder"><a href="#System-Act-Encoder" class="headerlink" title="System  Act  Encoder"></a>System  Act  Encoder</h3><p><strong>System  Act  Encoder</strong> 的作用是将时刻t的系统dialogue acts进行编码，得到$a^{t}$，编码与act的出现顺序无关。这与基于自然语言的编码不同，其会隐式地包含顺序信息。</p>
+<p>每个act包含act type以及可选参数slot, value，作者将所有的act分成两类：</p>
+<ul>
+<li>带有一个slot的act（一个act最多有一个slot），可以含slot value，也可以不包含：<code>request(time), negate(time=&#39;6pm&#39;)</code></li>
+<li>不含slot的act：<code>greeting</code></li>
+</ul>
+<p><em>Note  that  the  same dialogue  act  can  appear  in  the  dialogue  with  or  without  an  associated  slot  (negate(time=‘6  pm’)  versus  negate).</em></p>
+<p>定义：</p>
+<ul>
+<li>$A_{sys}$ : 所有系统act的集合 </li>
+<li>$a^{t}_{slot}(s)$ : binary vector, len=$\left | A_{sys} \right |$，代表act with slot，不含slot的值</li>
+<li>$a^{t}_{ns}$ : binary vector, len=$\left | A_{sys} \right |$，代表act without slot</li>
+<li>e_{s} :  embedding for slot s</li>
+<li>$S^{t}$ : slot集合</li>
+</ul>
+<p> <strong>System  Act  Encoder</strong> 本质上是一个全连接网络，结构如下：</p>
+<p>  <img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBSOWpTVjR0emRLdDg4am90OEZVbVB1amNobGtLOWl5bURoWGR5eFNQbWlRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Utterance-Encoder"><a href="#Utterance-Encoder" class="headerlink" title="Utterance  Encoder"></a>Utterance  Encoder</h3><p><strong>Utterance  Encoder</strong>的作用是获得用户输入token sequence的表征，输入为用户的自然语言序列（首末分别加上SOS和EOS token），输出为对应token embedding。<br>定义：</p>
+<ul>
+<li>$x_{t}=\left { x^{t}_{m}\epsilon R^{u_{d}}, \forall 0 \leq m&lt; M^{t} \right }$：用户输入的token embedding</li>
+<li>$M^{t}$：第t轮，用户输入的序列长度</li>
+<li>$u^{t} \epsilon R^{2d_{u}}$：对整个用户输入的表征</li>
+<li>$u_{o}^{t} =\left { u_{o,m}^{t}\epsilon R^{2d_{u}}, \forall 0 \leq m&lt; M^{t} \right }$：对应输入token序列的表征</li>
+</ul>
+<p><strong>Utterance  Encoder</strong>本质上是一个单层双向的GRU：<br>$$u^{t}, u_{o}^{t}=BRNN_{GRU}(x^{t})    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \   (5)$$</p>
+<h3 id="Dialogue-Encoder"><a href="#Dialogue-Encoder" class="headerlink" title="Dialogue  Encoder"></a>Dialogue  Encoder</h3><p><strong>Dialogue  Encoder</strong>是一个单向的GRU RNN，每一个时间步长代表一个对话轮次，目的是得到每一轮对话的上下文表征。输入为 $a^{t} \bigoplus u^{t}$，结合上一轮次的隐层状态 $s^{t-1}$，得到当前轮次的输出$o^{t}$以及隐层状态$s^{t}$（对于GRU Cell来说二者是一样的），$o^{t}$即为第t轮的对话上下文表征。</p>
+<p>这种编码方式相对于<code>memory networks</code>来说更加高效，因为<code>memory networks</code>在每一轮次都需要处理所有的对话历史。</p>
+<h3 id="Intent-and-Dialogue-Act-Classification"><a href="#Intent-and-Dialogue-Act-Classification" class="headerlink" title="Intent  and  Dialogue  Act  Classification"></a>Intent  and  Dialogue  Act  Classification</h3><blockquote>
+<p>The  user  intent  helps  to  identify  the  APIs/databases  which  the dialogue  system  should  interact  with.Intents  are  predicted  at each  turn  so  that  a  change  of  intent  during  the  dialogue  can  be detected.</p>
+</blockquote>
+<p>论文假定用户每次输入只能包含一个intent，在每一轮预测基于所有intent集合的概率分布，如下式；而<strong>Dialogue  Act  Classification</strong>则看成一个多标签分类任务，即对于一个用户输入可以有多个dialogue act标签。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBSOWpTVjR0emRLaERzNG5XSHVOTzhGREpaYmJ0UEV2WG1VS2ZpRTRiS0hnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>定义：</p>
+<ul>
+<li>$p_{i}^{t}$：len=$\left|I \right|$，intent 概率分布</li>
+<li>$p_{a}^{t}(k)$：probability  of  presence  of  dialogue  act  k  in  turn  t</li>
+<li>$I$：user intent set</li>
+<li>$A_{u}$：dialogue act set</li>
+<li>$W_{i}\epsilon R^{d \times \left|I \right|}, W_{a}\epsilon R^{d \times \left|A_{u} \right|}, len(o^{t})=d$</li>
+</ul>
+<blockquote>
+<p>During inference, we predict $argmax(p_{i}^{t})$ as the intent label and all dialogue acts with probability greater than $t_{u}$ are associated with the utterance, where 0 &lt; $t_{u}$ &lt; 1.0 is a hyperparameter tuned using the validation set.</p>
+</blockquote>
+<h3 id="Slot-Tagging"><a href="#Slot-Tagging" class="headerlink" title="Slot  Tagging"></a>Slot  Tagging</h3><blockquote>
+<p>Slot  tagging  is  the  task  of  identifying  the  values  for  different slots  present  in  the  user  utterance.</p>
+</blockquote>
+<p><strong>Slot Tagger</strong>是一个Bi-LSTM，输入为<strong>Utterance  Encoder</strong>的输出token embedding，得到 $s_{o}^{t}=\left { s_{o,m}^{t}\epsilon R^{2d_{s}},\ \ \ 0\leq m&lt; M^{t} \right }$，$M^{t}$ 是用户输入的token序列长度。对于第m个token，使用 $s_{o,m}^{t}$ 做softmax分类得到基于 $2\left| S\right|+1$ 个标签的概率分布，S是所有的slot构成的集合。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBNMFpiMEY4RXUzazEyWS82ZUsrNnBHZGJ4TXZ6SXBOQ28rbGpxeDVSUjhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<blockquote>
+<p>We use an LSTM cell instead of a GRU because it gave better results on the validation set.</p>
+</blockquote>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>在本文中，设定一个turn包含系统和用户的一个来回，系统先说一句话，之后用户再回复一句。本文使用的对话上下文编码实际包含两种信息：</p>
+<ul>
+<li><p>the  dialogue encoding  vector  $o^{t-1}$ encodes  all  turns  prior  to  the  current  turn</p>
+</li>
+<li><p>the  system  intent  vector  $a^{t}$ encodes  the  current  turn  system utterance</p>
+</li>
+</ul>
+<p>因此，当系统说完一句话后，使用 $o^{t-1}$ 和  $a^{t}$ 一起对整个对话历史做编码。并且，这些向量表示可以被作为SLU中很多模块的额外输入：</p>
+<blockquote>
+<p>Positions A and C feed context vectors as additional inputs at each RNN step whereas positions B and D use the context vectors to initialize the hidden state of the two RNNs after a linear projection to the hidden state dimension.</p>
+</blockquote>
+<p>本文选取的实验配置如下：</p>
+<ul>
+<li><p>只有 $a^{t}$ ，没有<strong>dialogue encoder</strong>模块：在A-D某一个位置上将 $a^{t}$ 作为额外输入，去掉<strong>dialogue encoder</strong>模块，直接用 $u^{t}$ 代替 $o^{t}$ 做intent和act分类。在这种配置下，实验证明，在位置B添加 $a^{t}$ 可以在验证集上达到最优效果，测试集结果见Table 1的第七行。</p>
+</li>
+<li><p>只有  $a^{t}$ ：将 $a^{t}$ 作为<strong>dialogue encoder</strong>模块的输入，同时在A-D某一个位置上将 $a^{t}$ 作为额外输入。Table 1的第八行代表这种配置下的最好模型，此时将 $a^{t}$ 添加到D位置。</p>
+</li>
+<li><p>只有 $o^{t-1}$ ：将 $a^{t}$ 作为<strong>dialogue encoder</strong>模块的输入，在C或者D位置上添加 $o^{t-1}$ 作为额外输入。Table 1的第九行代表这种配置下的最好模型，此时将 $o^{t-1}$ 添加到D位置。</p>
+</li>
+<li><p>$a^{t}$ 和 $o^{t-1}$：将 $a^{t}$ 作为<strong>dialogue encoder</strong>模块的输入，在C或者D位置上独立添加 $o^{t-1}$ 或者 $a^{t}$ 作为额外输入，共有四种情况。Table 1的第十行代表这种配置下的最好模型，此时将 $o^{t-1}$ 添加到D位置，$a^{t}$  到C位置。</p>
+</li>
+</ul>
+<h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p>选择的是谷歌的<a href="http://github.com/google-research-datasets/simulated-dialogue" target="_blank" rel="noopener">对话数据集</a>，包含12个slot类别，21种用户dialogue act。这个数据集比较大的挑战是有很多未出现的实体。</p>
+<blockquote>
+<p>For  instance,  only  13%  of  the  movie  names  in  the  validation  and  test  sets  are  also  present  in  the  training  set.</p>
+</blockquote>
+<h3 id="Baselines"><a href="#Baselines" class="headerlink" title="Baselines"></a>Baselines</h3><p>本文选取以下四种模型作为基线：</p>
+<ul>
+<li><p><code>NoContext</code>:  A  two-layer  stacked  bidirectional  RNN  using GRU  and  LSTM  cells  respectively,  and  no  context.</p>
+</li>
+<li><p><code>PrevTurn</code>:  This  is  similar  to  the NoContext model.  with  a  different  bidirectional  GRU  layer  encoding  the  previous  system turn,  and  this  encoding  being  input  to  the  slot  tagging  layer of  encoder  i.e.  position  C  in  Figure  2.</p>
+</li>
+<li><p><code>MemNet</code>:  This  is  the  system  from  [11],  using  cosine  attention.  For  this  model,  we  report  metrics  with  models  trained with  memory  sizes  of  6  and  20  turns.  A  memory  size  of  20, while  making  the  model  slower,  enables  it  to  use  the  entire dialogue  history  for  most  of  the  dialogues.</p>
+</li>
+<li><p><code>SDEN</code>:  This  is  the  system  from  [12]  which  uses  a  bidirectional  GRU  RNN  for  combining  memory  embeddings.  We report  metrics  for  models  with  memory  sizes  6  and  20.</p>
+</li>
+</ul>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFBRFc4YXJoY2wvU0JCblNUemhZVGJNQTB6VGYxdEJ6cytyZG9id2xnanpRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table1:  SLU  results  on  test  sets  with  baselines  and  our  proposed  architecture  variants,  when  trained  on  Sim-M  +  Sim-R.  For  each dataset,  the  columns  indicate  the  intent  accuracy,  dialogue  act  F1  score,  slot  chunk  F1  score  and  frame  accuracy,  in  that  order.  The Config  column  indicates  the  best  obtained  config  for  feeding  context  vectors  for  each  experiment."></p>
+<h3 id="Training-and-Evaluation"><a href="#Training-and-Evaluation" class="headerlink" title="Training  and Evaluation"></a>Training  and Evaluation</h3><blockquote>
+<p>We  use  sigmoid  cross  entropy  loss  for  dialogue  act  classification  (since  it  is  modeled  as  a  multilabel  binary  classification problem)  and  softmax  cross  entropy  loss  for  intent  classification  and  slot  tagging.  During  training,  we  minimize  the  sum  of the  three  constituent  losses  using  the  ADAM  optimizer  [25]  for 150k  training  stepswith  a  batch  size  of  10  dialogues.</p>
+</blockquote>
+<blockquote>
+<p>To  improve  model  performance  in  the  presence  of  out  of vocabulary  (OOV)  tokens  arising  from  entities  not  present  in  the training  set,  we  randomly  replace  tokens  corresponding  to  slot values  in  user  utterance  with  a  special  OOV  token  with  a  value dropout  probability  that  linearly  increases  during  training.</p>
+</blockquote>
+<blockquote>
+<p>To  find  the  best  hyperparameter  values,  we  perform  grid search  over  the  token  embedding  size  {64;128;256},<br>learning  rate  [0.0001, 0.01],  maximum  value  dropout  probability  [0:2;0:5]  and  the  intent  prediction  threshold  {0.3,0.4,0.5},  for  each  model  configuration  listed  in  Section 3.  The  utterance  encoder  and  slot  tagger  layer  sizes  are  set  equal to  the  token  embedding  dimension,  and  that  of  the  dialogue  encoder  to  half  this  dimension.  In  Table  1,  we  report  intent  accuracy,  dialogue  act  F1  score,  slot  chunk  F1  score  [22]  and  frame accuracy  on  the  test  set  for  the  best  runs  for  each  configuration in  Section  3  based  on  frame  accuracy  on  the  combined  validation  set,  to  avoid  overfitting.  </p>
+</blockquote>
+<p><strong>A  frame  is  considered  correct  if  its predicted  intent,  slots  and  acts  are  all  correct.</strong></p>
+<h2 id="Results-and-Discussion"><a href="#Results-and-Discussion" class="headerlink" title="Results  and  Discussion"></a>Results  and  Discussion</h2><ol>
+<li>本文提出的模型与MemNet  and  SDEN基线模型的准确率相当，均远远优于无上下文模型，证明上下文信息在SLU中的重要性。</li>
+<li><p>另一个关注方面是计算效率：memory network在每个轮次都需要处理对话历史中的很多输入语句，而本文提出的模型只需要经过一个前馈全连接网络以及RNN的一步计算即可得到上下文表征。SDEN比memory network更慢，因为它需要将memory network的输出embedding再通过RNN。</p>
+<blockquote>
+<p>Empirically,  MemNet-6 and  MemNet-20  experiments  took  roughly  4x  and  12x  more</p>
+</blockquote>
+</li>
+<li><p>本文提出的模型在小数据集（Sim-M）上的泛化能力更优。</p>
+</li>
+</ol>
+<blockquote>
+<p>Two  interesting  experiments  to  compare  are  rows  2  and  7 i.e.  “PrevTurn”  and  “$a^{t}$ only,  No  DE”;  they  both  use  context only  from  the  previous  system  utterance/acts,  discarding  the  remaining  turns.  Our  system  act  encoder,  comprising  only  a  two-layer  feedforward  network,  is  in  principle  faster  than  the  bidirectional  GRU  that  “PrevTurn”  uses  to  encode  the  system  utterance.  This  notwithstanding,  the  similar  performance  of  both models  suggests  that  using  system  dialogue  acts  for  context  is  a good  alternative  to  using  the  corresponding  system  utterance.</p>
+</blockquote>
+<ol start="4">
+<li>Table 1中也显示了最优的 $a^{t}$ 和 $o^{t-1}$ 输入位置。总体来说，将它们作为RNN Cell的初始状态（B,D）要优于单独拼接输入（A,C）。作者认为这可能是因为 $a^{t}$ 和 $o^{t-1}$ 对于每个用户token来说都是相同的，造成了冗余。</li>
+<li>在slot tagger任务的准确率上，使用 $o^{t-1}$ 与 $a^{t}$ 相比并没有带来提升。这表明：系统act中的slot与用户回复中提到的slot有很强的相关性，用户回复的通常是与上一个系统act直接相关，而与之前的轮次相关性不大。</li>
+</ol>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文提出了一种快速有效的对对话上下文进行编码的SLU模型，避免了memory network低效的运算方式，同时准确率没有受到影响。并且可以应用于对话系统的其它组件中，例如状态追踪。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/08/An Efficient Approach to Encoding Context for Spoken Language Understanding/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2018/11/08/An Efficient Approach to Encoding Context for Spoken Language Understanding/" class="title">An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding</a></p>
+                            <p class="item-date"><time datetime="2018-11-08T08:15:00.000Z" itemprop="datePublished">2018-11-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFwUDkxckRVeWtBYTB2dmh2dXFqTFpjVDVvZ1FMZTBsMW5pM3ppMHJkN1FRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/" class="title">BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding</a></p>
+                            <p class="item-date"><time datetime="2018-10-30T01:25:00.000Z" itemprop="datePublished">2018-10-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/19/Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJ3M1NiTEwwV3NvbXRhRmxIUW53QkJNcWdsVWg4SjFnYjJOTGJSUFpTYUl3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/19/Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning/" class="title">Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning</a></p>
+                            <p class="item-date"><time datetime="2018-10-19T08:11:00.000Z" itemprop="datePublished">2018-10-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBqeWNaMGF4WWhOWlJaM0g5eGl4K2ZxYmtHT3BSeVBlc2dqOHFXbWFRMUxBPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/11/Deep Relevance Ranking Using Enhanced Document-Query Interactions/" class="title">Deep  Relevance  Ranking  Using  Enhanced  Document-Query  Interactions</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T06:32:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/07/Deep contextualized word representations/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjIwNXdJRFJydzBiYy9CMUtrZUZ4cHJsUStNWDJvdTVSTFErOTVtZG9ObmFBPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Deep contextualized word representations" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/07/Deep contextualized word representations/" class="title">Deep contextualized word representations</a></p>
+                            <p class="item-date"><time datetime="2018-10-07T01:40:00.000Z" itemprop="datePublished">2018-10-07</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 12px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 12px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 14px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/NLG/" style="font-size: 12px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 10px;">NLU</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 12px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 12px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 14px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 18px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 10px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2018/11/08/An Efficient Approach to Encoding Context for Spoken Language Understanding/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
