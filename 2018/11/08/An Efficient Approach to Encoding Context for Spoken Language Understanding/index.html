@@ -17,7 +17,7 @@
 <meta property="og:description" content="SLU是任务型对话系统的基础，本文提出了一种基于对话历史建模的SLU模型，通过RNN对对话上下文进行建模，进而辅助对当前句子的理解，并且可以用于DST（对话状态追踪）。paper linkdataset link">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2018-11-10T12:31:58.472Z">
+<meta property="og:updated_time" content="2018-11-10T12:39:11.112Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding">
 <meta name="twitter:description" content="SLU是任务型对话系统的基础，本文提出了一种基于对话历史建模的SLU模型，通过RNN对对话上下文进行建模，进而辅助对当前句子的理解，并且可以用于DST（对话状态追踪）。paper linkdataset link">
@@ -241,7 +241,7 @@
 <h3 id="Slot-Tagging"><a href="#Slot-Tagging" class="headerlink" title="Slot  Tagging"></a>Slot  Tagging</h3><blockquote>
 <p>Slot  tagging  is  the  task  of  identifying  the  values  for  different slots  present  in  the  user  utterance.</p>
 </blockquote>
-<p><strong>Slot Tagger</strong>是一个Bi-LSTM，输入为<strong>Utterance  Encoder</strong>的输出token embedding，得到 $s_{o}^{t}=\left { s_{o,m}^{t}\epsilon R^{2d_{s}},\ \ \ 0\leq m&lt; M^{t} \right }$，$M^{t}$ 是用户输入的token序列长度。对于第m个token，使用 $s_{o,m}^{t}$ 做softmax分类得到基于 $2\left| S\right|+1$ 个标签的概率分布，S是所有的slot构成的集合。</p>
+<p><strong>Slot Tagger</strong>是一个Bi-LSTM，输入为<strong>Utterance  Encoder</strong>的输出token embedding，得到 $s_{o}^{t}=\left { s_{o,m}^{t}\epsilon R^{2d_{s}},0\leq m&lt; M^{t} \right }$，$M^{t}$ 是用户输入的token序列长度。对于第m个token，使用 $s_{o,m}^{t}$ 做softmax分类得到基于 $2\left| S\right|+1$ 个标签的概率分布，S是所有的slot构成的集合。</p>
 <p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBNMFpiMEY4RXUzazEyWS82ZUsrNnBHZGJ4TXZ6SXBOQ28rbGpxeDVSUjhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <blockquote>
 <p>We use an LSTM cell instead of a GRU because it gave better results on the validation set.</p>
