@@ -214,12 +214,12 @@
 <p>  <img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBSOWpTVjR0emRLdDg4am90OEZVbVB1amNobGtLOWl5bURoWGR5eFNQbWlRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <h3 id="Utterance-Encoder"><a href="#Utterance-Encoder" class="headerlink" title="Utterance  Encoder"></a>Utterance  Encoder</h3><p><strong>Utterance  Encoder</strong>的作用是获得用户输入token sequence的表征，输入为用户的自然语言序列（首末分别加上SOS和EOS token），输出为对应token embedding。<br>定义：</p>
 <ul>
-<li>$x_{t}=\left { x^{t}_{m}\epsilon R^{u_{d}}, \forall 0 \leq m&lt; M^{t} \right }$：用户输入的token embedding</li>
+<li>$x_{t}=\left \{ x^{t}_{m}\epsilon R^{u_{d}}, \forall 0 \leq m&lt; M^{t} \right \}$：用户输入的token embedding</li>
 <li>$M^{t}$：第t轮，用户输入的序列长度</li>
 <li>$u^{t} \epsilon R^{2d_{u}}$：对整个用户输入的表征</li>
-<li>$u_{o}^{t} =\left { u_{o,m}^{t}\epsilon R^{2d_{u}}, \forall 0 \leq m&lt; M^{t} \right }$：对应输入token序列的表征</li>
+<li>$u_{o}^{t} =\left \{ u_{o,m}^{t}\epsilon R^{2d_{u}}, \forall 0 \leq m&lt; M^{t} \right \}$：对应输入token序列的表征</li>
 </ul>
-<p><strong>Utterance  Encoder</strong>本质上是一个单层双向的GRU：<br>$$u^{t}, u_{o}^{t}=BRNN_{GRU}(x^{t})    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \   (5)$$</p>
+<p><strong>Utterance  Encoder</strong>本质上是一个单层双向的GRU：<br>$$u^{t}, u_{o}^{t}=BRNN_{GRU}(x^{t})                       (5)$$</p>
 <h3 id="Dialogue-Encoder"><a href="#Dialogue-Encoder" class="headerlink" title="Dialogue  Encoder"></a>Dialogue  Encoder</h3><p><strong>Dialogue  Encoder</strong>是一个单向的GRU RNN，每一个时间步长代表一个对话轮次，目的是得到每一轮对话的上下文表征。输入为 $a^{t} \bigoplus u^{t}$，结合上一轮次的隐层状态 $s^{t-1}$，得到当前轮次的输出$o^{t}$以及隐层状态$s^{t}$（对于GRU Cell来说二者是一样的），$o^{t}$即为第t轮的对话上下文表征。</p>
 <p>这种编码方式相对于<code>memory networks</code>来说更加高效，因为<code>memory networks</code>在每一轮次都需要处理所有的对话历史。</p>
 <h3 id="Intent-and-Dialogue-Act-Classification"><a href="#Intent-and-Dialogue-Act-Classification" class="headerlink" title="Intent  and  Dialogue  Act  Classification"></a>Intent  and  Dialogue  Act  Classification</h3><blockquote>
@@ -241,7 +241,7 @@
 <h3 id="Slot-Tagging"><a href="#Slot-Tagging" class="headerlink" title="Slot  Tagging"></a>Slot  Tagging</h3><blockquote>
 <p>Slot  tagging  is  the  task  of  identifying  the  values  for  different slots  present  in  the  user  utterance.</p>
 </blockquote>
-<p><strong>Slot Tagger</strong>是一个Bi-LSTM，输入为<strong>Utterance  Encoder</strong>的输出token embedding，得到 $s_{o}^{t}=\left { s_{o,m}^{t}\epsilon R^{2d_{s}},0\leq m&lt; M^{t} \right }$，$M^{t}$ 是用户输入的token序列长度。对于第m个token，使用 $s_{o,m}^{t}$ 做softmax分类得到基于 $2\left| S\right|+1$ 个标签的概率分布，S是所有的slot构成的集合。</p>
+<p><strong>Slot Tagger</strong>是一个Bi-LSTM，输入为<strong>Utterance  Encoder</strong>的输出token embedding，得到 $s_{o}^{t}=\left \{ s_{o,m}^{t}\epsilon R^{2d_{s}},0\leq m&lt; M^{t} \right \}$，$M^{t}$ 是用户输入的token序列长度。对于第m个token，使用 $s_{o,m}^{t}$ 做softmax分类得到基于 $2\left| S\right|+1$ 个标签的概率分布，S是所有的slot构成的集合。</p>
 <p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBNMFpiMEY4RXUzazEyWS82ZUsrNnBHZGJ4TXZ6SXBOQ28rbGpxeDVSUjhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <blockquote>
 <p>We use an LSTM cell instead of a GRU because it gave better results on the validation set.</p>
