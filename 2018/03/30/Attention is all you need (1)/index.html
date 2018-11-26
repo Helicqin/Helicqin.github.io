@@ -3,16 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Category: NLG | Helic</title>
+    <title>Attention is all you need | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Helic">
-<meta property="og:url" content="https://helic.github.io/categories/NLP/NLG/index.html">
+        <meta name="keywords" content="NLP,Transformer" />
+    
+    <meta name="description" content="来自Google的一篇神经翻译的文章，在这篇文章中作者们抛弃了传统Encoder-Decoder中经典的卷积和循环结构，仅保留了attention的结构，在减少了训练成本的同时在数个数据集上取得了最优的BLEU.paper link">
+<meta name="keywords" content="NLP,Transformer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attention is all you need">
+<meta property="og:url" content="https://helic.github.io/2018/03/30/Attention is all you need (1)/index.html">
 <meta property="og:site_name" content="Helic">
+<meta property="og:description" content="来自Google的一篇神经翻译的文章，在这篇文章中作者们抛弃了传统Encoder-Decoder中经典的卷积和循环结构，仅保留了attention的结构，在减少了训练成本的同时在数个数据集上取得了最优的BLEU.paper link">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
+<meta property="og:updated_time" content="2018-03-31T04:58:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Helic">
+<meta name="twitter:title" content="Attention is all you need">
+<meta name="twitter:description" content="来自Google的一篇神经翻译的文章，在这篇文章中作者们抛弃了传统Encoder-Decoder中经典的卷积和循环结构，仅保留了attention的结构，在减少了训练成本的同时在数个数据集上取得了最优的BLEU.paper link">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
     
 
     
@@ -124,74 +133,145 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-folder-open"></i>Category: <em class="page-title-link">NLG</em>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-Attention is all you need (1)" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/04/RNNLG/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fj7ckpao25j3091078jra.jpg)" alt="RNNLG" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helic.github.io/2017/09/04/RNNLG/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLG/">NLG</a>
-            </div>
-            <div class="date"><time datetime="2017-09-04T02:57:50.000Z" itemprop="datePublished">2017-09-04</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/04/RNNLG/">RNNLG</a>
+        Attention is all you need
         </h1>
     
 
-        <p class="article-excerpt">
-            RNNLG is an open source benchmark toolkit for Natural Language Generation (NLG) in spoken dialogue system application domains. It is released by Tsung-Hsien (Shawn) Wen from Cambridge Dialogue Systems Group under Apache License 2.0.
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/30/Attention is all you need (1)/" class="article-date">
+            <time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/Transformer/">Transformer</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>来自Google的一篇神经翻译的文章，在这篇文章中作者们抛弃了传统Encoder-Decoder中经典的卷积和循环结构，仅保留了attention的结构，在减少了训练成本的同时在数个数据集上取得了最优的BLEU.<a href="https://link.zhihu.com/?target=https://arxiv.org/pdf/1706.03762.pdf" target="_blank" rel="noopener"><br>paper link</a><br><a id="more"></a></p>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><h3 id="What-is-attention"><a href="#What-is-attention" class="headerlink" title="What is attention?"></a>What is attention?</h3><blockquote>
+<p>An  attention  function  can  be  described  as  mapping  a  query  and  a  set  of  key-value  pairs  to  an  output, where  the  query,  keys,  values,  and  output  are  all  vectors.  The  output  is  computed  as  a  weighted  sum  of  the  values,  where  the  weight  assigned  to  each  value  is  computed  by  a  compatibility  function  of  the  query  with  the  corresponding  key.</p>
+</blockquote>
+<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fputoqecq1j30fs080ac4.jpg" alt="attention"></p>
+<p>在计算 Attention 时主要分为三步，第一步是将 query 和每个 key 进行相似度计算得到权重，常用的相似度函数有点积，拼接，感知机等；然后第二步一般是使用一个 softmax 函数对这些权重进行归一化；最后将权重和相应的键值 value 进行加权求和得到最后的 Attention。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fputt9cbq3j30fs07ogoe.jpg" alt=""></p>
+<h2 id="Transformer-Model-Architecture"><a href="#Transformer-Model-Architecture" class="headerlink" title="Transformer Model  Architecture"></a>Transformer Model  Architecture</h2><h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><h4 id="Scaled-Dot-Product-Attention"><a href="#Scaled-Dot-Product-Attention" class="headerlink" title="Scaled  Dot-Product  Attention"></a>Scaled  Dot-Product  Attention</h4><p><img src="http://wx1.sinaimg.cn/large/006tGRI6ly1fputyei123j30860a674p.jpg" alt=""></p>
+<p>输入是$d_{k}$维的query和key，value的维度为$d_{v}$。其操作步骤为：首先计算query与所有key的内积，然后再除以$\sqrt{d_{k}}$,并使用softmax获取value的权值，最后加权求和得到相应的输出。在Scaled Dot-Product Attention上加上一个Mask（仅在decoder的Masked Multi-head Attention中使用）单元，可以用于处理训练时的一些不合法信息流动的问题。</p>
+<p>计算公式：<br><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fputzk8h4qj307z01aa9v.jpg" alt=""></p>
+<p>在实际操作里，通常Q是一系列query vectors的组合,$Q \in R^{ m \times d_{k}}$中的每一行对应于一个query；Q与$K^{T}\in\mathbb{R}^{d_{v}\times n}$相乘并进行scale之后，即可得到$m \times n$ 的矩阵，其中每一行都对应着一个 query vector的attention score；之后进行softmax归一化；然后，再将这个attention matrix与$V\in{\mathbb{R}^{n\times d_{v}}}$相乘，即可得到一个 $m \times d_{v}$ 维的attention output，其中每一行对应一个query output。</p>
+<p>其中$\sqrt{d_{k}}$因子起到调节作用，使得内积不至于太大。</p>
+<h4 id="Multi-Head-Attention"><a href="#Multi-Head-Attention" class="headerlink" title="Multi-Head  Attention"></a>Multi-Head  Attention</h4><p><img src="http://wx1.sinaimg.cn/large/006tGRI6ly1fpuvsyinrwj308i0au754.jpg" alt=""></p>
+<p><img src="http://wx1.sinaimg.cn/large/006tGRI6ly1fpuvybtoxcj30p305ajso.jpg" alt=""></p>
+<p>Query，Key，Value 首先经过一个线性变换，然后输入到放缩点积 Attention，注意这里要做 h 次，其实也就是所谓的多头，每一次算一个头。而且每次 Q，K，V 进行线性变换的参数 W 是不一样的。然后将 h 次的放缩点积 Attention 结果进行拼接，再进行一次线性变换得到的值作为多头 Attention 的结果。</p>
+<blockquote>
+<p>Multi-head  attention  allows  the  model  to  jointly  attend  to  information  from  different  representation subspaces  at  different  positions.</p>
+</blockquote>
+<h4 id="Applications-of-Attention-in-Transformer-Model"><a href="#Applications-of-Attention-in-Transformer-Model" class="headerlink" title="Applications  of  Attention  in  Transformer  Model"></a>Applications  of  Attention  in  Transformer  Model</h4><p>1）在encoder-decoder attention层，query来自于先前的解码层，key与value来自于encoder的输出。</p>
+<p>2）在encoder上单独使用了self-attention。这里的key，value，query都来自于encoder中上一层的输出。</p>
+<p>3）在decoder上也单独使用了self-attention。这里的key，value，query来自于decoder中当前时间步及之前的输出。为了避免信息向左流动，在scaled dot-product attention中增加了一个屏蔽层（mask），用以屏蔽掉那些softmax中的不合法连接（仅在训练时发挥作用）。</p>
+<h3 id="Position-wise-Feed-Forward-Networks"><a href="#Position-wise-Feed-Forward-Networks" class="headerlink" title="Position-wise  Feed-Forward  Networks"></a>Position-wise  Feed-Forward  Networks</h3><p>Position-wise Feed-Forward Networks使用两层线性变换与一个ReLU激活函数实现：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fpuwvhlaz4j307600ta9u.jpg" alt=""></p>
+<h3 id="Positional-Encoding"><a href="#Positional-Encoding" class="headerlink" title="Positional  Encoding"></a>Positional  Encoding</h3><blockquote>
+<p>Since  our  model  contains  no  recurrence  and  no  convolution,  in  order  for  the  model  to  make  use  of  the order  of  the  sequence,  we  must  inject  some  information  about  the  relative  or  absolute  position  of  the tokens  in  the  sequence. To  this  end,  we  add  “positional  encodings”  to  the  input  embeddings  at  the bottoms  of  the  encoder  and  decoder  stacks.  The  positional  encodings  have  the  same  dimension  $d_{model}$ as  the  embeddings,  so  that  the  two  can  be  summed.</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://arxiv.org/pdf/1706.03762.pdf" target="_blank" rel="noopener">Attention is all you need</a></li>
+<li></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
     </div>
 </article>
+
+    <section id="comments">
     
-        </div>
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
     
-
-
-    </div></section>
-
-
+    </section>
 
 
                         </div>
@@ -252,6 +332,29 @@
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/30/Attention is all you need/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Attention is all you need
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/03/22/Semi-Supervised Learning for NLP/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Semi-Supervised Learning for NLP</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -453,11 +556,13 @@
     var disqus_shortname = 'helic';
     
     
+    var disqus_url = 'https://helic.github.io/2018/03/30/Attention is all you need (1)/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>

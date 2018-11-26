@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Tensorflow_note_1 | Helic</title>
+    <title>Multi-task learning for Joint Language Understanding and Dialogue State Tracking | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Tensorflow" />
+        <meta name="keywords" content="NLP,NLU,DST" />
     
-    <meta name="description" content="基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Graphs and Sessions">
-<meta name="keywords" content="Tensorflow">
+    <meta name="description" content="本文是来自于SIGdial的一篇文章，主要研究的是LU和DST的联合建模，在不影响准确率的前提下提高了计算效率，同时在训练阶段引入了Scheduled Sampling，亦是创新点。本篇文章是作者一系列关于LU和DST的最新作，可结合之前两篇对比来看（参见Reference）。paper linkdataset link">
+<meta name="keywords" content="NLP,NLU,DST">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Tensorflow_note_1">
-<meta property="og:url" content="https://helic.github.io/2017/09/06/tensorflow-note-1 (1)/index.html">
+<meta property="og:title" content="Multi-task learning for Joint Language Understanding and Dialogue State Tracking">
+<meta property="og:url" content="https://helic.github.io/2018/11/23/Multi-task learning for Joint Language Understanding and Dialogue State Tracking/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Graphs and Sessions">
+<meta property="og:description" content="本文是来自于SIGdial的一篇文章，主要研究的是LU和DST的联合建模，在不影响准确率的前提下提高了计算效率，同时在训练阶段引入了Scheduled Sampling，亦是创新点。本篇文章是作者一系列关于LU和DST的最新作，可结合之前两篇对比来看（参见Reference）。paper linkdataset link">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
-<meta property="og:updated_time" content="2017-09-07T03:38:53.000Z">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2018-11-26T09:15:43.998Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tensorflow_note_1">
-<meta name="twitter:description" content="基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Graphs and Sessions">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg">
+<meta name="twitter:title" content="Multi-task learning for Joint Language Understanding and Dialogue State Tracking">
+<meta name="twitter:description" content="本文是来自于SIGdial的一篇文章，主要研究的是LU和DST的联合建模，在不影响准确率的前提下提高了计算效率，同时在训练阶段引入了Scheduled Sampling，亦是创新点。本篇文章是作者一系列关于LU和DST的最新作，可结合之前两篇对比来看（参见Reference）。paper linkdataset link">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
     
 
     
@@ -133,18 +133,18 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-tensorflow-note-1 (1)" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Multi-task learning for Joint Language Understanding and Dialogue State Tracking" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Tensorflow_note_1
+        Multi-task learning for Joint Language Understanding and Dialogue State Tracking
         </h1>
     
 
@@ -154,51 +154,189 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2017/09/06/tensorflow-note-1 (1)/" class="article-date">
-            <time datetime="2017-09-06T14:02:03.000Z" itemprop="datePublished">2017-09-06</time>
+        <a href="/2018/11/23/Multi-task learning for Joint Language Understanding and Dialogue State Tracking/" class="article-date">
+            <time datetime="2018-11-23T01:06:00.000Z" itemprop="datePublished">2018-11-23</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Tensorflow/">Tensorflow</a>
+        <a class="tag-link" href="/tags/DST/">DST</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/NLU/">NLU</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>基于cs20si的Tensorflow笔记，<a href="https://web.stanford.edu/class/cs20si/syllabus.html" target="_blank" rel="noopener">课程主页</a>；<br>本节主要内容：Graphs and Sessions<br><a id="more"></a></p>
-<h2 id="Tensor"><a href="#Tensor" class="headerlink" title="Tensor"></a>Tensor</h2><h4 id="An-n-dimensional-array"><a href="#An-n-dimensional-array" class="headerlink" title="An n-dimensional array"></a>An n-dimensional array</h4><ul>
-<li>0-d tensor: scalar (number)，标量</li>
-<li>1-d tensor: vector</li>
-<li>2-d tensor: matrix</li>
-<li>and so on</li>
-</ul>
-<h2 id="Data-Flow-Graphs"><a href="#Data-Flow-Graphs" class="headerlink" title="Data Flow Graphs"></a>Data Flow Graphs</h2><ul>
-<li>Nodes: operators, variables, and constants</li>
-<li>Edges: tensors</li>
-</ul>
-<p><img src="https://pic1.zhimg.com/v2-caaa05bf53220560904a0d8891a0122c_b.png" alt="Visualized by TensorBoard"><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">a = tf.add(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">print(a)  <span class="comment"># Tensor("Add:0", shape=(), dtype=int32)</span></span><br></pre></td></tr></table></figure></p>
-<p>TF automatically names the nodes when you don’t explicitly name them:x = 3 , y = 5</p>
-<h4 id="计算图"><a href="#计算图" class="headerlink" title="计算图"></a>计算图</h4><p>Create a session, assign it to variable sess so we can call it later.Within the session, evaluate the graph to fetch the value of a.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">a = tf.add(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">sess = tf.Session()</span><br><span class="line">print(sess.run(a))</span><br><span class="line">sess.close()</span><br><span class="line">&gt;&gt; <span class="number">8</span></span><br></pre></td></tr></table></figure></p>
-<p>一种更加高效的写法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">a = tf.add(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    print(sess.run(a))</span><br><span class="line">&gt;&gt; <span class="number">8</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>tf.Session()</strong> : A Session object encapsulates(包含) the environment in which Operation objects are executed, and Tensor objects are evaluated.</p>
-<h4 id="More-graphs"><a href="#More-graphs" class="headerlink" title="More graphs"></a>More graphs</h4><p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fja89pnkr2j30ek06odgb.jpg" alt=""><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">x = <span class="number">1</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">op1 = tf.add(x, y)  </span><br><span class="line">op2 = tf.multiply(x, y)   <span class="comment"># mul() has been deprecated</span></span><br><span class="line">op3 = tf.pow(op2, op1)    <span class="comment"># op2^op1</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    op3 = sess.run(op3)</span><br><span class="line">print(op3)   <span class="comment"># 8</span></span><br></pre></td></tr></table></figure></p>
-<p><em>note:tf.mul, tf.sub and tf.neg are deprecated in favor of tf.multiply, tf.subtract and tf.negative</em></p>
-<hr>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fja8ur6inmj30er079jsc.jpg" alt=""><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 省略 import tensorflow as tf，下同</span></span><br><span class="line">x = <span class="number">2</span></span><br><span class="line">y = <span class="number">3</span></span><br><span class="line">add_op = tf.add(x, y)</span><br><span class="line">mul_op = tf.multiply(x, y)</span><br><span class="line">useless = tf.multiply(x, add_op)</span><br><span class="line">pow_op = tf.pow(add_op, mul_op)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    z = sess.run(pow_op)</span><br></pre></td></tr></table></figure></p>
-<p><em>note:Because we only want the value of pow_op and pow_op doesn’t<br>depend on useless, session won’t compute value of useless<br>→ save computation</em></p>
-<hr>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fja942bebaj30eq07oq3w.jpg" alt=""><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">1</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">add_op = tf.add(x, y)</span><br><span class="line">mul_op = tf.multiply(x, y)</span><br><span class="line">useless = tf.multiply(x, add_op)</span><br><span class="line">pow_op = tf.pow(add_op, mul_op)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    z, not_useless = sess.run([pow_op, useless])</span><br><span class="line">print(z, not_useless)  <span class="comment"># (9, 3)</span></span><br></pre></td></tr></table></figure></p>
-<p><em>tf.Session.run(fetches, feed_dict=None,<br>options=None, run_metadata=None) :<br>pass all variables whose values you want to a list in fetches</em></p>
-<h2 id="Distributed-Computation"><a href="#Distributed-Computation" class="headerlink" title="Distributed Computation"></a>Distributed Computation</h2><p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fja98ewq75j30ck0brmzz.jpg" alt=""><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># To put part of a graph on a specific CPU or GPU:</span></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">'/gpu:2'</span>):</span><br><span class="line">  a = tf.constant([[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>], [<span class="number">4.0</span>, <span class="number">5.0</span>, <span class="number">6.0</span>]], name=<span class="string">'a'</span>)</span><br><span class="line">  b = tf.constant([[<span class="number">1.0</span>, <span class="number">2.0</span>], [<span class="number">3.0</span>, <span class="number">4.0</span>], [<span class="number">5.0</span>, <span class="number">6.0</span>]], name=<span class="string">'b'</span>)</span><br><span class="line">  c = tf.matmul(a, b)</span><br><span class="line"></span><br><span class="line">sess = tf.Session(config=tf.ConfigProto(log_device_placement=<span class="keyword">True</span>))</span><br><span class="line">print(sess.run(c))</span><br></pre></td></tr></table></figure></p>
-<p><strong>不要构建多个图：</strong> The session runs the default graph</p>
+            <p>本文是来自于SIGdial的一篇文章，主要研究的是LU和DST的联合建模，在不影响准确率的前提下提高了计算效率，同时在训练阶段引入了Scheduled Sampling，亦是创新点。本篇文章是作者一系列关于LU和DST的最新作，可结合之前两篇对比来看（参见Reference）。<br><a href="https://drive.google.com/open?id=1I8iU-dLPRnC7ZxTULTso_gwhj4uQJ23U" target="_blank" rel="noopener">paper link</a><br><a href="http://github.com/google-research-datasets/simulated-dialogue" target="_blank" rel="noopener">dataset link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在一个任务型对话系统中，通常包含自然语言理解模块(LU)和状态追踪模块(DST or belief tracking component)，LU的作用是将用户输入的自然语言转成语义帧的形式，DST则是跟踪对话上下文以及对话状态。在每一个对话轮次，DST使用LU生成的语义帧来更新对话状态DS：</p>
+<blockquote>
+<p>The  DS  accumulates  the preferences  specified  by  the  user  over  the  dialogue and  is  used  to  make  requests  to  a  backend.  The  results  from  the  backend  and  the  dialogue  state  are then  used  by  a  dialogue  policy  module  to  generate the  next  system  response.</p>
+</blockquote>
+<p>级联对话组件往往会导致错误传递，最近的研究热点集中于LU和DST联合建模，目的是减小计算量，同时修正LU模块带来的错误。</p>
+<blockquote>
+<p>However,  combining  joint  modeling  with  the  ability  to  scale  to  multiple  domains  and  handle  slots  with  a  large  set  of possible  values,  potentially  containing  entities  not seen  during  training,  are  active  areas  of  research.</p>
+</blockquote>
+<p>本文提出了一个LU和DST联合建模的多任务学习模型。与<a href="https://arxiv.org/abs/1708.05956" target="_blank" rel="noopener">Bing  Liu  and  Ian  Lane.  2017.  An  end-to-end  trainable neural  network  model  with  belief  tracking  for  task-oriented  dialog.  InProceedings  of  Interspeech</a>类似，本文采用RNN来获取对话的上下文信息，RNN的隐层状态被用来做意图识别、dialog act分类以及slot标注；slot tags（Figure 2）获取的slot value被用来更新每个slot可能的值集合。与<a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8268986" target="_blank" rel="noopener">Rastogi  et  al.  2017</a> 类似，使用共享权重的recurrent  scoring  network对slot value评分，使得DST可以处理在训练集未出现过的实体，例如OOV的slot value。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFualZDeVJuSFFteUlxTkF1dXpBVzFUbmwxQWpVUXZ3TGFXSmxsZ0pGY3NRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  IOB  slot  tags  for  a  user  utterance.  Slot values  #  =  two  and  rest  =  Olive  Garden  are  obtained  from  corresponding  B  and  I  tags."></p>
+<blockquote>
+<p>During  inference,  the  model  uses  its  own  predicted  slot  tags  and  previous  turn  dialogue  state. However,  ground  truth  slot  tags  and  dialogue  state are  used  for  training  to  ensure  stability.  Aiming  to bridge  this  gap  between  training  and  inference,  we also  propose  a  novel  scheduled  sampling  (Bengio  et  al.,  2015)  approach  to  joint  language  understanding  and  dialogue  state  tracking.</p>
+</blockquote>
+<h2 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model  Architecture"></a>Model  Architecture</h2><p>设定一个对话由T turns 组成，每个轮次包含用户的utterance和系统的dialog acts。Figure 3 给出了整个模型的架构图，共包含下列模块：</p>
 <ul>
-<li>Multiple graphs require multiple sessions, each will try to use all available resources by default</li>
-<li>Can’t pass data between them without passing them through<br>python/numpy, which doesn’t work in distributed</li>
-<li>It’s better to have disconnected subgraphs within one graph<h2 id="Why-Graphs"><a href="#Why-Graphs" class="headerlink" title="Why Graphs"></a>Why Graphs</h2>1.Save computation (only run subgraphs that lead<br>to the values you want to fetch)<br>2.Break computation into small, differential pieces<br>to facilitates auto-differentiation(自动微分)<br>3.Facilitate distributed computation, spread the<br>work across multiple CPUs, GPUs, or devices<br>4.Many common machine learning models are commonly taught and visualized as directed graphs already</li>
+<li>a  user  utterance  encoder </li>
+<li>a  system  act  encoder</li>
+<li>a  state  encoder</li>
+<li>a slot  tagger  and  a  candidate  scorer</li>
+</ul>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFualZDeVJuSFFtMS9yVUdUNEpYYytuY09GTFVXQllxUjhvWWIxQWt4cDlBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  3:  Architecture  of  our  joint  LU  and  DST  model  as  described  in  Section  3.  $x^{t}$ is  the  sequence of  user  utterance  token  embeddings,  $a^{t}$ is  the  system  act  encoding  and  blue  arrows  indicate  additional features  used  by  DST  as  detailed  in  Section  3.8."></p>
+<blockquote>
+<p>At  each  turn $t \epsilon \left \{  1,2,…,T\right \}$ ,  the  model  takes  a  dialogue  turn  and the  previous  dialogue  state  $D^{t-1}$  as  input  and  outputs  the  predicted  user  intent,  user  dialogue  acts, slot  values  in  the  user  utterance  and  the  updated dialogue  state  $D^{t}$.</p>
+</blockquote>
+<blockquote>
+<p>As  a  new  turn  arrives,  the  system  act  encoder (Section  3.1)  encodes  all  system  dialogue  acts  in the  turn  to generate  the  system  dialogue  act  vector $a^{t}$.  Similarly,  the  utterance  encoder  (Section  3.2) encodes  the  user  utterance  into  a  vector  $u^{t}_{e}$  ,  and also  generates  contextual  token  embeddings $u^{t}_{o}$  for each  utterance  token.  The  state  encoder  (Section 3.3)  then  uses  $a^{t}$,  $u_{e}^{t}$  and  its  previous  turn  hidden state,  $d_{st}^{t-1}$,  to  generate  the  dialogue  context  vector $d_{o}^{t}$ ,  which  summarizes  the  entire  observed  dialogue,  and  its  updated  hidden  state  $d_{st}^{t}$ .</p>
+</blockquote>
+<blockquote>
+<p>The  dialogue  context  vector  $d_{o}^{t}$  is  then  used  by the  user  intent  classifier  (Section  3.4)  and  user  dialogue  act  classifier  (Section  3.5).  The  slot  tagger (section  3.6)  uses  the  dialogue  context  from  previous  turn  $d_{o}^{t-1}$ ,  the  system  act  vector $a^{t}$ and  contextual  token  embeddings  $u^{t}_{o}$  to  generate  refined  contextual  token  embeddings  $s_{o}^{t}$  .  These  refined  token embeddings  are  then  used  to  predict  the  slot  tag for  each  token  in  the  user  utterance.</p>
+</blockquote>
+<blockquote>
+<p>The  system  dialogue  acts  and  predicted  slot  tags are  then  used  to  update  the  set  of  candidate  values for  each  slot  (Section  3.7).  The  candidate  scorer (Section  3.8)  then  uses  the  previous  dialogue  state $D^{t-1}$ ,  the  dialogue  context  vector  $d_{o}^{t}$  and  other features  extracted  from  the  current  turn  (indicated by  blue  arrows  in  Figure  3)  to  update  the  scores  for all  candidates  in  the  candidate  set  and  outputs  the updated  dialogue  state $D^{t}$ .  The  following  sections describe  these  components  in  detail.</p>
+</blockquote>
+<h3 id="System-Act-Encoder"><a href="#System-Act-Encoder" class="headerlink" title="System  Act  Encoder"></a>System  Act  Encoder</h3><p>设定每个系统的dialog act包含一个act type, 一个可选的slot和slot value。在<strong>System  Act  Encoder</strong>模块中，首先把输入的dialog acts编码成one-hot向量，共分为三类：</p>
+<ul>
+<li>没有slot和slot value的dialog act编码成 $a_{utt}^{t}$：例如 <code>greeting</code>, <code>negate</code></li>
+<li>只有一个slot s的dialog act编码成 $a_{slot}^{t}(s)$：例如 <code>request(date)</code></li>
+<li>同时包含一个slot s和value c的dialog act编码成 $a_{cand}^{t}(s, c)$ ：例如<code>offer(time=7pm)</code></li>
+</ul>
+<p>然后根据这些one-hot向量做如下运算：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJNREJTL1hndWdjN2ozbVNUdVh6NWRKWFU5Vk4vVnNQMWF5UjliK0IrODNBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中：$e_{s}$代表slot embedding，训练得到。</p>
+<h3 id="Utterance-Encoder"><a href="#Utterance-Encoder" class="headerlink" title="Utterance  Encoder"></a>Utterance  Encoder</h3><p><strong>Utterance  Encoder</strong>的作用是获得用户输入token sequence的表征，输入为用户的自然语言序列（首末分别加上SOS和EOS token），输出为对应token embedding。</p>
+<p><strong>Utterance  Encoder</strong>本质上是一个单层双向的GRU，注意这里初始化隐层状态的时候直接用的零向量：<br>$$u^{t}, u_{o}^{t}=BRNN_{GRU}(x^{t}) $$</p>
+<h3 id="State-Encoder"><a href="#State-Encoder" class="headerlink" title="State  Encoder"></a>State  Encoder</h3><p><strong>State  Encoder</strong> 是一个单向单层的GRU RNN，在每一个时间步长t，输入为 $a^{t} \bigoplus u_{t}^{e}$ ，以及上一步的隐层 $d_{st}^{t-1}$，输出更新后的隐层状态 $d_{st}^{t}$ 以及对话上下文表征 $d_{o}^{t}$，对于GRU而言，这两者是等同的。</p>
+<h3 id="User-Intent-Classification"><a href="#User-Intent-Classification" class="headerlink" title="User  Intent  Classification"></a>User  Intent  Classification</h3><blockquote>
+<p>The  user  intent  is  used  to  identify  the  backend  with which  the  dialogue  system  should  interact.</p>
+</blockquote>
+<p>本文设定，用户在对话过程中可以切换intent，但是每一个轮次只能有一个intent。intent可以看成多分类任务，在每一轮预测基于所有intent集合的概率分布：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBacytsT3NvR0tYbm1zU0djU3RLeXlrbGlraXVRTG5IbGFaTGlRSWh4QnRBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<ul>
+<li>$p_{i}^{t}$：len=$\left|I \right|$，intent 概率分布</li>
+<li>$I$：user intent set</li>
+</ul>
+<h3 id="User-Dialogue-Act-Classification"><a href="#User-Dialogue-Act-Classification" class="headerlink" title="User  Dialogue  Act  Classification"></a>User  Dialogue  Act  Classification</h3><blockquote>
+<p>We  model  user  dialogue  act  classification  as  a  multilabel  classification  problem,  to allow  for  the  presence  of  more  than  one  dialogue act  in  a  turn.</p>
+</blockquote>
+<p>在每个对话轮次，act a的概率被预测：<br><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBacytsT3NvR0tYZ3hEWXpYckVPa25kSDVYR1Y0NEVDcWYrVFhNK1g1WXN3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<ul>
+<li>$A_{u}$：dialogue act set</li>
+<li>$W_{a}\epsilon R^{d \times \left|A_{u} \right|}$</li>
+<li>$d = dim(d_{o}^{t})$</li>
+</ul>
+<blockquote>
+<p>For  each  act  $\alpha$,  $p_{a}^{t}(\alpha)$ is  interpreted as  the  probability  of  presence  of  in  turn  t.  During  inference,  all  dialogue  acts  with  a  probability greater  than  $t_{u}$  are  predicted,  where  0  &lt;  tu  &lt;  1.0 is  a  hyperparameter  tuned  using  the  dev  set.</p>
+</blockquote>
+<h3 id="Slot-Tagging"><a href="#Slot-Tagging" class="headerlink" title="Slot  Tagging"></a>Slot  Tagging</h3><blockquote>
+<p>Slot  tagging  is  the  task  of  identifying  the  presence of  values  of  different  slots  in  the  user  utterance.We  use  the  IOB  tagging  scheme  (Tjong  Kim  Sang and  Buchholz  2000,  see  Figure  2)  to  assign  a  label to  each  token.  These  labels  are  then  used  to  extract the  values  for  different  slots  from  the  utterance.</p>
+</blockquote>
+<p><strong>Slot Tagger</strong>是一个Bi-LSTM，输入为<strong>Utterance  Encoder</strong>的输出token embedding $u_{o}^{t}$ 和 system act encoding $a^{t}$ 的拼接，得到 $s_{o}^{t}=\left \{ s_{o,m}^{t}\epsilon R^{2d_{s}},0\leq m&lt; M^{t} \right \}$，$M^{t}$ 是用户输入的token序列长度，$d_{o}^{t-1}$ 用来初始化隐层状态，cell state初始化为零向量。对于第m个token，使用 $s_{o,m}^{t}$ 做softmax分类得到基于 $2\left| S\right|+1$ 个标签的概率分布，S是所有的slot构成的集合。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBNMFpiMEY4RXUzazEyWS82ZUsrNnBHZGJ4TXZ6SXBOQ28rbGpxeDVSUjhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Updating-Candidate-Set"><a href="#Updating-Candidate-Set" class="headerlink" title="Updating  Candidate  Set"></a>Updating  Candidate  Set</h3><p>候选集 $C_{s}^{t}$ 为 一个slot s对应的值集合，其中slot一定是在turn t之前（包括turn t）被系统或者用户提到过。</p>
+<blockquote>
+<p>Rastogi  et  al.  2017(参见ref 3) proposed  the  use  of  candidate  sets  in  DST  for  efficiently  handling  slots  with  a  large  set  of  values. In  their  setup,  the  candidate  set  is  updated  at  every  turn  to  include  new  values  and  discard  old  values  when  it  reaches  its  maximum  capacity.  The dialogue  state  is  represented  as  a  set  of  distributions  over  value  set    $V_{s}^{t} = C_{s}^{t}\cup \left \{ \delta ,\phi  \right \}$ for  each slot  $s\epsilon S^{t}$,  where  $\delta$  and  $\phi$  are  special  values <code>dontcare</code>  (user  is  ok  with  any  value  for  the  slot) and  <code>null</code>  (slot  not  specified  yet)  respectively,  and $S^{t}$ is  the  set  of  all  slots  that  have  been  mentioned either  by  the  user  or  the  system  till  turn  t.</p>
+</blockquote>
+<p>本文提出的模型采取了相同的定义和更新方式。在每个轮次，使用slot tagger预测的标签和系统包含slot的act来更新candidate sets。为了便于并行计算，所有的candidate sets被填充成相同的长度，为了区分，定义 $m_{v}^{t}(s,c)$ 来表示候选值是否是填充的，当slot value是真实的，取 $m_{v}^{t}(s,c)$ 为1；否则取0。</p>
+<h3 id="Candidate-Scorer"><a href="#Candidate-Scorer" class="headerlink" title="Candidate  Scorer"></a>Candidate  Scorer</h3><blockquote>
+<p>The  candidate  scorer  predicts  the  dialogue  state  by updating  the  distribution  over  the  value  set  $V_{s}^{t}$ for<br>each  slot  $s\epsilon S^{t}$.</p>
+</blockquote>
+<p>作者定义三种中间特征，与system dialog act三类对应（$a_{utt}^{t}$，$a_{slot}^{t}(s)$， $a_{cand}^{t}(s, c)$）：</p>
+<ul>
+<li>$r_{utt}^{t}$： 在所有的value candidate sets中共享</li>
+<li>$r_{slot}^{t}(s)$：更新scores for $V_{s}^{t}$</li>
+<li>$r_{cand}^{t}(s, c)$：slot s取值c的特征</li>
+</ul>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJNQzhsYVQ4M05BMTFtd0F2M3JvdWZ6SS8zSlpWTnhqNW54NlNLQzZsVXRnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中：</p>
+<ul>
+<li>$p_{\delta }^{t-1}(s)$ ：<code>dontcare</code>的score</li>
+<li>$p_{\phi  }^{t-1}(s)$ ：<code>null</code>的score</li>
+<li>$p_{c}^{t-1}(s)$ ：slot s取值为c的score；如果c不属于$C_{s}^{t}$，则取0</li>
+<li>$m_{u}^{t}(c)$ ：如果值c是user utterance的substring，取值为1；否则为0。目的是表明user最近提及到哪个候选值</li>
+</ul>
+<p>得到上述的几个中间特征之后，使用FC来获得具体的score distribution over $V_{s}^{t}$：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJNQzhsYVQ4M05BNHQxOHdHVmlIMngraThjZjZ4TlB4VEVabW9oZmdhTEJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中：</p>
+<ul>
+<li>$l_{s}^{t}(\delta)$ ：denotes the  logit  for <code>dontcare</code></li>
+<li>$l_{s}^{t}(\phi)$ ：a trainable  parameter</li>
+<li>$l_{s}^{t}(c)$ ：denotes the  logit  for  a  candidate  $c\epsilon  C_{s}^{t}$ </li>
+</ul>
+<blockquote>
+<p>These  logits  are  obtained  by processing  the  corresponding  features  using  feedforward  neural  networks  $FF_{cs}^{1}$  and $FF_{cs}^{2}$ ,  each having  one  hidden  layer.  The  output  dimension of  these  networks  is  1  and  the  dimension  of  the hidden  layer  is  taken  to  be  half  of  the  input  dimension.  The  logits  are  then  normalized  using  softmax to  get  the  distribution  $p_{s}^{t}$  over  $V_{s}^{t}$.</p>
+</blockquote>
+<h2 id="Scheduled-Sampling"><a href="#Scheduled-Sampling" class="headerlink" title="Scheduled  Sampling"></a>Scheduled  Sampling</h2><blockquote>
+<p>DST  is  a  recurrent  model  which  uses  predictions from  the  previous  turn.  For  stability  during  training,  ground  truth  predictions  from  the  previous turn  are  used.  This  causes  a  mismatch  between training  and  inference  behavior.</p>
+</blockquote>
+<p>本文使用<strong>scheduled  sampling</strong>来解决上述问题。这种方法已经被证实能够有效地改善slot tagging的性能。scheduled  sampling的本质是在训练时以一定的概率选取真实值和预测值，人为引入噪声。</p>
+<p>slot tagger的准确率对DST有着重要的影响，因为未被识别的slot value不会被加入到candidate set中。为了解决这个问题，在训练阶段，作者以一定的概率来选取真实slot tags $c_{u}^{-t}$和预测的slot tags $c_{u}^{t}$，定义$p_{c}$ 为选择$c_{u}^{-t}$的概率，训练初始阶段 $p_{c}=1$ ，之后逐渐减小。目的是人为增加candidate set的噪声。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBvQlkrZlRrNFF4OWVrQWRhSGYydkI5SnBvNXRZay8zYno2ZGxTbGV2NVF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  4:  Illustration  of  scheduled  sampling  for  training  the  candidate  scorer.  The  left  figure  shows  the two  locations  in  our  setup  where  we  can  perform  scheduled  sampling,  while  the  plot  on  the  right  shows the  variation  of  sampling  probabilities  pc  and  pD  with  training  step.  See  Section  4  for  details."></p>
+<p>同理，candidate scorer 也采用相同的方式。</p>
+<blockquote>
+<p>During  inference,  the  candidate  scorer  only  has access  to  its  own  predicted  scores  in  the  previous turn  (Equations  13  and  14).  To  better  mimic  this setup  during  training,  we  start  with  using  ground truth  previous  scores  taken  from<br>$\overline{D}^{t-1}$(i.e.  with keep  probability  $p_{D}$ =  1)  and  gradually  switch  to $D^{t-1}$,  the  predicted  previous  scores,  reducing  $p_{D}$.</p>
+</blockquote>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>本文的主要贡献在于：</p>
+<ul>
+<li>LU和DST联合建模，减小了计算量的同时性能并没有下降；</li>
+<li>使用scheduled  sampling提高了DST在inference阶段的鲁棒性。</li>
+</ul>
+<p>为了验证以上两个贡献，作者做了两组实验分别验证以上两个想法：</p>
+<ul>
+<li><p>Separate  vs  Joint  LU-DST ：Figure  3  shows  the joint  LU-DST  setup  where  parameters  in  the  utterance  encoder  and  state  encoder  are  shared  across LU  tasks  (intent  classification,  dialogue  act  classification  and  slot  tagging)  and  DST  (candidate scoring).  As  baselines,  we  also  conduct  experiments  where  LU  and  DST  tasks  use  separate  parameters  for  utterance  and  state  encoders.</p>
+</li>
+<li><p>Scheduled  Sampling：根据slot tagger和candidate scorer是否使用Scheduled  Sampling分为四组</p>
+<ul>
+<li><p><code>None</code>  :  Ground  truth  slot  tags  ($c_{u}^{-t}$)  and  previous dialogue  state  ($\overline{D}^{t-1}$)  are  used  for  training.</p>
+</li>
+<li><p><code>Tags</code>  :  Model  samples  between  ground  truth ($c_{u}^{-t}$)  and  predicted  ($c_{u}^{t}$)  slot  tags,  sticking  to<br>ground  truth  previous  state.</p>
+</li>
+<li><code>State</code>  :  Model  samples  between  ground  truth ($\overline{D}^{t-1}$)  and  predicted  ($D^{t-1}$)  previous  state, sticking  to  ground  truth  slot  tags.</li>
+<li><code>Both</code>  :  Model  samples  between  $\overline{D}^{t-1}$ and $D^{t-1}$ as  well  as  between  $c_{u}^{-t}$ and $c_{u}^{t}$.</li>
+</ul>
+</li>
+</ul>
+<p>设定 $k_{pre} = 0.3k_{max}$。</p>
+<h3 id="Evaluation-Metrics"><a href="#Evaluation-Metrics" class="headerlink" title="Evaluation  Metrics"></a>Evaluation  Metrics</h3><p>本文共采用5种评价指标：</p>
+<ul>
+<li><code>user  intent  classification  accuracy</code>：</li>
+<li><code>F1 score  for  user  dialogue  act  classification</code></li>
+<li><code>frame  accuracy  for  slot  tagging</code>：全部的slot预测正确才算正确</li>
+<li><code>joint  goal  accuracy</code>：joint goal  accuracy  is  the  fraction  of  turns  for  which  the predicted  and  ground  truth dialogue  state  match for  all  slots<blockquote>
+<p>The  output  of  DST  is  a  distribution  of  probabilities  for  candidate  values  of  each  slot.  To  calculate  the  slot  assignments, the  value(s)  with  probability  above  a  threshold  (tuned  using dev  set)  are  chosen.  We  use  joint  goal  accuracy  as  the  metric  for  evaluation.  This  metric  compares  the  predicted  slot assignments  to  the  ground  truth  at  every  dialogue  turn,  and the  output  is  considered  correct  only  if  all  the  predicted  slot values  exactly  match  the  ground  truth  values.  (参见Ref 3)</p>
+</blockquote>
+</li>
+<li><code>slot  F1  score  for  DST</code>：评估DST时，作者只使用前一轮次预测出的slot values和dialog state，而非真实值</li>
+</ul>
+<h3 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h3><ul>
+<li><a href="http://github.com/google-research-datasets/simulated-dialogue/" target="_blank" rel="noopener">Simulated  Dialogues</a></li>
+<li>DSTC2</li>
+</ul>
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><blockquote>
+<p>We  use  sigmoid  cross  entropy  loss  for  dialogue act  classification  and  softmax  cross  entropy  loss for  all  other  tasks.  During  training,  we  minimize the  sum  of  all  task  losses  using  ADAM  optimizer (Kingma  and  Ba,  2014),  for  100k  training  steps with  batches  of  10  dialogues  each.  We  used  grid-search  to  identify  the  best  hyperparameter  values (sampled  within  specified  range)  for  learning  rate (0.0001  -  0.005)  and  token  embedding  dimension(50  -  200).  For  scheduled  sampling  experiments, the  minimum  keep  rate  i.e.  pmin  is  varied  between 0.1  -  0.9  with  linear  decay.  The  layer  sizes  for  the utterance  encoder  and  slot  tagger  are  set  equal  to the  token  embedding  dimension,  and  that  of  the state  encoder  to  half  this  dimension.<br>Slot  Value  dropout  -  To  make  the  model  robust  to  OOV  tokens  arising  from  new  entities  not present  in  the  training  set,  we  randomly  replace slot  value  tokens  in  the  user  utterance  with  a  special  OOV  token  with  a  probability  that  linearly  increases  from  0.0  to  0.4  during  training.</p>
+</blockquote>
+<h2 id="Results-and-Discussion"><a href="#Results-and-Discussion" class="headerlink" title="Results  and  Discussion"></a>Results  and  Discussion</h2><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjI3MTBlUFY2Sk1XL3ZJdGgzc1llT1k3SXFEQ09XVlk4bGdJUzQ4dUJXTDhRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Experiments  and  results  on  test  set  with  variants  of  scheduled  sampling  on  separate  and  joint LU-DST  models,  when  trained  on  Sim-M  +  Sim-R."></p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjI3MTBlUFY2Sk1XM2VET25Qdlpidm52YktZNktvanV5dDhZZWpLMU1GRk13PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  Reported  joint  goal  accuracy  of  model variants  on  the  DSTC2  test  set."></p>
+<ul>
+<li>The  joint  LU-DST  model  with  scheduled  sampling  (SS)  on  both  slot  tags  and  dialogue state  performs  the  best</li>
+<li>SS  on  slottags  helps  the  most with  Sim-R  and  DSTC2:  our  two  datasets  with the  most  data,  and  low  OOV  rates,  while  SS  on both  slot  tags  and  dialogue  state  helps  more  on the smaller  Sim-M.  </li>
+<li>Slot value  dropout  (Section  5.3),  improves  LU  as  well as  DST  results  consistently. </li>
+</ul>
+<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h2><blockquote>
+<p>In  this  work,  we  present  a  joint  model  for  language understanding  (LU)  and  dialogue  state  tracking (DST),  which  is  computationally  efficient  by  way of  sharing  feature  extraction  layers  between  LU and  DST,  while  achieving  an  accuracy  comparable  to  modeling  them  separately  across  multiple  tasks.  We  also  demonstrate  the  effectiveness of  scheduled  sampling  on  LU  outputs  and  previous  dialogue  state  as  an  effective  way  to  simulate inference-time  conditions  during  training  for  DST, and  make  the  model  more  robust  to  errors.</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://drive.google.com/open?id=1I8iU-dLPRnC7ZxTULTso_gwhj4uQJ23U" target="_blank" rel="noopener">Multi-task learning for Joint Language Understanding and Dialogue State Tracking</a></li>
+<li><a href="https://drive.google.com/open?id=1H4pEa3sxxe81W7hlNp5mNRyGyF0nrcIS" target="_blank" rel="noopener">An Efficient Approach to Encoding Context for Spoken Language Understanding</a></li>
+<li><a href="https://drive.google.com/open?id=1cXKqcRyE_iEd9vjE_Xnl3IiVaRCmLSri" target="_blank" rel="noopener">SCALABLE MULTI-DOMAIN DIALOGUE STATE TRACKING</a></li>
 </ul>
 
         </div>
@@ -337,20 +475,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2017/09/06/tensorflow-note-1/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Tensorflow_note_1
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2017/09/04/RNNLG/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/11/08/An Efficient Approach to Encoding Context for Spoken Language Understanding/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">RNNLG</p>
+        <p class="article-nav-title">An  Efficient  Approach  to  Encoding  Context  for  Spoken  Language Understanding</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -557,7 +685,7 @@
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2017/09/06/tensorflow-note-1 (1)/';
+    var disqus_url = 'https://helic.github.io/2018/11/23/Multi-task learning for Joint Language Understanding and Dialogue State Tracking/';
     
     (function() {
     var dsq = document.createElement('script');
