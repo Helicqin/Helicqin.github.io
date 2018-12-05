@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Sequential Minimal Optimization | Helic</title>
+    <title>Slot-Gated  Modeling  for  Joint  Slot  Filling  and  Intent  Prediction | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Machine Learning,SVM" />
+        <meta name="keywords" content="NLU" />
     
-    <meta name="description" content="序列最小最优化(sequential minimal optimization, SMO)算法是支持向量机的学习算法，本文主要讲解了SMO算法，并且实现了一个简单基于SMO的SVM demo，最后简要了解封装SVM的scikit-learn库。">
-<meta name="keywords" content="Machine Learning,SVM">
+    <meta name="description" content="基于Attention的RNN模型在联合意图识别(ID)和槽位填充(SF)上实现最好性能（其ID和SF的attention权重独立）。本文提出slot gate结构，其关注于学习intent和slot attention向量之间的关系，通过全局优化获得更好的semantic frame。通过在ATIS和Snips数据集实验，相比于attention模型semantic frame准确率提升了4.2">
+<meta name="keywords" content="NLU">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sequential Minimal Optimization">
-<meta property="og:url" content="https://helic.github.io/2017/08/31/Sequential-Minimal-Optimization/index.html">
+<meta property="og:title" content="Slot-Gated  Modeling  for  Joint  Slot  Filling  and  Intent  Prediction">
+<meta property="og:url" content="https://helic.github.io/2018/12/03/Slot-Gated Modeling for Joint Slot Filling and Intent Prediction/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="序列最小最优化(sequential minimal optimization, SMO)算法是支持向量机的学习算法，本文主要讲解了SMO算法，并且实现了一个简单基于SMO的SVM demo，最后简要了解封装SVM的scikit-learn库。">
+<meta property="og:description" content="基于Attention的RNN模型在联合意图识别(ID)和槽位填充(SF)上实现最好性能（其ID和SF的attention权重独立）。本文提出slot gate结构，其关注于学习intent和slot attention向量之间的关系，通过全局优化获得更好的semantic frame。通过在ATIS和Snips数据集实验，相比于attention模型semantic frame准确率提升了4.2">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2s13v8wij30hs0d53z3.jpg">
-<meta property="og:updated_time" content="2017-11-19T14:40:52.689Z">
+<meta property="og:image" content="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4ZWkxTkVLV2czOTFiWXNXSDNQYVR5MytjMDgzREN6bFVnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2018-12-05T12:17:41.877Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sequential Minimal Optimization">
-<meta name="twitter:description" content="序列最小最优化(sequential minimal optimization, SMO)算法是支持向量机的学习算法，本文主要讲解了SMO算法，并且实现了一个简单基于SMO的SVM demo，最后简要了解封装SVM的scikit-learn库。">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2s13v8wij30hs0d53z3.jpg">
+<meta name="twitter:title" content="Slot-Gated  Modeling  for  Joint  Slot  Filling  and  Intent  Prediction">
+<meta name="twitter:description" content="基于Attention的RNN模型在联合意图识别(ID)和槽位填充(SF)上实现最好性能（其ID和SF的attention权重独立）。本文提出slot gate结构，其关注于学习intent和slot attention向量之间的关系，通过全局优化获得更好的semantic frame。通过在ATIS和Snips数据集实验，相比于attention模型semantic frame准确率提升了4.2">
+<meta name="twitter:image" content="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4ZWkxTkVLV2czOTFiWXNXSDNQYVR5MytjMDgzREN6bFVnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
     
 
     
@@ -146,18 +146,18 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/NLP/NLU/">NLU</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Sequential-Minimal-Optimization" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Slot-Gated Modeling for Joint Slot Filling and Intent Prediction" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Sequential Minimal Optimization
+        Slot-Gated  Modeling  for  Joint  Slot  Filling  and  Intent  Prediction
         </h1>
     
 
@@ -167,55 +167,73 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2017/08/31/Sequential-Minimal-Optimization/" class="article-date">
-            <time datetime="2017-08-31T04:04:41.000Z" itemprop="datePublished">2017-08-31</time>
+        <a href="/2018/12/03/Slot-Gated Modeling for Joint Slot Filling and Intent Prediction/" class="article-date">
+            <time datetime="2018-12-03T13:01:00.000Z" itemprop="datePublished">2018-12-03</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>, <a class="tag-link" href="/tags/SVM/">SVM</a>
+        <a class="tag-link" href="/tags/NLU/">NLU</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>序列最小最优化(sequential minimal optimization, SMO)算法是支持向量机的学习算法，本文主要讲解了SMO算法，并且实现了一个简单基于SMO的SVM demo，最后简要了解封装SVM的scikit-learn库。<br><a id="more"></a></p>
-<h3 id="1-SVM简要回顾"><a href="#1-SVM简要回顾" class="headerlink" title="1. SVM简要回顾"></a>1. SVM简要回顾</h3><p>SVM最终会得到一个对偶问题：      </p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2yeb0b1cj30dq04oweg.jpg" alt="dual problem"></p>
-<p>解决这个优化问题可以得到a;进而，</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2yqbo5yyj30k806ujrl.jpg" alt=""></p>
-<p>SVM的学习，就是通过训练数据计算出a和b，然后通过决策函数判定xj的分类。其中a是一个向量，长度与训练数据的样本数相同，如果训练数据很大，那么这个向量会很长，不过绝大部分的分量值都是0，只有支持向量的对应的分量值大于0。而SMO算法就是用来解决SVM的对偶问题。</p>
-<h3 id="2-SMO"><a href="#2-SMO" class="headerlink" title="2. SMO"></a>2. SMO</h3><p>简介：SMO是一种启发式算法，其基本思想是：如果所有变量的解都满足了此最优化问题的KKT条件，那么这个最优化问题的解就得到了。否则，选择两个变量，固定其它变量，针对这两个变量构建一个二次规划问题，然后关于这个二次规划的问题的解就更接近原始的二次归还问题的解，因为这个解使得需要优化的问题的函数值更小。</p>
-<hr>
-<h4 id="2-1-KKT-Conditions"><a href="#2-1-KKT-Conditions" class="headerlink" title="2.1 KKT Conditions"></a>2.1 KKT Conditions</h4><p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2z8ywx3uj30jm0770sw.jpg" alt="SVM KKT Conditions"></p>
-<p>引入一个误差系数<strong>ε</strong>(tolerance)，</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2zfqt8aqj30kl0hcwfv.jpg" alt=""></p>
-<h4 id="2-2-SMO-Algorithm"><a href="#2-2-SMO-Algorithm" class="headerlink" title="2.2 SMO Algorithm"></a>2.2 SMO Algorithm</h4><p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2zjsu2hkj30m309zdgr.jpg" alt="SMO Algorithm"></p>
-<p>两个关键点：变量如何选取以及如何更新</p>
-<p>变量选取:</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2zpxq2osj30lw08kq4x.jpg" alt=""></p>
-<p>变量更新：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2zsvm8lxj30m10nsjte.jpg" alt=""></p>
-<p><em>More details in Platt’s paper:<a href="https://pdfs.semanticscholar.org/59ee/e096b49d66f39891eb88a6c84cc89acba12d.pdf?_ga=2.169761313.1496883415.1504168835-302772994.1496220698" target="_blank" rel="noopener">Sequential Minimal Optimization:<br>A Fast Algorithm for Training Support Vector Machines</a></em></p>
-<h3 id="3-SMO算法实现-python"><a href="#3-SMO算法实现-python" class="headerlink" title="3. SMO算法实现(python)"></a>3. SMO算法实现(python)</h3><ul>
-<li>只是简单版本，并未实现复杂的变量选取规则，简化如下：一次迭代中，遍历所有的ai，如果ai违反了KKT条件，那么就将它做为第一个变量，然后再遍历所有的ai，依次做为第二个变量，如果第二个变量有足够的下降，那么就更新两个变量。如果没有，就不更新。</li>
-<li>线性核</li>
-<li>原始数据：<a href="https://github.com/liuhongjiang/blog_code/blob/master/svm/svm.train" target="_blank" rel="noopener">data</a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding:utf8 -*-</span></span><br><span class="line"><span class="comment"># Created by Helic on 2017/8/31</span></span><br><span class="line"><span class="comment"># 参考 http://liuhongjiang.github.io/tech/blog/2012/12/28/svm-smo/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">samples = []</span><br><span class="line">labels = []</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">svm_params</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.a = []</span><br><span class="line">        self.b = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">params = svm_params()</span><br><span class="line">e_dict = []</span><br><span class="line"></span><br><span class="line">train_data = <span class="string">"svm.train"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loaddata</span><span class="params">()</span>:</span></span><br><span class="line">    fn = open(train_data, <span class="string">"r"</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fn:</span><br><span class="line">        line = line[:<span class="number">-1</span>]</span><br><span class="line">        vlist = line.split(<span class="string">"\t"</span>)</span><br><span class="line">        samples.append((int(vlist[<span class="number">0</span>]), int(vlist[<span class="number">1</span>])))</span><br><span class="line">        labels.append(int(vlist[<span class="number">2</span>]))</span><br><span class="line">        params.a.append(<span class="number">0.0</span>)</span><br><span class="line">    fn.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 线性核</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kernel</span><span class="params">(j, k)</span>:</span></span><br><span class="line">    ret = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(len(samples[j])):</span><br><span class="line">        ret += samples[j][idx] * samples[k][idx]   <span class="comment"># 计算内积</span></span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict_real_diff</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="string">"""return Ei=g(xi)−yi=WXi+b-yi,返回KKT条件中的Ei变量"""</span></span><br><span class="line">    diff = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(len(samples)):</span><br><span class="line">        diff += params.a[j] * labels[j] * kernel(j, i)</span><br><span class="line">    diff = diff + params.b - labels[i]</span><br><span class="line">    <span class="keyword">return</span> diff</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_e_dict</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">        e_dict.append(predict_real_diff(i))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_e_dict</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">        e_dict[i] = predict_real_diff(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(tolerance, times, C)</span>:</span></span><br><span class="line">    time = <span class="number">0</span></span><br><span class="line">    init_e_dict()</span><br><span class="line">    updated = <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">while</span> time &lt; times <span class="keyword">and</span> updated:</span><br><span class="line">        updated = <span class="keyword">False</span></span><br><span class="line">        time += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">            ai = params.a[i]</span><br><span class="line">            Ei = e_dict[i]</span><br><span class="line">            <span class="comment"># 违反KKT</span></span><br><span class="line">            <span class="comment"># agaist the KKT</span></span><br><span class="line">            <span class="keyword">if</span> (labels[i] * Ei &lt; -tolerance <span class="keyword">and</span> ai &lt; C) <span class="keyword">or</span> (labels[i] * Ei &gt; tolerance <span class="keyword">and</span> ai &gt; <span class="number">0</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">                    <span class="keyword">if</span> j == i: <span class="keyword">continue</span></span><br><span class="line">                    eta = kernel(i, i) + kernel(j, j) - <span class="number">2</span> * kernel(i, j)</span><br><span class="line">                    <span class="keyword">if</span> eta &lt;= <span class="number">0</span>:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    new_aj = params.a[j] + labels[j] * (e_dict[i] - e_dict[j]) / eta</span><br><span class="line">                    L = <span class="number">0.0</span></span><br><span class="line">                    H = <span class="number">0.0</span></span><br><span class="line">                    <span class="keyword">if</span> labels[i] == labels[j]:</span><br><span class="line">                        L = max(<span class="number">0</span>, params.a[j] + params.a[i] - C)</span><br><span class="line">                        H = min(C, params.a[j] + params.a[i])</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        L = max(<span class="number">0</span>, params.a[j] - params.a[i])</span><br><span class="line">                        H = min(C, C + params.a[j] - params.a[i])</span><br><span class="line">                    <span class="keyword">if</span> new_aj &gt; H:</span><br><span class="line">                        new_aj = H</span><br><span class="line">                    <span class="keyword">if</span> new_aj &lt; L:</span><br><span class="line">                        new_aj = L</span><br><span class="line">                    <span class="comment"># 《统计学习方法》公式7.109（下同）</span></span><br><span class="line">                    <span class="comment"># formula 7.109</span></span><br><span class="line">                    new_ai = params.a[i] + labels[i] * labels[j] * (params.a[j] - new_aj)</span><br><span class="line"></span><br><span class="line">                    <span class="comment"># 第二个变量下降是否达到最小步长</span></span><br><span class="line">                    <span class="comment"># decline enough for new_aj</span></span><br><span class="line">                    <span class="keyword">if</span> abs(params.a[j] - new_aj) &lt; <span class="number">0.001</span>:</span><br><span class="line">                        <span class="keyword">print</span> <span class="string">"j = %d, is not moving enough"</span> % j</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">                    <span class="comment"># formula 7.115</span></span><br><span class="line">                    new_b1 = params.b - e_dict[i] - labels[i]*kernel(i,i)*(new_ai-params.a[i]) - labels[j]*kernel(j,i)*(new_aj-params.a[j])</span><br><span class="line">                    <span class="comment"># formula 7.116</span></span><br><span class="line">                    new_b2 = params.b - e_dict[j] - labels[i]*kernel(i,j)*(new_ai-params.a[i]) - labels[j]*kernel(j,j)*(new_aj-params.a[j])</span><br><span class="line">                    <span class="keyword">if</span> new_ai &gt; <span class="number">0</span> <span class="keyword">and</span> new_ai &lt; C: new_b = new_b1</span><br><span class="line">                    <span class="keyword">elif</span> new_aj &gt; <span class="number">0</span> <span class="keyword">and</span> new_aj &lt; C: new_b = new_b2</span><br><span class="line">                    <span class="keyword">else</span>: new_b = (new_b1 + new_b2) / <span class="number">2.0</span></span><br><span class="line"></span><br><span class="line">                    params.a[i] = new_ai</span><br><span class="line">                    params.a[j] = new_aj</span><br><span class="line">                    params.b = new_b</span><br><span class="line">                    update_e_dict()</span><br><span class="line">                    updated = <span class="keyword">True</span></span><br><span class="line">                    <span class="keyword">print</span> <span class="string">"iterate: %d, changepair: i: %d, j:%d"</span> %(time, i, j)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">(tolerance, C)</span>:</span></span><br><span class="line">    plt.xlabel(<span class="string">u"x1"</span>)</span><br><span class="line">    plt.xlim(<span class="number">0</span>, <span class="number">100</span>)</span><br><span class="line">    plt.ylabel(<span class="string">u"x2"</span>)</span><br><span class="line">    plt.ylim(<span class="number">0</span>, <span class="number">100</span>)</span><br><span class="line">    plt.title(<span class="string">"SVM - %s, tolerance %f, C %f"</span> % (train_data, tolerance, C))</span><br><span class="line">    ftrain = open(train_data, <span class="string">"r"</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> ftrain:</span><br><span class="line">        line = line[:<span class="number">-1</span>]</span><br><span class="line">        sam = line.split(<span class="string">"\t"</span>)</span><br><span class="line">        <span class="keyword">if</span> int(sam[<span class="number">2</span>]) &gt; <span class="number">0</span>:</span><br><span class="line">            plt.plot(sam[<span class="number">0</span>],sam[<span class="number">1</span>], <span class="string">'or'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            plt.plot(sam[<span class="number">0</span>],sam[<span class="number">1</span>], <span class="string">'og'</span>)</span><br><span class="line"></span><br><span class="line">    w1 = <span class="number">0.0</span></span><br><span class="line">    w2 = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(labels)):</span><br><span class="line">        w1 += params.a[i] * labels[i] * samples[i][<span class="number">0</span>]</span><br><span class="line">        w2 += params.a[i] * labels[i] * samples[i][<span class="number">1</span>]</span><br><span class="line">    w = - w1 / w2</span><br><span class="line"></span><br><span class="line">    b = - params.b / w2</span><br><span class="line">    r = <span class="number">1</span> / w2</span><br><span class="line"></span><br><span class="line">    lp_x1 = [<span class="number">10</span>, <span class="number">90</span>]</span><br><span class="line">    lp_x2 = []</span><br><span class="line">    lp_x2up = []</span><br><span class="line">    lp_x2down = []</span><br><span class="line">    <span class="keyword">for</span> x1 <span class="keyword">in</span> lp_x1:</span><br><span class="line">        lp_x2.append(w * x1 + b)</span><br><span class="line">        lp_x2up.append(w * x1 + b + r)</span><br><span class="line">        lp_x2down.append(w * x1 + b - r)</span><br><span class="line">    plt.plot(lp_x1, lp_x2, <span class="string">'b'</span>)</span><br><span class="line">    plt.plot(lp_x1, lp_x2up, <span class="string">'b--'</span>)</span><br><span class="line">    plt.plot(lp_x1, lp_x2down, <span class="string">'b--'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    loaddata()</span><br><span class="line">    <span class="keyword">print</span> samples</span><br><span class="line">    <span class="keyword">print</span> labels</span><br><span class="line">    <span class="comment"># 惩罚系数</span></span><br><span class="line">    <span class="comment"># penalty for mis classify</span></span><br><span class="line">    C = <span class="number">10</span></span><br><span class="line">    <span class="comment"># 计算精度</span></span><br><span class="line">    <span class="comment"># computational accuracy</span></span><br><span class="line">    tolerance = <span class="number">0.0001</span></span><br><span class="line">    train(tolerance, <span class="number">100</span>, C)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"a = "</span>, params.a</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"b = "</span>, params.b</span><br><span class="line">    support =  []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">        <span class="keyword">if</span> params.a[i] &gt; <span class="number">0</span> <span class="keyword">and</span> params.a[i] &lt; C:</span><br><span class="line">            support.append(samples[i])</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"support vector = "</span>, support</span><br><span class="line">    draw(tolerance, C)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>运行结果：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj307c9gwij30hs0d53z3.jpg" alt=""></p>
-<h3 id="4-封装SVM的scikit-learn库"><a href="#4-封装SVM的scikit-learn库" class="headerlink" title="4. 封装SVM的scikit-learn库"></a>4. 封装SVM的scikit-learn库</h3><p>在实际使用中，并不需要自己亲手书写SVM算法实现，scikit-learn SVM算法库封装了libsvm 和 liblinear 的实现，仅仅重写了算法了接口部分。</p>
-<hr>
-<p>scikit-learn中SVM的算法库分为两类，一类是分类的算法库，包括SVC， NuSVC，和LinearSVC 3个类。另一类是回归算法库，包括SVR， NuSVR，和LinearSVR 3个类。相关的类都包裹在sklearn.svm模块之中。</p>
-<p>对于SVC， NuSVC，和LinearSVC 3个分类的类，SVC和 NuSVC差不多，区别仅仅在于对损失的度量方式不同，而LinearSVC从名字就可以看出，他是线性分类，也就是不支持各种低维到高维的核函数，仅仅支持线性核函数，对线性不可分的数据不能使用。</p>
-<p>同样的，对于SVR， NuSVR，和LinearSVR 3个回归的类， SVR和NuSVR差不多，区别也仅仅在于对损失的度量方式不同。LinearSVR是线性回归，只能使用线性核函数。</p>
-<p><em>More details in <a href="http://www.cnblogs.com/pinard/p/6117515.html" target="_blank" rel="noopener">http://www.cnblogs.com/pinard/p/6117515.html</a></em></p>
-<h3 id="5-Summary"><a href="#5-Summary" class="headerlink" title="5. Summary"></a>5. Summary</h3><p>SVM是一种相当高效的算法，在手写体数字识别取得不错的效果，适用范围很广，可以解决高维特征；更重要的一点是，kernel并非SVM所独有，kernel的本质是将低维映射到高维，在一些其他算法中也可以应用，如感知器算法。
-　　　　</p>
+            <p>基于Attention的RNN模型在联合意图识别(ID)和槽位填充(SF)上实现最好性能（其ID和SF的attention权重独立）。本文提出slot gate结构，其关注于学习intent和slot attention向量之间的关系，通过全局优化获得更好的semantic frame。通过在ATIS和Snips数据集实验，相比于attention模型semantic frame准确率提升了4.2%。</p>
+<p><a href="https://drive.google.com/open?id=1BLgkrEJb281ZtlhOP6Pn5_xg2rF_Q2tB" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/MiuLab/SlotGated-SLU" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>slot-filling, intent detection示例：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjAwNWtYZkFlU2RqMzVEc1B2K2FKSnFUOFZkN1VEN2ZSOUwwdGtvQ3F4QXJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  An  example  utterance  with  annotations  of  semantic  slots  in  IOB  format  (S)  and  intent  (I),  B-dir  and I-dir  denote  the  director  name"></p>
+<p>当前最佳模型是用attention+rnn对ID和SF联合建模，但是这种方法只是通过一个共同的loss函数 $loss_{total} = loss_{ID}+loss_{SF}$ 隐式地将二者建立关联。本文提出一种slot-gated mechanism来显式建立联系。</p>
+<p>本文的主要贡献在于：</p>
+<blockquote>
+</blockquote>
+<pre><code>1. the  proposed  slot-gated  approach  achieves  better  performance  than the  attention-based  models; 
+2. the  experiments  on two  SLU  datasets  show  the  generalization  and  the effectiveness  of  the  proposed  slot  gate;  
+3. the  gating  results  help  us  analyze  the  slot-intent  relations.
+</code></pre><h2 id="Slot-Gated-Model"><a href="#Slot-Gated-Model" class="headerlink" title="Slot-Gated Model"></a>Slot-Gated Model</h2><p>本文提出的模型结构如下：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjAwNWtYZkFlU2RqK2xwVml5eWhhelJLWUg3WHpLaU9YUDFxS1h4QTNyQ3JnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2 :  The  architecture  of  the  proposed  slot-gated  models; left : Slot-Gated  Model  with  Full  Attention; right: Slot-Gated  Model  with  Intent  Attention"></p>
+<h3 id="Attention-Based-RNN-Model"><a href="#Attention-Based-RNN-Model" class="headerlink" title="Attention-Based  RNN  Model"></a>Attention-Based  RNN  Model</h3><p>Figure 2中的BILSTM输入为word sequence $\mathbf{x}=(x_{1},…,x_{T})$ ，生成前向隐层状态$\underset{h_{i}}{\rightarrow}$和反向隐层状态$\underset{h_{i}}{\leftarrow}$ ，最终将二者拼接得到$h_{i}=[\underset{h_{i}}{\rightarrow};\underset{h_{i}}{\leftarrow}]$。</p>
+<p><code>Slot Filling</code>:</p>
+<p>SF任务是将输入$\mathbf{x}=(x_{1},…,x_{T})$映射成输出$\mathbf{y}=(y_{1}^{S},…,y_{T}^{S})$。对于每个步长的输入word对应的$h_{i}$，首先计算slot context vector $c_{i}^{S}$ （实际上是self-attention，对应Figure 2中的slot attention）：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjAwNWtYZkFlU2RqekhHak1RMVliNHhOcnBHUFpJanJrZ2I4YW93TGE1bWZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>$\alpha_{i,j}^{S}$ 是attention score：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjAwNWtYZkFlU2RqMnh1bXlVTk9FL0lEdG5oUm1CM3NsVlpTV1p1RXFrN3RnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>然后使用$h_{i}$ 和$c_{i}^{S}$ 做分类得到第i个word对应的slot label $y_{i}^{S}$：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNEc2pFZW5XcnZiTDU5MWlGKzdWY2wxczExdXBneDFYczJ3d1NyS2JjN1d3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><code>Intent Prediction</code>：</p>
+<p>intent context vector $c^{I}$ 的计算方式类似于 $c_{i}^{S}$ ，区别在于预测意图时只使用BILSTM最后一个隐层状态$h_{T}$：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNEc2pFZW5XcnZiT1BHNTRFeEQvazZ6MERMZTNGUXMzTisvNVMvRFptbmRBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Slot-Gated-Mechanism"><a href="#Slot-Gated-Mechanism" class="headerlink" title="Slot-Gated  Mechanism"></a>Slot-Gated  Mechanism</h3><p>slot-gated的主要目的是使用intent context vector来改善slot-filling的表现，结构如下：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNEc2pFZW5XcnZiSUQ0dUNpMXZkbm00OGV5QUN6N3hRczB2YlRiaE9iZXZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  3:  Illustration  of  the  slot  gate"></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNEc2pFZW5XcnZiTFhoRXBObmdKWVJ4ZW5tRDhMRlFCMldnUkVBdWJhbHhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<blockquote>
+<p>where v  and W  are  trainable  vector  and  matrix  respectively.  The  summation  is  done  over  elements in  one  time  step.</p>
+</blockquote>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFBNW04YytIL3pMdUJtaXJSWERuMjhCOWphYTJwNFZkQzU5NmlxV2htd3VBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>为了比较slot gate的效果，本文还提出了一个去掉slot attention的结构，见Figure 2 右图。</p>
+<h3 id="Joint-Optimization"><a href="#Joint-Optimization" class="headerlink" title="Joint  Optimization"></a>Joint  Optimization</h3><p>模型的联合目标函数为：</p>
+<p>$$p(y^{S},y^{I}|\mathbf{x})\\=p(y^{I}|\mathbf{x})\prod_{t=1}^{T}p(y^{S}_{t}|\mathbf{x})\\=p(y^{I}|x_{1},…,x_{T})\prod_{t=1}^{T}p(y^{S}_{t}|x_{1},…,x_{T})$$</p>
+<p>其中，$p(y^{S},y^{I}|\mathbf{x})$ 是 SF和ID的联合条件概率。</p>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p>本文采取的实验数据集为<a href="https://catalog.ldc.upenn.edu/docs/LDC93S4B/corpus.html" target="_blank" rel="noopener">ATIS</a>  (Airline  Travel  Information  Systems) 和<a href="https://github.com/snipsco/nlu-benchmark/tree/master/2017-06-custom-intent-engines" target="_blank" rel="noopener">Snips</a>。</p>
+<blockquote>
+<p>Compared  to  single-domain  ATIS  dataset,  Snips is  more complicated mainly  due to  the  intent  diversity  and  large  vocabulary.</p>
+</blockquote>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNXODdyYUdWTDR3T2xUQnc3bzU5dkxtMW4yOWMxVVlBZ1d0MkRjRU10M2N3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2 :  Intents  and  examples  in  Snips  dataset."></p>
+<h3 id="Results-and-Analysis"><a href="#Results-and-Analysis" class="headerlink" title="Results  and  Analysis"></a>Results  and  Analysis</h3><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNXODdyYUdWTDR3Ti9HOE1ZNWpPbTkzM3lHTUJ1eWx0UUZKbTBLbHEyS0NBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  3 :  SLU  performance  on  ATIS  and  Snips  datasets  (%). † indicates  the  significant  improvement over all baselines  (p &lt;0.05)."></p>
+<p>根据Table 3，两种slot-gated模型的性能均优于baselines，但是在ATIS数据集上intent attention最优，在Snips上full attention最优。</p>
+<blockquote>
+<p>Considering  different complexity  of  these  datasets,  the  probable  reason is  that  a  simpler  SLU  task,  such  as  ATIS,  does  not require  additional  slot  attention  to  achieve  good results,  and  the  slot  gate  is  capable  of  providing enough  cues  for  slot  filling.  On  the  other  hand, Snips  is  more  complex,  so  that  the  slot  attention  is needed  in  order  to  model  slot  filling  better  (as  well as  the  semantic  frame  results).</p>
+</blockquote>
+<p>作者特意强调slot-gate模型在frame acc上的改善，因为frame acc是同时衡量两个任务的指标。</p>
+<blockquote>
+<p>It  may  credit  to  the  proposed  slot  gate  that  learns the  slot-intent  relations  to  provide  helpful  information  for  global  optimization  of  the  joint  model.</p>
+</blockquote>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><blockquote>
+<p>This  paper  focuses  on  learning  the  explicit  slot-intent  relations  by  introducing  a  slot-gated  mechanism  into  the  state-of-the-art  attention  model, which  allows  the  slot  filling  can  be  conditioned  on the  learned  intent  result  in  order  to  achieve  better SLU  (joint  slot  filling  and  intent  detection).</p>
+</blockquote>
 
         </div>
         <footer class="article-footer">
@@ -353,20 +371,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2017/08/31/Sequential-Minimal-Optimization (1)/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Sequential Minimal Optimization
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2017/08/01/本周进展/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/11/27/Discriminative Deep Dyna-Q_ Robust Planning for Dialogue Policy Learning/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">本周进展</p>
+        <p class="article-nav-title">Discriminative  Deep  Dyna-Q  Robust  Planning for  Dialogue  Policy  Learning</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -573,7 +581,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2017/08/31/Sequential-Minimal-Optimization/';
+    var disqus_url = 'https://helic.github.io/2018/12/03/Slot-Gated Modeling for Joint Slot Filling and Intent Prediction/';
     
     (function() {
     var dsq = document.createElement('script');
