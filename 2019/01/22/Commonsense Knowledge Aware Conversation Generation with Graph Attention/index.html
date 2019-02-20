@@ -17,7 +17,7 @@
 <meta property="og:description" content="本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-02-20T13:28:07.134Z">
+<meta property="og:updated_time" content="2019-02-20T13:46:48.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Commonsense Knowledge Aware Conversation Generation with Graph Attention">
 <meta name="twitter:description" content="本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是">
@@ -208,7 +208,7 @@ ga('send', 'pageview');
 <p>每个三元组表示成（head entity, relation, tail entity）= （h, r, t）。本文使用<strong>TransE</strong>表示实体关系，为了减小知识图谱与无结构对话数据之间的差距，增加了MLP网络。因此，一个三元组的表示为 $\bold k = (\bold h, \bold r, \bold t) = MLP(TranE(h, r, t))$ ，<strong>（h, r, t）</strong>分别为最终得到（h, r, t）的向量表示。</p>
 <p>本文提出的CCM整体结构如下：</p>
 <p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Overview  of  CCM"></p>
-<p><strong>Knowledge  Interpreter</strong> 模块负责将一个词的词向量和这个词对应的图谱向量表示堆叠起来，作为Encoder(GRU)的一步输入，由图转化成向量的过程是通过静态图注意力机制完成的。TODO</p>
+<p><strong>Knowledge  Interpreter</strong> 模块负责将一个词的词向量和这个词对应的图谱向量表示堆叠起来，作为Encoder(GRU)的一步输入，由图转化成向量的过程是通过静态图注意力机制完成的。基于我们的动态图注意力机制，知识感知生成器 (Knowledge Aware Generator) 生成了回复﻿﻿﻿﻿。在每个解码环节，它读取检索到的图和每个图中的实体，然后在词汇表中生成通用词汇，或在知识图中生成实体。</p>
 <h3 id="Knowledge-Interpreter"><a href="#Knowledge-Interpreter" class="headerlink" title="Knowledge  Interpreter"></a>Knowledge  Interpreter</h3><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJidGNFUE16c0VBaWI5czU0S1p0L0JqbWFkdDJNYldmekF4bGR0UjI1aFpBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  3:  Knowledge  interpreter  concatenates  a  word  vector  and  the graph  vector  of  the  corresponding  retrieved  graph.  In  this  example, word  rays  (also  key  entity)  corresponds  to  the  first  graph,  and  sunlightto  the  second  one.  Each  graph  is  represented  by  a  graph  vector. A  key  entity  is  an  entity  which  occurs  in  the  post."></p>
 <p>在输入序列的每一个位置上，Knowledge  Interpreter使用当前位置上的token作为key entity去检索整个知识图谱，得到与token相关联的一个图谱（如上图中黄色部分所示，注意一个词只能对应一个图，这个词是这个图中的一个实体），对于一些在知识图谱中不存在的词（例如of），作者直接用一个特定的<em>Not_A_Fact</em>表示（如上图所示）；然后，使用静态注意力机制获取检索到知识图谱的向量表示$g_{i}$，与词向量拼接得到最终的表示 $e(x_{t}) = [w(x_{t});g_{i}]$，输入到GRU。</p>
 <p><strong>Static  Graph  Attention</strong>：<br>静态图注意力机制的目的是得到一个知识图谱的静态向量表示，由[Velickovicet al., 2017]首次提出，本文中使用的Static  Graph  Attention稍有区别，不同之处在于本文不仅仅考虑节点，同时考虑节点之间的关系。</p>
