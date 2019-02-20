@@ -17,7 +17,7 @@
 <meta property="og:description" content="本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-02-20T13:46:48.828Z">
+<meta property="og:updated_time" content="2019-02-20T13:56:03.238Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Commonsense Knowledge Aware Conversation Generation with Graph Attention">
 <meta name="twitter:description" content="本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是">
@@ -229,7 +229,8 @@ ga('send', 'pageview');
 <p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjAyYVNYWG42UUtncHgwTnc2cGNlWi9vU0p1NVJ4M2VTa0hHREZoVmlDd3ZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <p>接下来，该模型用每个图$g_{i}$﻿﻿中的知识三元组向量﻿$K(g_{i}) = (k_{1}, k_{2}, …, k_{N_{g_{i}}})$﻿﻿﻿，来计算选择某个三元组来生成答案的概率，过程如下：</p>
 <p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjAyYVNYWG42UUtncE5yaURTQ1cwejl2V2Z4QlpTcU40U0hUN3hFL3pVbXB3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>最后，知识感知生成器选取通用词汇或实体词汇，基于如下概率分布：<br>1.png<br>这里﻿$\gamma_{t} \in [0, 1]$  是用来平衡实体词汇﻿$w_{e}$﻿﻿﻿和通用词汇﻿﻿﻿$w_{c}$﻿之间选择的标量，﻿﻿﻿$P_{c}, P_{e}$﻿分别是通用词汇和实体词汇的概率，最终的概率﻿﻿﻿$P(y_{t})$﻿由两种概率结合所得。</p>
+<p>最后，知识感知生成器选取通用词汇或实体词汇，基于如下概率分布：<br><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFDSUVMYlg3Z1BlMWNISmkyYXFOQWQwdWhDWWtBWG4yWmlES3hKWTV3eXFBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>这里﻿$\gamma_{t} \in [0, 1]$  是用来平衡实体词汇﻿$w_{e}$﻿﻿﻿和通用词汇﻿﻿﻿$w_{c}$﻿之间选择的标量，﻿﻿﻿$P_{c}, P_{e}$﻿分别是通用词汇和实体词汇的概率，最终的概率﻿﻿﻿$P(y_{t})$﻿由两种概率结合所得。</p>
 <h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><ol>
 <li>Commonsense  Knowledge  Base : 本文使用语义网络 (<a href="https://conceptnet.io" target="_blank" rel="noopener">ConceptNet</a>) 作为常识知识库。语义网络不仅包括客观事实，如“巴黎是法国的首都”这样确凿的信息，也包括未成文但大家都知道的常识，如“狗是一种宠物”。这一点对实验很关键，因为在建立开放域对话系统过程中，能识别常见概念之间是否有未成文但真实存在的关联是必需的。</li>
 <li>Commonsense  Conversation  Dataset：使用了来自 reddit 上一问一答形式的对话数据，数据集大小约为 10M。由于本文的目标是用常识知识优化语言理解和生成，所以作者滤出带有知识三元组的原始语料数据。若一对问答数据与任何三元组（即一个实体出现在问题中，另一个在答复中）都没有关联，那么这一对数据就会被剔除掉。</li>
