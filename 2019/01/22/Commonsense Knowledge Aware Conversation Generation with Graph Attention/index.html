@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Commonsense Knowledge Aware Conversation Generation with Graph Attention | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Commonsense  Knowledge,Dialogue System,Graph Attention" />
+    
+    <meta name="description" content="本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是">
+<meta name="keywords" content="Commonsense  Knowledge,Dialogue System,Graph Attention">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Commonsense Knowledge Aware Conversation Generation with Graph Attention">
+<meta property="og:url" content="https://helic.github.io/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-02-20T13:28:07.134Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Commonsense Knowledge Aware Conversation Generation with Graph Attention">
+<meta name="twitter:description" content="本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是">
+<meta name="twitter:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Commonsense Knowledge Aware Conversation Generation with Graph Attention" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Commonsense Knowledge Aware Conversation Generation with Graph Attention
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/" class="article-date">
+            <time datetime="2019-01-22T06:16:00.000Z" itemprop="datePublished">2019-01-22</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a>, <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>, <a class="tag-link" href="/tags/Graph-Attention/">Graph Attention</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是单独的使用图谱中三元组。<br><a href="https://drive.google.com/open?id=1mD17UBEZfDPJZYwlMmMZtIFqB71aD6Jy" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/tuxchow/ccm" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>背景知识对于很多自然语言任务至关重要，在对话生成领域，已经提出了一些方法和模型来利用常识知识[Han  et  al.,  2015;</p>
+<p>Ghazvininejadet  al.,  2017;  Zhuet  al.,  2017]，这些模型通常使用的是非结构化数据或者领域特定的三元组。因此，普遍存在以下问题：</p>
+<ul>
+<li>模型质量高度依赖于非结构化数据的好坏或者受限于小规模的、特定领域的知识图谱；</li>
+<li>这些模型通常分散独立地使用知识图谱的每个三元组，而不是把一个图中的所有三元组看作一个整体，很难通过实体和关系表征整体的语义信息。</li>
+</ul>
+<p>为了解决上述问题，本文提出了<strong>CCM(commonsense knowledge  aware  conversational  model)</strong>模型，促进开放域对话系统的理解与生成。模型使用的是一个大规模知识图谱[Speer  and  Havasi,  2012]，下图是一个对比：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFzUkZqRElDd1R2a21oVkV1YUFZWW44UG9jUndPbkVjRmJuWlNKK1QvUmd3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  (Better  viewed  in  color)  Two  response  examples  by  our model  (the  first  line)  and  Seq2Seq  (second)  with/without  considering  commonsense  knowledge,  respectively"></p>
+<p>本文的贡献在于：</p>
+<ol>
+<li>本文首次在对话生成领域使用大规模知识图谱，进而生成更加合理和包含有用信息的对话。</li>
+<li>本文将三元组看成图的一部分，侧重于从整体去获取图的表征，这样可以更好的解释图中相邻实体和关系的语义信息。</li>
+</ol>
+<h2 id="Commonsense-Conversational-Model"><a href="#Commonsense-Conversational-Model" class="headerlink" title="Commonsense  Conversational  Model"></a>Commonsense  Conversational  Model</h2><h3 id="Background-Encoder-Decoder-Framework"><a href="#Background-Encoder-Decoder-Framework" class="headerlink" title="Background : Encoder-Decoder Framework"></a>Background : Encoder-Decoder Framework</h3><p>本部分是一个传统的encoder-decoder+attention模型，编码器负责将输入序列编码成隐层状态$h_{t}$：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpQjMzMWN2WVJLTXBNTjMwRmxTeWFNZEJFU0szTHJKdmh3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>$e(x_{t})$ 代表输入token $x_{t}$ 的词向量。解码器如下：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpTlZtZnZXd0NXakhqTHZpTWhLMGJYaWxnTzEwT1pUMER3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中$c_{t-1}$为$s_{t-1}$与编码器隐层状态的注意力输出。最后是一个softmax分类层。</p>
+<h3 id="Task-Definition-and-Overview"><a href="#Task-Definition-and-Overview" class="headerlink" title="Task  Definition  and  Overview"></a>Task  Definition  and  Overview</h3><p>模型研究的问题定义如下：给定用户输入post $X = x_{1}x_{2}…x_{n}$ 和一些抽取得到的知识图谱 $G = (g_{1}, …,g_{N_{G}})$ ，目标是生成一个恰当回复 $Y  = y_{1}…y_{m}$，即使得以下概率最大：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpREw5SE9FeW8xbGx6VitKSDZDaXBzT1BCOTd5SkpKdUZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>这些抽取的知识图谱来自于一个大的知识库，使用用户输入的每个词来做检索，一个词对应G中的一个图（对于没有匹配到的词，设定一个特殊的图<em>Not  A  Fact</em>）。每个图谱由一系列三元组组成：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpR1l0WWNJd3hSSDJPMS9aQmExUGt1SGtRTHNjNjdUcGp3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>每个三元组表示成（head entity, relation, tail entity）= （h, r, t）。本文使用<strong>TransE</strong>表示实体关系，为了减小知识图谱与无结构对话数据之间的差距，增加了MLP网络。因此，一个三元组的表示为 $\bold k = (\bold h, \bold r, \bold t) = MLP(TranE(h, r, t))$ ，<strong>（h, r, t）</strong>分别为最终得到（h, r, t）的向量表示。</p>
+<p>本文提出的CCM整体结构如下：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Overview  of  CCM"></p>
+<p><strong>Knowledge  Interpreter</strong> 模块负责将一个词的词向量和这个词对应的图谱向量表示堆叠起来，作为Encoder(GRU)的一步输入，由图转化成向量的过程是通过静态图注意力机制完成的。TODO</p>
+<h3 id="Knowledge-Interpreter"><a href="#Knowledge-Interpreter" class="headerlink" title="Knowledge  Interpreter"></a>Knowledge  Interpreter</h3><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJidGNFUE16c0VBaWI5czU0S1p0L0JqbWFkdDJNYldmekF4bGR0UjI1aFpBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  3:  Knowledge  interpreter  concatenates  a  word  vector  and  the graph  vector  of  the  corresponding  retrieved  graph.  In  this  example, word  rays  (also  key  entity)  corresponds  to  the  first  graph,  and  sunlightto  the  second  one.  Each  graph  is  represented  by  a  graph  vector. A  key  entity  is  an  entity  which  occurs  in  the  post."></p>
+<p>在输入序列的每一个位置上，Knowledge  Interpreter使用当前位置上的token作为key entity去检索整个知识图谱，得到与token相关联的一个图谱（如上图中黄色部分所示，注意一个词只能对应一个图，这个词是这个图中的一个实体），对于一些在知识图谱中不存在的词（例如of），作者直接用一个特定的<em>Not_A_Fact</em>表示（如上图所示）；然后，使用静态注意力机制获取检索到知识图谱的向量表示$g_{i}$，与词向量拼接得到最终的表示 $e(x_{t}) = [w(x_{t});g_{i}]$，输入到GRU。</p>
+<p><strong>Static  Graph  Attention</strong>：<br>静态图注意力机制的目的是得到一个知识图谱的静态向量表示，由[Velickovicet al., 2017]首次提出，本文中使用的Static  Graph  Attention稍有区别，不同之处在于本文不仅仅考虑节点，同时考虑节点之间的关系。</p>
+<p>对于给定的一个图 $K(g_{i}) = (k_{1}, k_{2}, …, k_{N_{g_{i}}})$，$g_{i}$ 表示给定的图，$k_{i}$ 表示图中的一个三元组。本文中使用的Static  Graph  Attention计算如下：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJidGNFUE16c0VBdVg5WGFUdHVBMERMSy9oT2xyWFZVeXZNQitrNDNqZDNRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>Attention机制用来衡量relation $\bold r_{n}$ 与 head entity $\bold h_{n}$ ，tail entity $\bold t_{n}$ 的关系。</p>
+<h3 id="Knowledge-Aware-Generator"><a href="#Knowledge-Aware-Generator" class="headerlink" title="Knowledge  Aware  Generator"></a>Knowledge  Aware  Generator</h3><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFVMU9YNzZLRHE2Wlg3SDEraGVlcWJydGdmVTlVOHpjdGZBYkorMmpKTlhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  4:  Knowledge  aware  generator  dynamically  attends  on  the graphs  (the  pink  graph  is  mostly  attended)  .  It  then  attentively  reads the  triples  in  each  graph  to  estimate  the  probability  of  selecting  a triple,  where  the  triple’s  neighboring  entity  (purple  dots/words)  is used  for  word  generation"></p>
+<p> Knowledge  Aware  Generator用来结合知识图谱生成对话回复，主要有以下两个作用：</p>
+<ul>
+<li>读取所有检索到的图，来获取一个图感知上下文向量，并用这个向量来更新解码器的状态。</li>
+<li><p>自适应地从检索到的图中，选择通用词汇或实体来生成词语。形式上来看，解码器通过如下过程来更新状态：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjAyYVNYWG42UUtnc0RpWFZ2VEdXcnRGTmVOUnJTWThLeGtVOFJmOW5IMHBRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+</li>
+</ul>
+<p>这里﻿﻿﻿ $e(y_{t})$﻿是单词向量﻿﻿﻿$w(y_{t})$﻿和前一个知识三元组向量﻿﻿﻿$k_{j}$﻿的结合，其来自上一个所选单词$y﻿﻿﻿﻿_{t}$。$c_{t}$﻿﻿是式 2 中的上下文向量，﻿﻿﻿$c_{t}^{g}$﻿和﻿﻿﻿$c_{t}^{k}$﻿分别是作用于知识图向量﻿$G = (g_{1}, …,g_{N_{G}})$﻿﻿﻿和知识三元组向量﻿﻿﻿$K(g_{i}) = (k_{1}, k_{2}, …, k_{g_{N_{G}}})$（所有检索图中的所有三元组）的上下文向量。</p>
+<p><em>注意：作者在实验数据集部分中提到，若一对问答数据与任何三元组（即一个实体出现在问题中，另一个在答复中）都没有关联，那么这一对数据就会被剔除掉。也即作者假设问答对中必须至少包含一个三元组，三元组的一个实体在问题中，另一个在答案中，这样，答案中出现的实体一定在通过问题检索出来的知识图谱中，这是整个模型的前提。</em></p>
+<p><strong>Dynamic  Graph  Attention</strong>：<br>动态图注意力机制是一个分层的、自上而下的过程。首先，它读取所有的检索到的知识图（实际上是指输入问题检索到的知识图谱）和每个图中的所有三元组，用来生成最终的回复。若给定一个解码器的状态﻿$s_{t}$﻿﻿﻿, 它首先作用于知识图向量﻿﻿﻿﻿$(g_{1}, …,g_{N_{G}})$﻿﻿，以计算使用每个图的概率，如下：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjAyYVNYWG42UUtncHgwTnc2cGNlWi9vU0p1NVJ4M2VTa0hHREZoVmlDd3ZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>接下来，该模型用每个图$g_{i}$﻿﻿中的知识三元组向量﻿$K(g_{i}) = (k_{1}, k_{2}, …, k_{N_{g_{i}}})$﻿﻿﻿，来计算选择某个三元组来生成答案的概率，过程如下：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjAyYVNYWG42UUtncE5yaURTQ1cwejl2V2Z4QlpTcU40U0hUN3hFL3pVbXB3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>最后，知识感知生成器选取通用词汇或实体词汇，基于如下概率分布：<br>1.png<br>这里﻿$\gamma_{t} \in [0, 1]$  是用来平衡实体词汇﻿$w_{e}$﻿﻿﻿和通用词汇﻿﻿﻿$w_{c}$﻿之间选择的标量，﻿﻿﻿$P_{c}, P_{e}$﻿分别是通用词汇和实体词汇的概率，最终的概率﻿﻿﻿$P(y_{t})$﻿由两种概率结合所得。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><ol>
+<li>Commonsense  Knowledge  Base : 本文使用语义网络 (<a href="https://conceptnet.io" target="_blank" rel="noopener">ConceptNet</a>) 作为常识知识库。语义网络不仅包括客观事实，如“巴黎是法国的首都”这样确凿的信息，也包括未成文但大家都知道的常识，如“狗是一种宠物”。这一点对实验很关键，因为在建立开放域对话系统过程中，能识别常见概念之间是否有未成文但真实存在的关联是必需的。</li>
+<li>Commonsense  Conversation  Dataset：使用了来自 reddit 上一问一答形式的对话数据，数据集大小约为 10M。由于本文的目标是用常识知识优化语言理解和生成，所以作者滤出带有知识三元组的原始语料数据。若一对问答数据与任何三元组（即一个实体出现在问题中，另一个在答复中）都没有关联，那么这一对数据就会被剔除掉。</li>
+</ol>
+<h3 id="Baselines"><a href="#Baselines" class="headerlink" title="Baselines"></a>Baselines</h3><ul>
+<li><p>Seq2Seq，一种 seq2seq 模型，它被广泛应用于各种开放域对话系统中。</p>
+</li>
+<li><p>MemNet，一个基于知识的模型，其中记忆单元用来存储知识三元组经 TransE 嵌入处理后的数据。</p>
+</li>
+<li><p>CopyNet，一种拷贝网络模型，它会从知识三元组中拷贝单词或由词汇表生成单词。</p>
+</li>
+</ul>
+<h3 id="Automatic-Evaluation"><a href="#Automatic-Evaluation" class="headerlink" title="Automatic  Evaluation"></a>Automatic  Evaluation</h3><p>指标：作者采用复杂度 （perplexity）来评估模型生成的内容。同时也计算了每条回复中的实体个数，来估量模型从常识知识库中挑选概念的能力，这项指标记为 entity score.</p>
+<p>结果：如表 2 所示，CCM 获得了最低的复杂度，说明 CCM 可以更好地理解用户的问题，从而给出语义上更合理的回复。而且与其他模型相比，在对话生成中，CCM 从常识知识中选取的实体最多，这也可以说明常识知识可以在真正意义上优化回复的生成。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjAyYVNYWG42UUtnb2ZxTGFzQ3hlbU15V0JWQmxIcXdrVjFBUjcrN3lXTmh3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  Automatic  evaluation  withperplexity(ppx.),  andentity  score(ent.)"></p>
+<h3 id="Manual-Evaluation"><a href="#Manual-Evaluation" class="headerlink" title="Manual  Evaluation"></a>Manual  Evaluation</h3><p>指标：作者定义了两项指标：appropriateness 在内容质量上进行评估（基于语法、主题和逻辑）；informativeness 在知识层面进行评估（基于生成的答复是否针对问题提供了新的信息和知识）。</p>
+<p>结果：如表 3 所示，CCM 在两项指标下都比另外几个模型表现更为突出。其中 CopyNet 是将知识三元组分开单独使用的，这也证明了图注意力机制的有效性。</p>
+<p>很明显，在 OOV (out-of-vocabulary) 数据集的表现上， CCM 比 Seq2Seq 突出得多。这也进一步说明常识知识在理解生僻概念上很有效，而 Seq2Seq 并没有这个能力。对于 MemNet 和 CopyNet，未发现在这一点上的差别，是因为这两个模型都或多或少引入使用了常识知识。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjAyYVNYWG42UUtna0k5NnJXcjIxWVN3aHlmNVpiYkRaZTB4TlJZbC9yaHJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="enter image description herTable  3:  Manual  evaluation  withappropriateness(app.),andinformativeness(inf.).  The  score  is  the  percentage  that  CCM  wins  its  competitor after  removing  “Tie”  pairs.  CCM  is  significantly  better  (sign  test,  p-value&lt;0:005)  than  all  the  baselines  on  all  the  test  sets.e"></p>
+<h2 id="Conclusion-and-Future-Work"><a href="#Conclusion-and-Future-Work" class="headerlink" title="Conclusion  and  Future  Work"></a>Conclusion  and  Future  Work</h2><p>在本文中，作者提出了一个常识知识感知对话模型 (CCM)，演示了常识知识有助于开放域对话系统中语言的理解与生成。自动评估与人工评估皆证明了，与当前最先进的模型相比，CCM 能够生成更合理、信息量更丰富的回复。图注意力机制的表现，鼓舞了我们在未来的其他项目中也将使用常识知识。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://drive.google.com/open?id=1mD17UBEZfDPJZYwlMmMZtIFqB71aD6Jy" target="_blank" rel="noopener">Commonsense Knowledge Aware Conversation Generation with Graph Attention</a></li>
+<li><a href="https://blog.csdn.net/dQCFKyQDXYm3F8rB0/article/details/81437414?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="noopener">https://blog.csdn.net/dQCFKyQDXYm3F8rB0/article/details/81437414?utm_source=tuicool&amp;utm_medium=referral</a></li>
+<li><a href="https://conceptnet.io" target="_blank" rel="noopener">ConceptNet</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/11/Learning Personalized End-to-End Goal-Oriented Dialog/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Learning  Personalized  End-to-End  Goal-Oriented  Dialog</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Commonsense Knowledge Aware Conversation Generation with Graph Attention" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/" class="title">Commonsense Knowledge Aware Conversation Generation with Graph Attention</a></p>
+                            <p class="item-date"><time datetime="2019-01-22T06:16:00.000Z" itemprop="datePublished">2019-01-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/11/Learning Personalized End-to-End Goal-Oriented Dialog/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNteXRHWHF4RHNFdmQrNVN0MWJuNlJzVDZ6dGptcG13VU9iOW1EQUhzemVRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Learning  Personalized  End-to-End  Goal-Oriented  Dialog" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/12/11/Learning Personalized End-to-End Goal-Oriented Dialog/" class="title">Learning  Personalized  End-to-End  Goal-Oriented  Dialog</a></p>
+                            <p class="item-date"><time datetime="2018-12-11T02:45:00.000Z" itemprop="datePublished">2018-12-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/03/Slot-Gated Modeling for Joint Slot Filling and Intent Prediction/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjAwNWtYZkFlU2RqK2xwVml5eWhhelJLWUg3WHpLaU9YUDFxS1h4QTNyQ3JnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Slot-Gated  Modeling  for  Joint  Slot  Filling  and  Intent  Prediction" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2018/12/03/Slot-Gated Modeling for Joint Slot Filling and Intent Prediction/" class="title">Slot-Gated  Modeling  for  Joint  Slot  Filling  and  Intent  Prediction</a></p>
+                            <p class="item-date"><time datetime="2018-12-03T13:01:00.000Z" itemprop="datePublished">2018-12-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/27/Discriminative Deep Dyna-Q_ Robust Planning for Dialogue Policy Learning/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFkaUYyaEJZd3lycVZnK3ZKdGY2QmtEY21ieE9EMzhCOUorN0czYnlRTkVBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Discriminative  Deep  Dyna-Q  Robust  Planning for  Dialogue  Policy  Learning" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/11/27/Discriminative Deep Dyna-Q_ Robust Planning for Dialogue Policy Learning/" class="title">Discriminative  Deep  Dyna-Q  Robust  Planning for  Dialogue  Policy  Learning</a></p>
+                            <p class="item-date"><time datetime="2018-11-27T06:15:00.000Z" itemprop="datePublished">2018-11-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/23/Multi-task learning for Joint Language Understanding and Dialogue State Tracking/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFualZDeVJuSFFtMS9yVUdUNEpYYytuY09GTFVXQllxUjhvWWIxQWt4cDlBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Multi-task learning for Joint Language Understanding and Dialogue State Tracking" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/11/23/Multi-task learning for Joint Language Understanding and Dialogue State Tracking/" class="title">Multi-task learning for Joint Language Understanding and Dialogue State Tracking</a></p>
+                            <p class="item-date"><time datetime="2018-11-23T01:06:00.000Z" itemprop="datePublished">2018-11-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 11.67px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 10px;">Commonsense  Knowledge</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/Dialogue-System/" style="font-size: 10px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.67px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 10px;">Memory Network</a> <a href="/tags/NLG/" style="font-size: 11.67px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 13.33px;">NLU</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.67px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 11.67px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 15px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16.67px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 18.33px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 11.67px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
