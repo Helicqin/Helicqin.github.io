@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Commonsense  Knowledge,Dialogue System,DSTC7" />
+    
+    <meta name="description" content="本文是Wechat AI团队发表的基于DSTC7中第二个评测Sentence Generation 的论文，发表在AAAI2019上。研究的主要问题是基于背景知识的对话生成，主要通过指针生成机制和注意力机制从对话历史和背景知识中来生成更加有意义的回复。 paper link">
+<meta name="keywords" content="Commonsense  Knowledge,Dialogue System,DSTC7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge">
+<meta property="og:url" content="https://helic.github.io/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文是Wechat AI团队发表的基于DSTC7中第二个评测Sentence Generation 的论文，发表在AAAI2019上。研究的主要问题是基于背景知识的对话生成，主要通过指针生成机制和注意力机制从对话历史和背景知识中来生成更加有意义的回复。 paper link">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4TUcyNGFtZUVsK1doNGRPc0l5YjBabG1FRlZyR1JPQTFRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-02-26T08:23:43.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge">
+<meta name="twitter:description" content="本文是Wechat AI团队发表的基于DSTC7中第二个评测Sentence Generation 的论文，发表在AAAI2019上。研究的主要问题是基于背景知识的对话生成，主要通过指针生成机制和注意力机制从对话历史和背景知识中来生成更加有意义的回复。 paper link">
+<meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4TUcyNGFtZUVsK1doNGRPc0l5YjBabG1FRlZyR1JPQTFRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/" class="article-date">
+            <time datetime="2019-02-23T02:43:00.000Z" itemprop="datePublished">2019-02-23</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a>, <a class="tag-link" href="/tags/DSTC7/">DSTC7</a>, <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文是Wechat AI团队发表的基于<a href="http://workshop.colips.org/dstc7/tracks.html" target="_blank" rel="noopener">DSTC7</a>中第二个评测<a href="http://workshop.colips.org/dstc7/proposals/DSTC7-MSR_end2end.pdf" target="_blank" rel="noopener">Sentence Generation</a> 的论文，发表在AAAI2019上。研究的主要问题是基于背景知识的对话生成，主要通过指针生成机制和注意力机制从对话历史和背景知识中来生成更加有意义的回复。</p>
+<p><a href="https://drive.google.com/open?id=1zD_jeDioJTo4PGqitcZ7LwECckNLAJUG" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>问题介绍：在目前纯数据驱动的对话系统中（如chitchat），往往存在大量的无意义的通用回复，无法利用真实世界的背景知识，生成的回复中缺乏有意义的实体和背景内容，与此相反的是，任务型对话系统中为了解决该问题则存在大量的手工编码过程（如slot-filling）。本文研究的问题如下：给定一段对话历史和一些与对话相关的文章片段，目标是生成有意义的、与给定背景信息密切相关的答复。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4UHA0b3F2SnlrRnpFZTRPcGdCbWhtaXlSbXlOaWtPYWRRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table 1: Sample of the DSTC7 Sentence Generation data, which combines Reddit data (Turns 1-4) along with documents (extracted from Common Crawl) discussed in the conversations. The emphasis was added by us. The [URL] links to the web page above."></p>
+<p>DSTC7提供的评测数据包括：</p>
+<ol>
+<li><p><strong>Conversational input</strong>: Similarly to DSTC6 Track 2 [7], all preceding turns of the conversation are available to the system. For practical purposes, we might truncate the context to the K most recent turns, at least in the case of the training data. </p>
+</li>
+<li><p><strong>Contextually-relevant “facts”</strong>: The system is given up to N factual snippets of text (N = 20 in [9]) that are relevant to the context of the conversation. Note that these facts may vary turn-by-turn as the discussion progresses. These snippets of text are not drawn from any conversational data, and are instead extracted from external knowledge sources such as Wikipedia or Foursquare.</p>
+</li>
+</ol>
+<p>本文重点关注的是以下三个方面：</p>
+<ul>
+<li>对话历史建模</li>
+<li>如何充分使用非结构化的外部知识 </li>
+<li>生成回复的多样性和相关性</li>
+</ul>
+<p>本文的主要贡献在于：</p>
+<ol>
+<li>提出了一个泛化的指针生成机制(pointer generator)，使得同时从对话历史和外部知识中复制实体。</li>
+<li>提出了一种聚类Beam Search算法，可以在解码的时候动态地将相似语义地序列分组归类，避免生成通用回复。</li>
+</ol>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>模型整体结构图：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4TUcyNGFtZUVsK1doNGRPc0l5YjBabG1FRlZyR1JPQTFRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  A  pointer  generator  approach  that  enables  copying  mechanism  for  conversation  history  (H)  and  facts  (F).  For  each decoding  time  step,  three  action  probabilities  are  calculated,  namely  copying  a  token  from  H,  copying  a  token  from  F,  and generating  a  token.  The  final  word  probability  distribution  is  the  linear  interpolation  of  these  three  probability  distributions. Out-of-vocabulary  (OOV)  token  receives  probability  mass  from  the  attention  distributions  of  history  and  facts."></p>
+<h3 id="Data-Cleaning-and-Fact-Retrieval"><a href="#Data-Cleaning-and-Fact-Retrieval" class="headerlink" title="Data  Cleaning  and  Fact  Retrieval"></a>Data  Cleaning  and  Fact  Retrieval</h3><p>DSTC官方给出的评测数据里的背景知识来自于网络爬虫得到的很多文章片段，作者首先对这些非结构化数据做了预处理。论文中认为片段的每一句话是一个事实(fact)，因为文章很多，所以作者使用了tfidf来选取与对话最相关的前topk个事实：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4R05CaThSbEtTTG8vMlJhMlF1Zi9iVFhRdHByUE1TWElBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>上式计算的是对话和一个事实的相关度，其中H是对话历史，F是一个事实，w是对话中的一个词，idf(w)是倒文档频率（此处是指w在所有对话中出现的频率的倒数）。上式的含义是在对话中出现频率低，而在文档某句话中出现次数多的词，决定了对话与该事实的相关度。最后将得到的前topk个事实按照初始出现的顺序拼接到一起。</p>
+<p>因此，模型的目标函数定义为：    $$P_{r}(R|H, F)$$</p>
+<h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><p>对于对话历史和背景事实，模型使用两个独立的单层双向LSTM网络进行编码，得到两个隐层状态：<br>$$H^{H} = (h^{H}_{1},h^{H}_{2},…,h^{H}_{L})$$<br>$$H^{F} = (h^{F}_{1},h^{F}_{2},…,h^{F}_{T})$$</p>
+<h3 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h3><p>Decoder主要包含三个模块：</p>
+<ol>
+<li>分别针对于对话历史和背景事实的注意力机制</li>
+<li>生成回复的模式预测</li>
+<li>词生成</li>
+</ol>
+<h4 id="Attention-Mechanism"><a href="#Attention-Mechanism" class="headerlink" title="Attention  Mechanism"></a>Attention  Mechanism</h4><p>在解码的每个时刻t，利用解码器的隐层状态$h_{t}^{R}$分别对$H^{H}, H^{F}$计算attention：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4UHhiL0VXaXRiYnBheFZTUFl6REtnTjhpTm9EYVh1ajdRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4UFJoY2JWQXN3cVFuaHJ2Zm5BRW9rTDR3R1I3dkFxQUFBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>$\alpha_{ti}^{H}$ 和 $\alpha_{ti}^{F}$ 分别代表当前时刻拷贝对话历史和背景事实中的词的概率分布。</p>
+<h4 id="Mode-Prediction"><a href="#Mode-Prediction" class="headerlink" title="Mode  Prediction"></a>Mode  Prediction</h4><p>本模块主要是借鉴自pointer generator (See, Liu, and Manning 2017)，解决生成过程中的OOV问题，唯一的不同点在于本模型增加了从背景事实中复制的机制，因此，Mode  Prediction支持以下三种模式：</p>
+<ol>
+<li>Seq2Seq生成一个词</li>
+<li>从对话历史中复制一个词</li>
+<li>从背景事实中复制一个词</li>
+</ol>
+<p>模型使用一个softmax得到每个模式的概率：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4S08yMHBnMWk0NTF3aVhmeVlraEEzbUVwLys5emJ6czJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中：$x_{t}$ 为时刻t的解码器输入。</p>
+<h4 id="Word-prediction"><a href="#Word-prediction" class="headerlink" title="Word  prediction"></a>Word  prediction</h4><p>最终，模型生成一个词的概率等于三种模式生成的概率相加：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4R3BHVTk1SFA4NVB0SmJnek51VzlaaTEwclZ1ak9BZzRBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<ol>
+<li>对于 Seq2Seq生成一个词：$P_{r_{m}}(w|t,H,F)=softmax(W_{g}h_{t}^{R})$ </li>
+<li>对于从对话历史或者背景事实中复制一个词：$P_{r_{m}}(w|t,H,F) = \alpha_{ti}^{H} or  \alpha_{ti}^{F}$</li>
+</ol>
+<h4 id="Cluster-based-Beam-Search"><a href="#Cluster-based-Beam-Search" class="headerlink" title="Cluster-based  Beam  Search"></a>Cluster-based  Beam  Search</h4><p>传统的beam search有一个固定大小的候选集上限k，而这k个最有可能的候选项有很多是语义相似的，例如<code>i donot known, i donnot see，i donot understand</code>，虽然它们的概率都很高，但是对于生成的多样性来讲没有意义。因此，作者提出了一种新的基于聚类的Beam  Search算法：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4Q2EzYXJHM3VQcXJQWTJpYUlyQW5xdjRPbUcweWNpNGx3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>主要过程如下：</p>
+<ol>
+<li>首先根据对数似然概率选取前BS*2个候选项</li>
+<li>然后使用K-means聚成K个簇，聚类的特征为已解码序列的词向量平均</li>
+<li>在每一个簇中选取前BS/K个候选项作为下一步解码的候选集</li>
+</ol>
+<p>作用：语义相似的候选项会在一个簇中，不同簇中候选项含义不同，这样就可以在不增加Beam Search容量的前提下，增加不同语义回复的可能性。</p>
+<p>作者还去除了注意力机制导致的重复N-grams，以及使用语言模型去除通用回复。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>针对于模型评估，DSTC提供两种方式：自动指标评估和手工评估。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4RUdJSWl6WTVnTzBOc1FydjR6TkxaRmlBRVBkb2h2a0J3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>可以看出，本模型在两种评价模式上都处于领先，模型的不足之处在于模型生成回复的相关性和回答一致性：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4RlluSVY3N3RzOWhJUXc0NEU4U1RpMFIva216bkFWZDNBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="enter image description here"></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文研究的主要问题是基于背景知识的对话生成，主要通过指针生成机制和注意力机制从对话历史和背景知识中来生成更加有意义的回复，提出了Cluster-based  Beam  Search机制，取得了一定的效果。但与人类对话相比还有很大差距，模型在利用背景知识时会出现前后逻辑不一致的问题，也有待解决。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://drive.google.com/open?id=1zD_jeDioJTo4PGqitcZ7LwECckNLAJUG" target="_blank" rel="noopener">Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge</a></li>
+<li><a href="http://workshop.colips.org/dstc7/tracks.html" target="_blank" rel="noopener">http://workshop.colips.org/dstc7/tracks.html</a></li>
+<li><a href="http://workshop.colips.org/dstc7/papers/DSTC7_Task_2_overview_paper.pdf" target="_blank" rel="noopener">http://workshop.colips.org/dstc7/papers/DSTC7_Task_2_overview_paper.pdf</a></li>
+<li><a href="http://workshop.colips.org/dstc7/papers/03_slides.pdf" target="_blank" rel="noopener">http://workshop.colips.org/dstc7/papers/03_slides.pdf</a></li>
+<li><a href="https://github.com/mgalley/DSTC7-End-to-End-Conversation-Modeling" target="_blank" rel="noopener">https://github.com/mgalley/DSTC7-End-to-End-Conversation-Modeling</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/02/25/A Knowledge-Grounded Neural Conversation Model/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A  Knowledge-Grounded  Neural  Conversation  Model
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Commonsense Knowledge Aware Conversation Generation with Graph Attention</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/02/25/A Knowledge-Grounded Neural Conversation Model/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="A  Knowledge-Grounded  Neural  Conversation  Model" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/02/25/A Knowledge-Grounded Neural Conversation Model/" class="title">A  Knowledge-Grounded  Neural  Conversation  Model</a></p>
+                            <p class="item-date"><time datetime="2019-02-25T11:16:00.000Z" itemprop="datePublished">2019-02-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4TUcyNGFtZUVsK1doNGRPc0l5YjBabG1FRlZyR1JPQTFRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/" class="title">Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge</a></p>
+                            <p class="item-date"><time datetime="2019-02-23T02:43:00.000Z" itemprop="datePublished">2019-02-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Commonsense Knowledge Aware Conversation Generation with Graph Attention" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/" class="title">Commonsense Knowledge Aware Conversation Generation with Graph Attention</a></p>
+                            <p class="item-date"><time datetime="2019-01-22T06:16:00.000Z" itemprop="datePublished">2019-01-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/11/Learning Personalized End-to-End Goal-Oriented Dialog/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNteXRHWHF4RHNFdmQrNVN0MWJuNlJzVDZ6dGptcG13VU9iOW1EQUhzemVRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Learning  Personalized  End-to-End  Goal-Oriented  Dialog" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/12/11/Learning Personalized End-to-End Goal-Oriented Dialog/" class="title">Learning  Personalized  End-to-End  Goal-Oriented  Dialog</a></p>
+                            <p class="item-date"><time datetime="2018-12-11T02:45:00.000Z" itemprop="datePublished">2018-12-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/03/Slot-Gated Modeling for Joint Slot Filling and Intent Prediction/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjAwNWtYZkFlU2RqK2xwVml5eWhhelJLWUg3WHpLaU9YUDFxS1h4QTNyQ3JnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Slot-Gated  Modeling  for  Joint  Slot  Filling  and  Intent  Prediction" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2018/12/03/Slot-Gated Modeling for Joint Slot Filling and Intent Prediction/" class="title">Slot-Gated  Modeling  for  Joint  Slot  Filling  and  Intent  Prediction</a></p>
+                            <p class="item-date"><time datetime="2018-12-03T13:01:00.000Z" itemprop="datePublished">2018-12-03</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">19</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 11.67px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 13.33px;">Commonsense  Knowledge</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 13.33px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.67px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 13.33px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 10px;">Memory Network</a> <a href="/tags/NLG/" style="font-size: 11.67px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 13.33px;">NLU</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.67px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 11.67px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 15px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16.67px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 18.33px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 11.67px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
