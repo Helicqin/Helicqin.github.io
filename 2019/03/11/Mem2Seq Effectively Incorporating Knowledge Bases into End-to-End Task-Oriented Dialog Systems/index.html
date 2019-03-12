@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="Helic">
 <meta property="og:description" content="本文提出了一个端到端的基于memory network和指针网络的对话生成模型，结合多跳注意力机制和指针网络，从对话历史和词汇表中生成回复。ACL2018paper linkcode link">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-03-12T09:10:47.199Z">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB0SXBHUDNmcTVkWmhWNWlpQ3R5R1dGNW5QSk1YOHh6YndlNDNMdDQxd0tRPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg">
+<meta property="og:updated_time" content="2019-03-12T14:56:12.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems">
 <meta name="twitter:description" content="本文提出了一个端到端的基于memory network和指针网络的对话生成模型，结合多跳注意力机制和指针网络，从对话历史和词汇表中生成回复。ACL2018paper linkcode link">
-<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB0SXBHUDNmcTVkWmhWNWlpQ3R5R1dGNW5QSk1YOHh6YndlNDNMdDQxd0tRPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg">
     
 
     
@@ -209,7 +209,8 @@ ga('send', 'pageview');
 <p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNZRjlURmZVR3MybHgxZS92Ni9GRFdPcFQ3Ukp1R01pS1g5bjdmWGFCc3dRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
 <h3 id="Memory-Decoder"><a href="#Memory-Decoder" class="headerlink" title="Memory  Decoder"></a>Memory  Decoder</h3><p>解码器的初始输入是 $o^{k}$ ，它是编码器的最后一层的输出。解码器使用一个GRU作为动态查询生成器，利用先前的生成词以及隐状态作为输入。0时刻的隐状态 $h_{0}=o^{k}$， t 时刻的隐状态计算公式为： $h_{t}=GRU(C^{1}(\widetilde{y}_{t-1}),h_{t-1})$ 。解码器的结构如图所示：</p>
 <p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNZRjlURmZVR3MybzMvVVlkMEhpb2M2SWt6UU9jeEQvWkJIditqVkxsSmtRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
-<p>每一个时刻，将产生两个分布：词表分布 $P_{vocab}$ 和记忆分布 $P_{ptr}$ 。记忆分布是指对话历史以及KB的word distribution。</p>
+<p>每一个时刻，将产生两个分布：词表分布 $P_{vocab}$ 和记忆分布 $P_{ptr}$ 。记忆分布是指对话历史以及KB的word distribution，来自于最后一跳的注意力分布；而词表分布来自于第一跳：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFiVWxwZjdpbTUrU3U2RjY2OGZrbklnSWFKVEZZeDZQaW1zRlFWQWNBeXVBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <p>训练阶段，给定目标输出$Y=\{y_{1},…,y_{m}\}$，首先计算每个词的pointer index：</p>
 <p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNZRjlURmZVR3MyblhiMmlXODNCRzhqMTFIM2lMTTVHZ1VkM1c4MG5wSlJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <p>上式的含义为：对于给定的$y_{i}$如果出现在memory集合U中，则认为$y_{i}$是由memory中的词copy得到（对于memory可能出现多次$y_{i}$，默认取最后一个），如果没有出现在memory集合U中，则指向特殊结束符<code>$</code>。对于每一个词$y_{i}$，如果它的index指向<code>$</code>，则说明这个词是由$P_{vocab}$生成，损失函数为$y_{i}$ pointer index分布与$P_{ptr}$的交叉熵和$P_{vocab}$与实际的词分布的交叉熵之和；否则是由$P_{ptr}$生成，损失函数为$y_{i}$ pointer index分布与$P_{ptr}$的交叉熵。</p>
@@ -393,7 +394,7 @@ from  (Eric  et  al.,  2017),  which  are  not  directly  comparable. Mem2Seq  a
                             <a href="/2019/03/11/Mem2Seq Effectively Incorporating Knowledge Bases into End-to-End Task-Oriented Dialog Systems/" class="thumbnail">
     
     
-        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBobU5ld3YwWnNJY3RIN25DZVZtWWVLaDNnaGh2NUozcHFaamtFSnQ4NTBRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems" class="thumbnail-image"></span>
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB0SXBHUDNmcTVkWmhWNWlpQ3R5R1dGNW5QSk1YOHh6YndlNDNMdDQxd0tRPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems" class="thumbnail-image"></span>
     
     
 </a>
