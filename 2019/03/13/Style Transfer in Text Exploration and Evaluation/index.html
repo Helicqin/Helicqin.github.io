@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Generative Adversarial Networks | Helic</title>
+    <title>Style Transfer in Text  Exploration and Evaluation | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="GAN" />
+        <meta name="keywords" content="NLP" />
     
-    <meta name="description" content="Generative Models ：PixelRNN and PixelCNN ； Variational Autoencoders (VAE) ； Generative Adversarial Networks (GAN)">
-<meta name="keywords" content="GAN">
+    <meta name="description" content="本文是文本风格迁移问题的一个尝试，提出了两个模型，核心点在于如何从文本中分离内容特征和风格特征，作者使用了对抗网络来解决这个问题。同时作者建立了paper-news、positive-negative  review两个数据集，提出了文本风格迁移两个指标：transfer  strength、content  preservation，实验证明，与auto-encoder相比，作者提出的模型在内容">
+<meta name="keywords" content="NLP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Generative Adversarial Networks">
-<meta property="og:url" content="https://helic.github.io/2018/06/04/GAN/index.html">
+<meta property="og:title" content="Style Transfer in Text  Exploration and Evaluation">
+<meta property="og:url" content="https://helic.github.io/2019/03/13/Style Transfer in Text Exploration and Evaluation/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="Generative Models ：PixelRNN and PixelCNN ； Variational Autoencoders (VAE) ； Generative Adversarial Networks (GAN)">
+<meta property="og:description" content="本文是文本风格迁移问题的一个尝试，提出了两个模型，核心点在于如何从文本中分离内容特征和风格特征，作者使用了对抗网络来解决这个问题。同时作者建立了paper-news、positive-negative  review两个数据集，提出了文本风格迁移两个指标：transfer  strength、content  preservation，实验证明，与auto-encoder相比，作者提出的模型在内容">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4ZWkxTkVLV2czOTFiWXNXSDNQYVR5MytjMDgzREN6bFVnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2018-11-28T07:42:57.242Z">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBpVjVaeU1Ccmx2RWNsN0RTS1JnZFg4eE53aU9NUnNEWS9rQzdad3p6M09nPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg">
+<meta property="og:updated_time" content="2019-03-15T07:19:10.952Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Generative Adversarial Networks">
-<meta name="twitter:description" content="Generative Models ：PixelRNN and PixelCNN ； Variational Autoencoders (VAE) ； Generative Adversarial Networks (GAN)">
-<meta name="twitter:image" content="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4ZWkxTkVLV2czOTFiWXNXSDNQYVR5MytjMDgzREN6bFVnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta name="twitter:title" content="Style Transfer in Text  Exploration and Evaluation">
+<meta name="twitter:description" content="本文是文本风格迁移问题的一个尝试，提出了两个模型，核心点在于如何从文本中分离内容特征和风格特征，作者使用了对抗网络来解决这个问题。同时作者建立了paper-news、positive-negative  review两个数据集，提出了文本风格迁移两个指标：transfer  strength、content  preservation，实验证明，与auto-encoder相比，作者提出的模型在内容">
+<meta name="twitter:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBpVjVaeU1Ccmx2RWNsN0RTS1JnZFg4eE53aU9NUnNEWS9rQzdad3p6M09nPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg">
     
 
     
@@ -146,18 +146,18 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-GAN" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Style Transfer in Text Exploration and Evaluation" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Generative Adversarial Networks
+        Style Transfer in Text  Exploration and Evaluation
         </h1>
     
 
@@ -167,130 +167,66 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/06/04/GAN/" class="article-date">
-            <time datetime="2018-06-04T09:29:50.000Z" itemprop="datePublished">2018-06-04</time>
+        <a href="/2019/03/13/Style Transfer in Text Exploration and Evaluation/" class="article-date">
+            <time datetime="2019-03-13T01:19:00.000Z" itemprop="datePublished">2019-03-13</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/GAN/">GAN</a>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>Generative Models ：PixelRNN and PixelCNN ； Variational Autoencoders (VAE) ； Generative Adversarial Networks (GAN)<br><a id="more"></a></p>
-<h2 id="Generative-Models"><a href="#Generative-Models" class="headerlink" title="Generative Models"></a>Generative Models</h2><p>Given training data, generate new samples from same distribution:</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tGRI6ly1frzf3fvupcj30n306b0v3.jpg" alt=""><br>Several flavors:</p>
+            <p>本文是文本风格迁移问题的一个尝试，提出了两个模型，核心点在于如何从文本中分离内容特征和风格特征，作者使用了对抗网络来解决这个问题。同时作者建立了paper-news、positive-negative  review两个数据集，提出了文本风格迁移两个指标：<code>transfer  strength</code>、<code>content  preservation</code>，实验证明，与auto-encoder相比，作者提出的模型在内容保存度上接近，在风格迁移度上大幅提高。<br><a href="http://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1711.06861.pdf" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>风格转换（Style Transfer）是人工智能许多子领域的一个重要问题，而语言风格转换的发展滞后，主要面临三个挑战：</p>
 <ul>
-<li>Explicit density estimation: explicitly define and solve for $p_{model}(x)$ </li>
-<li>Implicit density estimation: learn model that can sample from $p_{model}(x)$ w/o explicitly defining it</li>
+<li>缺乏平行语料来对风格转换提供标注数据作为参考</li>
+<li>缺乏可靠的评估指标</li>
+<li>如何从文本内容中分离出风格</li>
 </ul>
-<h3 id="Why-Generative-Models"><a href="#Why-Generative-Models" class="headerlink" title="Why Generative Models?"></a>Why Generative Models?</h3><ul>
-<li>Realistic samples for artwork, super-resolution, colorization, etc.</li>
-<li>Generative models of time-series data can be used for simulation and planning (reinforcement learning applications!) </li>
-<li>Training generative models can also enable inference of latent representations that can be useful as general features</li>
-</ul>
-<p><img src="https://ws2.sinaimg.cn/large/006tGRI6ly1frzfdhvxavj30sm0dqgo4.jpg" alt=""></p>
-<h2 id="PixelRNN-and-PixelCNN"><a href="#PixelRNN-and-PixelCNN" class="headerlink" title="PixelRNN and PixelCNN"></a>PixelRNN and PixelCNN</h2><p><img src="https://ws2.sinaimg.cn/large/006tGRI6ly1frzfgtsi1ij30oj09ht9u.jpg" alt=""></p>
-<h3 id="PixelRNN"><a href="#PixelRNN" class="headerlink" title="PixelRNN"></a>PixelRNN</h3><ul>
-<li>Generate image pixels starting from corner </li>
-<li>Dependency on previous pixels modeled using an RNN (LSTM)</li>
-</ul>
-<p><img src="http://imglf6.nosdn.127.net/img/bG1jbzEvdHVjVjJqYkpubnNKZ2svc3RHWEx1bWZHRDdpa0p0dlE5c1NNRU9Gc3JSei96UktBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""><img src="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjJqYkpubnNKZ2sva3hsaVBvVjVrdnR4WSsreE5hWG1pcUxnWXNPVjAzT0x3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>Drawback: sequential generation is slow!</p>
-<h3 id="PixelCNN"><a href="#PixelCNN" class="headerlink" title="PixelCNN"></a>PixelCNN</h3><ul>
-<li>Still generate image pixels starting from corner </li>
-<li>Dependency on previous pixels now modeled using a CNN over context region</li>
-</ul>
-<p>Training: maximize likelihood of training images</p>
-<p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjJqYkpubnNKZ2svbmV3L0JQcXp5VkNWbzMvTnYwVHhXRFR0bGZyckZmdCtnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="enter image description here"></p>
-<p><img src="http://imglf6.nosdn.127.net/img/bG1jbzEvdHVjVjJqYkpubnNKZ2svcG1teW0zVEJGa2VWbXJsNDVzR1B3c21iY3drd3hwVVdRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>Training is faster than PixelRNN (can parallelize convolutions since context region values known from training images) Generation must still proceed sequentially =&gt; still slow</p>
-<p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjJqYkpubnNKZ2svakxiYzlvVXdIN1FMZjJVdGU4VzUrc1ArRC9UR21KMy9BPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h2 id="Variational-Autoencoders-VAE"><a href="#Variational-Autoencoders-VAE" class="headerlink" title="Variational Autoencoders (VAE)"></a>Variational Autoencoders (VAE)</h2><p>PixelCNNs define tractable density function, optimize likelihood of training data:</p>
-<p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjJqYkpubnNKZ2svbmV3L0JQcXp5VkNWbzMvTnYwVHhXRFR0bGZyckZmdCtnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>VAEs define intractable density function with latent z: </p>
-<p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjB4c01Ibzg5cG1tcFcrcXVWaEFBZjZaRG53S0dxeEZFQjhrVDNsRFNid1ZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>Cannot optimize directly, derive and optimize lower bound on likelihood instead.</p>
-<h3 id="Background-Autoencoders"><a href="#Background-Autoencoders" class="headerlink" title="Background: Autoencoders"></a>Background: Autoencoders</h3><p>Unsupervised approach for learning a lower-dimensional feature representation from unlabeled training data:</p>
-<p><img src="http://imglf3.nosdn.127.net/img/bG1jbzEvdHVjVjB4c01Ibzg5cG1tdW1pVFhNRGhEMWVubGFBS2RpZ0orSUx6dVhGZXhpeWtnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>How to learn this feature representation?<br>Train such that features can be used to reconstruct original data “Autoencoding” - encoding itself</p>
-<p><img src="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjB4c01Ibzg5cG1tbmhDcDJoZXlicDZ3OHdBR1BySUxCWlFkMDEyZ01WY0VBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>L2 Loss function:<br>$$||x - \widetilde{x}||^2$$</p>
-<h3 id="Variational-Autoencoders"><a href="#Variational-Autoencoders" class="headerlink" title="Variational Autoencoders"></a>Variational Autoencoders</h3><p>Assume training data $\{x^{(i)}\}_{i=1}^{N}$ is generated from underlying unobserved (latent) representation z :</p>
-<p><img src="http://imglf3.nosdn.127.net/img/bG1jbzEvdHVjVjBTZUVXb0NjMTdiYlpKVUxHdzhqT2U2M2NxWVBoMUxvNnIzdjNSWWRlZ0JnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p><em>Intuition (remember from autoencoders!): x is an image, z is latent factors used to generate x: attributes, orientation, etc.</em></p>
-<p>We want to estimate the true parameters of this generative model. How should we represent this model?<br>Choose prior p(z) to be simple, e.g. Gaussian. Conditional p(x|z) is complex (generates image) =&gt; represent with neural network.</p>
-<p>How to train the model?<br>Remember strategy for training generative models from FVBNs. Learn model parameters to maximize likelihood of training data.</p>
-<p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjB4c01Ibzg5cG1tcFcrcXVWaEFBZjZaRG53S0dxeEZFQjhrVDNsRFNid1ZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjBTZUVXb0NjMTdiY1BGamZNUDg5MzJMdnFHZEVXSGV5d0xMZTdYK2JER0VBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<ul>
-<li>$p_θ(z)$ : Simple Gaussian prior</li>
-<li>$p_θ(x|z)$ : Decoder neural network</li>
-</ul>
-<p>Solution: In addition to decoder network modeling $p_θ(x|z)$, define additional encoder network $q_Ψ(z|x)$ that approximates $p_θ(z|x)$ .This allows us to derive a <strong>lower bound</strong> on the data likelihood that is tractable, which we can optimize.</p>
-<p><img src="http://imglf6.nosdn.127.net/img/bG1jbzEvdHVjVjBTZUVXb0NjMTdiY2lzYzJaSW5vaEwwaEtvSmcxVGhvV3p2c240RXdWV0hBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjBTZUVXb0NjMTdiWndwZmcwdWRDN0cxS01FaU9FYmMraVF0c3hhdHViaVp3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>Putting it all together: maximizing the likelihood lower bound</p>
-<p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjBTZUVXb0NjMTdiZk93ZGxYT21WelphVms5REJleXczS2xqRVBZMGlHWm93PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h4 id="Generating-Data"><a href="#Generating-Data" class="headerlink" title="Generating Data"></a>Generating Data</h4><p>Use decoder network. Now sample z from prior!</p>
-<p><img src="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBTZUVXb0NjMTdiY2hRTlpPaUZTckg2TGpwUWcxbkZtVFBsM3ZneUlhT1hRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p><img src="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBTZUVXb0NjMTdiVmZjZVhXY1JTTFQ2N05wQTBUMjNOUEpnZXY3dXVYWk5RPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h4 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h4><p>Probabilistic spin to traditional autoencoders =&gt; allows generating data Defines an intractable density =&gt; derive and optimize a (variational) lower bound </p>
-<ul>
-<li>Pros: - Principled approach to generative models - Allows inference of q(z|x), can be useful feature representation for other tasks <ul>
-<li>Cons: - Maximizes lower bound of likelihood: okay, but not as good evaluation as PixelRNN/PixelCNN - Samples blurrier and lower quality compared to state-of-the-art (GANs)</li>
-</ul>
-</li>
-</ul>
-<h2 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h2><p>Don’t work with any explicit density function! Instead, take game-theoretic approach: learn to generate from training distribution through 2-player game.</p>
-<ul>
-<li><p>Generator network: try to fool the discriminator by generating real-looking images </p>
-</li>
-<li><p>Discriminator network: try to distinguish between real and fake images</p>
-</li>
-</ul>
-<p><img src="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4ZWkxTkVLV2czOTFiWXNXSDNQYVR5MytjMDgzREN6bFVnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h3 id="Training-GANs-Two-player-game"><a href="#Training-GANs-Two-player-game" class="headerlink" title="Training GANs: Two-player game"></a>Training GANs: Two-player game</h3><p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4V3VrT2tGWEdNU3dNR0NJRzdtZjF6ZEdDOTVhKzBMbVl3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<ul>
-<li>Discriminator $θ_d$ wants to maximize objective such that D(x) is close to 1 (real) and D(G(z)) is close to 0 (fake) </li>
-<li>Generator $θ_g$ wants to minimize objective such that D(G(z)) is close to 1 (discriminator is fooled into thinking generated G(z) is real)</li>
-</ul>
-<p>Alternate between: </p>
+<p>本文提出两个模型在缺乏平行语料训练数据的情况下，进行风格转换。模型的关键是使用对抗网络来让模型分别独立的学习文本表示和风格表示。另外由于缺乏有效的评价指标, 本文提出两个新的评价风格转换的指标：转换强度和内容保存。本文将提出的模型应用在两个风格转换任务上：paper-news title转换和positive-negative review 转换。</p>
+<p>结果表明, 本文提出的评价方法与人类的判断高度相关, 提出的模型不仅能够生成相似文本的句子，而且与autoencoder相比有更高的风格转换强度。</p>
+<p>本文的贡献有三点:  </p>
 <ol>
-<li>Gradient ascent on discriminator<br><img src="http://imglf3.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4WkVCMVZaS0UvUjQzaldOS2cvcjZ1dHhaVm5TQzNqSTRRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li>
-<li>Gradient descent on generator<br><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4UlByS3p1ZStDWnA2cWJIOFAvSmV0K3Y5WGpHT1FKZGlBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li>
+<li>构成一个论文-新闻标题的数据集方便语言风格转换研究。</li>
+<li>为风格转换提出两个评估指标：转换强度和内容保存，评价指标与人类的主观判断高度相关。</li>
+<li>提出两个风格转换的模型。</li>
 </ol>
-<p><em>In practice, optimizing this generator objective does not work well!</em><br><img src="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4WXpRVnVtM3pJSEJnQjlQZklwdU9GQjJUSW8yK3cwSWtBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>Instead of minimizing likelihood of discriminator being correct, now maximize likelihood of discriminator being wrong.<br>Gradient ascent on generator, different objective:<br><img src="http://imglf6.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4WGVPRlU1c1BQZjBnNXduQ1B1eXlkRW1oUFkyT0krVHRBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>Putting it together: GAN training algorithm</p>
-<p><img src="http://imglf4.nosdn.127.net/img/bG1jbzEvdHVjVjBoY3JmYnN3NlJ4ZmEyQVRHM0IwcG1IVHRpR3dhUWgzQThhWUcyN3dWZG93PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>After training, use generator network to generate new images.</p>
-<h3 id="Summary-1"><a href="#Summary-1" class="headerlink" title="Summary"></a>Summary</h3><p>Don’t work with an explicit density function.<br>Take game-theoretic approach: learn to generate from training distribution through 2-player game<br>Pros: </p>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>本文提出了两个基于seq2seq的风格转换模型：</p>
 <ul>
-<li>Beautiful, state-of-the-art samples! </li>
+<li>使用多解码器的seq2seq模型。每个解码器独立生成一种对应的文本风格。</li>
+<li>引入了style embedding的seq2seq模型。style embedding加到文本表示上，一个解码器训练生成不同风格的文本。</li>
 </ul>
-<p>Cons: </p>
-<ul>
-<li>Trickier / more unstable to train </li>
-<li>Can’t solve inference queries such as p(x), p(z|x) </li>
-</ul>
-<p>Active areas of research: </p>
-<ul>
-<li>Better loss functions, more stable training (Wasserstein GAN, LSGAN, many others) </li>
-<li>Conditional GANs, GANs for all kinds of applications</li>
-</ul>
-<h2 id="Recap"><a href="#Recap" class="headerlink" title="Recap"></a>Recap</h2><p>Generative Models </p>
-<ul>
-<li>PixelRNN and PixelCNN : Explicit density model, optimizes exact likelihood, good samples. But inefficient sequential generation.</li>
-<li><p>Variational Autoencoders (VAE) : Optimize variational lower bound on likelihood. Useful latent representation, inference queries. But current sample quality not the best. </p>
-</li>
-<li><p>Generative Adversarial Networks (GANs)  : Game-theoretic approach, best samples! But can be tricky and unstable to train, no inference queries.</p>
-</li>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBpVjVaeU1Ccmx2RWNsN0RTS1JnZFg4eE53aU9NUnNEWS9rQzdad3p6M09nPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt="Figure  1:  Two  models  in  this  paper,  multi-decoder  (left)  and  style-embedding  (right).  Contentcrepresents  output  of  the  encoder. Multi-layer  Perceptron  (MLP)  and  Softmax  constitute  the  classifier.  This  classifier  aims  at  distinguishing  the  style  of  input  X. An  adversarial  network  is  used  to  make  sure  content  c  does  not  have  style  representation.  In  style-embedding,  content  c  and style  embedding  s  are  concatenated  and  [c;  e]  is  fed  into  decoder  GRU."></p>
+<h3 id="Multi-decoder-Model"><a href="#Multi-decoder-Model" class="headerlink" title="Multi-decoder  Model"></a>Multi-decoder  Model</h3><p>多解码器模型类似于有几个解码器的auto-encoder。这个模型的挑战是如何使用输入X生成文本内容表征 <strong>c</strong> 。在原始的auto-encoder 模型，编码器的生成表示包含文本内容和风格信息。</p>
+<p>我们使用一个类似<a href="https://arxiv.org/pdf/1704.07556.pdf" target="_blank" rel="noopener">Adversarial Multi-Criteria Learning for Chinese Word Segmentation</a> 提出的分离多任务学习的共享和私有特征的对抗网络，来分离文本内容表示与风格表示。对抗性网络由两部分组成：第一部分是分类器，旨在对编码器表示的x的风格进行分类。损失函数将训练数据中的风格标签的负对数概率最小化：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBpVjVaeU1Ccmx2R3JKN0piZ0gvZksrY2dOOTMyYkxCMGI3K2tsOHdxVFJ3PT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>$\theta_{c}$是多层感知器(MLP) 用于预测风格标签的参数 。第二部分是对抗网络的生成器（也就是Encoder GRU），通过最大化预测风格标签的熵，使分类器无法分辨输入x的风格：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBpVjVaeU1Ccmx2Q3NSNlJIRlZZZDk3TFVHWXowMSt4R1VEVHF4S2NOemFnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><em>给定一个输入句，对抗训练包括两部分：一是MLP分类器对Encoder生成的特征表示进行分类，使得分类器更好的区分风格类别；另一方面是训练Encoder生成的特征表示，使得分类器无法区分风格类别。训练的最终结果是encoder生成的特征表示中只包含内容信息，不包含风格信息。</em></p>
+<h3 id="Style-embedding-Model"><a href="#Style-embedding-Model" class="headerlink" title="Style-embedding  Model"></a>Style-embedding  Model</h3><p>借鉴自<a href="https://drive.google.com/open?id=1m-8zAXyZSuLetHXsVgVSsrSBbvoEAQ0z" target="_blank" rel="noopener">A  Persona-Based  Neural  Conversation  Model</a>，在这个模型中，编码器和对抗网络与多解码器模型相同。不同之处在于加入了style embeddings  $E\in R^{N\times d_{n}}$，_N_ 表示风格数量和$d_{s}$是风格的维度，只使用一个解码器将文本表示和嵌入的风格拼接生成不同类型的风格。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNLZFE1ME8xNW51TUowWGRoUVlVczFUSW8zdnZUektCL05hYytRMC9EZGhnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p><code>Transfer  Strength</code>：</p>
+<p>用来评估风格是否被转换，使用<a href="https://github.com/fchollet/keras/blob/%20master/examples/imdb%20lstm.py" target="_blank" rel="noopener">LSTM-sigmoid分类器</a>实现。定义如下：转换强度的准确度定义为 $N_{right}/N_{total}$，$N_{right}$ 是测试数据的总数，$N_{total}$是风格正常转换的数目。<br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNLZFE1ME8xNW51T1ZPSGhwK3MxN3F2cU5DQm1SZ0JnYUEyUGRqL0plUjJnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><code>Content  Preservation</code>：</p>
+<p>训练100% 的转移强度的模型是很容易的。但是也要保证内容一致。内容保存可以计算源文本和目标文本之间的相似性。内容保留率被定义为源句vs和目标句vt之间的余弦距离。语句嵌入包含在(17) 中定义的单词嵌入的最大、最小、平均pooling，对于词嵌入, 使用预训练的Glove，本文使用维度100。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNLZFE1ME8xNW51TFVRVDQraTRWR2dUSFhraU5NRVhKQjdjNkVIQ3JNQ0FBPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjNLZFE1ME8xNW51TnZLMGZmTE5KeGtLbDdHQnhVRE4xZkxkT0p3NXhBNGhnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>两个非平行语料paper-news title数据集和positive-negative review数据集。第一个数据集的论文从ACM 等学术网站上爬取，新闻标题来自UC Irvine Machine Learning Repository 的科学技术目录。第二个数据集使用2016年发布的亚马逊产品评论数据。随机选择40万积极和40万消极评论组成我们的数据集。</p>
+<h3 id="Results-and-Analysis"><a href="#Results-and-Analysis" class="headerlink" title="Results  and  Analysis"></a>Results  and  Analysis</h3><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNLZFE1ME8xNW51Sk1lS2NYNUEyd1dCNzJORFZHMGpCQnNZNnl1OURWZ2VRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt="Figure  2:  Results  for  auto-encoder,  multi-decoder  and  style  embedding  for  two  tasks,  paper-news  title  style  transfer  (left)  and positive-negative  review  style  transfer  (right).  Different  nodes  for  the  same  model  denote  different  hyper-parameters."></p>
+<p>Paper-News Title中 auto-encoder 能够恢复大部分内容, 但几乎没有转换强度。提出的两个模型都能达到相当高的分。多解码器模型在转换强度上表现更好, 而style-embedding模型对内容保存效果更好，范围更广。Positive-Negative评论转换，对于style-embedding模型, 它涵盖广泛。多解码器模型表现更好，有较高的转换强度，并取得了更高的内容保存。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNLZFE1ME8xNW51STd4Q0VydW1OdVc2aVRoTUxjeFJMZVpZUFZaS0xKQXpnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt="Table  2:  Case  study  of  style  transfer"></p>
+<h2 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h2><p>本文是文本风格迁移问题的一个尝试，提出了两个模型，核心点在于如何从文本中分离内容特征和风格特征，作者使用了对抗网络来解决这个问题。同时作者建立了paper-news、positive-negative  review两个非平行语料数据集，提出了文本风格迁移两个指标：<code>transfer  strength</code>、<code>content  preservation</code>，实验证明，与auto-encoder相比，作者提出的模型在内容保存度上接近，在风格迁移度上大幅提高。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="http://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1704.05742.pdf" target="_blank" rel="noopener">Adversarial Multi-task Learning for Text Classification</a></li>
+<li><a href="https://arxiv.org/pdf/1704.07556.pdf" target="_blank" rel="noopener">Adversarial Multi-Criteria Learning for Chinese Word Segmentation</a></li>
+<li><a href="https://drive.google.com/open?id=1m-8zAXyZSuLetHXsVgVSsrSBbvoEAQ0z" target="_blank" rel="noopener">A  Persona-Based  Neural  Conversation  Model</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32300981" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32300981</a></li>
 </ul>
 
         </div>
@@ -429,20 +365,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2018/09/25/Universal Sentence Encoder/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Universal  Sentence  Encoder
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2018/03/30/Attention is all you need/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/03/11/Mem2Seq Effectively Incorporating Knowledge Bases into End-to-End Task-Oriented Dialog Systems/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Attention is all you need</p>
+        <p class="article-nav-title">Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -649,7 +575,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2018/06/04/GAN/';
+    var disqus_url = 'https://helic.github.io/2019/03/13/Style Transfer in Text Exploration and Evaluation/';
     
     (function() {
     var dsq = document.createElement('script');
