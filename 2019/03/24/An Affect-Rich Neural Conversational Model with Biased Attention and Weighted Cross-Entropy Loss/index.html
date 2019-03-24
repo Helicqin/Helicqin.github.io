@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>An  Affect-Rich  Neural  Conversational  Model  with  Biased  Attention and  Weighted  Cross-Entropy  Loss | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="NLP" />
+    
+    <meta name="description" content="本文主要研究的是融合情感的开放域对话系统，在seq2seq的基础上增加了VAD  (Valence,  Arousal  and  Dominance)编码，引入了情感注意力机制来建模否定词和加强词的影响，使用加权交叉熵损失函数来鼓励模型生成包含情感的词。AAAI2019 paper link">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="An  Affect-Rich  Neural  Conversational  Model  with  Biased  Attention and  Weighted  Cross-Entropy  Loss">
+<meta property="og:url" content="https://helic.github.io/2019/03/24/An Affect-Rich Neural Conversational Model with Biased Attention and Weighted Cross-Entropy Loss/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文主要研究的是融合情感的开放域对话系统，在seq2seq的基础上增加了VAD  (Valence,  Arousal  and  Dominance)编码，引入了情感注意力机制来建模否定词和加强词的影响，使用加权交叉熵损失函数来鼓励模型生成包含情感的词。AAAI2019 paper link">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWbVdlZ3Q5UGJ0YmcrdWVMSHR6S0tlTVNIZWNuM1A5a1BRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-03-24T08:06:38.877Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="An  Affect-Rich  Neural  Conversational  Model  with  Biased  Attention and  Weighted  Cross-Entropy  Loss">
+<meta name="twitter:description" content="本文主要研究的是融合情感的开放域对话系统，在seq2seq的基础上增加了VAD  (Valence,  Arousal  and  Dominance)编码，引入了情感注意力机制来建模否定词和加强词的影响，使用加权交叉熵损失函数来鼓励模型生成包含情感的词。AAAI2019 paper link">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWbVdlZ3Q5UGJ0YmcrdWVMSHR6S0tlTVNIZWNuM1A5a1BRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-An Affect-Rich Neural Conversational Model with Biased Attention and Weighted Cross-Entropy Loss" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        An  Affect-Rich  Neural  Conversational  Model  with  Biased  Attention and  Weighted  Cross-Entropy  Loss
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/03/24/An Affect-Rich Neural Conversational Model with Biased Attention and Weighted Cross-Entropy Loss/" class="article-date">
+            <time datetime="2019-03-24T06:16:00.000Z" itemprop="datePublished">2019-03-24</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文主要研究的是融合情感的开放域对话系统，在seq2seq的基础上增加了VAD  (Valence,  Arousal  and  Dominance)编码，引入了情感注意力机制来建模否定词和加强词的影响，使用加权交叉熵损失函数来鼓励模型生成包含情感的词。AAAI2019</p>
+<p><a href="https://goo.gl/ByFsgh" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本文主要解决以下两个问题：</p>
+<ol>
+<li>因为否定词和加强词会改变情感的极性，所以导致情感识别仍然存在困难</li>
+<li>如何在生成的时候同时兼顾语法和情感两方面</li>
+</ol>
+<p>本文以seq2seq模型为基础，引入了心理学领域的VAD情感词编码；为了建模否定词和加强词，作者使用了情感注意力机制；最后，使用加权交叉熵损失函数鼓励模型生成包含情感的词而不影响语言的流畅度。</p>
+<blockquote>
+<p>Our  main  contributions  are  summarized  as  follows:</p>
+<ul>
+<li>For  the  first  time,  we  propose  a  novel  affective  attention mechanism  to  incorporate  the  effect  of negators  and  intensifiers  in  conversation  modeling.  Our  mechanism  introduces  only  a  small  number  of  additional  parameters.</li>
+<li>For  the  first  time,  we  apply  weighted  cross-entropy  loss  in conversation  modeling.  Our  affect-incorporated  weights achieve  a  good  balance  between  language  fluency  and emotion  quality  in  model  responses.  Our  empirical  study does  not  show  performance  degradation  in  language  fluency  while  producing  affect-rich  words.</li>
+<li>Overall,  we  propose  Affect-Rich  Seq2Seq  (AR-S2S),  a novel  end-to-end  affect-rich  open-domain  neural  conversational  model  incorporating  external  affect  knowledge. Human  preference  test  shows  that  our  model  is  preferred over  the  state-of-the-art  baseline  model  in  terms  of  both content  quality  and  emotion  quality  by  a  large  margin.</li>
+</ul>
+</blockquote>
+<h2 id="Affect-Rich-Seq2Seq-Model"><a href="#Affect-Rich-Seq2Seq-Model" class="headerlink" title="Affect-Rich  Seq2Seq  Model"></a>Affect-Rich  Seq2Seq  Model</h2><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWbVdlZ3Q5UGJ0YmcrdWVMSHR6S0tlTVNIZWNuM1A5a1BRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Overall  architecture  of  our  proposed  AR-S2S.  This  diagram  illustrates  decoding  “fine”  and  affect  bias  for  “bad”."></p>
+<h3 id="Affective-Embedding"><a href="#Affective-Embedding" class="headerlink" title="Affective  Embedding"></a>Affective  Embedding</h3><p>模型使用VAD情感编码，VAD代表情感的三个因素，每个因素的得分范围在[1, 9]：</p>
+<blockquote>
+<p>For example, word “nice” is associated with the clipped VAD values: (V: 6.95, A: 3.53, D: 6.47). </p>
+</blockquote>
+<p>作者对原始的VAD情感分数做了限制[3, 7]，目的是避免在生成的时候重复出现VAD值偏大或偏小的词。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWcDhHcjJ0NzYyZlQ0MXlzNWFzcW1DY0dBRCtDeGhYNzF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Interpretations  of  clipped  VAD  embeddings."></p>
+<p>之后作者对VAD分数做了归一化：（[5,3,5]代表中性词的得分）</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWbjlQNkZKeWp2dllJcHlCZ1ExQk40cjdDYVpJSTRPODJ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>因此，将词向量与其VAD编码拼接得到包含情感的表征：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWay9PM1MwWURDcUZPSWx6Z1FESFR3ZTdFM0xqeGVDdWF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中，$\lambda \in R_{+}$ 是一个超参数，用来调节情感embedding的强度。</p>
+<h3 id="Affective-Attention"><a href="#Affective-Attention" class="headerlink" title="Affective  Attention"></a>Affective  Attention</h3><blockquote>
+<p>To incorporate affect into attention naturally, we make the intuitive assumption that humans pay extra attention on affect-rich words during conversations. </p>
+</blockquote>
+<p><strong>Affective  Attention</strong>核心是在seq2seq + attention基础上，增加了一个情感偏置项：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWZ0FzTEJvay85Mi91TEMzUjdMV01yVVIxTXIyVmdxck93PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中 $\bigotimes$ 表示逐元素相乘，$||…||_{k}$ 表示$l_{k}$正则化，$\beta\in R^{3}$ 是一个缩放因子，取值在[-1, 1]。</p>
+<p>$\mu(x_{t}) \in R, [0, 1]$ 用来衡量一个词的重要性，作者共使用了三种计算方式：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWbTRWaURQQ3RES1ZTT3ZOS0RiN1ArT3pDVVBFMUo5dkpnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中 $p(x_{t})$ 代表训练集中词的词频，$a, \epsilon$ 代表平滑因子。</p>
+<blockquote>
+<p>We take the log function in $u_{li}(x_{t})$ to prevent rare words from dominating the importance. </p>
+</blockquote>
+<p>$\beta$ 是用来建模否定词和加强词对情感极性的影响：</p>
+<blockquote>
+<p>Note that our affective attention only considers unigram negators and intensifiers</p>
+</blockquote>
+<h3 id="Affective-Objective-Function"><a href="#Affective-Objective-Function" class="headerlink" title="Affective  Objective  Function"></a>Affective  Objective  Function</h3><p>为了鼓励生成包含情感的词，引入了加权交叉熵损失函数：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWc0phbUt3L05KaWNNVG1qWWpRVFpWbzRqYzBZd2hCVzZnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<blockquote>
+<p>Our proposed affective loss is essentially a weighted cross-entropy loss. The weights are constant and positively correlated with VAD strengths in l2 norm. Intuitively,  our affective  loss  encourages  affect-rich  words  to  obtain  higher output  probability,  which  effectively  introduces  a  probability  bias  into  the  decoder  language  model  towards  affect-rich words.</p>
+</blockquote>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWcXcxWS9YRi8yMTVMY09hRnRPcTB6ZjFlbDZiT05vY2hnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  Model  test  perplexity.  Symbol  y  indicates  in-domain  perplexity  obtained  on  10K  test  pairs  from  the  Open-Subtitles  dataset.  Symbolzindicates  out-domain  perplexity obtained  on  10K  test  pairs  from  the  DailyDialog  dataset."></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文提出了一个端到端融合情感的开放域对话系统，使用了外部的VAD知识，计算注意力时更加关注于情感词汇，同时也考虑了否定词和强度词的影响，最后使用加权交叉熵损失函数来鼓励模型生成包含情感的词。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/03/21/Personalizing Dialogue Agents_ I have a dog, do you have pets too_/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Personalizing  Dialogue  Agents   I  have  a  dog,  do  you  have  pets  too?</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/24/An Affect-Rich Neural Conversational Model with Biased Attention and Weighted Cross-Entropy Loss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJzZGc1M0FUNklWbVdlZ3Q5UGJ0YmcrdWVMSHR6S0tlTVNIZWNuM1A5a1BRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="An  Affect-Rich  Neural  Conversational  Model  with  Biased  Attention and  Weighted  Cross-Entropy  Loss" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/03/24/An Affect-Rich Neural Conversational Model with Biased Attention and Weighted Cross-Entropy Loss/" class="title">An  Affect-Rich  Neural  Conversational  Model  with  Biased  Attention and  Weighted  Cross-Entropy  Loss</a></p>
+                            <p class="item-date"><time datetime="2019-03-24T06:16:00.000Z" itemprop="datePublished">2019-03-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/21/Personalizing Dialogue Agents_ I have a dog, do you have pets too_/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNodmxkUjV2REpNc1dhdERPZENFOEV4YTcvd1ZtdW15MlJkbE4wZy9mOVp3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Personalizing  Dialogue  Agents   I  have  a  dog,  do  you  have  pets  too?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/03/21/Personalizing Dialogue Agents_ I have a dog, do you have pets too_/" class="title">Personalizing  Dialogue  Agents   I  have  a  dog,  do  you  have  pets  too?</a></p>
+                            <p class="item-date"><time datetime="2019-03-21T01:23:00.000Z" itemprop="datePublished">2019-03-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/13/Style Transfer in Text Exploration and Evaluation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBpVjVaeU1Ccmx2RWNsN0RTS1JnZFg4eE53aU9NUnNEWS9rQzdad3p6M09nPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Style Transfer in Text  Exploration and Evaluation" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/03/13/Style Transfer in Text Exploration and Evaluation/" class="title">Style Transfer in Text  Exploration and Evaluation</a></p>
+                            <p class="item-date"><time datetime="2019-03-13T01:19:00.000Z" itemprop="datePublished">2019-03-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/11/Mem2Seq Effectively Incorporating Knowledge Bases into End-to-End Task-Oriented Dialog Systems/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB0SXBHUDNmcTVkWmhWNWlpQ3R5R1dGNW5QSk1YOHh6YndlNDNMdDQxd0tRPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/03/11/Mem2Seq Effectively Incorporating Knowledge Bases into End-to-End Task-Oriented Dialog Systems/" class="title">Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems</a></p>
+                            <p class="item-date"><time datetime="2019-03-11T11:43:00.000Z" itemprop="datePublished">2019-03-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/03/07/Sequential Attention-based Network for Noetic End-to-End Response Selection && Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFmcCtkeExEbnJGRFpTQkRaQTIvRGY1cEtudW16WEpVSmlFOEE5NllNUWRBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/03/07/Sequential Attention-based Network for Noetic End-to-End Response Selection && Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations/" class="title">Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations</a></p>
+                            <p class="item-date"><time datetime="2019-03-07T02:45:00.000Z" itemprop="datePublished">2019-03-07</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BUPT/" style="font-size: 11.43px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 12.86px;">Commonsense  Knowledge</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 17.14px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.43px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 12.86px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 10px;">Memory Network</a> <a href="/tags/NLG/" style="font-size: 11.43px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 12.86px;">NLU</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.43px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 14.29px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15.71px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 18.57px;">Tensorflow</a> <a href="/tags/Transformer/" style="font-size: 11.43px;">Transformer</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helic.github.io/2019/03/24/An Affect-Rich Neural Conversational Model with Biased Attention and Weighted Cross-Entropy Loss/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
