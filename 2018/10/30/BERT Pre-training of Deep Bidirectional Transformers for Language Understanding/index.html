@@ -12,7 +12,7 @@
 <meta name="keywords" content="NLP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BERT  Pre-training  of  Deep  Bidirectional  Transformers  for Language  Understanding">
-<meta property="og:url" content="https://helic.github.io/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/index.html">
+<meta property="og:url" content="https://helicqin.github.io/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/index.html">
 <meta property="og:site_name" content="Helic">
 <meta property="og:description" content="本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。paper linkcode link">
 <meta property="og:locale" content="en">
@@ -201,7 +201,7 @@ ga('send', 'pageview');
 <li><p>BERT 刷新了 11 项 NLP 任务的当前最优性能记录。本论文还报告了 BERT 的模型简化测试（ablation study），证明该模型的双向特性是最重要的一项新贡献。</p>
 </li>
 </ul>
-<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="Feature-based-Approaches"><a href="#Feature-based-Approaches" class="headerlink" title="Feature-based  Approaches"></a>Feature-based  Approaches</h3><p><a href="https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/" target="_blank" rel="noopener">ELMo</a> 是从语言模型中提取上下文相关的特征，将其移植到特定任务的架构中，在很多NLP任务上得到了提升。注意Feature-based的预训练表征在应用的时候只是被添加到特定任务架构中，作为一个额外的特征。ELMo也是使用的bi-LM，但是两个方向的语言模型是相互独立的，只是在最后将两个方向的语言模型隐层状态拼接在一起，这一点跟本文提出的BERT有本质差异。</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="Feature-based-Approaches"><a href="#Feature-based-Approaches" class="headerlink" title="Feature-based  Approaches"></a>Feature-based  Approaches</h3><p><a href="https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/">ELMo</a> 是从语言模型中提取上下文相关的特征，将其移植到特定任务的架构中，在很多NLP任务上得到了提升。注意Feature-based的预训练表征在应用的时候只是被添加到特定任务架构中，作为一个额外的特征。ELMo也是使用的bi-LM，但是两个方向的语言模型是相互独立的，只是在最后将两个方向的语言模型隐层状态拼接在一起，这一点跟本文提出的BERT有本质差异。</p>
 <p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNmQVF3RWNkSnRsenc1TTh4ZStnWEpNZHVTeXJzRncyejJISHBzcE9qUHVnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNmQVF3RWNkSnRsL0VNWHpmMzNVSmg3REN1aFpncHB1djRNL2cyT1g2NGxBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <h3 id="Fine-tuning-Approaches"><a href="#Fine-tuning-Approaches" class="headerlink" title="Fine-tuning  Approaches"></a>Fine-tuning  Approaches</h3><p>微调策略（如Generative  Pre-trained  Transformer(OpenAI GPT)）引入了更少的任务特定参数，通过简单地微调预训练参数在下游任务中进行训练。</p>
@@ -317,7 +317,7 @@ symbol  to  separate  non-consecutive  token  sequences."></p>
 <li><a href="https://github.com/google-research/bert" target="_blank" rel="noopener">https://github.com/google-research/bert</a></li>
 <li><a href="https://www.jiqizhixin.com/articles/2018-10-12-13" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2018-10-12-13</a></li>
 <li><a href="https://www.jiqizhixin.com/articles/2018-10-22-3?from=synced&amp;keyword=BERT" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2018-10-22-3?from=synced&amp;keyword=BERT</a></li>
-<li><a href="https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/" target="_blank" rel="noopener">https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/</a></li>
+<li><a href="https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/">https://helicqin.github.io/2018/10/07/Deep%20contextualized%20word%20representations/</a></li>
 <li><a href="http://nlp.seas.harvard.edu/2018/04/03/attention.html#background" target="_blank" rel="noopener">http://nlp.seas.harvard.edu/2018/04/03/attention.html#background</a></li>
 </ul>
 
@@ -677,7 +677,7 @@ symbol  to  separate  non-consecutive  token  sequences."></p>
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/';
+    var disqus_url = 'https://helicqin.github.io/2018/10/30/BERT Pre-training of Deep Bidirectional Transformers for Language Understanding/';
     
     (function() {
     var dsq = document.createElement('script');

@@ -12,7 +12,7 @@
 <meta name="keywords" content="NLP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Universal  Sentence  Encoder">
-<meta property="og:url" content="https://helic.github.io/2018/09/25/Universal Sentence Encoder/index.html">
+<meta property="og:url" content="https://helicqin.github.io/2018/09/25/Universal Sentence Encoder/index.html">
 <meta property="og:site_name" content="Helic">
 <meta property="og:description" content="来自Google  Research的一篇文章，在这篇文章中作者们提出了一种通用句子编码器，相比于传统的word embedding，该编码器在多个不同的NLP任务上都取得了更好的准确率，可以用来做迁移学习。paper linkcode link">
 <meta property="og:locale" content="en">
@@ -187,13 +187,13 @@ ga('send', 'pageview');
 <p><em>This module is about 1GB. Depending on your network speed, it might take a while to load the first time you instantiate it. After that, loading the model should be faster as modules are cached by default (<a href="https://www.tensorflow.org/hub/basics" target="_blank" rel="noopener">learn more about caching</a>). Further, once a module is loaded to memory, inference time should be relatively fast.</em></p>
 <p>文章共提出两种基于不同网络架构的Universal  Sentence  Encoder：</p>
 <ul>
-<li><a href="https://helicqin.github.io/2018/03/30/Attention%20is%20all%20you%20need/" target="_blank" rel="noopener">Transformer</a></li>
+<li><a href="https://helicqin.github.io/2018/03/30/Attention%20is%20all%20you%20need/">Transformer</a></li>
 <li><a href="http://www.aclweb.org/anthology/P15-1162" target="_blank" rel="noopener">Deep  Averaging  Network  (DAN)</a></li>
 </ul>
 <blockquote>
 <p>Our  two  encoders have  different  design  goals.  One  based  on  the transformer  architecture  targets  high  accuracy  at<br>the  cost  of  greater  model  complexity  and  resource consumption.  The  other  targets  efficient  inference with  slightly  reduced  accuracy.</p>
 </blockquote>
-<h2 id="Encoders"><a href="#Encoders" class="headerlink" title="Encoders"></a>Encoders</h2><h3 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h3><p>具体原理参见:<a href="https://helicqin.github.io/2018/03/30/Attention%20is%20all%20you%20need/" target="_blank" rel="noopener">https://helicqin.github.io/2018/03/30/Attention%20is%20all%20you%20need/</a></p>
+<h2 id="Encoders"><a href="#Encoders" class="headerlink" title="Encoders"></a>Encoders</h2><h3 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h3><p>具体原理参见:<a href="https://helicqin.github.io/2018/03/30/Attention%20is%20all%20you%20need/">https://helicqin.github.io/2018/03/30/Attention%20is%20all%20you%20need/</a></p>
 <p>该结构可实现最好的迁移学习准确率，但当句子长度增加时，计算时间和内存消耗会急剧增加。</p>
 <h3 id="Deep-Averaging-Network-DAN"><a href="#Deep-Averaging-Network-DAN" class="headerlink" title="Deep  Averaging  Network  (DAN)"></a>Deep  Averaging  Network  (DAN)</h3><blockquote>
 <p>The  second  encoding  model  makes  use  of  a deep  averaging  network  (DAN)  (Iyyer  et  al.,2015)  whereby  input  embeddings  for  words  and bi-grams  are  first  averaged  together  and  then passed  through  a  feedforward  deep  neural  network (DNN)  to  produce  sentence  embeddings.</p>
@@ -595,7 +595,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2018/09/25/Universal Sentence Encoder/';
+    var disqus_url = 'https://helicqin.github.io/2018/09/25/Universal Sentence Encoder/';
     
     (function() {
     var dsq = document.createElement('script');

@@ -12,7 +12,7 @@
 <meta name="keywords" content="NLP,Reinforcement Learning,Task Oriented Dialogue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Discriminative  Deep  Dyna-Q  Robust  Planning for  Dialogue  Policy  Learning">
-<meta property="og:url" content="https://helic.github.io/2018/11/27/Discriminative Deep Dyna-Q_ Robust Planning for Dialogue Policy Learning/index.html">
+<meta property="og:url" content="https://helicqin.github.io/2018/11/27/Discriminative Deep Dyna-Q_ Robust Planning for Dialogue Policy Learning/index.html">
 <meta property="og:site_name" content="Helic">
 <meta property="og:description" content="本文是Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning 团队的续作，主要解决的是原始DDQ模型对world model生成的simulated dialogues质量好坏的严重依赖，通过引入一个区分真实对话和模拟对话的判别器，进而提高DDQ模型的鲁棒性和有效性。paper linkcode l">
 <meta property="og:locale" content="en">
@@ -182,7 +182,7 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>本文是<a href="https://helicqin.github.io/2018/10/19/Deep%20Dyna-Q%20Integrating%20Planning%20for%20Task-Completion%20Dialogue%20Policy%20Learning/" target="_blank" rel="noopener">Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning</a> 团队的续作，主要解决的是原始DDQ模型对world model生成的simulated dialogues质量好坏的严重依赖，通过引入一个区分真实对话和模拟对话的判别器，进而提高DDQ模型的鲁棒性和有效性。<br><a href="https://drive.google.com/open?id=14-x86A-XELuhsPmr971WPo1x6eM6M9Bt" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/MiuLab/D3Q" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+            <p>本文是<a href="https://helicqin.github.io/2018/10/19/Deep%20Dyna-Q%20Integrating%20Planning%20for%20Task-Completion%20Dialogue%20Policy%20Learning/">Deep Dyna-Q Integrating Planning for Task-Completion Dialogue Policy Learning</a> 团队的续作，主要解决的是原始DDQ模型对world model生成的simulated dialogues质量好坏的严重依赖，通过引入一个区分真实对话和模拟对话的判别器，进而提高DDQ模型的鲁棒性和有效性。<br><a href="https://drive.google.com/open?id=14-x86A-XELuhsPmr971WPo1x6eM6M9Bt" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/MiuLab/D3Q" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>目前通过RL来学习对话策略比较通用的做法是基于真实对话经验设计一个用户模拟器，通过与模拟器交互来学习策略。然而，这种方法的问题在于，人工设计的用户模拟器与真实用户有很大偏差，缺乏复杂度。</p>
 <blockquote>
 <p>Furthermore, to the best of our knowledge, there is no universally accepted metric for evaluating user simulators for dialogue purpose. <a href="https://drive.google.com/open?id=1y3F2WiqbuS3dQoxuMW5nZaAnIKNpUaP4" target="_blank" rel="noopener">Ref : A  survey  on  metrics  for  the  evaluation  of  user simulations</a> Therefore,  it  remains  controversial  whether training  task-completion  dialogue  agent  via  simulated  users  is  a  valid  and  effective  approach.</p>
@@ -215,8 +215,8 @@ ga('send', 'pageview');
 <p>starting  with  an  initial  dialogue  policy  and  an  initial world  model  (both  are  trained  with  pre-collected human  conversational  data),  D3Q  training  consists  of  four  stages:  (1)direct  reinforcement  learning:  the  agent  interacts  with  real  users,  collects real  experiences  and  improves  dialogue  policy; (2)  world  model  learning:  the  world  model  is<br>learned  and  refined  using  real  experience;  (3)  discriminator  learning:  the  discriminator  is  learned and  refined  to  differentiate  simulated  experience from  real  experience;  and  (4)  controlled  planning: the  agent  improves  the  dialogue  policy  using  the high-quality  simulated  experience  generated  by the  world  model  and  the  discriminator.</p>
 </blockquote>
 <h3 id="Direct-Reinforcement-Learning"><a href="#Direct-Reinforcement-Learning" class="headerlink" title="Direct  Reinforcement  Learning"></a>Direct  Reinforcement  Learning</h3><p><em>DQN : details in  <a href="https://drive.google.com/open?id=14-x86A-XELuhsPmr971WPo1x6eM6M9Bt" target="_blank" rel="noopener">Discriminative  Deep  Dyna-Q  : Robust  Planning for  Dialogue  Policy  Learning</a></em></p>
-<h3 id="World-Model-Learning"><a href="#World-Model-Learning" class="headerlink" title="World  Model  Learning"></a>World  Model  Learning</h3><p><em>world model与原始的 <a href="https://helicqin.github.io/2018/10/19/Deep%20Dyna-Q%20Integrating%20Planning%20for%20Task-Completion%20Dialogue%20Policy%20Learning/" target="_blank" rel="noopener">DDQ</a>相同</em></p>
-<h3 id="Discriminator-Learning"><a href="#Discriminator-Learning" class="headerlink" title="Discriminator  Learning"></a>Discriminator  Learning</h3><p>本模块借鉴于<a href="https://helicqin.github.io/2018/06/04/GAN/" target="_blank" rel="noopener">GAN</a> 。</p>
+<h3 id="World-Model-Learning"><a href="#World-Model-Learning" class="headerlink" title="World  Model  Learning"></a>World  Model  Learning</h3><p><em>world model与原始的 <a href="https://helicqin.github.io/2018/10/19/Deep%20Dyna-Q%20Integrating%20Planning%20for%20Task-Completion%20Dialogue%20Policy%20Learning/">DDQ</a>相同</em></p>
+<h3 id="Discriminator-Learning"><a href="#Discriminator-Learning" class="headerlink" title="Discriminator  Learning"></a>Discriminator  Learning</h3><p>本模块借鉴于<a href="https://helicqin.github.io/2018/06/04/GAN/">GAN</a> 。</p>
 <p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFDcEd1Rnd4MkcxVmRVRnBUMnFWK3pyb3paTVFGa3A4bWxCV1l4TE00aGJRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure3:  The  model  architectures  of  the  world  model  and  the  discriminator  for  controlled  planning"></p>
 <p>判别器D的作用是鉴别world model生成对话的质量，结构如Figure 3右边所示，使用一个LSTM编码对话上下文得到表征向量，再用MLP预测一个0-1的概率，表示模拟对话与真实对话的相似度。D的目标函数为：</p>
 <p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFDcEd1Rnd4MkcxVkllN0NhZlZZcSt0V2dzc3FpYUhudnRlQnhpcDFRU3ZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
@@ -619,7 +619,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helic.github.io/2018/11/27/Discriminative Deep Dyna-Q_ Robust Planning for Dialogue Policy Learning/';
+    var disqus_url = 'https://helicqin.github.io/2018/11/27/Discriminative Deep Dyna-Q_ Robust Planning for Dialogue Policy Learning/';
     
     (function() {
     var dsq = document.createElement('script');
