@@ -3,16 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Archive: 2017/9 | Helic</title>
+    <title>Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Helic">
-<meta property="og:url" content="https://helicqin.github.io/archives/2017/09/index.html">
+        <meta name="keywords" content="Commonsense  Knowledge,Dialogue System" />
+    
+    <meta name="description" content="本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。 paper link">
+<meta name="keywords" content="Commonsense  Knowledge,Dialogue System">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems">
+<meta property="og:url" content="https://helicqin.github.io/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/index.html">
 <meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。 paper link">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uR3lHQjBwYTZGTlFQd1I3bUxSb3o3dWJVakNhWWdKRzlBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-04-09T07:02:00.852Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Helic">
+<meta name="twitter:title" content="Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems">
+<meta name="twitter:description" content="本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。 paper link">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uR3lHQjBwYTZGTlFQd1I3bUxSb3o3dWJVakNhWWdKRzlBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
     
 
     
@@ -137,457 +146,151 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>Archive: 2017/9
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-Learning to Select Knowledge for Response Generation in Dialog Systems" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/29/Numpy-Note/" class="thumbnail">
-    
-    
-        <span style="background-image:url(data:image/jpeg;base64,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)" alt="Numpy_Note" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/29/Numpy-Note/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a>
-            </div>
-            <div class="date"><time datetime="2017-09-29T02:12:24.000Z" itemprop="datePublished">2017-09-29</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/29/Numpy-Note/">Numpy_Note</a>
+        Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems
         </h1>
     
 
-        <p class="article-excerpt">
-            Python Numpy Tutorial based on http://cs231n.github.io/python-numpy-tutorial/.主要内容：Arrays,Array Indexing,Datatypes,Array Math,Broadcasting
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/" class="article-date">
+            <time datetime="2019-04-08T06:03:00.000Z" itemprop="datePublished">2019-04-08</time>
+        </a>
     </div>
-</article>
-    
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a>, <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>
+    </div>
+
+            </div>
         
-        <a href="/2017/09/08/Tensorflow-note-3 (1)/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_note_3" class="thumbnail-image"></span>
-    
-    
         
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/08/Tensorflow-note-3 (1)/">0</span>
-    
-</span>
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。</p>
+<p><a href="https://drive.google.com/open?id=1Lnx1_S_lPP43lix9P1spQLAFh2kHKcdM" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>现有的方法缺乏对知识选择和使用的研究，本文的核心在于提出了一种后验知识分布的方法来指导知识的选择过程，然后使用Concatenated和Hierarchical  Gated  Fusion  Unit两种解码器来融合选择的知识。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uSDlsWmp3QmtSZWZyMWhGRTEyRk5VNStGd1dPcG1Na3ZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Comparison  between  Various  Responses  Generated  with/without  Correct  Knowledge"></p>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uRWU3eUN2ZXBGUHVOMnhvaGdkbTIxczIvTDJOWk43R2VnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Architecture  Overview"></p>
+<p>模型主要包括三个部分：句子和知识编码器，知识管理器，解码器。整体结构仍然是seq2seq+attention。</p>
+<h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><p>作者使用两个独立的BiLSTM分别编码句子和知识，以最后时刻的隐层状态作为特征表达，分别得到输入句子和知识的表征向量。</p>
+<h3 id="Knowledge-Manager"><a href="#Knowledge-Manager" class="headerlink" title="Knowledge  Manager"></a>Knowledge  Manager</h3><p>模型中的知识管理模块，最重要的作用是从所有的外部知识中，选出所需的知识。在训练过程中，已有的生成回复也作为选择知识的标准，是一种后验概率。所以在训练的过程中，X和Y都被用于训练，通过以下式子来计算每条知识被选择的概率（使用内积来衡量知识 $k_{i}$ 与输入X Y的相似度）。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBuQ2ltdVIvVzhtMkxRalQ4SlZTbnlOQzdWN2dJUStGNVZKSUJObkhwcURnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>而在预测时，Y是未知的，只能通过输入X来进行知识选择。具体式子如下：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBuQ2ltdVIvVzhtOUowS3A4OStCWWdVaXNVcGFsUVJnMUlFRjdSTlpzUmJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>训练和预测时的参考依据不同，肯定会影响整个系统的设计。因此在知识管理器中，设计了如下的损失函数KLDivLoss（KL散度），目标是让前两式不断接近，已达到训练和预测时的同步。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBuQ2ltdVIvVzhtME5xTWdULzdUV0l4eEM5VWhZdlg2dGZBcVBQOG9WeG5RPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h3><p>与传统的Seq2Seq解码器不同，该模型将知识$k_{i}$融入到响应生成$y_{t}$中。 作者使用了两种解码器，第一个是“硬”解码 <strong>Standard  GRU  with  Concatenated  Inputs</strong>，使用标准的GRU作为解码器，第二个是具有分级门控融合单元的“软”解码器 <strong>Hierarchical  Gated  Fusion  Unit  (HGFU)</strong>。</p>
+<p><strong>Standard  GRU  with  Concatenated  Inputs</strong>： 直接将选择的知识$k_{i}$与GRU上一步的输出$y_{t-1}$拼接</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBuQ2ltdVIvVzhtd1pzUnNRUGczenFOWjdEWFBHelVYRmhFd09WRzN4UUhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<blockquote>
+<p>However,  it forces  knowledge  $k_{i}$  to  attend  decoding,  which  is less  flexible  and  is  not  desirable  in  some  scenarios.</p>
+</blockquote>
+<p><strong>Hierarchical  Gated  Fusion  Unit  (HGFU)</strong>：总共包括utterance GRU和knowledge GRU，然后使用门函数融合两个GRU的隐层状态<br>$$<br>\begin{aligned}<br>\mathbf{s}_{t}^{y} &amp;=\operatorname{GRU}\left(y_{t-1}, \mathbf{s}_{t-1}, \mathbf{c}_{t}\right) \ \mathbf{s}_{t}^{k} &amp;=\operatorname{GRU}\left(\mathbf{k}_{i}, \mathbf{s}_{t-1}, \mathbf{c}_{t}\right) \\<br>\mathbf{r} &amp;=\sigma\left(\mathbf{W}_{z}\left[\tanh \left(\mathbf{W}_{y} \mathbf{s}_{t}^{y}\right) ; \tanh \left(\mathbf{W}_{k} \mathbf{s}_{t}^{k}\right)\right]\right)\\<br>\mathbf{s}_{t} &amp;=\mathbf{r} \odot \mathbf{s}_{t}^{y}+(\mathbf{1}-\mathbf{r}) \odot \mathbf{s}_{t}^{k} \\<br>y_{t} \sim \mathbf{p}_{t} &amp;=\operatorname{softmax}\left(\mathbf{s}_{t}, \mathbf{c}\right)<br>\end{aligned}<br>$$</p>
+<h3 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h3><p>模型共使用了三个损失函数：</p>
+<ol>
+<li>KL loss</li>
+<li>NLL loss: $\mathcal{L}_{N L L}(\theta)=-\frac{1}{m} \sum_{t=1}^{m} \log p_{\theta}\left(y_{t} | y_{&lt;t}, \mathbf{x}, \mathbf{k}_{i}\right)$，decoder端交叉熵损失函数</li>
+<li>BOW loss: $\mathcal{L}_{B O W}(\theta)=-\frac{1}{m} \sum_{t=1}^{m} \log p_{\theta}\left(y_{t} | \mathbf{k}_{i}\right), p_{\theta}\left(y_{t} | \mathbf{k}_{i}\right)=\frac{\exp \left(\mathbf{w}_{y_{t}}\right)}{\sum_{v \in V} \exp \left(\mathbf{w}_{v}\right)}$</li>
+</ol>
+<blockquote>
+<p>The  BOW  loss (<a href="https://drive.google.com/open?id=1-kv8CuK_hqZwoIp1IV9Fd3KRsFd0OGWX" target="_blank" rel="noopener">Learning  Discourse-level  Diversity  for  Neural  Dialog  Models  using Conditional  Variational  Autoencoders</a>) is  designed  to  ensure  the  accuracy  of  the  sampled knowledge  $k_{i}$  by  enforcing  the  relevancy  between the  knowledge  and  the  target  response.</p>
+</blockquote>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBLSmZ3bWNUSkVRK1RmZUtRWm5GMWttVUFDOVcrRGtrcGNyZXdnOVE4VjVRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  Automatic  and  Manual  Evaluation  on  Persona-chat  and  Wizard-of-Wikipedia"></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文核心的创新点在于利用后验分布来辅助选择正确的知识，从而生成有意义的回复。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/58893025" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/58893025</a></li>
+<li><a href="https://drive.google.com/open?id=1-kv8CuK_hqZwoIp1IV9Fd3KRsFd0OGWX" target="_blank" rel="noopener">Learning  Discourse-level  Diversity  for  Neural  Dialog  Models  using Conditional  Variational  Autoencoders</a></li>
+<li><a href="https://drive.google.com/open?id=1Lnx1_S_lPP43lix9P1spQLAFh2kHKcdM" target="_blank" rel="noopener">Learning to Select Knowledge for Response Generation in Dialog Systems</a></li>
+</ul>
 
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
+        </div>
+        <footer class="article-footer">
             
-            </div>
-            <div class="date"><time datetime="2017-09-08T08:51:52.000Z" itemprop="datePublished">2017-09-08</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/08/Tensorflow-note-3 (1)/">Tensorflow_note_3</a>
-        </h1>
-    
 
-        <p class="article-excerpt">
-            基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Linear and Logistic Regression
-        </p>
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
     </div>
 </article>
-    
-        </div>
-    
 
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/08/Tensorflow-note-3/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_note_3" class="thumbnail-image"></span>
-    
+    <section id="comments">
     
         
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/08/Tensorflow-note-3/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a>
-            </div>
-            <div class="date"><time datetime="2017-09-08T08:51:52.000Z" itemprop="datePublished">2017-09-08</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/08/Tensorflow-note-3/">Tensorflow_note_3</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Linear and Logistic Regression
-        </p>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-</article>
-    
 
     
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/07/Tensorflow-note-2 (1)/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_note_2" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/07/Tensorflow-note-2 (1)/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2017-09-07T03:36:20.000Z" itemprop="datePublished">2017-09-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/07/Tensorflow-note-2 (1)/">Tensorflow_note_2</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Basic Operations, Constants, Variables, Control Dependencies, Feeding inputs, TensorBoard
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/07/Tensorflow-note-2/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_note_2" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/07/Tensorflow-note-2/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a>
-            </div>
-            <div class="date"><time datetime="2017-09-07T03:36:20.000Z" itemprop="datePublished">2017-09-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/07/Tensorflow-note-2/">Tensorflow_note_2</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Basic Operations, Constants, Variables, Control Dependencies, Feeding inputs, TensorBoard
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/06/tensorflow-note-1/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_note_1" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/06/tensorflow-note-1/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a>
-            </div>
-            <div class="date"><time datetime="2017-09-06T14:02:03.000Z" itemprop="datePublished">2017-09-06</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/06/tensorflow-note-1/">Tensorflow_note_1</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Graphs and Sessions
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/06/tensorflow-note-1 (1)/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_note_1" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/06/tensorflow-note-1 (1)/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2017-09-06T14:02:03.000Z" itemprop="datePublished">2017-09-06</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/06/tensorflow-note-1 (1)/">Tensorflow_note_1</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            基于cs20si的Tensorflow笔记，课程主页；本节主要内容：Graphs and Sessions
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/04/RNNLG (1)/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fj7ckpao25j3091078jra.jpg)" alt="RNNLG" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/04/RNNLG (1)/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            
-            </div>
-            <div class="date"><time datetime="2017-09-04T02:57:50.000Z" itemprop="datePublished">2017-09-04</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/04/RNNLG (1)/">RNNLG</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            RNNLG is an open source benchmark toolkit for Natural Language Generation (NLG) in spoken dialogue system application domains. It is released by Tsung-Hsien (Shawn) Wen from Cambridge Dialogue Systems Group under Apache License 2.0.
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/04/RNNLG/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fj7ckpao25j3091078jra.jpg)" alt="RNNLG" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/04/RNNLG/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLG/">NLG</a>
-            </div>
-            <div class="date"><time datetime="2017-09-04T02:57:50.000Z" itemprop="datePublished">2017-09-04</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/04/RNNLG/">RNNLG</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            RNNLG is an open source benchmark toolkit for Natural Language Generation (NLG) in spoken dialogue system application domains. It is released by Tsung-Hsien (Shawn) Wen from Cambridge Dialogue Systems Group under Apache License 2.0.
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-
-    </div></section>
-
+    </section>
 
 
                         </div>
@@ -648,6 +351,19 @@ ga('send', 'pageview');
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/04/05/Adversarial Active Learning for Sequence Labeling and Generation/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Adversarial  Active  Learning  for  Sequence  Labeling  and  Generation</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -849,11 +565,13 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
+    var disqus_url = 'https://helicqin.github.io/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
