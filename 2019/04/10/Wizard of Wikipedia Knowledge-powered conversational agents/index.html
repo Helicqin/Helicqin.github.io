@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations | Helic</title>
+    <title>Wizard of Wikipedia Knowledge-powered conversational agents | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="NLP,Dialogue System" />
+        <meta name="keywords" content="Commonsense  Knowledge,Dialogue System" />
     
-    <meta name="description" content="这两篇文章分别来自 DSTC7 评测任务1 Sentence Selection 中排名第一和第二的团队，阿里巴巴达摩院以及Palo Alto研究中心。该任务重点关注了面向目标的对话系统中的回复选择问题，参赛者需要结合给定的对话片段在给出的一组候选回复中选择最符合的一个应答。这两个模型分别属于多轮对话的回复选择中基于序列的方法和基于层次的方法。Sequential  Attention-based">
-<meta name="keywords" content="NLP,Dialogue System">
+    <meta name="description" content="本文是FAIR发表于ICLR2019上的文章，主要提出了一个基于Wikipedia背景知识的开放域对话数据集以及两个基线模型。 paper linkdataset&amp;amp;&amp;amp;code link">
+<meta name="keywords" content="Commonsense  Knowledge,Dialogue System">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations">
-<meta property="og:url" content="https://helicqin.github.io/2019/03/07/Sequential Attention-based Network for Noetic End-to-End Response Selection && Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations/index.html">
+<meta property="og:title" content="Wizard of Wikipedia Knowledge-powered conversational agents">
+<meta property="og:url" content="https://helicqin.github.io/2019/04/10/Wizard of Wikipedia Knowledge-powered conversational agents/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="这两篇文章分别来自 DSTC7 评测任务1 Sentence Selection 中排名第一和第二的团队，阿里巴巴达摩院以及Palo Alto研究中心。该任务重点关注了面向目标的对话系统中的回复选择问题，参赛者需要结合给定的对话片段在给出的一组候选回复中选择最符合的一个应答。这两个模型分别属于多轮对话的回复选择中基于序列的方法和基于层次的方法。Sequential  Attention-based">
+<meta property="og:description" content="本文是FAIR发表于ICLR2019上的文章，主要提出了一个基于Wikipedia背景知识的开放域对话数据集以及两个基线模型。 paper linkdataset&amp;amp;&amp;amp;code link">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFmcCtkeExEbnJGRFpTQkRaQTIvRGY1cEtudW16WEpVSmlFOEE5NllNUWRBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-03-09T09:40:16.723Z">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkT3hsdkVaUnBqSVhLdndsajF5eGRPcVdFbUxwQlZyemx3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-04-10T06:38:40.523Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations">
-<meta name="twitter:description" content="这两篇文章分别来自 DSTC7 评测任务1 Sentence Selection 中排名第一和第二的团队，阿里巴巴达摩院以及Palo Alto研究中心。该任务重点关注了面向目标的对话系统中的回复选择问题，参赛者需要结合给定的对话片段在给出的一组候选回复中选择最符合的一个应答。这两个模型分别属于多轮对话的回复选择中基于序列的方法和基于层次的方法。Sequential  Attention-based">
-<meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFmcCtkeExEbnJGRFpTQkRaQTIvRGY1cEtudW16WEpVSmlFOEE5NllNUWRBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta name="twitter:title" content="Wizard of Wikipedia Knowledge-powered conversational agents">
+<meta name="twitter:description" content="本文是FAIR发表于ICLR2019上的文章，主要提出了一个基于Wikipedia背景知识的开放域对话数据集以及两个基线模型。 paper linkdataset&amp;amp;&amp;amp;code link">
+<meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkT3hsdkVaUnBqSVhLdndsajF5eGRPcVdFbUxwQlZyemx3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
     
 
     
@@ -150,14 +150,14 @@ ga('send', 'pageview');
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Sequential Attention-based Network for Noetic End-to-End Response Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Wizard of Wikipedia Knowledge-powered conversational agents" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations
+        Wizard of Wikipedia Knowledge-powered conversational agents
         </h1>
     
 
@@ -167,74 +167,62 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/03/07/Sequential Attention-based Network for Noetic End-to-End Response Selection && Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations/" class="article-date">
-            <time datetime="2019-03-07T02:45:00.000Z" itemprop="datePublished">2019-03-07</time>
+        <a href="/2019/04/10/Wizard of Wikipedia Knowledge-powered conversational agents/" class="article-date">
+            <time datetime="2019-04-10T02:06:00.000Z" itemprop="datePublished">2019-04-10</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
+        <a class="tag-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a>, <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>这两篇文章分别来自 <a href="http://workshop.colips.org/dstc7/" target="_blank" rel="noopener">DSTC7</a> 评测任务1 <a href="http://link.zhihu.com/?target=http%3A//workshop.colips.org/dstc7/call.html" target="_blank" rel="noopener">Sentence Selection</a> 中排名第一和第二的团队，阿里巴巴达摩院以及Palo Alto研究中心。该任务重点关注了面向目标的对话系统中的回复选择问题，参赛者需要结合给定的对话片段在给出的一组候选回复中选择最符合的一个应答。这两个模型分别属于多轮对话的回复选择中基于序列的方法和基于层次的方法。<br><a href="https://drive.google.com/open?id=1KfWJD1CcEE4BVfwHhDhzmPPCr7TOoSoJ" target="_blank" rel="noopener">Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection</a><br><a href="https://drive.google.com/open?id=17oDseDFJw4IK_4-ck8uaEywYWExYp4n9" target="_blank" rel="noopener">Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations</a><br><a id="more"></a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFta29NemRabDBUdEFuTGhCamdZK3hPRUMvRDh5YzBXWlpxSkorOHFDdW1nPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt="Figure 1: Examples of partial conversations in the DSTC datasets"></p>
-<p>该任务包含两个<a href="http://link.zhihu.com/?target=https%3A//ibm.github.io/dstc7-noesis/public/datasets.html" target="_blank" rel="noopener">数据集</a>：Advising数据集（包含学生和他的选课顾问之间的对话）和Ubuntu数据集（顾客和技术支持者之间的对话）。每个数据集包括两个speaker之间的部分对话，以及下一句应答的一组可选项。</p>
-<p>该任务下又分了5个子任务，它们的不同主要在候选应答的数量，候选应答中正确应答句的数量，以及是否允许访问外部数据集。</p>
-<ol>
-<li>从100个候选句（包含1个正确回复）中选择下一句回复。</li>
-<li>从120000候选句中选择下一句回复。（仅适用于Ubuntu数据）</li>
-<li>从100个候选句（包含1-5个正确回复）中选择下一句回复。（仅适用于Advising数据）</li>
-<li>从100个候选句（包含0个或1个正确回复）中选择下一句回复或者None。</li>
-<li>从100个候选句中选择正确回复，可以访问外部数据集。</li>
-</ol>
-<p>两篇文章都将应答选择看做是一个二元的分类任务，给定一个多轮的对话历史和一个候选应答，模型需要做的就是判断该应答是否为正确的应答句。现在多轮对话的应答选择的典型方法有基于序列的和基于层次的两类。</p>
-<blockquote>
-<p>Sequence-based methods usually concatenate the context utterances into a long sequence. Hierarchy-based methods normally model each utterance individually and then explicitly model the interactions among the utter-ances. </p>
-</blockquote>
-<h2 id="Sequential-Attention-based-Network-for-Noetic-End-to-End-Response-Selection"><a href="#Sequential-Attention-based-Network-for-Noetic-End-to-End-Response-Selection" class="headerlink" title="Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection"></a>Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection</h2><h3 id="ESIM"><a href="#ESIM" class="headerlink" title="ESIM"></a><a href="http://link.zhihu.com/?target=https%3A//arxiv.org/abs/1609.06038" target="_blank" rel="noopener">ESIM</a></h3><p>本文用到的模型是为自然语言推理任务而设计的<a href="http://link.zhihu.com/?target=https%3A//arxiv.org/abs/1609.06038" target="_blank" rel="noopener">ESIM(ACL2017)</a>模型，这个模型整体结构图如下所示，主要分为3个部分：<strong>Input Encoding</strong>，<strong>Local Matching</strong> 和 <strong>Matching Composition</strong>。</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFmcCtkeExEbnJGRFpTQkRaQTIvRGY1cEtudW16WEpVSmlFOEE5NllNUWRBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="(b)  Cross  attention-based  method"></p>
-<h3 id="Input-Encoding"><a href="#Input-Encoding" class="headerlink" title="Input Encoding"></a>Input Encoding</h3><ol>
-<li>将对话历史拼接成一个长序列</li>
-<li>对于长序列中的每一个词将多种词向量拼接，然后用一个relu的前馈层压缩维度</li>
-<li>将对话历史和候选答复分别用LSTM进行编码，得到context 隐层状态 $c_{i}^{s}$ 和 response 隐层状态 $r_{j}^{s}$</li>
-</ol>
-<h3 id="Local-Matching"><a href="#Local-Matching" class="headerlink" title="Local Matching"></a>Local Matching</h3><p>对对话历史和应答之间的局部语义关系的建模是确定应答是否正确的关键。比如，正确的应答句通常涉及对话历史中的一些关键字，这可以通过局部语义建模来获得。本文使用cross-attention机制来将来自对话历史和应答句的tokens对齐，然后计算token级别的语义关系。attention权重计算方式如下：</p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFNUUVpcjRUUVplcjVnRmZTUzFHMFFaRm5oMkxrb1Y2VmJ4R1Y1Q0l2S2VnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>（4）式和（5）式分别对应context 隐层状态 $c_{i}^{s}$对所有的response 隐层状态 $r_{j}^{s}$做注意力和response 隐层状态 $r_{j}^{s}$对所有的context 隐层状态 $c_{i}^{s}$做注意力，其中均采用内积运算。</p>
-<blockquote>
-<p>By  comparing  vector  pair  $&lt;c_{i}^{s}, c_{i}^{d}&gt;$,  we  can  model  the token-level  semantic  relation  between  aligned  token  pairs.</p>
-</blockquote>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVDRRS1BJcG1DRCtTUzJpN1huby9md2hxcE1BZktTRVM1NDZqK2hsalF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>F是单层全连接以减小维度。</p>
-<h3 id="Matching-Composition"><a href="#Matching-Composition" class="headerlink" title="Matching Composition"></a>Matching Composition</h3><p>确定应答句是否为正确的下一句话，需要一个合成层来合成上面得到的局部匹配的结果。这里再次使用BiLSTM来读取局部匹配向量并学习区分关键的局部匹配向量来获得整体的语义关系 。</p>
-<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVDRRS1BJcG1DSVNKK1U5YjFkcEdrZGNBRUhrdjQ5N2RHUk1XQ3lRWlBBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>之后对BiLSTM2的隐层做池化操作，得到固定长度的向量，再通过一个MLP得到softmax输出：</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVDRRS1BJcG1DRS8vdkRmZHF6TXFtaEdhMkZYVTFSdXEvT2gzQk1rL2p3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h3 id="Sentence-encoding-based-methods"><a href="#Sentence-encoding-based-methods" class="headerlink" title="Sentence-encoding  based  methods"></a>Sentence-encoding  based  methods</h3><p>在Ubuntu数据的子任务2中，需要从12000个候选项中选出正确的应答句，所以需要先从中选出TOP100，然后再将这100个候选应答输入到ESIM主模型中进行排序。这里选出TOP100用了基于句子编码的模型（类似于Siamese的架构），使用多抽头的self-attention池化的BiLSTM来对句子进行编码，并应用MLP来分类。模型如图所示：</p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNQMTFPL2NocWYwU2lOVlN0MjU3eGgrcDNKQkltSDkvUkZyNHBGRGIyNCtRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="(a)  Sentence  encoding-based  method"></p>
-<h3 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h3><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNQMTFPL2NocWYwUlowZmZaQVNYTHpMRnlYUEZweGU4V1lkeENSQTZFTmFBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  6:  Comparison  of  different  models  on  two  large-scale  public  benchmark  datasets.  All  the  results  except  ours  are  cited from  previous  work  (Zhang  et  al.  2018;  Wu  et  al.  2018)."></p>
-<p>作者还提到之前SOTA的模型大多是hierarchy-based的模型，显式地建模不同轮次的交互，而本文的结果证明sequential-based模型也有很好的效果。</p>
-<h2 id="Comparison-of-Transfer-Learning-Approaches-for-Response-Selection-in-Multi-Turn-Conversations"><a href="#Comparison-of-Transfer-Learning-Approaches-for-Response-Selection-in-Multi-Turn-Conversations" class="headerlink" title="Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations"></a>Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations</h2><h3 id="MT-EE"><a href="#MT-EE" class="headerlink" title="MT-EE"></a>MT-EE</h3><p>本文是基于层次结构的模型，同样用到了ESIM，但是不同于上文将对话历史连接成一个长序列，本文提出的解决方案是将对话历史中的每个语句分别与候选句进行匹配，将所有的匹配结果再输入到合成层进行聚合。</p>
-<p>本文认为单句话与应答之间的关系受这句话在对话历史中的位置以及说这句话的人的影响，而对话中不同的角色所说的话对应答选择造成的影响也不同。所以在聚合时，加入了这两方面因素的影响。模型结构如下所示：</p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJwbmI2S0toS1VRZnhCbDV1OGQ0T254aXA5aHVDTThGR2FIazNjc1dwV29BPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Aggregation  scheme  in  the  MT-EE  model"></p>
-<p>首先将  context  里的每一个  c  与  r  进行比较，这里用的是上文所述的句子对建模模型ESIM和ELMo来获得两者之间的匹配关系。不同于直接使用ESIM的输出（分类概率），我们去掉最后一层，并且使用前一层的输出向量，将这个向量定义为$v_{i}$ 。</p>
-<p>之后再通过一个残差结构，然后将所有的$v_{i}{}’$加权求和，最后再通过一个softmax输出层：</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJwbmI2S0toS1VRVjZPMm9kZVl0QzdIYkllcWZCY1NuaFMxbW1IdnZ0SjVRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""><br><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJwbmI2S0toS1VRUmdIVmVxaU9idHJQR1E2N1Y4UEE1UWw5MnNFVjlsdXp3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h3 id="End-to-End-Pre-trained-Models"><a href="#End-to-End-Pre-trained-Models" class="headerlink" title="End-to-End  Pre-trained  Models"></a>End-to-End  Pre-trained  Models</h3><blockquote>
-<p>For  both  models,  the  standard  approach  for  sentence-pair  tasks  is  to  concatenate  the  two  sentences,  along  with<br>a  separator  token,  into  a  single  input  sequence.  We  take this  same  approach  for  the  present  task,  by  concatenating<br>context  and  response  (and  separator  token).  To  capture  the structure  within  the  context,  we  also  insert  speaker-specific delimiter  tokens  between  the  utterances  in  the  context:  <strong>EOU1</strong>  if  the  preceding  utterance  came  from  Speaker  1, or  <strong>EOU2</strong>  if  it  was  from  Speaker  2.  Thus  the  structure is  encoded  through  delimiters  tokens  rather  than  through  a structured  aggregation  approach  as  in  MT-EE.</p>
-</blockquote>
-<h3 id="Experiment-1"><a href="#Experiment-1" class="headerlink" title="Experiment"></a>Experiment</h3><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJwbmI2S0toS1VRUTJFUnJKeDNzWXlWMUpDaGNLTXlYQjFsK3NkenNWbXNBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/58219602" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/58219602</a></li>
-<li><a href="https://drive.google.com/open?id=1KfWJD1CcEE4BVfwHhDhzmPPCr7TOoSoJ" target="_blank" rel="noopener">Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection</a></li>
-<li><a href="https://drive.google.com/open?id=17oDseDFJw4IK_4-ck8uaEywYWExYp4n9" target="_blank" rel="noopener">Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations</a></li>
+            <p>本文是FAIR发表于ICLR2019上的文章，主要提出了一个基于Wikipedia背景知识的开放域对话数据集以及两个基线模型。</p>
+<p><a href="https://drive.google.com/open?id=1aCCf7-tx5PdlOu7f4KPDNMgTBnZ2cbwB" target="_blank" rel="noopener">paper link</a><br><a href="http://parl.ai/projects/wizard_of_wikipedia/" target="_blank" rel="noopener">dataset&amp;&amp;code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Wizard of Wikipedia</strong>对话数据集属于开放域对话系统，一个对话者随机选择一个初始话题，对话双方可以在此基础上进行对话，但在对话过程中话题也可以拓展。对话双方的角色是不同的，分为 <strong>wizard</strong> 和 <strong>apprentice</strong>：</p>
+<ul>
+<li><strong>wizard</strong>：wizard的目的是通知apprentice关于对话主题相关的背景知识，在对话开始之前，会给定一些相关的wiki段落，这些对于apprentice不可见。同时，wizard不允许直接复制拷贝wiki里的文本句子作为回复，而是需要自己进行组合生成融合知识的回答。</li>
+<li><strong>apprentice</strong>：apprentice的目的是深入的询问与对话主题相关的问题，这与普通的闲聊有所区别。</li>
 </ul>
+<blockquote>
+<p>Conversation  Flow  The  flow  of  the  conversation  thus  takes  place  as  follows.</p>
+<ol>
+<li>Either  the  wizard  or  apprentice  is  picked  to  choose  the  topic  and  speak  first.  The  other player  receives  the  topic  information,  and  the  conversation  begins.</li>
+<li>When  the  apprentice  sends  the  wizard  a  message,  the  wizard  is  shown  relevant  knowledge(described  below),  and  chooses  a  relevant  sentence  in  order  to  construct  a  response,  or  else chooses  the  no  sentence  used  option.</li>
+<li>The  Wizard  responds  to  the  apprentice  basing  their  response  on  their  chosen  sentence.</li>
+<li>The  conversation  repeats  until  one  of  the  conversation  partners  ends  the  chat  (after  a  minimum  of  4  or  5  turns  each,  randomly  chosen  beforehand).</li>
+</ol>
+</blockquote>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkTE5Mek5rVWNJQW9HR2VTVUlmYlMxMVFBdjNpNDRiZWpnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="HUMAN ANNOTATION INTERFACE(FOR WIZARD)"></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkSmNEOER3dFJyUk1IYVBTc3R1Q0dYQUZUNWVzYTdWQjdnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Dataset  statistics  of  the  Wizard  of  Wikipedia  task"></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkRXRlQXg2RnZKck5UK2haK1NMdmx3ZG1CYXVBWEZ0MGlRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="The  Wizard  of  Wikipediadataset."></p>
+<h2 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h2><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkT3hsdkVaUnBqSVhLdndsajF5eGRPcVdFbUxwQlZyemx3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Generative  Transformer  Memory  Network.  An  IR  system  provides  knowledge  candidates  from  Wikipedia.  Dialogue  Context  and  Knowledge  are  encoded  using  a  shared  encoder.  In  the Two-stage  model,  the  dialogue  and  knowledge  are  re-encoded  after  knowledge  selection."></p>
+<p>作者提出了两个基线模型，分别是检索式和生成式。二者都是用相同的Transformer来编码context和knowledge获取向量表征，再通过memrory network选择knowledge。</p>
+<p><strong>RETRIEVAL  TRANSFORMER  MEMORY  NETWORK</strong>：<br>首先使用Transformer来编码context $m_{c_{1}}, \dots, m_{c_{K}}$和knowledge $x$ 获取向量表征，之后利用x对context做注意力得到向量 $\mathrm{rep}_{\mathrm{LHS}}\left(m_{c_{1}}, \ldots, m_{c_{K}}, x\right)$，同样用另一个Transformer获取候选回复的表示 $\mathrm{rep}_{\mathrm{LHS}}(r_{i})$，使用二者内积结果作为输出概率：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkTnFuUm1Jd0ZYVnBPUGc0anZKK0U0bkR5dFhqYmMza1ZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<blockquote>
+<p>The  model  is  trained  to  minimize  the  cross-entropy  loss,  where  the  negative  candidates  for  each example  are  the  responses  to  the  other  examples  in  the  batch  (Henderson  et  al.,  2017).</p>
+</blockquote>
+<p><strong>GENERATIVE  TRANSFORMER  MEMORY  NETWORK</strong>：</p>
+<p>作者提出了两种变体：a  Two-stage  and  an  End-to-end  version</p>
+<ul>
+<li>End-to-end : 与检索模型类似，得到context对knowledge的注意力分布后，选择概率最大的知识 $m_{best}$，将其与context encoding拼接，然后再经过Transformer decoder解码生成。作者额外添加了辅助交叉熵loss，以帮助选择合适的知识：$\mathcal{L}=(1-\lambda) \mathcal{L}_{\mathrm{NLL}}+\lambda \mathcal{L}_{\mathrm{know} \mathrm{ledge}}$</li>
+<li>Two-stage：这种模式下，模型分为两个单独的子任务<strong>knowledge  selection</strong> 和 <strong>utterance  prediction</strong>，二者分开训练。knowledge  selection的训练方式与end-to-end没有区别，在选择出知识$m_{best}$后，需要用另一个Transformer对context和选择的知识进行编码，再经过Transformer decoder解码生成。作者还提出了一种<strong>knowledge  dropout</strong>的机制，能够避免knowledge  selection错误传播。</li>
+</ul>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="KNOWLEDGE-SELECTION-TASK"><a href="#KNOWLEDGE-SELECTION-TASK" class="headerlink" title="KNOWLEDGE  SELECTION  TASK"></a>KNOWLEDGE  SELECTION  TASK</h3><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkQTl1M1REVzNDQ2t5dEM5Rm5UUHZST2FPb1A0RlE1elNBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  Test  performance  of  various  methods  on  the  Knowledge  Selection  Task.  The  models must select  the  gold  knowledge  sentences  chosen  by  humans  given  the  dialogue  context"></p>
+<h3 id="FULL-TASK-DIALOGUE-WITH-KNOWLEDGE"><a href="#FULL-TASK-DIALOGUE-WITH-KNOWLEDGE" class="headerlink" title="FULL  TASK:  DIALOGUE  WITH  KNOWLEDGE"></a>FULL  TASK:  DIALOGUE  WITH  KNOWLEDGE</h3><p>作者设置了两种实验条件：<strong>Predicted Knowledge</strong> 指模型需要从给定的所有知识中预测匹配的知识，而<strong>Gold Knowledge</strong>指模型直接使用wizard手工选择的知识。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkRHo4MWJVYlA2L1k2d2VjK0l4OUI0b00zOWZ5eFdKem1nPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  3:Retrieval  methods  on  the  full  Wizard  task. Models  must  select  relevant  knowledge  and retrieve  a  response  from  the  training  set  as  a  dialogue  response.  Using  knowledge  always  helps,  and the Transformer  Memory  Network  with  pretraining  performs  best."></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkTDlNUUJtanhubFBZZnh0ZjB0NEJMUEc0RHQreVdiWUJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  4:Generative  models  on  the  full  Wizard  Task.The  Two-stage  model  performs  best  using predicted  knowledge,  while  the  End-to-end  (E2E)  model  performs  best  with  gold  knowledge."></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkQ21kU01kK2pvY1BDa2hHNHdCSUdVYk40NHNzVlNxcXBnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  5:Human  Experiments.Evaluations  of  the  best  generative  and  retrieval  models  on  full dialogues  with  humans.  Human  ratings  are  reported  as  mean  (stddev).  Wiki  F1  measures  unigram overlap  with  the  Wikipedia  entry  for  the  chosen  topic,  a  measure  of  knowledge  used  in  conversations."></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文核心的贡献在于提出了一个基于Wikipedia背景知识的开放域对话数据集，从实验结果来看，目前的模型与人相比还有很大的差距，值得研究。</p>
+<blockquote>
+<p>There  is  much  future  work  to  be  explored  using  our  task  and  dataset.  Some  of  these  include:<br>(i)  bridging  the  gap  between  the  engagingness  of  retrieval  responses  versus  the  ability  of  generative  models  to  work  on  new  knowledge  and  topics.<br>(ii)  learning  to  retrieve  and  reason  simultaneously  rather  than  using  a  separate  IR  component.<br>(iii)  investigating  the  relationship  between knowledge-grounded  dialogue  and  existing  QA  tasks  which  also  employ  such  IR  systems.  The  aim is  for  those  strands  to  come  together  to  obtain  an  engaging  and knowledgeable  conversational  agent.</p>
+</blockquote>
 
         </div>
         <footer class="article-footer">
@@ -372,20 +360,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/03/11/Mem2Seq Effectively Incorporating Knowledge Bases into End-to-End Task-Oriented Dialog Systems/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/03/05/Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory</p>
+        <p class="article-nav-title">Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -592,7 +570,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2019/03/07/Sequential Attention-based Network for Noetic End-to-End Response Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations/';
+    var disqus_url = 'https://helicqin.github.io/2019/04/10/Wizard of Wikipedia Knowledge-powered conversational agents/';
     
     (function() {
     var dsq = document.createElement('script');
