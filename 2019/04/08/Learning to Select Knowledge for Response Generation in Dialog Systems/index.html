@@ -17,7 +17,7 @@
 <meta property="og:description" content="本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。 paper link">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uR3lHQjBwYTZGTlFQd1I3bUxSb3o3dWJVakNhWWdKRzlBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-04-09T07:02:00.852Z">
+<meta property="og:updated_time" content="2019-04-11T06:35:13.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems">
 <meta name="twitter:description" content="本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。 paper link">
@@ -201,7 +201,7 @@ ga('send', 'pageview');
 <blockquote>
 <p>However,  it forces  knowledge  $k_{i}$  to  attend  decoding,  which  is less  flexible  and  is  not  desirable  in  some  scenarios.</p>
 </blockquote>
-<p><strong>Hierarchical  Gated  Fusion  Unit  (HGFU)</strong>：总共包括utterance GRU和knowledge GRU，然后使用门函数融合两个GRU的隐层状态<br>$$<br>\begin{aligned}<br>\mathbf{s}_{t}^{y} &amp;=\operatorname{GRU}\left(y_{t-1}, \mathbf{s}_{t-1}, \mathbf{c}_{t}\right) \ \mathbf{s}_{t}^{k} &amp;=\operatorname{GRU}\left(\mathbf{k}_{i}, \mathbf{s}_{t-1}, \mathbf{c}_{t}\right) \\<br>\mathbf{r} &amp;=\sigma\left(\mathbf{W}_{z}\left[\tanh \left(\mathbf{W}_{y} \mathbf{s}_{t}^{y}\right) ; \tanh \left(\mathbf{W}_{k} \mathbf{s}_{t}^{k}\right)\right]\right)\\<br>\mathbf{s}_{t} &amp;=\mathbf{r} \odot \mathbf{s}_{t}^{y}+(\mathbf{1}-\mathbf{r}) \odot \mathbf{s}_{t}^{k} \\<br>y_{t} \sim \mathbf{p}_{t} &amp;=\operatorname{softmax}\left(\mathbf{s}_{t}, \mathbf{c}\right)<br>\end{aligned}<br>$$</p>
+<p><strong>Hierarchical  Gated  Fusion  Unit  (HGFU)</strong>：总共包括utterance GRU和knowledge GRU，然后使用门函数融合两个GRU的隐层状态<br>$$<br>\begin{aligned}<br>\mathbf{s}_{t}^{y} &amp;=\operatorname{GRU}\left(y_{t-1}, \mathbf{s}_{t-1}, \mathbf{c}_{t}\right) \ <br>\mathbf{s}_{t}^{k} &amp;=\operatorname{GRU}\left(\mathbf{k}_{i}, \mathbf{s}_{t-1}, \mathbf{c}_{t}\right) \\<br>\mathbf{r} &amp;=\sigma\left(\mathbf{W}_{z}\left[\tanh \left(\mathbf{W}_{y} \mathbf{s}_{t}^{y}\right) ; \tanh \left(\mathbf{W}_{k} \mathbf{s}_{t}^{k}\right)\right]\right)\\<br>\mathbf{s}_{t} &amp;=\mathbf{r} \odot \mathbf{s}_{t}^{y}+(\mathbf{1}-\mathbf{r}) \odot \mathbf{s}_{t}^{k} \\<br>y_{t} \sim \mathbf{p}_{t} &amp;=\operatorname{softmax}\left(\mathbf{s}_{t}, \mathbf{c}\right)<br>\end{aligned}<br>$$</p>
 <h3 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h3><p>模型共使用了三个损失函数：</p>
 <ol>
 <li>KL loss</li>

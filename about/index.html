@@ -3,25 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network | Helic</title>
+    <title>about | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Dialogue System,NLP" />
-    
-    <meta name="description" content="本文是ACL2018上的文章，主要研究对话领域选择回复的问题，作者提出了DAM模型，主要通过stacked self-attention获取不同维度的表征，从而得到self-attention matching matrix和cross-attention matching matrix，取得了不错的效果。paper linkcode link">
-<meta name="keywords" content="Dialogue System,NLP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network">
-<meta property="og:url" content="https://helicqin.github.io/2019/03/01/Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network/index.html">
+    <meta name="description" content="about">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="https://helicqin.github.io/about/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="本文是ACL2018上的文章，主要研究对话领域选择回复的问题，作者提出了DAM模型，主要通过stacked self-attention获取不同维度的表征，从而得到self-attention matching matrix和cross-attention matching matrix，取得了不错的效果。paper linkcode link">
+<meta property="og:description" content="about">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjI3d1drYmRxSnA0RU9ZTi95U3hQTU43aWRhdmIzUjVIU2o3U2RvcCtXSzJRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-03-02T13:43:19.324Z">
+<meta property="og:updated_time" content="2019-04-11T06:28:36.405Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network">
-<meta name="twitter:description" content="本文是ACL2018上的文章，主要研究对话领域选择回复的问题，作者提出了DAM模型，主要通过stacked self-attention获取不同维度的表征，从而得到self-attention matching matrix和cross-attention matching matrix，取得了不错的效果。paper linkcode link">
-<meta name="twitter:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjI3d1drYmRxSnA0RU9ZTi95U3hQTU43aWRhdmIzUjVIU2o3U2RvcCtXSzJRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta name="twitter:title" content="about">
+<meta name="twitter:description" content="about">
     
 
     
@@ -146,96 +141,27 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    <em class="page-title-link" data-url="/about/index.html">about</em>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="page-" class="article article-single article-type-page" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network
+        about
         </h1>
     
 
             </header>
         
         
-            <div class="article-meta">
-                
-    <div class="article-date">
-        <a href="/2019/03/01/Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network/" class="article-date">
-            <time datetime="2019-03-01T05:57:00.000Z" itemprop="datePublished">2019-03-01</time>
-        </a>
-    </div>
-
-                
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
-    </div>
-
-            </div>
-        
         
         <div class="article-entry" itemprop="articleBody">
-            <p>本文是ACL2018上的文章，主要研究对话领域选择回复的问题，作者提出了DAM模型，主要通过stacked self-attention获取不同维度的表征，从而得到self-attention matching matrix和cross-attention matching matrix，取得了不错的效果。<br><a href="https://drive.google.com/open?id=1xZx637vN2tstyxSYvtlgTWnKb5I_K_IR" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/baidu/Dialogue/DAM" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本文研究的问题是<strong>response selection</strong>：给定一段对话历史和一些候选回复，从中选择最佳答案。</p>
-<p>人类生成回复通常依赖于语义和功能依赖，例如对话历史和回复之间的指代关系。本文提出了Deep Attention Matching Network （DAM），完全基于attention来获得候选回复与对话历史之间的依赖信息（dependency information），进而得到匹配回复。DAM借鉴于Transformer，主要使用了两种attention：</p>
-<ul>
-<li>使用堆叠的自注意力层来获取不同粒度（维度）上的文本片段的表征</li>
-<li>使用context和response计算cross attention得到文本段间的关系</li>
-</ul>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjIyM0ZJLzAvd3JzTmlsTEI3SUtlNnN5SHJ0c2V2aEc2eExIWmNoNksvQnhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Example  of  human  conversation  on  Ubuntu  system  troubleshooting.  Speaker  A  is  seeking  for  a  solution  of package  management  in  his/her  system  and  speaker  B  recommend  using,  the  debian  package  manager,  dpkg.  But  speaker A  does  not  know  dpkg,  and  asks  a  backchannel-question (Stolcke  et  al.,  2000),  i.e.,  “no  clue  what  do  you  need  it  for?”, aiming  to  double-check  if  dpkg  could  solve  his/her  problem. Text  segments  with  underlines  in  the  same  color  across  context  and  response  can  be  seen  as  matched  pairs."></p>
-<p>作者认为matched segment pairs对于回复选择来说很重要，可以分为以下两种层次：</p>
-<ul>
-<li>浅层的文本相关性：例如词汇间的重叠 <code>package</code> <code>packages</code></li>
-<li>语义上的相关（latent dependency）：例如<code>it</code>指代<code>dpkg</code></li>
-</ul>
-<p>本文的贡献在于：DAM完全使用注意力机制来建模context和candidate response之间的联系，避免了之前一些基于RNN的方法带来的高代价的计算消耗，并且取得了SOTA的结果（本文发表于ACL2018，之后在DSTC7的评测中阿里达摩院的一篇文章<a href="https://drive.google.com/open?id=1KfWJD1CcEE4BVfwHhDhzmPPCr7TOoSoJ" target="_blank" rel="noopener">Sequential Attention-based Network for Noetic End-to-End Response Selection</a>超过该结果），充分证明了self-attention和cross-attention的有效性。</p>
-<h2 id="Deep-Attention-Matching-Network"><a href="#Deep-Attention-Matching-Network" class="headerlink" title="Deep  Attention  Matching  Network"></a>Deep  Attention  Matching  Network</h2><h3 id="Problem-Formalization"><a href="#Problem-Formalization" class="headerlink" title="Problem Formalization"></a>Problem Formalization</h3><p>给定对话历史 $c=\{ u_{0}, …,u_{n-1}\}$，$u_{i}$ 代表utterance，$r$ 代表一个候选回复，$y\in \{0,1\}$ 是一个二类标签，表示r是不是c的一个合适回复。目标为学习一个匹配模型 $g(c,r)$ ，衡量c与r之间的相关性。</p>
-<h3 id="Model-Overview"><a href="#Model-Overview" class="headerlink" title="Model Overview"></a>Model Overview</h3><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjI3d1drYmRxSnA0RU9ZTi95U3hQTU43aWRhdmIzUjVIU2o3U2RvcCtXSzJRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Overview  of  Deep  Attention  Matching  Network"></p>
-<p>对于context中的每一个utterance $u_{i}=[w_{u_{i},k}]_{k=0}^{n_{u_{i}-1}}$，$n_{u_{i}}$ 代表 $u_{i}$中words的数量，一个候选回复 $r=[w_{r,t}]_{t=0}^{n_{r}-1}$，$n_{r}$ 代表 $r$中words的数量。$u_{i},r$共享相同的词向量，分别得到两个词向量的序列 $U_{i}^{0}=[e_{u_{i},0}^{0},…,e_{u_{i},n_{u_{i}}-1}^{0}]$ 和 $R^{0}=[e_{r,0}^{0},…,e_{r,n_{r}-1}^{0}]$，其中e是一个d维的词向量。接下来针对于$u_{i}$和$r$构建不同粒度的表征，具体是用L个相同的self-attention层，得到$[U_{i}^{l}]_{l=0}^{L}$和$[R^{l}]_{l=0}^{L}$。之后对于不同的粒度$l\in [0,L]$，分别计算两个相似度矩阵$M_{self}^{u_{i},r,l}, M_{cross}^{u_{i},r,l}$，分别衡量textual information和dependency information。最后将这些矩阵合并成三维的立方体，通过三维卷积和池化得到一维向量，经过单层全连接得到匹配分数。</p>
-<h3 id="Attentive-Module"><a href="#Attentive-Module" class="headerlink" title="Attentive Module"></a>Attentive Module</h3><p>类似于Transformer结构，但是没有使用multi-head和position-encoding。</p>
-<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5bFJNTXE4QmdaanN4VThCNDVhRTZuUERIYnJJZkZIcm9hQ244NituT3l3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  3:  Attentive  Module"></p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5bFJNTXE4QmdaZ0NVVmlCa0FpQ05pSEh3UTd3K29nWGlTRStoa0FhZ1NBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h3 id="Representation"><a href="#Representation" class="headerlink" title="Representation"></a>Representation</h3><p>给定utterance $u_{i}$ 和 response r 的词向量序列$U_{i}^{0},R^{0}$，DAM模型将其作为Attentive Module的输入，并且堆叠多个Module：</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5bFJNTXE4Qmdaa1pxSTllaGJaYllDRys0N0lkWU14Z09oZm54Umo4U1ZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>其中$l\in [0,L]$，代表不同的粒度。</p>
-<h3 id="Matching"><a href="#Matching" class="headerlink" title="Matching"></a>Matching</h3><p>得到$[U_{i}^{l}]_{l=0}^{L}$和$[R^{l}]_{l=0}^{L}$之后，在不同的粒度上计算segment-segment匹配矩阵：</p>
-<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5bFJNTXE4Qmdac2dsa0U5ekpJV2lySC9tcFNMd3R2Si9GaGs2Q1BjbHJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>上式代表$U_{i}^{l}[k]$和$R^{l}[t]$的内积，也即$U_{i}$中第k个embedding与$R^{l}[t]$第t个embedding做内积，这代表浅层的文本相关性。</p>
-<p>另一种cross-attention-matrix定义为：</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJFVUFkbEV1UkUzZjVvOW5VK2tlQ2F2bFIyRjJ1aTBRR0dsR1NOaHo5c1RnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>作者认为这代表语义相关性。</p>
-<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>DAM模型将这些$M_{self}^{u_{i},r,l}, M_{cross}^{u_{i},r,l}$矩阵拼接起来（$l\in [0,L]$，共2(L+1)个），得到<strong>Q</strong>：</p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBSdVBrNnVxQXNmSTVsSDJBck9LdGFxMEFWRmVpc1F1dkRXU0U3dCt1RlZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>上式中$n=2(L+1)$，对应每个channel上的元素为：</p>
-<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBSdVBrNnVxQXNmR1l0WkhYdlpwbVZXd0l4NnhRd1ZuTllpL0s2bHFrS3FBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>之后经过conv_3d和pooling_3d得到特征向量$f_{match}(c,r)$，再经过一层感知器：</p>
-<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBSdVBrNnVxQXNmRVkrc2Rzak10MGtiY202Z0tBcGwyQzFQSkdRWHNPSmNBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>DAM的损失函数为负极大似然函数。</p>
-<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBSdVBrNnVxQXNmTksrQUI5VldISUxXK3BrS2VrU0o4TDRkV21RRStNSGp3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Experimental  results  of  DAM  and  other  comparison  approaches  on  Ubuntu  Corpus  V1  and Douban  Conversation  Corpus."></p>
-<p>其中SMNdynamic是基于RNN的模型，DAMfirst和DAMlast分别指仅利用stacked self-attention的第一层和最后一层，DAMself和DAMcross分别代表仅仅利用一种attention matching matrix。</p>
-<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>作者分析了不同的对话历史轮次对于选择回复的影响：</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBSdVBrNnVxQXNmRnBpNk52K2VmUGhmTlZJTlExdml0c2hUVzRwam54QVRBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  4:  DAM’s  performance  on  Ubuntu  Corpus  across different  contexts.  The  left  part  shows  the  performance  in
-different  utterance  number  of  context.  The  right  part  shows performance  in  different  average  utterance  text  length  of  context  as  well  as  self-attention  stack  depth."></p>
-<p>从中有以下结论：</p>
-<ol>
-<li>对于不同的对话轮次，DAM都有着不错的改善，证明了使用多粒度信息表征的稳定性。</li>
-<li>对于utterance比较短的对话，DAM的效果会比较差，这说明短文本对话中含有的信息可能会比较少；同时，stacked self-attention的层数也有助于改善准确率。</li>
-</ol>
-<p>作者也指出了DAM的不足之处：</p>
-<ul>
-<li><strong>fuzzy-candidate</strong>,  where  response  candidates  are  basically  proper  for  the  conversation  context,  except for  a  few  improper  details.  </li>
-<li><strong>logical-error</strong>, where  response  candidates  are  wrong  due  to  logical  mismatch,  for  example,  given  a  conversation<br>context  A:  “I  just  want  to  stay  at  home  tomorrow.”,  B:  “Why  not  go  hiking?  I  can  go  with you.”,  response  candidate  like  “Sure,  I  was  planning  to  go  out  tomorrow.”  is  logically  wrong  because  it  is  contradictory  to  the  first  utterance  of speaker.</li>
-</ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://github.com/baidu/Dialogue/DAM" target="_blank" rel="noopener">https://github.com/baidu/Dialogue/DAM</a></li>
-</ul>
+            <p>about</p>
 
         </div>
         <footer class="article-footer">
@@ -369,29 +295,6 @@ different  utterance  number  of  context.  The  right  part  shows performance 
             
         </ul>
     </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2019/03/05/Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
-    
-    
-        <a href="/2019/02/25/A Knowledge-Grounded Neural Conversation Model/" id="article-nav-older" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">A  Knowledge-Grounded  Neural  Conversation  Model</p>
-        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
-        </a>
-    
-</nav>
-
     
     <div class="widgets-container">
         
@@ -593,7 +496,7 @@ different  utterance  number  of  context.  The  right  part  shows performance 
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2019/03/01/Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network/';
+    var disqus_url = 'https://helicqin.github.io/about/index.html';
     
     (function() {
     var dsq = document.createElement('script');
