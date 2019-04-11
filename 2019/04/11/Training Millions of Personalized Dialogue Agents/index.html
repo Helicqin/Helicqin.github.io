@@ -3,16 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Archive: 2018/3 | Helic</title>
+    <title>Training Millions of Personalized Dialogue Agents | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Helic">
-<meta property="og:url" content="https://helicqin.github.io/archives/2018/03/index.html">
+        <meta name="keywords" content="Dialogue System" />
+    
+    <meta name="description" content="本文是FAIR发表于EMNLP2018上的文章，主要提出了一个基于Reddit的大规模开放域对话数据集，附带大量的用户个性，实验证明用户个性有助于提高对话系统的性能；同时，基于本数据集的预训练模型也有助于各种任务（FAIR的另一篇文章Wizard of Wikipedia Knowledge-powered conversational agents 使用了基于本数据集的预训练Transforme">
+<meta name="keywords" content="Dialogue System">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Training Millions of Personalized Dialogue Agents">
+<meta property="og:url" content="https://helicqin.github.io/2019/04/11/Training Millions of Personalized Dialogue Agents/index.html">
 <meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文是FAIR发表于EMNLP2018上的文章，主要提出了一个基于Reddit的大规模开放域对话数据集，附带大量的用户个性，实验证明用户个性有助于提高对话系统的性能；同时，基于本数据集的预训练模型也有助于各种任务（FAIR的另一篇文章Wizard of Wikipedia Knowledge-powered conversational agents 使用了基于本数据集的预训练Transforme">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkT3hsdkVaUnBqSVhLdndsajF5eGRPcVdFbUxwQlZyemx3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-04-11T09:48:41.289Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Helic">
+<meta name="twitter:title" content="Training Millions of Personalized Dialogue Agents">
+<meta name="twitter:description" content="本文是FAIR发表于EMNLP2018上的文章，主要提出了一个基于Reddit的大规模开放域对话数据集，附带大量的用户个性，实验证明用户个性有助于提高对话系统的性能；同时，基于本数据集的预训练模型也有助于各种任务（FAIR的另一篇文章Wizard of Wikipedia Knowledge-powered conversational agents 使用了基于本数据集的预训练Transforme">
+<meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkT3hsdkVaUnBqSVhLdndsajF5eGRPcVdFbUxwQlZyemx3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
     
 
     
@@ -137,265 +146,173 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>Archive: 2018/3
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-Training Millions of Personalized Dialogue Agents" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/03/30/Attention is all you need (1)/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2018/03/30/Attention is all you need (1)/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/03/30/Attention is all you need (1)/">Attention is all you need</a>
+        Training Millions of Personalized Dialogue Agents
         </h1>
     
 
-        <p class="article-excerpt">
-            来自Google的一篇神经翻译的文章，在这篇文章中作者们抛弃了传统Encoder-Decoder中经典的卷积和循环结构，仅保留了attention的结构，在减少了训练成本的同时在数个数据集上取得了最优的BLEU.paper link
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/04/11/Training Millions of Personalized Dialogue Agents/" class="article-date">
+            <time datetime="2019-04-11T07:10:00.000Z" itemprop="datePublished">2019-04-11</time>
+        </a>
     </div>
-</article>
-    
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/03/30/Attention is all you need/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://ws2.sinaimg.cn/large/006tGRI6ly1fpvzlen1vpj30g50k8mze.jpg)" alt="Attention is all you need" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2018/03/30/Attention is all you need/">0</span>
-    
-</span>
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>
+    </div>
 
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
             </div>
-            <div class="date"><time datetime="2018-03-30T06:10:00.000Z" itemprop="datePublished">2018-03-30</time></div>
-        </div>
         
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/03/30/Attention is all you need/">Attention is all you need</a>
-        </h1>
-    
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文是FAIR发表于EMNLP2018上的文章，主要提出了一个基于Reddit的大规模开放域对话数据集，附带大量的用户个性，实验证明用户个性有助于提高对话系统的性能；同时，基于本数据集的预训练模型也有助于各种任务（FAIR的另一篇文章<a href="https://helicqin.github.io/2019/04/10/Wizard%20of%20Wikipedia%20Knowledge-powered%20conversational%20agents/">Wizard of Wikipedia Knowledge-powered conversational agents</a> 使用了基于本数据集的预训练Transformer Encoder）。</p>
+<p><a href="https://drive.google.com/open?id=1PWwxZKg1EqUs3B8DzjVK0nvsQBewyJoe" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>FAIR提出了两个基于用户个性persona的对话数据集：</p>
+<ul>
+<li><p><a href="https://helicqin.github.io/2019/03/21/Personalizing%20Dialogue%20Agents_%20I%20have%20a%20dog,%20do%20you%20have%20pets%20too_/">Personalizing Dialogue Agents I have a dog, do you have pets too?</a>(PERSONA-CHAT) ：</p>
+<ul>
+<li>众包标注，仅有1100左右的用户个性，规模较小；</li>
+<li>手工构建，可能与真实对话存在偏差。</li>
+</ul>
+</li>
+<li><p><a href="#">Training Millions of Personalized Dialogue Agents</a> ：</p>
+<ul>
+<li>从<a href="https://www.reddit.com/r/datasets/comments/3bxlg7/" target="_blank" rel="noopener">Reddit</a>中抽取，5百万的个性，7亿的对话数量，大规模对话数据集；</li>
+<li>规则抽取，会有一些偏差，用户persona与对话内容不一定相关，甚至相反；</li>
+<li>适合预训练模型。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Building-a-dataset-of-millions-of-persona-based-dialogues"><a href="#Building-a-dataset-of-millions-of-persona-based-dialogues" class="headerlink" title="Building  a  dataset  of  millions  of persona-based  dialogues"></a>Building  a  dataset  of  millions  of persona-based  dialogues</h2><p>以下是persona-based dialog的一个例子：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNFZlRabHdHeE1CM2c5N3hZQ28zcmxybmNFVEpsQ1ZpYkxERlpTWWExTURRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>用户个性是指回复者Responser的性格描述，由自然语言描述句组成（作者限制最大N句），目标是预测Response。</p>
+<blockquote>
+<p>We construct the persona of a user by gathering all the comments they wrote, splitting them into sentences, and selecting the sentences that satisfy the following rules:</p>
+<ul>
+<li>each  sentence  must  contain between  4  and  20  words  or  punctuation  marks</li>
+<li>it  contains  either  the  word  <em>I</em>  or  <em>my</em><ul>
+<li>at  least one  verb</li>
+<li>at  least  one  noun,  pronoun  or adjective.</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>作者采用了四种方法来收集用户个性：</p>
+<ul>
+<li><em>rule</em>：在所有满足上述规则的句子中，随机选择至多N个句子作为用户个性。</li>
+<li><em>rule+classifier</em>：首先使用上述规则初步过滤，之后再用一个分类器计算得分，手工设定阈值，选择前topN个作为个性句。这个分类器使用PERSONA-CHAT数据集中的persona句与随机抽取的reddit comments作为训练数据。</li>
+<li><em>random  from  user</em>：从同一个用户Responser句中随机抽取（只需满足长度的要求，忽略其它），作为该用户的个性</li>
+<li><em>random  from  dataset</em>：从整个数据集中随机抽取，有可能来自于不同用户，作为对比实验。</li>
+</ul>
+<blockquote>
+<p>We take each pair of successive comments in a thread to form the context and response of an example.</p>
+</blockquote>
+<h2 id="End-to-end-dialogue-models"><a href="#End-to-end-dialogue-models" class="headerlink" title="End-to-end  dialogue  models"></a>End-to-end  dialogue  models</h2><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjEvUk5OWTFqSVIwL2hoL0VGaTFWUFdwOU1GYmRvL0NWUTFFdTdabHQyZE53PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Persona-based  network  architecture."></p>
+<blockquote>
+<p>As  in  Zhang  et  al.  (2018),  we  combine the  encoded  context  and  persona  using  a  1-hop memory  network  with  a  residual  connection,  using  the  context  as  query  and  the  set  of  persona sentences  as  memory.</p>
+<p>We use mini-batches of training examples and, for each example therein, all the responses of the other examples of the same batch are used as negative responses. </p>
+</blockquote>
+<p>作者使用了以下几种编码器：</p>
+<ul>
+<li><strong>Bag-of-words</strong>：对词向量过一个全连接层，然后对所有位置做平均池化，除以长度的平方根，得到encoding</li>
+<li><strong>LSTM</strong>：applies  a  2-layer  bidirectional  LSTM. We  use  the  last  hidden  state  as  encoded  sentence.</li>
+<li><strong>Transformer encoding</strong>：We subsequently average the resulting representation across all positions in the sentence, yielding a fixed-size representation. </li>
+</ul>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjEvUk5OWTFqSVIwM3pkUi9XTFB2b3kyMlZlUS9ybkN0UnR1TExEVHdOMzBBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Test  results  when  classifying  the  correct  answer  among  a  total  of  100  possible  answers."></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjEvUk5OWTFqSVIwMzBwR2ZKMzNCdy8rZ0NSRlRuTWlMRVlTYU93U3oxeXBBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  Sample  predictions  from  the  best  model.  In  all  selected  cases  the  persona  consists  of  a  single  sentence. The  answer  is constrained  to  be  at  most  10  tokens  and  is  retrieved  among  1M  candidates  sampled  randomly  from the  training  set."></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjEvUk5OWTFqSVIwMkFRRDIybngxYnl0dytwVjc0NkYzL0dmMFlmSXA3a3NnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  3:  Retrieval  precision  on  the  REDDIT test  set using  a  Transformer  and  different  persona  selection  systems.  N:  maximum  number  of  sentences  per  persona."></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjEvUk5OWTFqSVIwejZBK1NZMHN6ZFpXalV1cGNNdVptS0FzYW90V2xKMWJRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  4:  hits@1  results  for  the  best  found  Transformer architecture  on  different  test  sets.  FT-PC:  REDDIT-trained  model  fine-tuned  on  the  PERSONA-CHAT training  set.  To  be  comparable  to  the  state  of  the  art  on  each dataset,  results  on  PERSONA-CHATare  computed  using 20  candidates,  while  results  on  REDDIT use  100."></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文是FAIR关于个性化对话系统的系列文章之一，主要提出了一个基于Reddit的大规模开放域对话数据集，附带大量的用户个性，适合于其它对话任务预训练模型。</p>
 
-        <p class="article-excerpt">
-            来自Google的一篇神经翻译的文章，在这篇文章中作者们抛弃了传统Encoder-Decoder中经典的卷积和循环结构，仅保留了attention的结构，在减少了训练成本的同时在数个数据集上取得了最优的BLEU.paper link
-        </p>
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
     </div>
 </article>
-    
-        </div>
-    
 
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/03/22/Semi-Supervised Learning for NLP/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://ws1.sinaimg.cn/large/006tGRI6ly1fpmr2ghes7j30lt0e6t9i.jpg)" alt="Semi-Supervised Learning for NLP" class="thumbnail-image"></span>
-    
+    <section id="comments">
     
         
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2018/03/22/Semi-Supervised Learning for NLP/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2018-03-22T12:11:50.000Z" itemprop="datePublished">2018-03-22</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/03/22/Semi-Supervised Learning for NLP/">Semi-Supervised Learning for NLP</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Semi-Supervised Learning for NLP. CS224n lecture 17.
-        </p>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-</article>
-    
 
     
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/03/20/Eager_Execution/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fja9v0wpkfj30fa0bhq2v.jpg)" alt="Tensorflow_Eager" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2018/03/20/Eager_Execution/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a>
-            </div>
-            <div class="date"><time datetime="2018-03-20T12:40:00.000Z" itemprop="datePublished">2018-03-20</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/03/20/Eager_Execution/">Tensorflow_Eager</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Eager execution is a feature that makes TensorFlow execute operations immediately: concrete values are returned, instead of a computational graph to be executed later.
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/03/15/Advanced Architectures and Memory Networks/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://ws1.sinaimg.cn/large/006tGRI6ly1fpegt4xc4pj30t00bnabq.jpg)" alt="Advanced Architectures and Memory Networks" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2018/03/15/Advanced Architectures and Memory Networks/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2018-03-15T08:57:50.000Z" itemprop="datePublished">2018-03-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/03/15/Advanced Architectures and Memory Networks/">Advanced Architectures and Memory Networks</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Model overview and combinations, Dynamic memory networks. CS224n lecture 16.
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-
-    </div></section>
-
+    </section>
 
 
                         </div>
@@ -456,6 +373,19 @@ ga('send', 'pageview');
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/04/10/Wizard of Wikipedia Knowledge-powered conversational agents/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Wizard of Wikipedia Knowledge-powered conversational agents</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -657,11 +587,13 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
+    var disqus_url = 'https://helicqin.github.io/2019/04/11/Training Millions of Personalized Dialogue Agents/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
