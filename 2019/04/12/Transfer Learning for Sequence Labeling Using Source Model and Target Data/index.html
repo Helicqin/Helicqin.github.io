@@ -17,7 +17,7 @@
 <meta property="og:description" content="本文来自于AAAI2019，主要研究的是迁移学习在序列标注任务上的应用，仅仅基于source data训练的source model迁移到新的target data（与source data相比，增加了标签的类别，而领域不变），而不直接使用source data来迁移，实验结果证明迁移学习在新标签类别和之前已有的标签类别上都取得了不错的效果。 paper linkcode link">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5NnVkangrMnRtVE0vSTdHTUw0eGNGQWxjM045K3p1UTh0aVpCaWVWcGtRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-04-14T13:55:19.823Z">
+<meta property="og:updated_time" content="2019-04-15T15:09:19.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Transfer  Learning  for  Sequence  Labeling  Using  Source  Model  and  Target  Data">
 <meta name="twitter:description" content="本文来自于AAAI2019，主要研究的是迁移学习在序列标注任务上的应用，仅仅基于source data训练的source model迁移到新的target data（与source data相比，增加了标签的类别，而领域不变），而不直接使用source data来迁移，实验结果证明迁移学习在新标签类别和之前已有的标签类别上都取得了不错的效果。 paper linkcode link">
@@ -219,7 +219,7 @@ ga('send', 'pageview');
 <p>$$\overleftarrow{a}_{t}=\overleftarrow{\mathrm{A}}\left(p_{t}^{\mathrm{S}}, \overleftarrow{a}_{t+1}\right)$$</p>
 <p>$$\boldsymbol{p}_{t}^{\mathrm{T}^{\prime}}=\boldsymbol{a}_{t} \oplus \boldsymbol{p}_{t}^{\mathrm{T}}$$</p>
 <p>$$\boldsymbol{a}_{t}=\left[\overrightarrow{a}_{t} \oplus \overleftarrow{a}_{t}\right], \oplus \text{ is the element-wise  summation}$$</p>
-<p>得到$\boldsymbol{p}_{t}^{\mathrm{T}^{\prime}}$后，再经过softmax归一化得到输出概率分布。整个过程中$M_{S}$的参数是固定不变的。</p>
+<p>得到$\boldsymbol{p}_{t}^{\mathrm{T}^{\prime}}$后，再经过softmax归一化得到输出概率分布。整个过程中$M_{S}$的参数是固定不变的。注意此时source model和target model的输入均来自于target data，即二者的输入是同一个sentence。</p>
 <blockquote>
 <p>The choice of BLSTM as the adapter is motivated by the fact that we want to incorporate the context information of a feature in the sequence to detect the new category that was annotated and possibly incorrectly predicted as not a label.</p>
 </blockquote>
