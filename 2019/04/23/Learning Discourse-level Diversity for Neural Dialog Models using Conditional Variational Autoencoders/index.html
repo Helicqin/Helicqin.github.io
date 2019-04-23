@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Dialogue System,NLP,VAE" />
+    
+    <meta name="description" content="本文是ACL2017上的文章，主要研究对话生成多样性问题，作者提出了基于条件变分自编码器CVAE的对话生成模型，借助于隐变量学习回复的概率分布，同时还引入了回复的diaact信息作为外部语言知识。针对于带RNN decoder的VAE模型训练过程中存在的vanishing  latent  variable  problem，作者引入了一种附加 bag loss。与基线模型相比，本文提出的模型在生">
+<meta name="keywords" content="Dialogue System,NLP,VAE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders">
+<meta property="og:url" content="https://helicqin.github.io/2019/04/23/Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文是ACL2017上的文章，主要研究对话生成多样性问题，作者提出了基于条件变分自编码器CVAE的对话生成模型，借助于隐变量学习回复的概率分布，同时还引入了回复的diaact信息作为外部语言知识。针对于带RNN decoder的VAE模型训练过程中存在的vanishing  latent  variable  problem，作者引入了一种附加 bag loss。与基线模型相比，本文提出的模型在生">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJXbmtzdDZqZzk3UXJXd3pCKzJtdVdyU2xWWjFSNlpGRUdlRFFXek1BOVZ3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-04-23T13:24:21.317Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders">
+<meta name="twitter:description" content="本文是ACL2017上的文章，主要研究对话生成多样性问题，作者提出了基于条件变分自编码器CVAE的对话生成模型，借助于隐变量学习回复的概率分布，同时还引入了回复的diaact信息作为外部语言知识。针对于带RNN decoder的VAE模型训练过程中存在的vanishing  latent  variable  problem，作者引入了一种附加 bag loss。与基线模型相比，本文提出的模型在生">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJXbmtzdDZqZzk3UXJXd3pCKzJtdVdyU2xWWjFSNlpGRUdlRFFXek1BOVZ3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/04/23/Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders/" class="article-date">
+            <time datetime="2019-04-23T09:10:00.000Z" itemprop="datePublished">2019-04-23</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/VAE/">VAE</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文是ACL2017上的文章，主要研究对话生成多样性问题，作者提出了基于条件变分自编码器CVAE的对话生成模型，借助于隐变量学习回复的概率分布，同时还引入了回复的diaact信息作为外部语言知识。针对于带RNN decoder的VAE模型训练过程中存在的<strong>vanishing  latent  variable  problem</strong>，作者引入了一种附加 bag loss。与基线模型相比，本文提出的模型在生成回复的多样性方面有明显提升。</p>
+<p><a href="https://drive.google.com/open?id=1-kv8CuK_hqZwoIp1IV9Fd3KRsFd0OGWX" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/snakeztc/NeuralDialog-CVA" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>传统的Encoder-decoder模型生成的回复往往是通用和无意义的，缺乏多样性。过去的工作主要围绕word-level来改进，基本分为两大类，第一种是增加输入信息，如对话的风格主题等；第二种关注Encoder-decoder模型的改进，包括运用beam-search, 激励生成较长的回复，RL-based等。而本文提出，response是多种可能的，不应该只有一个标准答案，所以应该按照_one-to-many_的方式来建模训练。这些多样性用隐变量来表征，然后decoder从学到的隐变量概率分布采样重建，生成不同的response。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJXbmtzdDZqZzk3WHlNWktucXlxNkJmSWd3Q1hUS2t3WnptWktESlN0ZUFBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>本文的三个贡献：</p>
+<ul>
+<li>提出了基于conditional  variational  autoencoders(CVAE) 的对话生成模型。</li>
+<li>在CVAE的基础上，融合外部知识，提高模型的可解释性，建立了Knowledge-Guided  CVAE  (kgCVAE)模型。</li>
+<li>针对于CVAE在自然语言生成任务上训练时出现的问题，提出了一种辅助损失函数。</li>
+</ul>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p><em>VAE details in <a href="https://helicqin.github.io/2018/06/04/GAN/">https://helicqin.github.io/2018/06/04/GAN/</a></em></p>
+<h2 id="Proposed-Models"><a href="#Proposed-Models" class="headerlink" title="Proposed  Models"></a>Proposed  Models</h2><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFbTZKaWtZb3JrbUsyajF4bVoxQUxoQ2lZMHZSS0NQWEV3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Graphical  models  of  CVAE  (a)  and  kgC-VAE  (b)"></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJXbmtzdDZqZzk3UXJXd3pCKzJtdVdyU2xWWjFSNlpGRUdlRFFXek1BOVZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Conditional-Variational-Autoencoder-CVAE-for-Dialog-Generation"><a href="#Conditional-Variational-Autoencoder-CVAE-for-Dialog-Generation" class="headerlink" title="Conditional  Variational  Autoencoder (CVAE)  for  Dialog  Generation"></a>Conditional  Variational  Autoencoder (CVAE)  for  Dialog  Generation</h3><p>先定义dialogue任务：c是对话的context （包含k-1 轮对话），x是要生成的第k轮对话，z是合理response的隐变量概率分布，此外还引入一个conversational floor变量(用0和1区分不同对话者)。生成任务可以表示为：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFbTdYUzBObGFWWWJ3VmF2SU5CYktVM0ZDeW83OXQ3V3dRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>将 $p_{\theta}(z|c)$ 称之为<code>prior network</code>，$p_{\theta}(x|z,c)$ 称之为<code>response decoder</code>，生成过程如下：</p>
+<ul>
+<li>从 <code>prior network</code> $p_{\theta}(z|c)$采样</li>
+<li>通过 <code>response decoder</code> $p_{\theta}(x|z,c)$ 生成x</li>
+</ul>
+<p>与VAE类似，无法直接计算似然函数，转而最大化似然函数的下界：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFanBqd0E1MzVmTWNYNkdxS3NSbFBKeXhNSDg1bkk5MTlBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>如Figure 3所示，utterance和context均使用RNN编码，使用RNN的最后时刻的隐层状态作为utterance的编码$u_{i}$，然后再把所有的$u_{i}$与说话者身份信息（0/1编码）作为RNN的输入得到context表征。根据CVAE的假设，$q_{\phi}(z | x, c) \sim \mathcal{N}\left(\mu, \sigma^{2} \mathbf{I}\right)$ 和 $p_{\theta}(z | c) \sim \mathcal{N}\left(\mu^{\prime}, \sigma^{\prime 2} \mathbf{I}\right)$ 均满足高斯分布：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFclFud3lkYTZ2ZzZrU0cxL2pNK0tpMXI3RjZwM3VHMjFBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Knowledge-Guided-CVAE-kgCVAE"><a href="#Knowledge-Guided-CVAE-kgCVAE" class="headerlink" title="Knowledge-Guided  CVAE  (kgCVAE)"></a>Knowledge-Guided  CVAE  (kgCVAE)</h3><p>此外，这篇论文认为应该融合linguistic features，记为y，在这篇论文中，y主要是指dialog act。论文提出假设，x的生成依赖于c、 z 和y，而y又依赖于z和c。$y^{\prime}=\operatorname{MLP}_{y}(z, c)$：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFb1pBSUF3RUkrZFA0SXMwYnlzMVhRYVZHamx6SXVxTHdnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="A-Training-Method-Bag-of-Word-Loss"><a href="#A-Training-Method-Bag-of-Word-Loss" class="headerlink" title="A Training Method: Bag-of-Word Loss"></a><strong>A Training Method: Bag-of-Word Loss</strong></h3><p>论文提到，简单的把VAE和RNN decoder结合会因为<code>vanishing latent variable problem</code>导致z学不到有用的信息（KL loss在训练中迅速降为0）。论文提出一个方法来解决这个问题：<strong>bag-of-word loss</strong>。论文将x分解成两个变量：$x_{o}$ 是词序，$x_{bow}$ 是词袋 ，并假设二者相互独立：$p(x, z | c)=p\left(x_{O} | z, c\right) p\left(x_{b o w} | z, c\right) p(z | c)$。$p\left(x_{b o w} | z, c\right)$ 由$MLP_{b}$计算：V是词汇表</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFa1g4THhPdEVyNVhLbFNqR1dTeHAxbmRsZlNnMHhoR3dBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""><br><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFa0I4NHlvM1ZTYUh3WStzRGszakR6aURhTjBPL0JjN1lnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>训练的目标函数在CVAE的基础上增加了bag-of-word loss：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFdmZlVDZOZVpMMmcxNGlwNlo2VnE3TVZLRlRncU4xZitRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>实验基于一个电话对话的数据集，the Switchboard(SW) 1 Release 2 Corpus，对比了三个模型：Baseline model，CVAE和kgCVAE，Baseline model是不含隐变量的encoder-decoder模型。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFblFoT2Z1WDhtc3NmU3hxOG1VZmxZYjRraHFDMkhndlpBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>论文分析了两个例子，分别对应Context对Target utterance的不同限制大小。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFcU84UXYxQlZwT004NGhIQXFNVHhVZTBHWlpsQXVJa2pBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>实验证明，不管Context的熵大小，隐变量z都能捕捉上下文细微的信息，并体现在给出的回答上：Context熵小时，对话的多样性体现在词级别；Context熵大时，多样性体现在discourse级别。</p>
+<p>另一个比较有趣的现象是，作者将z的后验概率分布用t-SNE在2D空间展示，发现隐变量相同的dialog act和相似的回复长度能聚类在一块。这也一定程度上说明了隐变量z能对有用的信息进行编码。  </p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBuN1RhWGo3Z1JFbDRXOEVrdDIyWFp4cVp6SjBjOUV5NUdqM2NaKzNGV3NRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><blockquote>
+<p>While the current paper ad-dresses diversifying responses in respect to dia-logue acts, this work is part of a larger research direction that targets leveraging both past linguis-tic findings and the learning power of deep neural networks to learn better representation of the la-tent factors in dialog.</p>
+</blockquote>
+<p>本文的核心思想是对话应该是one-to-many的。在这个基础上，论文首先将CVAE迁移到对话任务中，用隐变量来捕捉discourse-level信息提升diversity；然后，在CVAE的基础上，论文进一步提出融合了专家知识的kgCVAE，提升性能和模型的可解释性；最后，论文提出了一种新的训练方法，旨在解决文本生成的优化问题，降低了模型的训练难度。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://helicqin.github.io/2018/06/04/GAN/">https://helicqin.github.io/2018/06/04/GAN/</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/26898768" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26898768</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/04/12/Transfer Learning for Sequence Labeling Using Source Model and Target Data/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Transfer  Learning  for  Sequence  Labeling  Using  Source  Model  and  Target  Data</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/23/Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJXbmtzdDZqZzk3UXJXd3pCKzJtdVdyU2xWWjFSNlpGRUdlRFFXek1BOVZ3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/23/Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders/" class="title">Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders</a></p>
+                            <p class="item-date"><time datetime="2019-04-23T09:10:00.000Z" itemprop="datePublished">2019-04-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/12/Transfer Learning for Sequence Labeling Using Source Model and Target Data/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5NnVkangrMnRtVE0vSTdHTUw0eGNGQWxjM045K3p1UTh0aVpCaWVWcGtRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Transfer  Learning  for  Sequence  Labeling  Using  Source  Model  and  Target  Data" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/12/Transfer Learning for Sequence Labeling Using Source Model and Target Data/" class="title">Transfer  Learning  for  Sequence  Labeling  Using  Source  Model  and  Target  Data</a></p>
+                            <p class="item-date"><time datetime="2019-04-12T11:48:00.000Z" itemprop="datePublished">2019-04-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/11/Training Millions of Personalized Dialogue Agents/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjEvUk5OWTFqSVIwL2hoL0VGaTFWUFdwOU1GYmRvL0NWUTFFdTdabHQyZE53PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Training Millions of Personalized Dialogue Agents" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/11/Training Millions of Personalized Dialogue Agents/" class="title">Training Millions of Personalized Dialogue Agents</a></p>
+                            <p class="item-date"><time datetime="2019-04-11T07:10:00.000Z" itemprop="datePublished">2019-04-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/10/Wizard of Wikipedia Knowledge-powered conversational agents/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVUFUSVVlMEZkT3hsdkVaUnBqSVhLdndsajF5eGRPcVdFbUxwQlZyemx3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Wizard of Wikipedia Knowledge-powered conversational agents" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/10/Wizard of Wikipedia Knowledge-powered conversational agents/" class="title">Wizard of Wikipedia Knowledge-powered conversational agents</a></p>
+                            <p class="item-date"><time datetime="2019-04-10T02:06:00.000Z" itemprop="datePublished">2019-04-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uR3lHQjBwYTZGTlFQd1I3bUxSb3o3dWJVakNhWWdKRzlBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/" class="title">Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems</a></p>
+                            <p class="item-date"><time datetime="2019-04-08T06:03:00.000Z" itemprop="datePublished">2019-04-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">34</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Active-Learning/">Active Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversial-Learning/">Adversial Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentence-Semantic-Matching/">Sentence  Semantic  Matching</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Labeling/">Sequence  Labeling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Learning/">Sequence Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer  Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VAE/">VAE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Active-Learning/" style="font-size: 10px;">Active Learning</a> <a href="/tags/Adversial-Learning/" style="font-size: 10px;">Adversial Learning</a> <a href="/tags/BUPT/" style="font-size: 11.25px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 15px;">Commonsense  Knowledge</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 18.75px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.25px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 12.5px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 10px;">Memory Network</a> <a href="/tags/NLG/" style="font-size: 11.25px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 12.5px;">NLU</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.25px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 11.25px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.75px;">Reinforcement Learning</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/Sentence-Semantic-Matching/" style="font-size: 10px;">Sentence  Semantic  Matching</a> <a href="/tags/Sequence-Labeling/" style="font-size: 10px;">Sequence  Labeling</a> <a href="/tags/Sequence-Learning/" style="font-size: 10px;">Sequence Learning</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16.25px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 17.5px;">Tensorflow</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer  Learning</a> <a href="/tags/Transformer/" style="font-size: 11.25px;">Transformer</a> <a href="/tags/VAE/" style="font-size: 10px;">VAE</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://123.206.44.59/web/">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helicqin.github.io/2019/04/23/Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
