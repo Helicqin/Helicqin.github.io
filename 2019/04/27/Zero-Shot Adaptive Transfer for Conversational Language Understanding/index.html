@@ -3,16 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Helic</title>
+    <title>Zero-Shot  Adaptive  Transfer  for  Conversational  Language  Understanding | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Helic">
-<meta property="og:url" content="https://helicqin.github.io/page/2/index.html">
+        <meta name="keywords" content="Dialogue System,NLU,Transfer Learning" />
+    
+    <meta name="description" content="本文来自于AAAI2019，主要研究的是自然语言理解领域迁移的问题，与传统的序列标注模型不同的是，作者使用了slot描述信息来辅助多个领域之间的迁移，在10个领域的数据集上取得了最优的效果。 paper link">
+<meta name="keywords" content="Dialogue System,NLU,Transfer Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zero-Shot  Adaptive  Transfer  for  Conversational  Language  Understanding">
+<meta property="og:url" content="https://helicqin.github.io/2019/04/27/Zero-Shot Adaptive Transfer for Conversational Language Understanding/index.html">
 <meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文来自于AAAI2019，主要研究的是自然语言理解领域迁移的问题，与传统的序列标注模型不同的是，作者使用了slot描述信息来辅助多个领域之间的迁移，在10个领域的数据集上取得了最优的效果。 paper link">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjIxUDhYb2xFNHY2YnhEV1NVRjRoaTdoeFhwZ3VCSk1yS2NwVUUrSEF5Q1BnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-04-27T14:47:41.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Helic">
+<meta name="twitter:title" content="Zero-Shot  Adaptive  Transfer  for  Conversational  Language  Understanding">
+<meta name="twitter:description" content="本文来自于AAAI2019，主要研究的是自然语言理解领域迁移的问题，与传统的序列标注模型不同的是，作者使用了slot描述信息来辅助多个领域之间的迁移，在10个领域的数据集上取得了最优的效果。 paper link">
+<meta name="twitter:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjIxUDhYb2xFNHY2YnhEV1NVRjRoaTdoeFhwZ3VCSk1yS2NwVUUrSEF5Q1BnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
     
 
     
@@ -137,520 +146,147 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <em class="page-title-link" data-url="home">Home</em>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/NLP/NLU/">NLU</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-Zero-Shot Adaptive Transfer for Conversational Language Understanding" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2019" class="archive-year"><i class="icon fa fa-calendar-o"></i>2019</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/03/21/Personalizing Dialogue Agents_ I have a dog, do you have pets too_/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNodmxkUjV2REpNc1dhdERPZENFOEV4YTcvd1ZtdW15MlJkbE4wZy9mOVp3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Personalizing  Dialogue  Agents   I  have  a  dog,  do  you  have  pets  too?" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/03/21/Personalizing Dialogue Agents_ I have a dog, do you have pets too_/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-03-21T01:23:00.000Z" itemprop="datePublished">2019-03-21</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2019/03/21/Personalizing Dialogue Agents_ I have a dog, do you have pets too_/">Personalizing  Dialogue  Agents   I  have  a  dog,  do  you  have  pets  too?</a>
+        Zero-Shot  Adaptive  Transfer  for  Conversational  Language  Understanding
         </h1>
     
 
-        <p class="article-excerpt">
-            本文是来自于FAIR的一篇关于个性化chitchat对话系统数据集PERSONA-CHAT的论文，发表于ACL2018，论文主要是创建了一个全新的带有对话双方个性的对话数据集，并提供了一些基线模型。基于此数据集，在NIPS2018上举行了 ConvAI2 评测。
-paper linkdataset link
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/04/27/Zero-Shot Adaptive Transfer for Conversational Language Understanding/" class="article-date">
+            <time datetime="2019-04-27T12:38:00.000Z" itemprop="datePublished">2019-04-27</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>, <a class="tag-link" href="/tags/NLU/">NLU</a>, <a class="tag-link" href="/tags/Transfer-Learning/">Transfer Learning</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文来自于AAAI2019，主要研究的是自然语言理解领域迁移的问题，与传统的序列标注模型不同的是，作者使用了slot描述信息来辅助多个领域之间的迁移，在10个领域的数据集上取得了最优的效果。</p>
+<p><a href="https://drive.google.com/open?id=1DO8TnK4r2f3BxuSozf8ki0n1bemw0uKO" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>序列标注任务是自然语言理解中的一个关键问题，智能对话代理（Alexa, Google Assistant, Cortana等）需要频繁地添加新领域识别的功能，而构建一个良好的序列标注模型需要大量的标注数据。因此，如何从已有的高资源领域迁移到低资源领域是一个很有意义的问题。</p>
+<p>目前NLU迁移问题主要有两种方法：</p>
+<ul>
+<li><strong>data-driven</strong>：将源数据集和目标数据集相结合，使用类似特征增强的方式进行多任务学习，参照<a href="https://drive.google.com/open?id=1uThLZwYPgvGnsD_c0gosK6Ko0LJYc_dA" target="_blank" rel="noopener">Fast and Scalable Expansion of Natural Language Understanding Functionality for Intelligent Agents</a>。缺点是数据集的增加会带来训练时间的增加。</li>
+<li><strong>model-driven</strong>：与<strong>data-driven</strong>不同，<strong>model-driven</strong>并不直接利用源数据，而是将源模型的输出作为额外的特征添加到目标模型中，能够加快训练速度，参照 <a href="https://drive.google.com/open?id=1SZoSEX79Z1Zi9Gml2Hqg3ao23mbPeuDb" target="_blank" rel="noopener">Domain Attention with an Ensemble of Experts</a>。缺点在于<strong>model-driven</strong>需要显式地<code>concept alignments</code>即slot对齐。</li>
+</ul>
+<p>本文提出的模型<strong>Zero-Shot  Adaptive Transfer model  (ZAT)</strong>借鉴于zero-shot learning，传统的序列标注任务把slot类型作为预测输出，而本文中的模型则是将slot描述信息作为模型输入，如下图：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJsZ0c3RWEvNDlzaTBmUlI4bGdRTnpLKy9oek5CYTFaenBRVnBsVStKZGZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  (a)  Traditional  slot  tagging  approaches  with  the BIO  representation.  (b)  For  each  slot,  zero-shot  models  independently  detect  spans  that  contain  values  for  the  slot.  Detected  spans  are  then  merged  to  produce  a  final  prediction."></p>
+<p>针对于同一个utterance，需要独立的经过每一类slot type模型预测结果，之后再把结果合并得到最终的输出。作者假设，不同的领域可以共享slot描述的语义信息，基于此，我们可以在大量的源数据中训练源模型，之后在少量的目标数据上finetune，并且不需要显式地slot对齐。</p>
+<h2 id="Zero-Shot-Adaptive-Transfer-Model"><a href="#Zero-Shot-Adaptive-Transfer-Model" class="headerlink" title="Zero-Shot  Adaptive  Transfer  Model"></a>Zero-Shot  Adaptive  Transfer  Model</h2><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjIxUDhYb2xFNHY2YnhEV1NVRjRoaTdoeFhwZ3VCSk1yS2NwVUUrSEF5Q1BnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Network  architecture  for  the  Zero-Shot  Adaptive  Transfer  model."></p>
+<h3 id="Word-Embedding-Layer"><a href="#Word-Embedding-Layer" class="headerlink" title="Word  Embedding  Layer"></a>Word  Embedding  Layer</h3><p>对于input tokens和slot description tokens，ZAT模型使用了word embedding和character embedding拼接的方式，其中character embedding由CNN卷积然后max-pooling得到。</p>
+<h3 id="Contextual-LSTM-Layer"><a href="#Contextual-LSTM-Layer" class="headerlink" title="Contextual  LSTM  Layer"></a>Contextual  LSTM  Layer</h3><p>得到token的编码之后，再经过一个Bi-LSTM编码层，注意input tokens和slot description tokens共享相同的Bi-LSTM层，分别得到隐层状态表示$X\in R^{d\times T}, Q\in R^{d\times J}$ 。</p>
+<h3 id="Attention-Layer"><a href="#Attention-Layer" class="headerlink" title="Attention  Layer"></a>Attention  Layer</h3><p>注意力层的作用是获取input tokens的slot-aware的表征，使用每一个input token对应的隐层状态对slot description  tokens所有隐层状态做注意力：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJsZ0c3RWEvNDlzbmI3a1Ezc1hReVdQOU8wZkE1Q2dEYTFrVnhoSS9nQVlnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中$x_{t}$是$X$的第t行，$q_{j}$是$Q$的第j行。论文选择的$\alpha(x,q)=w<br>^{T}[x;q;x\circ q]$，最终得到$G_{:t}=\sum_{j}a_{tj}q_{j}$。</p>
+<h3 id="Conditional-LSTM-Layer"><a href="#Conditional-LSTM-Layer" class="headerlink" title="Conditional  LSTM  Layer"></a>Conditional  LSTM  Layer</h3><p>然后逐元素求和计算$\mathbf{H}=\mathbf{G} \oplus \mathbf{X}$ ，再通过一个Bi-LSTM。</p>
+<h3 id="Feedforward-Layer-amp-amp-CRF-Layer"><a href="#Feedforward-Layer-amp-amp-CRF-Layer" class="headerlink" title="Feedforward  Layer &amp;&amp; CRF  Layer"></a>Feedforward  Layer &amp;&amp; CRF  Layer</h3><p>最后通过一个前馈层和CRF层输出预测结果。</p>
+<p>ZAT模型预测的时候需要将所有的slot description与input utterance经过模型，再将所有的结果合并。</p>
+<blockquote>
+<p>For  example,  we  merge  “Find $[mexican]_{category}$  deals  in  seattle”  and  “Find  mexican  deals in  $[seattle]_{location}$”  to  produce  “Find  $[mexican]_{category}$ deals  in  $[seattle]_{location}$.”  When  there  are  conflicting  spans, we  select  one  of  the  spans  at  random.</p>
+</blockquote>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJsZ0c3RWEvNDlzdTVSQnF2aThncWVqSkd0My80eEZGdzI2cm0rOW1PQjV3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  List  of  domains  we  experimented  with.  80%  of  the  data  is  sampled  for  building  the  training  sets,  with  10%  each  for dev  and  test  sets."></p>
+<h3 id="Domain-Adaptation-using-Zero-Shot-Model"><a href="#Domain-Adaptation-using-Zero-Shot-Model" class="headerlink" title="Domain  Adaptation  using  Zero-Shot  Model"></a>Domain  Adaptation  using  Zero-Shot  Model</h3><p>针对于领域迁移任务，作者将10个领域数据集（随机取2000条）分为source data（包含9个领域）和target data（包含剩下的1个领域），先在source data训练出一个基础模型，之后再用target data进行finetue。</p>
+<blockquote>
+<p>Note that the size of the joint dataset for each target domain is 18,000, which is dramatically smaller than millions of examples used for training expert models in the BoE approach.</p>
+</blockquote>
+<h3 id="Results-and-Discussion"><a href="#Results-and-Discussion" class="headerlink" title="Results  and  Discussion"></a>Results  and  Discussion</h3><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJsZ0c3RWEvNDlzbkcwWlZZRGQ3WXVlZFVDc2kxMGx5R2hoVVFNY1k4UDJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  F1-scores  obtained  by  each  of  the  six  models  for  the  10  domains,  with  the  highest  score  in  each  row  marked  as  bold. Table  (a),  (b)  and  (c)  report  the  results  for  2000,  1000  and  500  training instances,  respectively.  The  average  improvement  is computed  over  the  CRF  model,  with  the  ones  marked * being  statistically  significant  with  p-value&lt;0.05."></p>
+<p>实验结果表明，ZAT模型与基线相比取得了最优的效果。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJsZ0c3RWEvNDlzcGNwUGhvM0JTYTJhbFRONVMxdUFYSVNsNkxFeUY2eENRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  7:  Visualization  of  attention  weights  for  the  input  sentence  ”Can  I  wear  jeans  to  a  casual  dinner?”  with  different  slots: (a)  category,  (b)  item,  and  (c)  time."></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文主要研究的是自然语言理解领域迁移的问题，提出了一种基于zero-shot learning的迁移方法，既避免了data-driven训练时间增加的缺点，同时也消除了slot对齐的问题，在各个领域的数据迁移实验中都取得了非常好的效果，尤其是低资源领域。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
     </div>
 </article>
-    
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/03/13/Style Transfer in Text Exploration and Evaluation/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBpVjVaeU1Ccmx2RWNsN0RTS1JnZFg4eE53aU9NUnNEWS9rQzdad3p6M09nPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Style Transfer in Text  Exploration and Evaluation" class="thumbnail-image"></span>
-    
+    <section id="comments">
     
         
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/03/13/Style Transfer in Text Exploration and Evaluation/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-03-13T01:19:00.000Z" itemprop="datePublished">2019-03-13</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/03/13/Style Transfer in Text Exploration and Evaluation/">Style Transfer in Text  Exploration and Evaluation</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文是文本风格迁移问题的一个尝试，提出了两个模型，核心点在于如何从文本中分离内容特征和风格特征，作者使用了对抗网络来解决这个问题。同时作者建立了paper-news、positive-negative  review两个数据集，提出了文本风格迁移两个指标：transfer  strength、content  preservation，实验证明，与auto-encoder相比，作者提出的模型在内容保存度上接近，在风格迁移度上大幅提高。paper link
-        </p>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-</article>
-    
-        </div>
-    
 
     
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/03/11/Mem2Seq Effectively Incorporating Knowledge Bases into End-to-End Task-Oriented Dialog Systems/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB0SXBHUDNmcTVkWmhWNWlpQ3R5R1dGNW5QSk1YOHh6YndlNDNMdDQxd0tRPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg)" alt="Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/03/11/Mem2Seq Effectively Incorporating Knowledge Bases into End-to-End Task-Oriented Dialog Systems/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-03-11T11:43:00.000Z" itemprop="datePublished">2019-03-11</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/03/11/Mem2Seq Effectively Incorporating Knowledge Bases into End-to-End Task-Oriented Dialog Systems/">Mem2Seq  Effectively  Incorporating  Knowledge  Bases  into  End-to-End Task-Oriented  Dialog  Systems</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文提出了一个端到端的基于memory network和指针网络的对话生成模型，结合多跳注意力机制和指针网络，从对话历史和词汇表中生成回复。ACL2018paper linkcode link
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/03/07/Sequential Attention-based Network for Noetic End-to-End Response Selection && Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFmcCtkeExEbnJGRFpTQkRaQTIvRGY1cEtudW16WEpVSmlFOEE5NllNUWRBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/03/07/Sequential Attention-based Network for Noetic End-to-End Response Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-03-07T02:45:00.000Z" itemprop="datePublished">2019-03-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/03/07/Sequential Attention-based Network for Noetic End-to-End Response Selection && Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations/">Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  Selection &amp;&amp; Comparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            这两篇文章分别来自 DSTC7 评测任务1 Sentence Selection 中排名第一和第二的团队，阿里巴巴达摩院以及Palo Alto研究中心。该任务重点关注了面向目标的对话系统中的回复选择问题，参赛者需要结合给定的对话片段在给出的一组候选回复中选择最符合的一个应答。这两个模型分别属于多轮对话的回复选择中基于序列的方法和基于层次的方法。Sequential  Attention-based  Network  for  Noetic  End-to-End  Response  SelectionComparison of Transfer-Learning Approaches for Response Selection in Multi-Turn Conversations
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/03/05/Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjExTmlnK3BpaHNkSGNjMWY2cWVFOE9mc0hXcTFFYkxkZ2oyTURoRnFnUHpBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/03/05/Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-03-05T06:51:00.000Z" itemprop="datePublished">2019-03-05</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/03/05/Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory/">Emotional Chatting Machine Emotional Conversation Generation with Internal and External Memory</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文主要研究的是将情感融入到开放域对话生成中，模型主要包含：对情感进行编码，捕获隐式地情感状态变化，使用显式地外部情感词汇；实验证明本文提出的模型（ECM）在生成内容和情感上都取得了一定的效果。paper linkcode link
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/03/01/Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjI3d1drYmRxSnA0RU9ZTi95U3hQTU43aWRhdmIzUjVIU2o3U2RvcCtXSzJRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/03/01/Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-03-01T05:57:00.000Z" itemprop="datePublished">2019-03-01</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/03/01/Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network/">Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文是ACL2018上的文章，主要研究对话领域选择回复的问题，作者提出了DAM模型，主要通过stacked self-attention获取不同维度的表征，从而得到self-attention matching matrix和cross-attention matching matrix，取得了不错的效果。paper linkcode link
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/02/25/A Knowledge-Grounded Neural Conversation Model/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjF3MlJOdGJYN0x6MkY4OGQrVisxUU9walJtcmcxckx4MWpuNnFOQnVjVDNnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="A  Knowledge-Grounded  Neural  Conversation  Model" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/02/25/A Knowledge-Grounded Neural Conversation Model/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-02-25T11:16:00.000Z" itemprop="datePublished">2019-02-25</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/02/25/A Knowledge-Grounded Neural Conversation Model/">A  Knowledge-Grounded  Neural  Conversation  Model</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文在传统的基于数据驱动的对话系统中引入了背景知识，试图增加对话回复的有效信息。AAAI2018paper link
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJHbkd3WUE1NjN4TUcyNGFtZUVsK1doNGRPc0l5YjBabG1FRlZyR1JPQTFRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-02-23T02:43:00.000Z" itemprop="datePublished">2019-02-23</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/">Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文是Wechat AI团队发表的基于DSTC7中第二个评测Sentence Generation 的论文，发表在AAAI2019上。研究的主要问题是基于背景知识的对话生成，主要通过指针生成机制和注意力机制从对话历史和背景知识中来生成更加有意义的回复。
-paper link
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Commonsense Knowledge Aware Conversation Generation with Graph Attention" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2019-01-22T06:16:00.000Z" itemprop="datePublished">2019-01-22</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/">Commonsense Knowledge Aware Conversation Generation with Graph Attention</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是单独的使用图谱中三元组。paper linkcode link
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-        
-            </div></section>
-        
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/12/11/Learning Personalized End-to-End Goal-Oriented Dialog/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNteXRHWHF4RHNFdmQrNVN0MWJuNlJzVDZ6dGptcG13VU9iOW1EQUhzemVRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Learning  Personalized  End-to-End  Goal-Oriented  Dialog" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2018/12/11/Learning Personalized End-to-End Goal-Oriented Dialog/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/NLP/">NLP</a>
-            </div>
-            <div class="date"><time datetime="2018-12-11T02:45:00.000Z" itemprop="datePublished">2018-12-11</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/12/11/Learning Personalized End-to-End Goal-Oriented Dialog/">Learning  Personalized  End-to-End  Goal-Oriented  Dialog</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文是来自于AAAI 2019关于在任务型对话中引入个性化的文章，主要通过用户profile建模来实现个性化回答和语义消歧。
-        </p>
-    </div>
-</article>
-    
-
-
-    </div></section>
-
-
-    <nav id="page-nav">
-        <span class="pages">Page 2 of 6</span>
-        <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
-    </nav>
+    </section>
 
 
                         </div>
@@ -711,6 +347,19 @@ paper link
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/04/23/Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -912,11 +561,13 @@ paper link
     var disqus_shortname = 'helic';
     
     
+    var disqus_url = 'https://helicqin.github.io/2019/04/27/Zero-Shot Adaptive Transfer for Conversational Language Understanding/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
