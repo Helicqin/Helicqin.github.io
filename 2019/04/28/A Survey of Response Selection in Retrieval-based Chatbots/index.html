@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>A Survey of Response Selection in Retrieval-based Chatbots | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Dialogue System,Response Selection" />
+    
+    <meta name="description" content="本文主要总结检索式对话系统中回复选择的模型方法，从基于编码的方法和基于匹配的方法两方面介绍，重点突出最新的一些进展，总体来说，多表征交互融合的方法基本上是SOTA。">
+<meta name="keywords" content="Dialogue System,Response Selection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Survey of Response Selection in Retrieval-based Chatbots">
+<meta property="og:url" content="https://helicqin.github.io/2019/04/28/A Survey of Response Selection in Retrieval-based Chatbots/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文主要总结检索式对话系统中回复选择的模型方法，从基于编码的方法和基于匹配的方法两方面介绍，重点突出最新的一些进展，总体来说，多表征交互融合的方法基本上是SOTA。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://user-images.githubusercontent.com/21177644/56953812-efc94e00-6b6f-11e9-9169-45430d309cc7.PNG">
+<meta property="og:updated_time" content="2019-04-30T10:05:37.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Survey of Response Selection in Retrieval-based Chatbots">
+<meta name="twitter:description" content="本文主要总结检索式对话系统中回复选择的模型方法，从基于编码的方法和基于匹配的方法两方面介绍，重点突出最新的一些进展，总体来说，多表征交互融合的方法基本上是SOTA。">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/21177644/56953812-efc94e00-6b6f-11e9-9169-45430d309cc7.PNG">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://helicqin.github.io/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-A Survey of Response Selection in Retrieval-based Chatbots" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Survey of Response Selection in Retrieval-based Chatbots
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/04/28/A Survey of Response Selection in Retrieval-based Chatbots/" class="article-date">
+            <time datetime="2019-04-28T07:36:00.000Z" itemprop="datePublished">2019-04-28</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>, <a class="tag-link" href="/tags/Response-Selection/">Response Selection</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文主要总结检索式对话系统中回复选择的模型方法，从基于编码的方法和基于匹配的方法两方面介绍，重点突出最新的一些进展，总体来说，多表征交互融合的方法基本上是SOTA。<br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>回复选择Response Selection是对话领域一个重要问题，主要研究的是给定一段对话历史，预测相应的回复。总体来说，分为两大类方法：检索式和生成式。</p>
+<p>检索式方法是从候选集中选择一个最合适的答复，类似于排序问题。检索式方法又分为两类：</p>
+<ul>
+<li><p>基于编码的方法：这类方法属于比较早期的模型，一般只用作基线模型，核心思想是使用hand-craft features or neural features分别对reponse和context做编码，得到向量表征，然后计算两个向量之间的相似度。例如<a href="#Lowe">Lowe et al. 2015</a> 提出了使用tf-idf和RNN做编码，<a href="#Kadlec">Kadlec, Schmid, and Kleindienst 2015</a> 提出了基于CNN, LSTM, BiLSTM的编码方法。这类方法由于没有考虑context和response之间的交互，所以准确率低于下面介绍的基于匹配的方法，但由于计算量小，一般会使用此类方法先对候选集做初步筛选，例如从100000条候选项中选取前top100条，然后再使用基于匹配的方法。</p>
+</li>
+<li><p>基于匹配的方法：这类方法属于目前最先进的模型，核心是通过计算context和response之间的交互信息来得到一个相关性分数，然后选择相关性分数最大的一个回复。早期基于匹配的方法基本是简单的使用注意力机制计算token-level的匹配信息，例如 <a href="#Wan">MV-LSTM (Wan et al. 2016)</a>, <a href="#Wang">Matching-LSTM (Wang and Jiang 2016)</a>, <a href="#Tan">Attentive-LSTM (Tan, Xiang, and Zhou 2015)</a>。之后改进为同时计算token-level和utterance-level的交互信息，例如<a href="#Zhou">Multi-View (Zhou et al. 2016)</a>，<a href="#Yan">DL2R(Yan, Song, and Wu 2016)</a>。一个比较有影响力的工作是 <a href="#Wu">SMN (Wu et al. 2017)</a> ，分别计算word-level和segment-level的相关矩阵，然后卷积池化，最后通过一个GRU，使用隐层状态来计算匹配分数。之后<a href="#Zhang">DUA (Zhang et al. 2018)</a> and <a href="#WuH">DAM (Wu et al. 2018)</a> 继承了这种思想，区别在于使用gated self attention和transformer结构做编码。DSTC7的<a href="#Chen">ESIM(Chen et al.2019)</a>则是借鉴自然语言推理NLI中的模型，直接将context拼接成一个长序列，再计算交互信息，实验结果优于DAM及其之前的模型。进一步，<a href="#Tao">MRFN(Tao et al.2019)</a> 则是将之前提到的所有的粒度表示融合到一起，并比较了早期阶段FES，中间阶段FIS或最后阶段FLS三种融合策略。</p>
+</li>
+</ul>
+<h2 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h2><p><em>以部分模型为例作为介绍</em></p>
+<h3 id="Multi-View-Zhou-et-al-2016-Multi-view-Response-Selection-for-Human-Computer-Conversation"><a href="#Multi-View-Zhou-et-al-2016-Multi-view-Response-Selection-for-Human-Computer-Conversation" class="headerlink" title="Multi-View (Zhou et al. 2016) : Multi-view Response Selection for Human-Computer Conversation"></a>Multi-View (Zhou et al. 2016) : Multi-view Response Selection for Human-Computer Conversation</h3><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFvUnJUa2ltK1hhYWVoRHBhQVNyUmYzVDRPb3pvekxBM1VROXNCV3YwbW9RPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure 1: Multi-view response selection model"></p>
+<p>Multi-View模型核心是在token-level和utterance-level分别进行交互。模型分为两部分，最上面是将context和response的所有token通过一个GRU，使用最后的隐层状态计算相关性分数：<br> $$p_{w}(y=1 | c, r)=\sigma\left(\overrightarrow{c_{w}}^{T} W_{w} \overrightarrow{r_{w}}+b_{w}\right)$$<br> 同理，utterance-level是指使用卷积和池化操作分别得到context和response中每句话的表征（一般来说response是一句话），然后同样得到一个相关性分数：<br> $$<br>p_{u}(y=1 | c, r)=\sigma\left(\overrightarrow{c_{u}}^{T} W_{u} \overrightarrow{r_{u}}+b_{u}\right)<br>$$<br>最终将这两个概率分布求和得到最终的结果：<br>$$<br>\begin{array}{c}{s_{m t v}(y=1 | c, r)=}  {p_{w}(y=1 | c, r)+p_{u}(y=1 | c, r)}\end{array}<br>$$</p>
+<p>训练的损失函数为：<br>$$<br>\begin{array}{l}{\mathcal{L}=\mathcal{L}_{\mathcal{D}}+\mathcal{L}_{\mathcal{L}}+\frac{\lambda}{2}|\theta|} \ {\mathcal{L}_{\mathcal{D}}=\sum_{i}\left(p_{w}\left(l_{i}\right) \overline{p_{u}}\left(l_{i}\right)+p_{u}\left(l_{i}\right) \overline{p_{w}}\left(l_{i}\right)\right)} \ {\mathcal{L}_{\mathcal{L}}=\sum_{i}\left(1-p_{w}\left(l_{i}\right)\right)+\sum_{i}\left(1-p_{u}\left(l_{i}\right)\right)}\end{array}<br>$$</p>
+<h3 id="SMN-Wu-et-al-2017-Sequential-Matching-Network-A-New-Architecture-for-Multi-turn-Response-Selection-in-Retrieval-Based-Chatbots"><a href="#SMN-Wu-et-al-2017-Sequential-Matching-Network-A-New-Architecture-for-Multi-turn-Response-Selection-in-Retrieval-Based-Chatbots" class="headerlink" title="SMN (Wu et al. 2017): Sequential Matching Network: A New Architecture for Multi-turn Response Selection in Retrieval-Based Chatbots"></a>SMN (Wu et al. 2017): Sequential Matching Network: A New Architecture for Multi-turn Response Selection in Retrieval-Based Chatbots</h3><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJ3N3BEOWtTb0dnd01EZlNPUzRVek4wUkVBakhyVHFWMitqdFg4OW9jVG9RPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  Architecture  of  SMN"></p>
+<p>模型使用词向量直接构建response和context utterance的序列表征得到矩阵R与U，然后计算R与U的相似度矩阵（简单的做内积运算）；同时让response和context utterance的序列表征经过GRU，得到隐层状态序列，再计算二者的相似度矩阵，得到segment level的信息。之后对这两个矩阵分别做CNN卷积运算，池化，最后再经过GRU，利用隐层状态得到匹配分数。最后的$L\left[h_{1}^{\prime}, \ldots, h_{n}^{\prime}\right]$有三种计算方式，以下是第三种Attention（实验效果最好，注意$t_{s}$ query是一个训练参数）<br>$$<br>\begin{array}{l}{t_{i}=\tanh \left(\mathbf{W}_{1,1} h_{u_{i}, n_{u}}+\mathbf{W}_{1,2} h_{i}^{\prime}+\mathbf{b}_{1}\right)} \ {\alpha_{i}=\frac{\exp \left(t_{i}^{\top} t_{s}\right)}{\sum_{i}\left(\exp \left(t_{i}^{\top} t_{s}\right)\right)}} \ {L\left[h_{1}^{\prime}, \ldots, h_{n}^{\prime}\right]=\sum_{i=1}^{n} \alpha_{i} h_{i}^{\prime}}\end{array}<br>$$<br>损失函数：<br>$$<br>-\sum_{i=1}^{N}\left[y_{i} \log \left(g\left(s_{i}, r_{i}\right)\right)+\left(1-y_{i}\right) \log \left(1-g\left(s_{i}, r_{i}\right)\right]\right.<br>$$</p>
+<h3 id="DAM-Wu-et-al-2018-Multi-Turn-Response-Selection-for-Chatbots-with-Deep-Attention-Matching-Network"><a href="#DAM-Wu-et-al-2018-Multi-Turn-Response-Selection-for-Chatbots-with-Deep-Attention-Matching-Network" class="headerlink" title="DAM (Wu et al. 2018): # Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network"></a>DAM (Wu et al. 2018): # Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network</h3><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjI3d1drYmRxSnA0RU9ZTi95U3hQTU43aWRhdmIzUjVIU2o3U2RvcCtXSzJRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure 3: Overview of Deep Attention Matching Network"></p>
+<p>对于context中的每一个utterance $u_{i}=[w_{u_{i},k}]_{k=0}^{n_{u_{i}-1}}$，$n_{u_{i}}$ 代表 $u_{i}$中words的数量，一个候选回复 $r=[w_{r,t}]_{t=0}^{n_{r}-1}$，$n_{r}$ 代表 $r$中words的数量。$u_{i},r$共享相同的词向量，分别得到两个词向量的序列 $U_{i}^{0}=[e_{u_{i},0}^{0},…,e_{u_{i},n_{u_{i}}-1}^{0}]$ 和 $R^{0}=[e_{r,0}^{0},…,e_{r,n_{r}-1}^{0}]$，其中e是一个d维的词向量。接下来针对于$u_{i}$和$r$构建不同粒度的表征，具体是用L个相同的self-attention层，得到$[U_{i}^{l}]_{l=0}^{L}$和$[R^{l}]_{l=0}^{L}$。之后对于不同的粒度$l\in [0,L]$，分别计算两个相似度矩阵$M_{self}^{u_{i},r,l}, M_{cross}^{u_{i},r,l}$，分别衡量textual information和dependency information。最后将这些矩阵合并成三维的立方体，通过三维卷积和池化得到一维向量，经过单层全连接得到匹配分数。</p>
+<p><strong>Attentive Module</strong>类似于Transformer结构，但是没有使用multi-head和position-encoding。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5bFJNTXE4QmdaanN4VThCNDVhRTZuUERIYnJJZkZIcm9hQ244NituT3l3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  4:  Attentive  Module"></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5bFJNTXE4QmdaZ0NVVmlCa0FpQ05pSEh3UTd3K29nWGlTRStoa0FhZ1NBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>给定utterance $u_{i}$ 和 response r 的词向量序列$U_{i}^{0},R^{0}$，DAM模型将其作为Attentive Module的输入，并且堆叠多个Module：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5bFJNTXE4Qmdaa1pxSTllaGJaYllDRys0N0lkWU14Z09oZm54Umo4U1ZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中$l\in [0,L]$，代表不同的粒度。得到$[U_{i}^{l}]_{l=0}^{L}$和$[R^{l}]_{l=0}^{L}$之后，在不同的粒度上计算segment-segment匹配矩阵：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5bFJNTXE4Qmdac2dsa0U5ekpJV2lySC9tcFNMd3R2Si9GaGs2Q1BjbHJnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>上式代表$U_{i}^{l}[k]$和$R^{l}[t]$的内积，也即$U_{i}$中第k个embedding与$R^{l}[t]$第t个embedding做内积，这代表浅层的文本相关性。</p>
+<p>另一种cross-attention-matrix定义为：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJFVUFkbEV1UkUzZjVvOW5VK2tlQ2F2bFIyRjJ1aTBRR0dsR1NOaHo5c1RnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>作者认为这代表语义相关性。DAM模型将这些$M_{self}^{u_{i},r,l}, M_{cross}^{u_{i},r,l}$矩阵拼接起来（$l\in [0,L]$，共2(L+1)个），得到<strong>Q</strong>：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBSdVBrNnVxQXNmSTVsSDJBck9LdGFxMEFWRmVpc1F1dkRXU0U3dCt1RlZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>上式中$n=2(L+1)$，对应每个channel上的元素为：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBSdVBrNnVxQXNmR1l0WkhYdlpwbVZXd0l4NnhRd1ZuTllpL0s2bHFrS3FBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>之后经过conv_3d和pooling_3d得到特征向量$f_{match}(c,r)$，再经过一层感知器：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBSdVBrNnVxQXNmRVkrc2Rzak10MGtiY202Z0tBcGwyQzFQSkdRWHNPSmNBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>DAM的损失函数为负极大似然函数。</p>
+<h3 id="ESIM-Chen-et-al-2019-Sequential-Attention-based-Network-for-Noetic-End-to-End-Response-Selection"><a href="#ESIM-Chen-et-al-2019-Sequential-Attention-based-Network-for-Noetic-End-to-End-Response-Selection" class="headerlink" title="ESIM(Chen et al.2019): Sequential Attention-based Network for Noetic End-to-End Response Selection"></a>ESIM(Chen et al.2019): Sequential Attention-based Network for Noetic End-to-End Response Selection</h3><p>模型整体结构图如下所示，主要分为3个部分：<strong>Input Encoding</strong>，<strong>Local Matching</strong> 和 <strong>Matching Composition</strong>。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFmcCtkeExEbnJGRFpTQkRaQTIvRGY1cEtudW16WEpVSmlFOEE5NllNUWRBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="(b)  Cross  attention-based  method"></p>
+<h4 id="Input-Encoding"><a href="#Input-Encoding" class="headerlink" title="Input Encoding"></a>Input Encoding</h4><ol>
+<li>将对话历史拼接成一个长序列</li>
+<li>对于长序列中的每一个词将多种词向量拼接，然后用一个relu的前馈层压缩维度</li>
+<li>将对话历史和候选答复分别用LSTM进行编码，得到context 隐层状态 $c_{i}^{s}$ 和 response 隐层状态 $r_{j}^{s}$</li>
+</ol>
+<h4 id="Local-Matching"><a href="#Local-Matching" class="headerlink" title="Local Matching"></a>Local Matching</h4><p>对对话历史和应答之间的局部语义关系的建模是确定应答是否正确的关键。比如，正确的应答句通常涉及对话历史中的一些关键字，这可以通过局部语义建模来获得。本文使用cross-attention机制来将来自对话历史和应答句的tokens对齐，然后计算token级别的语义关系。attention权重计算方式如下：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFNUUVpcjRUUVplcjVnRmZTUzFHMFFaRm5oMkxrb1Y2VmJ4R1Y1Q0l2S2VnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>（4）式和（5）式分别对应context 隐层状态 $c_{i}^{s}$对所有的response 隐层状态 $r_{j}^{s}$做注意力和response 隐层状态 $r_{j}^{s}$对所有的context 隐层状态 $c_{i}^{s}$做注意力，其中均采用内积运算。</p>
+<blockquote>
+<p>By  comparing  vector  pair  $&lt;c_{i}^{s}, c_{i}^{d}&gt;$,  we  can  model  the token-level  semantic  relation  between  aligned  token  pairs.</p>
+</blockquote>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVDRRS1BJcG1DRCtTUzJpN1huby9md2hxcE1BZktTRVM1NDZqK2hsalF3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>F是单层全连接以减小维度。</p>
+<h4 id="Matching-Composition"><a href="#Matching-Composition" class="headerlink" title="Matching Composition"></a>Matching Composition</h4><p>确定应答句是否为正确的下一句话，需要一个合成层来合成上面得到的局部匹配的结果。这里再次使用BiLSTM来读取局部匹配向量并学习区分关键的局部匹配向量来获得整体的语义关系 。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVDRRS1BJcG1DSVNKK1U5YjFkcEdrZGNBRUhrdjQ5N2RHUk1XQ3lRWlBBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>之后对BiLSTM2的隐层做池化操作，得到固定长度的向量，再通过一个MLP得到softmax输出：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFtVDRRS1BJcG1DRS8vdkRmZHF6TXFtaEdhMkZYVTFSdXEvT2gzQk1rL2p3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="MRFN-Tao-et-al-2019-Multi-Representation-Fusion-Network-for-Multi-turn-Response-Selection-in-Retrieval-based-Chatbots"><a href="#MRFN-Tao-et-al-2019-Multi-Representation-Fusion-Network-for-Multi-turn-Response-Selection-in-Retrieval-based-Chatbots" class="headerlink" title="MRFN(Tao et al.2019): Multi-Representation Fusion Network for Multi-turn Response Selection in Retrieval-based Chatbots"></a>MRFN(Tao et al.2019): Multi-Representation Fusion Network for Multi-turn Response Selection in Retrieval-based Chatbots</h3><p><img src="https://user-images.githubusercontent.com/21177644/56953812-efc94e00-6b6f-11e9-9169-45430d309cc7.PNG" alt="Figure  6:  Multi-representation  fusion  network  with  three  fusing  strategies  (FES,  FIS,  FLS).  ui  is  the  i-th  utterance  in  a  context and  r  is  a  response  candidate.  We  only  draw  three  representations  for  each  utterance  for  ease  of  illustration  in  this  figure."></p>
+<p><em>details in <a href="https://zhuanlan.zhihu.com/p/63214453" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/63214453</a></em></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><p><span id="Lowe"><a href="https://arxiv.org/pdf/1506.08909.pdf" target="_blank" rel="noopener">Lowe, R.; Pow, N.; Serban, I.; and Pineau, J. 2015. The ubuntu dialogue corpus: A large dataset for research in unstructured multi-turn dialogue systems. In Proceedings of the SIGDIAL 2015 Conference, 285–294.</a>  这篇论文中建立了ubuntu公开数据集，同时提出了基于tfidf和RNN encoding的方法 </span></p>
+</li>
+<li><p><span id="Kadlec"><a href="">Kadlec, R.; Schmid, M.; and Kleindienst, J. 2015. Improved deep learning baselines for ubuntu corpus dialogs. CoRRabs/1510.03753.</a>  基于CNN, LSTM, BiLSTM的encoding方法 </span></p>
+</li>
+<li><p><span id="Wan"><a href="https://arxiv.org/pdf/1604.04378.pdf" target="_blank" rel="noopener">Wan, S.; Lan, Y.; Xu, J.; Guo, J.; Pang, L.; and Cheng, X.2016. Match-srnn: Modeling the recursive matching structure with spatial RNN. In Proceedings of the Twenty-Fifth International Joint Conference on Artificial Intelligence, IJCAI 2016, 2922–2928.</a>  MV-LSTM </span></p>
+</li>
+<li><p><span id="Wang"><a href="https://arxiv.org/pdf/1512.08849.pdf" target="_blank" rel="noopener">Wang, S., and Jiang, J. 2016. Learning natural language inference with LSTM. In Proceedings of NAACL HLT 2016,1442–1451.</a>  Matching-LSTM</span></p>
+</li>
+<li><p><span id="Tan"><a href="https://arxiv.org/pdf/1511.04108.pdf" target="_blank" rel="noopener">Tan, M.; Xiang, B.; and Zhou, B. 2015. Lstm-based deep learning models for non-factoid answer selection. CoRRabs/1511.04108.</a>    Attentive-LSTM</span></p>
+</li>
+<li><p><span id="Zhou"><a href="https://www.aclweb.org/anthology/D16-1036" target="_blank" rel="noopener">Zhou, X.; Dong, D.; Wu, H.; Zhao, S.; Yu, D.; Tian, H.;Liu, X.; and Yan, R. 2016. Multi-view response selection for human-computer conversation. In Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing, EMNLP 2016, 372–381.</a>   Multi-View</span></p>
+</li>
+<li><p><span id="Yan"><a href="http://delivery.acm.org/10.1145/2920000/2911542/p55-yan.pdf?ip=59.64.129.27&amp;id=2911542&amp;acc=ACTIVE%20SERVICE&amp;key=BF85BBA5741FDC6E%2E66A15327C2E204FC%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&amp;__acm__=1556607690_8ac5d7416f0723746466bc3acd2a9767" target="_blank" rel="noopener">Yan, R.; Song, Y.; and Wu, H. 2016. Learning to respond with deep neural networks for retrieval-based human-computer conversation system. In Proceedings of SIGIR 2016, 55–64.</a>   DL2R</span></p>
+</li>
+<li><p><span id="Wu"><a href="https://goo.gl/GG8xLd" target="_blank" rel="noopener">Wu, Y.; Wu, W.; Xing, C.; Zhou, M.; and Li, Z. 2017. Sequential matching network: A new architecture for multi-turn response selection in retrieval-based chatbots. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics, ACL 2017, 496–505.</a>    SMN</span></p>
+</li>
+<li><p><span id="Zhang"><a href="https://arxiv.org/pdf/1806.09102.pdf" target="_blank" rel="noopener">Zhang, Z.; Li, J.; Zhu, P.; Zhao, H.; and Liu, G. 2018. Modeling multi-turn conversation with deep utterance aggregation. In Proceedings of the 27th International Conference on Computational Linguistics, COLING 2018, 3740–3752.</a>   DUA</span></p>
+</li>
+</ul>
+<ul>
+<li><p><span id="WuH"><a href="https://helicqin.github.io/2019/03/01/Multi-Turn%20Response%20Selection%20for%20Chatbots%20with%20Deep%20Attention%20Matching%20Network/">Wu, H.; Liu, Y.; Chen, Y.; Zhao, W. X.; Dong, D.; Yu, D.;Zhou, X.; and Li, L. 2018. Multi-turn response selection for chatbots with deep attention matching network. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics, ACL 2018, 1118–1127.</a>  DAM</span></p>
+</li>
+<li><p><span id="Chen"><a href="https://helicqin.github.io/2019/03/07/Sequential%20Attention-based%20Network%20for%20Noetic%20End-to-End%20Response%20Selection%20&amp;&amp;%20Comparison%20of%20Transfer-Learning%20Approaches%20for%20Response%20Selection%20in%20Multi-Turn%20Conversations/">Chen, Qian, and Wen Wang. “Sequential Attention-based Network for Noetic End-to-End Response Selection.” _arXiv preprint arXiv:1901.02609_ (2019).</a></span> ESIM</p>
+</li>
+<li><p><span id="Tao"><a href="https://drive.google.com/open?id=1y36bCBGCx-cnza486V7UwYFK_g5fbAJ4" target="_blank" rel="noopener">Tao, Chongyang, et al. “Multi-Representation Fusion Network for Multi-Turn Response Selection in Retrieval-Based Chatbots.” _Proceedings of the Twelfth ACM International Conference on Web Search and Data Mining_. ACM, 2019.</a></span> MRFN</p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/1901.01824.pdf" target="_blank" rel="noopener">Gu, Jia-Chen, Zhen-Hua Ling, and Quan Liu. “Interactive Matching Network for Multi-Turn Response Selection in Retrieval-Based Chatbots.” _arXiv preprint arXiv:1901.01824_(2019).</a> IMN</p>
+</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/04/27/Zero-Shot Adaptive Transfer for Conversational Language Understanding/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Zero-Shot  Adaptive  Transfer  for  Conversational  Language  Understanding</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/28/A Survey of Response Selection in Retrieval-based Chatbots/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/56953812-efc94e00-6b6f-11e9-9169-45430d309cc7.PNG)" alt="A Survey of Response Selection in Retrieval-based Chatbots" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/28/A Survey of Response Selection in Retrieval-based Chatbots/" class="title">A Survey of Response Selection in Retrieval-based Chatbots</a></p>
+                            <p class="item-date"><time datetime="2019-04-28T07:36:00.000Z" itemprop="datePublished">2019-04-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/27/Zero-Shot Adaptive Transfer for Conversational Language Understanding/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjIxUDhYb2xFNHY2YnhEV1NVRjRoaTdoeFhwZ3VCSk1yS2NwVUUrSEF5Q1BnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Zero-Shot  Adaptive  Transfer  for  Conversational  Language  Understanding" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2019/04/27/Zero-Shot Adaptive Transfer for Conversational Language Understanding/" class="title">Zero-Shot  Adaptive  Transfer  for  Conversational  Language  Understanding</a></p>
+                            <p class="item-date"><time datetime="2019-04-27T12:38:00.000Z" itemprop="datePublished">2019-04-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/23/Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJXbmtzdDZqZzk3UXJXd3pCKzJtdVdyU2xWWjFSNlpGRUdlRFFXek1BOVZ3PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/23/Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders/" class="title">Learning Discourse-level Diversity for Neural Dialog Models using Conditional Variational Autoencoders</a></p>
+                            <p class="item-date"><time datetime="2019-04-23T09:10:00.000Z" itemprop="datePublished">2019-04-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/12/Transfer Learning for Sequence Labeling Using Source Model and Target Data/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJ5NnVkangrMnRtVE0vSTdHTUw0eGNGQWxjM045K3p1UTh0aVpCaWVWcGtRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Transfer  Learning  for  Sequence  Labeling  Using  Source  Model  and  Target  Data" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/12/Transfer Learning for Sequence Labeling Using Source Model and Target Data/" class="title">Transfer  Learning  for  Sequence  Labeling  Using  Source  Model  and  Target  Data</a></p>
+                            <p class="item-date"><time datetime="2019-04-12T11:48:00.000Z" itemprop="datePublished">2019-04-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/04/11/Training Millions of Personalized Dialogue Agents/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjEvUk5OWTFqSVIwL2hoL0VGaTFWUFdwOU1GYmRvL0NWUTFFdTdabHQyZE53PT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Training Millions of Personalized Dialogue Agents" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/04/11/Training Millions of Personalized Dialogue Agents/" class="title">Training Millions of Personalized Dialogue Agents</a></p>
+                            <p class="item-date"><time datetime="2019-04-11T07:10:00.000Z" itemprop="datePublished">2019-04-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">36</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Active-Learning/">Active Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversial-Learning/">Adversial Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Response-Selection/">Response Selection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentence-Semantic-Matching/">Sentence  Semantic  Matching</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Labeling/">Sequence  Labeling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Learning/">Sequence Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer  Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VAE/">VAE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Active-Learning/" style="font-size: 10px;">Active Learning</a> <a href="/tags/Adversial-Learning/" style="font-size: 10px;">Adversial Learning</a> <a href="/tags/BUPT/" style="font-size: 11.25px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 15px;">Commonsense  Knowledge</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 18.75px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.25px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 12.5px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 10px;">Memory Network</a> <a href="/tags/NLG/" style="font-size: 11.25px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 13.75px;">NLU</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.25px;">Object Detection</a> <a href="/tags/Python/" style="font-size: 11.25px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.75px;">Reinforcement Learning</a> <a href="/tags/Response-Selection/" style="font-size: 10px;">Response Selection</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/Sentence-Semantic-Matching/" style="font-size: 10px;">Sentence  Semantic  Matching</a> <a href="/tags/Sequence-Labeling/" style="font-size: 10px;">Sequence  Labeling</a> <a href="/tags/Sequence-Learning/" style="font-size: 10px;">Sequence Learning</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16.25px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 17.5px;">Tensorflow</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer  Learning</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer Learning</a> <a href="/tags/Transformer/" style="font-size: 11.25px;">Transformer</a> <a href="/tags/VAE/" style="font-size: 10px;">VAE</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://helicqin.github.io/about/index.html">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helicqin.github.io/2019/04/28/A Survey of Response Selection in Retrieval-based Chatbots/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
