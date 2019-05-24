@@ -17,7 +17,7 @@
 <meta property="og:description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Autoencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBmMy9OcER1MjRCTkUrQ0ZnMER2SnROdW5BVy94WXV1cWxVRGUxRDBLeXF3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-05-24T14:15:14.720Z">
+<meta property="og:updated_time" content="2019-05-24T14:17:46.938Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Data Augmentation for Spoken Language Understanding via Joint Variational Generation">
 <meta name="twitter:description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Autoencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
@@ -214,7 +214,9 @@ ga('send', 'pageview');
 <h4 id="Joint-Language-Understanding-VAE"><a href="#Joint-Language-Understanding-VAE" class="headerlink" title="Joint  Language  Understanding  VAE"></a>Joint  Language  Understanding  VAE</h4><p>与标准的输入输出均为utterance的VAE模型相比，Joint  Language  Understanding  VAE(JLUVA) 还需要同时预测slot和intent标签，如图2所示：</p>
 <p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBmMy9OcER1MjRCTkUrQ0ZnMER2SnROdW5BVy94WXV1cWxVRGUxRDBLeXF3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <p>因此，SLU的loss如下：<br>$$<br>\mathcal{L}_{L U}(\phi, \psi ; \mathbf{w}, \mathbf{s}, y)=-\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\psi}(\mathbf{s}, y | \hat{\mathbf{w}}, \mathbf{z})\right]<br>$$<br>JLUVA的联合loss为：<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFoVURaK1A2Rk1ZaVlCUHlKM1R3aGMydzNWb2xMTXJpNkw5eVhOd0cyZkhnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>We  obtain  the  optimal  parameters  $\theta^{<em>}, \phi^{</em>}, \psi^{*}$ by  minimizing  Equation  6  (i.e.  $\arg \min_{\theta, \phi, \psi} \mathcal{L}$)  with  respect  to  a  real dataset  D.</p>
+<blockquote>
+<p>We  obtain  the  optimal  parameters  $\theta^{*}, \phi^{*}, \psi^{*}$ by  minimizing  Equation  6  (i.e.  $\arg \min_{\theta, \phi, \psi} \mathcal{L}$)  with  respect  to  a  real dataset  D.</p>
+</blockquote>
 <p>在数据生成阶段，模型使用某种近似策略（上文Sampling中的方法）来采样，然后通过decoder network $p_{\theta}\left(\mathbf{w} | \mathbf{z}^{\star}\right)$ 来合成utterance $\hat{\mathrm{w}}$，最后再通过SLU网络来预测合成utterance的标签 $\hat{\mathbf{s}}$ 和 $\hat{y}$，三者合为一体得到一个样本$(\hat{\mathbf{w}}, \hat{\mathbf{s}}, \hat{y})$。</p>
 <h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h3><p>作者在以下SLU数据集上做实验：</p>
 <ul>
