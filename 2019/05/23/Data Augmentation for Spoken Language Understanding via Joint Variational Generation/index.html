@@ -8,19 +8,19 @@
     
         <meta name="keywords" content="NLU,Variational Generation" />
     
-    <meta name="description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
+    <meta name="description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Autoencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
 <meta name="keywords" content="NLU,Variational Generation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Data Augmentation for Spoken Language Understanding via Joint Variational Generation">
 <meta property="og:url" content="https://helicqin.github.io/2019/05/23/Data Augmentation for Spoken Language Understanding via Joint Variational Generation/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
+<meta property="og:description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Autoencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBmMy9OcER1MjRCTkUrQ0ZnMER2SnROdW5BVy94WXV1cWxVRGUxRDBLeXF3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-05-24T09:53:48.122Z">
+<meta property="og:updated_time" content="2019-05-24T14:05:07.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Data Augmentation for Spoken Language Understanding via Joint Variational Generation">
-<meta name="twitter:description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
+<meta name="twitter:description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Autoencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
 <meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBmMy9OcER1MjRCTkUrQ0ZnMER2SnROdW5BVy94WXV1cWxVRGUxRDBLeXF3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
@@ -182,19 +182,19 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-<br>toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019</p>
+            <p>本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Autoencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019</p>
 <p><a href="https://drive.google.com/open?id=1XJzN44swGl0NSwXDQ9Jkykjg-ltv_WxP" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>标准的SLU任务需要大量的标注数据，本文研究的是基于VAE的SLU数据增强（DA）方法。大部分传统的DA方法只是简单地保留类别信息，对样本进行一定的转译，这类方法需要完整的监督信息，缺乏生成的多样性和鲁棒性。而本文定义了一种基于隐变量的 <strong>generative data augmentation (GDA)</strong>，在多个SLU数据集上进行实验，证明了GDA的有效性。</p>
 <p>本文的核心贡献如下：</p>
 <ul>
-<li>本文定义了一种针对于SLU任务的通用GDA框架  TODO</li>
-<li>本文提出了一种联合生成utterance和label的生成模型，实验证明可以生成自然的语句，并且可以正确的标注；同时提高了SLU模型的准确率</li>
+<li>本文定义了一种针对于SLU任务的通用GDA框架，并且提出了一种基于monte carlo的采样方法。</li>
+<li>本文提出了一种联合生成utterance和label的生成模型，实验证明可以生成自然的语句，并且可以正确的标注；同时提高了SLU模型的准确率。</li>
 <li>作者通过大量的实验证明本文提出的GDA方法适用于各种SLU数据集和模型。</li>
 </ul>
 <h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><h3 id="GDA-Framework"><a href="#GDA-Framework" class="headerlink" title="GDA Framework"></a>GDA Framework</h3><p>作者首先描述了SLU任务中GDA的通用框架。</p>
 <p><strong>Notations</strong><br>$w=(w_{1},…,w_{T})$ 是一个utterance，T是这个序列的长度。在一个已标注的SLU数据集中，$s=(s_{1},…,s_{T})$ 是序列w对应的slot标注，序列的意图标注则用y表示。D是一个全部标注过的SLU数据集 $\left\{\left(\mathbf{w}_{1}, \mathbf{s}_{1}, y_{1}\right), \dots,\left(\mathbf{w}_{n}, \mathbf{s}_{n}, y_{n}\right)\right\}$，n是数据集的大小，从D中采样的一个样本为$x=(w,s,y)$，$D_{w}, D_{s}, D_{y}$ 分别代表D中所有utterances、slot labels、intent labels。</p>
 <p><strong>Spoken  Language  Understanding</strong><br>本文采用的是slot-intent联合模型，训练损失函数如下：<br>$$<br>\mathcal{L}_{L U}(\psi ; \mathbf{w}, \mathbf{s}, y)=-\log p_{\psi}(\mathbf{s}, y | \mathbf{w})<br>$$</p>
-<p><strong>Generative  Data  Augmentation</strong><br>作者从理论上分析了生成式数据增强的通用框架，如Fig 1所示。假设D中的所有样本满足独立同分布，都是从一个真实但未知的语言分布P采样得到 $p(\mathbf{x}) \in \mathcal{P}$，但是由于实际数据收集过程中的偏差，数据集D中的$D_{w}$与真实分布存在差异，定义这种偏差为 $\omega_{b} \in \Omega : \mathcal{P} \rightarrow \mathcal{P^{<em>}}$，可以使用KL散度来衡量真实分布p与采样分布$p^{</em>}$。</p>
+<p><strong>Generative  Data  Augmentation</strong><br>作者从理论上分析了生成式数据增强的通用框架，如Fig 1所示。假设D中的所有样本满足独立同分布，都是从一个真实但未知的语言分布P采样得到 $p(\mathbf{x}) \in \mathcal{P}$，但是由于实际数据收集过程中的偏差，数据集D中的$D_{w}$与真实分布存在差异，定义这种偏差为 $\omega_{b} \in \Omega : \mathcal{P} \rightarrow \mathcal{P^{*}}$，可以使用KL散度来衡量真实分布p与采样分布$p^{*}$。</p>
 <p>一个理想的GDA模型应该抵消偏差$\omega_{b}$，通过无监督地采样学习来发掘出真实分布。如果合成的数据完全满足$p^{*}$的分布，那么这种DA的方法不会产生更好的SLU的结果。与之相反，一个好的DA方法应该能得到一个新的分布 $\hat{p}^{\star}=\omega_{d}(\hat{p})$，使得$d\left(\hat{p}^{\star}, p\right)&lt;d(\hat{p}, p)$，即DA采样$w_{d}$能够抵消$w_{b}$的影响。</p>
 <p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJKZE1EOFF4Q0JqK1hGMjUvNFd3MmI2NVY2aDRISVJTZGlXZ1F0eUhuRnFnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <h3 id="Joint-Generative-Model"><a href="#Joint-Generative-Model" class="headerlink" title="Joint  Generative  Model"></a>Joint  Generative  Model</h3><p>作者首先将VAE应用到utterance的生成，然后再拓展VAE模型，以一种联合的方式去产生对应的标签信息。</p>
@@ -213,7 +213,7 @@ ga('send', 'pageview');
 <p>作者还提出了一种<strong>Exploratory  Sampling</strong>的采样方法，目的是增加生成utterance的多样性。作者认为一种理想的采样方法应该是无偏估计，但是方差要增加。假设Algorithm 1中，$\mu, \sigma$ 分别是VAE encoder得到的均值和方差，然后可以从 $\mathcal{N}\left(\boldsymbol{\mu}(\mathbf{w}), \lambda_{s} \cdot \boldsymbol{\sigma}(\mathbf{w})\right)$ 采样z，而参数 $\lambda_{s}$ 用来控制VAE decoder（也叫做generator）探索exploration的程度，影响生成utterance的多样性。</p>
 <h4 id="Joint-Language-Understanding-VAE"><a href="#Joint-Language-Understanding-VAE" class="headerlink" title="Joint  Language  Understanding  VAE"></a>Joint  Language  Understanding  VAE</h4><p>与标准的输入输出均为utterance的VAE模型相比，Joint  Language  Understanding  VAE(JLUVA) 还需要同时预测slot和intent标签，如图2所示：</p>
 <p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBmMy9OcER1MjRCTkUrQ0ZnMER2SnROdW5BVy94WXV1cWxVRGUxRDBLeXF3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>因此，SLU的loss如下：<br>$$<br>\mathcal{L}_{L U}(\phi, \psi ; \mathbf{w}, \mathbf{s}, y)=-\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\psi}(\mathbf{s}, y | \hat{\mathbf{w}}, \mathbf{z})\right]<br>$$<br>JLUVA的联合loss为：<br>$$<br>\begin{aligned} \mathcal{L}(\theta, \phi, \psi ; \mathbf{w}, \mathbf{s}, y)=&amp; \mathrm{D}_{\mathrm{KL}}\left(q_{\phi}(\mathbf{z} | \mathbf{w}) | p_{\theta}(\mathbf{z} | \mathbf{w})\right) \ &amp;-\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\theta}(\mathbf{w} | \mathbf{z})\right] \ &amp;-\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\psi}(\mathbf{s}, y | \hat{\mathbf{w}}, \mathbf{z})\right] \end{aligned}<br>$$</p>
+<p>因此，SLU的loss如下：<br>$$<br>\mathcal{L}_{L U}(\phi, \psi ; \mathbf{w}, \mathbf{s}, y)=-\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\psi}(\mathbf{s}, y | \hat{\mathbf{w}}, \mathbf{z})\right]<br>$$<br>JLUVA的联合loss为：<br>$$<br>\begin{aligned} \mathcal{L}(\theta, \phi, \psi ; \mathbf{w}, \mathbf{s}, y)=&amp; \mathrm{D}_{\mathrm{KL}}\left(q_{\phi}(\mathbf{z} | \mathbf{w}) | p_{\theta}(\mathbf{z} | \mathbf{w})\right)  -\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\theta}(\mathbf{w} | \mathbf{z})\right] -\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\psi}(\mathbf{s}, y | \hat{\mathbf{w}}, \mathbf{z})\right] \end{aligned}<br>$$</p>
 <blockquote>
 <p>We  obtain  the  optimal  parameters  $\theta^{<em>}, \phi^{</em>}, \psi^{*}$ by  minimizing  Equation  6  (i.e.  $\arg \min _{\theta, \phi, \psi} \mathcal{L}$)  with  respect  to  a  real dataset  D.</p>
 </blockquote>
