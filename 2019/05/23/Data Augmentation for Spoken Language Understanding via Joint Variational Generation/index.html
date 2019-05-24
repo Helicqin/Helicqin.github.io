@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Xception-Deep  Learning  with  Depthwise  Separable  Convolutions | Helic</title>
+    <title>Data Augmentation for Spoken Language Understanding via Joint Variational Generation | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="CNN" />
+        <meta name="keywords" content="NLU,Variational Generation" />
     
-    <meta name="description" content="Xception是google继Inception后提出的对Inception v3的另一种改进，主要是采用depthwise separable convolution来替换原来Inception v3中的卷积操作。paper link">
-<meta name="keywords" content="CNN">
+    <meta name="description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
+<meta name="keywords" content="NLU,Variational Generation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Xception-Deep  Learning  with  Depthwise  Separable  Convolutions">
-<meta property="og:url" content="https://helicqin.github.io/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/index.html">
+<meta property="og:title" content="Data Augmentation for Spoken Language Understanding via Joint Variational Generation">
+<meta property="og:url" content="https://helicqin.github.io/2019/05/23/Data Augmentation for Spoken Language Understanding via Joint Variational Generation/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="Xception是google继Inception后提出的对Inception v3的另一种改进，主要是采用depthwise separable convolution来替换原来Inception v3中的卷积操作。paper link">
+<meta property="og:description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBBZVpLZElXRnpYNHpNcUMzVGc5bVMyWDkwVFZrOEZWemNDUndQOTZtS2dnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2018-10-04T08:43:22.934Z">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBmMy9OcER1MjRCTkUrQ0ZnMER2SnROdW5BVy94WXV1cWxVRGUxRDBLeXF3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-05-24T09:53:48.122Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xception-Deep  Learning  with  Depthwise  Separable  Convolutions">
-<meta name="twitter:description" content="Xception是google继Inception后提出的对Inception v3的另一种改进，主要是采用depthwise separable convolution来替换原来Inception v3中的卷积操作。paper link">
-<meta name="twitter:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBBZVpLZElXRnpYNHpNcUMzVGc5bVMyWDkwVFZrOEZWemNDUndQOTZtS2dnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta name="twitter:title" content="Data Augmentation for Spoken Language Understanding via Joint Variational Generation">
+<meta name="twitter:description" content="本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019 paper link">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBmMy9OcER1MjRCTkUrQ0ZnMER2SnROdW5BVy94WXV1cWxVRGUxRDBLeXF3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
     
@@ -146,18 +146,18 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/CV/">CV</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/CV/CNN/">CNN</a>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Xception-Deep Learning with Depthwise Separable Convolutions" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Data Augmentation for Spoken Language Understanding via Joint Variational Generation" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Xception-Deep  Learning  with  Depthwise  Separable  Convolutions
+        Data Augmentation for Spoken Language Understanding via Joint Variational Generation
         </h1>
     
 
@@ -167,70 +167,97 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/" class="article-date">
-            <time datetime="2018-10-02T01:56:00.000Z" itemprop="datePublished">2018-10-02</time>
+        <a href="/2019/05/23/Data Augmentation for Spoken Language Understanding via Joint Variational Generation/" class="article-date">
+            <time datetime="2019-05-23T06:40:00.000Z" itemprop="datePublished">2019-05-23</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/CNN/">CNN</a>
+        <a class="tag-link" href="/tags/NLU/">NLU</a>, <a class="tag-link" href="/tags/Variational-Generation/">Variational Generation</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>Xception是google继Inception后提出的对Inception v3的另一种改进，主要是采用depthwise separable convolution来替换原来Inception v3中的卷积操作。<br><a href="https://arxiv.org/abs/1610.02357" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Xception继承自Inception，下图是Inception v3 module的示意图：</p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNZZHhSSTJNNkNHVXZpSVNNT0pKcHJhOGRZVzRTYm9Xc0RXbG9nS284b1ZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1.  A  canonical  Inception  module  (Inception  V3)"></p>
-<p>作者提出了两种卷积的概念：</p>
+            <p>本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-<br>toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。AAAI2019</p>
+<p><a href="https://drive.google.com/open?id=1XJzN44swGl0NSwXDQ9Jkykjg-ltv_WxP" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>标准的SLU任务需要大量的标注数据，本文研究的是基于VAE的SLU数据增强（DA）方法。大部分传统的DA方法只是简单地保留类别信息，对样本进行一定的转译，这类方法需要完整的监督信息，缺乏生成的多样性和鲁棒性。而本文定义了一种基于隐变量的 <strong>generative data augmentation (GDA)</strong>，在多个SLU数据集上进行实验，证明了GDA的有效性。</p>
+<p>本文的核心贡献如下：</p>
 <ul>
-<li>cross-channel  correlations ：使用N个1 x 1 x input_channels的卷积核计算卷积，得到N个feature map；这一步实际上是在计算不同通道之间的相关性。</li>
-<li>spatial  correlations ：得到N个feature map之后，在每一个维度的feature map上单独用一个k x k的卷积核计算卷积；这一步实际上是在计算空间相关性。</li>
+<li>本文定义了一种针对于SLU任务的通用GDA框架  TODO</li>
+<li>本文提出了一种联合生成utterance和label的生成模型，实验证明可以生成自然的语句，并且可以正确的标注；同时提高了SLU模型的准确率</li>
+<li>作者通过大量的实验证明本文提出的GDA方法适用于各种SLU数据集和模型。</li>
 </ul>
-<p>这两步实际上是将传统的卷积计算分成两个步骤，将学习空间相关性和学习通道间相关性的任务完全分离。</p>
-<p>作者提出假设：</p>
-<blockquote>
-<p> assume that cross-channel correlations and spatial correlations can be mapped completely separately</p>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><h3 id="GDA-Framework"><a href="#GDA-Framework" class="headerlink" title="GDA Framework"></a>GDA Framework</h3><p>作者首先描述了SLU任务中GDA的通用框架。</p>
+<p><strong>Notations</strong><br>$w=(w_{1},…,w_{T})$ 是一个utterance，T是这个序列的长度。在一个已标注的SLU数据集中，$s=(s_{1},…,s_{T})$ 是序列w对应的slot标注，序列的意图标注则用y表示。D是一个全部标注过的SLU数据集 $\left\{\left(\mathbf{w}_{1}, \mathbf{s}_{1}, y_{1}\right), \dots,\left(\mathbf{w}_{n}, \mathbf{s}_{n}, y_{n}\right)\right\}$，n是数据集的大小，从D中采样的一个样本为$x=(w,s,y)$，$D_{w}, D_{s}, D_{y}$ 分别代表D中所有utterances、slot labels、intent labels。</p>
+<p><strong>Spoken  Language  Understanding</strong><br>本文采用的是slot-intent联合模型，训练损失函数如下：<br>$$<br>\mathcal{L}_{L U}(\psi ; \mathbf{w}, \mathbf{s}, y)=-\log p_{\psi}(\mathbf{s}, y | \mathbf{w})<br>$$</p>
+<p><strong>Generative  Data  Augmentation</strong><br>作者从理论上分析了生成式数据增强的通用框架，如Fig 1所示。假设D中的所有样本满足独立同分布，都是从一个真实但未知的语言分布P采样得到 $p(\mathbf{x}) \in \mathcal{P}$，但是由于实际数据收集过程中的偏差，数据集D中的$D_{w}$与真实分布存在差异，定义这种偏差为 $\omega_{b} \in \Omega : \mathcal{P} \rightarrow \mathcal{P^{<em>}}$，可以使用KL散度来衡量真实分布p与采样分布$p^{</em>}$。</p>
+<p>一个理想的GDA模型应该抵消偏差$\omega_{b}$，通过无监督地采样学习来发掘出真实分布。如果合成的数据完全满足$p^{*}$的分布，那么这种DA的方法不会产生更好的SLU的结果。与之相反，一个好的DA方法应该能得到一个新的分布 $\hat{p}^{\star}=\omega_{d}(\hat{p})$，使得$d\left(\hat{p}^{\star}, p\right)&lt;d(\hat{p}, p)$，即DA采样$w_{d}$能够抵消$w_{b}$的影响。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJKZE1EOFF4Q0JqK1hGMjUvNFd3MmI2NVY2aDRISVJTZGlXZ1F0eUhuRnFnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Joint-Generative-Model"><a href="#Joint-Generative-Model" class="headerlink" title="Joint  Generative  Model"></a>Joint  Generative  Model</h3><p>作者首先将VAE应用到utterance的生成，然后再拓展VAE模型，以一种联合的方式去产生对应的标签信息。</p>
+<h4 id="Standard-VAE"><a href="#Standard-VAE" class="headerlink" title="Standard  VAE"></a>Standard  VAE</h4><p><img src="http://imglf5.nosdn.127.net/img/bG1jbzEvdHVjVjBTZUVXb0NjMTdiZk93ZGxYT21WelphVms5REJleXczS2xqRVBZMGlHWm93PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><strong>The  Sampling  Problem</strong><br>训练好Encoder network和Decoder network后，需要从Decoder network采样得到utterance，即：<br>$$<br>\hat{\mathbf{w}} \sim p_{\theta_{\mathcal{D}}, \phi_{\mathcal{D}}}(\mathbf{w})=\int p_{\theta_{\mathcal{D}}}(\mathbf{w} | \mathbf{z}) p_{\theta_{\mathcal{D}}, \phi_{\mathcal{D}}}(\mathbf{z}) d \mathbf{z}<br>$$<br>$$<br>p_{\theta_{\mathcal{D}}, \phi_{\mathcal{D}}}(\mathbf{z})=\mathbb{E}_{\mathbf{w} \sim p(\mathbf{w})}\left[q_{\phi_{\mathcal{D}}}(\mathbf{z} | \mathbf{w})\right]<br>$$<br>而w的真实分布往往是未知的，因此需要一些近似的方法来从隐变量中采样，而采样的质量会影响生成样本的好坏。</p>
+<ul>
+<li>VAE中最基础的方法是直接用z的先验分布（标准正态分布）来近似，直接从正态分布中采样z。而这种方法会生成大量同质的和无意义的样本，因为这种假设过于简单。<blockquote>
+<p>In  real  world  scenarios,  the  KLD  loss  term  in  ELBO loss  is  still  large  after convergence.</p>
 </blockquote>
-<p>根据以上假设，作者提出了以下结构：</p>
-<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBBZVpLZElXRnpYN05BNkhIUTRoUXVhbTBROWQ0YmFPbEQwaE9DRVkrZnZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2. An  “extreme”  version  of  our  Inception  module,  with  one spatial  convolution  per  output  channel  of  the  1x1  convolution."></p>
-<p>Figure 2展示的结构先使用N个1 x 1 x input_channels的卷积核计算卷积，得到N个feature map（cross-channel  correlations ）；然后在每一个维度的feature map上单独用一个k x k的卷积核计算卷积（spatial  correlations ）。</p>
-<p>这种结构与<code>depthwise  separable  convolution</code>（深度可分离卷积）类似：下图就是depthwise separable convolution的示意图，其实就是将传统的卷积操作分成两步，假设原来是3<em>3的卷积，那么depthwise separable convolution就是先用M个3</em>3<em>1的卷积核分别与输入的M个channel进行卷积运算，生成M个feature map；然后用N个1</em>1*M的卷积核与上一步生成的M个feature map进行卷积运算，最后生成N个feature map。因此文章中将depthwise separable convolution分成两步，一步叫depthwise convolution，就是下图的（b），另一步是pointwise convolution，就是下图的（c）。</p>
-<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBBZVpLZElXRnpYeU1iT1RBVkg2eXludEpSSjFDQ21RYXplRG4zbFY5MDNRPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
-<p>Figure 2与depthwise  separable  convolution的区别在于：</p>
-<ol>
-<li>顺序不一样：在depthwise separable convolution中是先进行一个channel-wise的spatial convolution，也就是上图的（b），然后是1<em>1的卷积。而在Figure4中是先进行1</em>1的卷积，再进行channel-wise的spatial convolution，最后concat。</li>
-<li>是否存在非线性激活：在Figure 2中，每一步卷积操作后都有一个ReLU的非线性激活，但是在depthwise separable convolution中没有。</li>
+</li>
+<li>另一种是基于Monte Carlo的方法<br>  <img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjE5V0RNMDA0N1RpRThvWVFHeCswd0JaKy8wNjNzcks3Q2xmM08vdGo2cSt3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""><blockquote>
+<p>According  to  the  law  of  large  numbers,  the  marginal  likelihood $p_{\theta_{\mathcal{D}}, \phi_{\mathcal{D}}}(\mathbf{w})$ converges  to  the  empirical  mean,  thereby providing  an  unbiased  distribution  for  sampling w.</p>
+</blockquote>
+</li>
+</ul>
+<p>作者还提出了一种<strong>Exploratory  Sampling</strong>的采样方法，目的是增加生成utterance的多样性。作者认为一种理想的采样方法应该是无偏估计，但是方差要增加。假设Algorithm 1中，$\mu, \sigma$ 分别是VAE encoder得到的均值和方差，然后可以从 $\mathcal{N}\left(\boldsymbol{\mu}(\mathbf{w}), \lambda_{s} \cdot \boldsymbol{\sigma}(\mathbf{w})\right)$ 采样z，而参数 $\lambda_{s}$ 用来控制VAE decoder（也叫做generator）探索exploration的程度，影响生成utterance的多样性。</p>
+<h4 id="Joint-Language-Understanding-VAE"><a href="#Joint-Language-Understanding-VAE" class="headerlink" title="Joint  Language  Understanding  VAE"></a>Joint  Language  Understanding  VAE</h4><p>与标准的输入输出均为utterance的VAE模型相比，Joint  Language  Understanding  VAE(JLUVA) 还需要同时预测slot和intent标签，如图2所示：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBmMy9OcER1MjRCTkUrQ0ZnMER2SnROdW5BVy94WXV1cWxVRGUxRDBLeXF3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>因此，SLU的loss如下：<br>$$<br>\mathcal{L}_{L U}(\phi, \psi ; \mathbf{w}, \mathbf{s}, y)=-\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\psi}(\mathbf{s}, y | \hat{\mathbf{w}}, \mathbf{z})\right]<br>$$<br>JLUVA的联合loss为：<br>$$<br>\begin{aligned} \mathcal{L}(\theta, \phi, \psi ; \mathbf{w}, \mathbf{s}, y)=&amp; \mathrm{D}_{\mathrm{KL}}\left(q_{\phi}(\mathbf{z} | \mathbf{w}) | p_{\theta}(\mathbf{z} | \mathbf{w})\right) \ &amp;-\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\theta}(\mathbf{w} | \mathbf{z})\right] \ &amp;-\mathbb{E}_{\mathbf{z} \sim q_{\phi}}\left[\log p_{\psi}(\mathbf{s}, y | \hat{\mathbf{w}}, \mathbf{z})\right] \end{aligned}<br>$$</p>
+<blockquote>
+<p>We  obtain  the  optimal  parameters  $\theta^{<em>}, \phi^{</em>}, \psi^{*}$ by  minimizing  Equation  6  (i.e.  $\arg \min _{\theta, \phi, \psi} \mathcal{L}$)  with  respect  to  a  real dataset  D.</p>
+</blockquote>
+<p>在数据生成阶段，模型使用某种近似策略（上文Sampling中的方法）来采样，然后通过decoder network $p_{\theta}\left(\mathbf{w} | \mathbf{z}^{\star}\right)$ 来合成utterance $\hat{\mathrm{w}}$，最后再通过SLU网络来预测合成utterance的标签 $\hat{\mathbf{s}}$ 和 $\hat{y}$，三者合为一体得到一个样本$(\hat{\mathbf{w}}, \hat{\mathbf{s}}, \hat{y})$。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h3><p>作者在以下SLU数据集上做实验：</p>
+<ul>
+<li>ATIS:  Airline  Travel  Information  System  (ATIS) (Hemphill,  Godfrey,  and  Doddington  1990)  is  a  representative  dataset  in  the  SLU  task,  providing  well-founded comparative  environment  for  our  experiments.</li>
+<li>Snips:  The  snips  dataset  is  an  open  source  virtual-assistant  corpus.  The  dataset  contains  user  queries  from various  domains  such  as  manipulating  playlists  or  booking  restaurants.</li>
+<li>MIT  Restaurant  (MR):  This  single-domain  dataset  specializes  in  spoken  queries  related  to  booking  restaurants.</li>
+<li>MIT  Movie:  The  MIT  movie  corpus  consists  of  two single-domain  datasets:  the  movie  eng  (ME)  and  movie trivia  (MT)  datasets.  While  both  datasets  contain  queries about  film  information,  the  trivia  queries  are  more  complex  and  specific.</li>
+</ul>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJKditIWDVxdnhPMFNJM3Q2bit0TnYrL0F4NFA5T0JidCt5QTdBTHBTTFhBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Experimental-Settings"><a href="#Experimental-Settings" class="headerlink" title="Experimental  Settings"></a>Experimental  Settings</h3><blockquote>
+<p>Since  we  observe  a  high variance  in  performance  gains  among  different  runs  of  the same  generative  model,  we  need  to  approach the  experimental  designs  with  a  more  conservative  stance.</p>
+</blockquote>
+<p>论文实验设置如下：</p>
+<ul>
+<li>在相同的训练集下，使用不同的随机数种子来训练$N_{G}$个相同的生成模型</li>
+<li>从$N_{G}$中每一个模型采样得到m个utterances，得到$N_{G}$个增强后的数据集$\mathcal{D}_{1}^{\prime}, \ldots, \mathcal{D}_{N_{G}}^{\prime}$</li>
+<li>在每一个数据集上训练$N_{L}$个相同的SLU模型，所有的模型都是在相同的验证集和测试集上评估</li>
+<li>最终得到$N_{G} \times N_{L}$个结果</li>
+</ul>
+<h3 id="Generative-Data-Augmentation-Results"><a href="#Generative-Data-Augmentation-Results" class="headerlink" title="Generative  Data  Augmentation  Results"></a>Generative  Data  Augmentation  Results</h3><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJKditIWDVxdnhPem9OOE5pZ0pIbUhFSGZJZDE4YTdCS1c2S1Y1QWlvR3p3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>实验表明本文提出的方法在小规模数据集上效果提升明显，可能是因为对于大数据集数据增强的意义不大。</p>
+<p><strong>GDA  on  Other  SLU  Models  and  Datasets</strong><br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJKditIWDVxdnhPeGVoNWh0VGxiL2tiOEhZZkwyMURBa0N3U080MlN6Um9nPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>从表3可以看出，本文提出的GDA模型的效果受两个方面因素的影响：</p>
+<ul>
+<li>数据集本身的难度</li>
+<li>模型的表达能力</li>
+</ul>
+<p><strong>Comparison  to  Other  State-of-the-art  Results</strong><br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJKditIWDVxdnhPMG1uTkhGalV0Vis2amMySUswNnJVQUVjSVRxSVhWb3pRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Ablation-Studies"><a href="#Ablation-Studies" class="headerlink" title="Ablation  Studies"></a>Ablation  Studies</h3><p>作者做了两组消融实验分别来验证采样方法和合成数据比例的影响。</p>
+<h4 id="Sampling-Methods"><a href="#Sampling-Methods" class="headerlink" title="Sampling  Methods"></a>Sampling  Methods</h4><ol>
+<li><p><strong>Exploratory Monte-Carlo  Posterior  Sampling  (Ours)</strong>:  z  is  sampled from  the  empirical  expectation  of  the  model,  which  is  estimated  by  inferring  posteriors  from  random  utterance  samples.  (Algorithm  1)</p>
+</li>
+<li><p><strong>Standard  Gaussian</strong>:  z  is  sampled  from  the  assumed prior,  the  standard  multivariate  Gaussian.</p>
+</li>
+<li><p><strong>Additive  Sampling</strong>:  First,  the  latent  representation  $z_{w}$  of a  random  utterance w  is  sampled.  Then $z_{w}$   is  disturbed  by a  perturbation  vector  α  ∼  U  (−0.2,0.2).  It  was  proposed for  the  deterministic  model  in  (Kurata,  Xiang,  and  Zhou 2016).</p>
+</li>
 </ol>
-<h2 id="The-Xception-architecture"><a href="#The-Xception-architecture" class="headerlink" title="The  Xception  architecture"></a>The  Xception  architecture</h2><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBBZVpLZElXRnpYNHpNcUMzVGc5bVMyWDkwVFZrOEZWemNDUndQOTZtS2dnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="The  Xception  architecture:  the  data  first  goes  through  the  entry  flow,  then  through  the  middle  flow  which  is  repeated  eight  times, and  finally  through  the  exit  flow.  Note  that  all  Convolution  and  SeparableConvolution  layers  are  followed  by  batch  normalization  [7]  (not included  in  the  diagram).  All  SeparableConvolution  layers  use  a  depth  multiplier  of  1  (no  depth  expansion)"></p>
-<p><em>这里的sparsableConv就是depthwise separable convolution</em></p>
-<blockquote>
-<p>In  short,  the  Xception  architecture  is  a  linear  stack  of depthwise  separable  convolution  layers  with  residual  connections.</p>
-</blockquote>
-<p><em>code link : <a href="https://keras.io/applications/#xception" target="_blank" rel="noopener">https://keras.io/applications/#xception</a></em></p>
-<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p>作者选取Inception v3与Xception做比较，因为二者的网络参数数量大致相同，因此任何性能上的差异可归结于两种结构本身的不同。作者共选取了两个任务：</p>
-<ul>
-<li>1000-class  single-label  classification  task  on the  <strong>ImageNet</strong>  dataset </li>
-<li>17,000-class multi-label  classification  task  on  the  large-scale  <strong>JFT</strong>  dataset.</li>
-</ul>
-<p>具体的训练细节参加原文：<a href="https://arxiv.org/abs/1610.02357" target="_blank" rel="noopener">https://arxiv.org/abs/1610.02357</a></p>
-<h3 id="Classification-performance"><a href="#Classification-performance" class="headerlink" title="Classification  performance"></a>Classification  performance</h3><p>选取部分结果如下：</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFmVVVieGgxS1czMjR5QWVHTlM5UlMxNVQ2eFZvQklBcktqM2FqQy8zL0NnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table1.Classification performance comparison on ImageNet(single  crop,  single  model).  VGG-16  and  ResNet-152  numbers  are only  included  as  a  reminder.  The  version  of  Inception  V3  being benchmarked  does  not  include  the  auxiliary  tower."></p>
-<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFmVVVieGgxS1czNXpCS09aeWZTNzZsRVV6U1VZQlNOamdpbDM3UnJFRzRBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2.  Classification  performance  comparison  on  JFT  (single crop,  single  model)."></p>
-<blockquote>
-<p>The  Xception  architecture  shows  a  much  larger  performance  improvement  on  the  JFT  dataset  compared  to  the<br>ImageNet  dataset.  We  believe  this  may  be  due  to  the  fact that  Inception  V3  was  developed  with  a  focus  on  ImageNet and  may  thus  be  by  design  over-fit  to  this  specific  task.  On the  other  hand,  neither  architecture  was  tuned  for  JFT.  It  is likely  that  a  search  for  better  hyperparameters  for  Xception on  ImageNet  (in  particular  optimization  parameters  and  regularization  parameters)  would  yield  significant  additional improvement.</p>
-</blockquote>
-<h3 id="Size-and-speed"><a href="#Size-and-speed" class="headerlink" title="Size  and  speed"></a>Size  and  speed</h3><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFmVVVieGgxS1czNFpjQk1ZSThwQ3JBTVFWTlhjWEFrTVE4ZUh1TnEyTU5nPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  3.  Size  and  training  speed  comparison."></p>
-<h3 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h3><blockquote>
-<p>We  showed  how  convolutions  and  depthwise  separable convolutions  lie  at  both  extremes  of  a  discrete  spectrum,<br>with  Inception  modules  being  an  intermediate  point  in  between.  This  observation  has  led  to  us  to  propose  replacing Inception  modules  with  depthwise  separable  convolutions  in neural  computer  vision  architectures.  We  presented  a  novel architecture  based  on  this  idea,  named  Xception,  which  has a  similar  parameter  count  as  Inception  V3.  Compared  to Inception  V3,  Xception  shows  small  gains  in  classification performance  on  the  ImageNet  dataset  and  large  gains  on  the JFT  dataset.  We  expect  depthwise  separable  convolutions to  become  a  cornerstone  of  convolutional  neural  network architecture  design  in  the  future,  since  they  offer  similar properties  as  Inception  modules,  yet  are  as  easy  to  use  as regular  convolution  layers.</p>
-</blockquote>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li><a href="https://drive.google.com/file/d/1gVMRTAwxxCjHHDHprGrB636wzdLCk0Vg/view?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/file/d/1gVMRTAwxxCjHHDHprGrB636wzdLCk0Vg/view?usp=sharing</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/28186857" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/28186857</a></li>
-</ul>
+<p>实验结果见表2。实验结果表明本文提出的Exploratory Monte-Carlo  Posterior  Sampling是最优的。而简单的Additive  Sampling也取得了不错的效果，表明采样方法并不仅限于高斯分布。最简单的标准正态分布导致模型表现下降，说明这种采样方法有很大的局限性。</p>
+<h4 id="Synthetic-Data-Ratio"><a href="#Synthetic-Data-Ratio" class="headerlink" title="Synthetic  Data  Ratio"></a>Synthetic  Data  Ratio</h4><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJKditIWDVxdnhPNktyQjM2M0M3MS9vSzJxbEpCZ1VoWk9RWXFHZlNuMFhRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>从图3可以看出，在合成数据：原始数据=50左右时，SLU模型的提升效果达到平衡。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文定义了数据增强DA的通用结构，并且针对于SLU任务提出了Joint  Language  Understanding  Variational  Au-<br>toencoder  (JLUVA)模型，在此基础上分析了各种VAE采样的方法。作者最后提到这类方法也可以应用到其它NLP任务中，但是这些工作还需要更多的理论上的解释。</p>
 
         </div>
         <footer class="article-footer">
@@ -368,20 +395,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2018/10/07/Deep contextualized word representations/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Deep contextualized word representations
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2018/09/25/Universal Sentence Encoder/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/05/21/Cross-Lingual Transfer Learning for Multilingual Task Oriented Dialog/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Universal  Sentence  Encoder</p>
+        <p class="article-nav-title">Cross-Lingual Transfer Learning for Multilingual Task Oriented Dialog</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -588,7 +605,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2018/10/02/Xception-Deep Learning with Depthwise Separable Convolutions/';
+    var disqus_url = 'https://helicqin.github.io/2019/05/23/Data Augmentation for Spoken Language Understanding via Joint Variational Generation/';
     
     (function() {
     var dsq = document.createElement('script');
