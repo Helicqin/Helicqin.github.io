@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>A  Knowledge-Grounded  Neural  Conversation  Model | Helic</title>
+    <title>Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Commonsense  Knowledge,Dialogue System" />
+        <meta name="keywords" content="Dialogue System,NLU" />
     
-    <meta name="description" content="本文在传统的基于数据驱动的对话系统中引入了背景知识，试图增加对话回复的有效信息。AAAI2018paper link">
-<meta name="keywords" content="Commonsense  Knowledge,Dialogue System">
+    <meta name="description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper linkcode link">
+<meta name="keywords" content="Dialogue System,NLU">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A  Knowledge-Grounded  Neural  Conversation  Model">
-<meta property="og:url" content="https://helicqin.github.io/2019/02/25/A Knowledge-Grounded Neural Conversation Model/index.html">
+<meta property="og:title" content="Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding">
+<meta property="og:url" content="https://helicqin.github.io/2019/06/08/Decay-Function-Free Time-Aware Attention to Context and Speaker Indicator for Spoken Language Understanding/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="本文在传统的基于数据驱动的对话系统中引入了背景知识，试图增加对话回复的有效信息。AAAI2018paper link">
+<meta property="og:description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper linkcode link">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjF3MlJOdGJYN0x6MkY4OGQrVisxUU9walJtcmcxckx4MWpuNnFOQnVjVDNnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-02-26T08:31:04.545Z">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBFcTQxcXNleXVYc1U2Tjc4TUxCVitRd3A1U3U0a1ZtKzNpWWxmT1BucTR3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-06-08T14:14:32.734Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A  Knowledge-Grounded  Neural  Conversation  Model">
-<meta name="twitter:description" content="本文在传统的基于数据驱动的对话系统中引入了背景知识，试图增加对话回复的有效信息。AAAI2018paper link">
-<meta name="twitter:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjF3MlJOdGJYN0x6MkY4OGQrVisxUU9walJtcmcxckx4MWpuNnFOQnVjVDNnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta name="twitter:title" content="Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding">
+<meta name="twitter:description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper linkcode link">
+<meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBFcTQxcXNleXVYc1U2Tjc4TUxCVitRd3A1U3U0a1ZtKzNpWWxmT1BucTR3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
     
@@ -146,18 +146,18 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/NLP/NLU/">NLU</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-A Knowledge-Grounded Neural Conversation Model" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Decay-Function-Free Time-Aware Attention to Context and Speaker Indicator for Spoken Language Understanding" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        A  Knowledge-Grounded  Neural  Conversation  Model
+        Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding
         </h1>
     
 
@@ -167,70 +167,43 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/02/25/A Knowledge-Grounded Neural Conversation Model/" class="article-date">
-            <time datetime="2019-02-25T11:16:00.000Z" itemprop="datePublished">2019-02-25</time>
+        <a href="/2019/06/08/Decay-Function-Free Time-Aware Attention to Context and Speaker Indicator for Spoken Language Understanding/" class="article-date">
+            <time datetime="2019-06-08T09:17:00.000Z" itemprop="datePublished">2019-06-08</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a>, <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>
+        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>, <a class="tag-link" href="/tags/NLU/">NLU</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>本文在传统的基于数据驱动的对话系统中引入了背景知识，试图增加对话回复的有效信息。AAAI2018<br><a href="https://drive.google.com/open?id=1mD17UBEZfDPJZYwlMmMZtIFqB71aD6Jy" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>目前基于纯数据驱动的端到端对话系统取得了很大的成功，但是缺乏背景知识的支持，生成的回复信息量不足。如下图所示，纯对话驱动的对话系统很难给出事实内容，无法引入实体到回复中。</p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjB1VEw0M1hyV29NdCtLWGJtWkZwVkp5b3Z4UUo2Q0gzck5Pcy94eHNkQ2l3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Responses  of  fully  data-driven  conversation  models  are  often  appropriate,  but  generally  lack  content  characteristic  of  human  responses."></p>
-<p>本文的目标是使对话系统生成回复更加相关并且包含更大的有用信息，关键在于如何有效地利用外部知识（例如Wikipedia,  book  reviews  on  Goodreads,  and  restaurant  reviews  on  Foursquare）。本文提出了一个基于背景知识的数据驱动的对话生成模型，同时基于对话历史和相关背景事实进行建模，具有很强的扩展性。实验表明，该模型与seq2seq相比在提供有用信息方面有了很大的改善。</p>
-<blockquote>
-<p>To  the  best  of  our  knowledge,  this  is  the  first large-scale,  fully  data-driven  neural  conversation  model  that effectively  exploits  external  knowledge.</p>
-</blockquote>
-<h2 id="Grounded-Response-Generation"><a href="#Grounded-Response-Generation" class="headerlink" title="Grounded  Response  Generation"></a>Grounded  Response  Generation</h2><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjF3MlJOdGJYN0x6MkY4OGQrVisxUU9walJtcmcxckx4MWpuNnFOQnVjVDNnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  3:  Knowledge-grounded  model  architecture"></p>
-<p>主要有以下过程：</p>
+            <p>本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019</p>
+<p><a href="https://drive.google.com/open?id=1mD17UBEZfDPJZYwlMmMZtIFqB71aD6Jy" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/jgkimi/Decay-Function-Free-Time-Aware" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在对话的场景下去考虑SLU任务，上下文信息的重要性是变化的，以图1为例，当识别<code>&quot;We have Sungei Buloh which is on the Northwest of Singapore.&quot;</code>这句话时，最重要的历史信息应该是<code>&quot;What  are  the  places  that  I can  have  some  memorable  experiences  there?&quot;</code>，而非前一句<code>&quot;Right&quot;</code>。因此，手工设定的time-delay function是无法表达出这种复杂性。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJXYkRlUzMvdUNXdjBscnl4WTI0WFUvSXJ2cWc0VWY1WTlaVGwweWRCMzZBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>目前大部分研究time-aware的SLU模型使用人工设定的单一time-delay function或者多个线性组合，这类手动设定的函数不够灵活。本文提出了一种可以自动学习time-delay tendency的方法，同时还引入了当前说话者的身份信息。</p>
+<h2 id="Proposed-Model"><a href="#Proposed-Model" class="headerlink" title="Proposed Model"></a>Proposed Model</h2><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBFcTQxcXNleXVYc1U2Tjc4TUxCVitRd3A1U3U0a1ZtKzNpWWxmT1BucTR3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Decay-Function-Free-Time-Aware-Attention"><a href="#Decay-Function-Free-Time-Aware-Attention" class="headerlink" title="Decay-Function-Free  Time-Aware Attention"></a>Decay-Function-Free  Time-Aware Attention</h3><p>作者使用一个距离矩阵描述当前utterance与所有历史utterance之间的相关性，记为$D\in R^{dim \times|D|}$，其中第t个历史utterance对应的距离向量为$d_{t}$，这个矩阵是随模型训练而自动更新的。得到距离向量后，作者使用注意力机制计算$t_{th}$历史utterance的重要性：<br>$$<br>\alpha_{t}=w_{a t t}^{T} \sigma\left(h_{T}+d_{t}+b_{a t t}\right)<br>$$<br>其中$b_{att}$是可训练的偏差参数。得到注意力分数后，有两种加权求和的变体：</p>
 <ol>
-<li>首先要从大规模背景知识中（world facts）提取出与对话历史相关的facts : $F=(f_{1},…,f_{k})$ 。（作者直接用关键词检索，也可以使用NER）</li>
-<li>分别对对话历史和facts进行编码，通过memory network（作者没有使用multi-hop，实际只有一层），最终输入到解码端。</li>
+<li>role-level：只考虑所有相同说话者的历史utterances<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWYlVPb0piMk9KOEpkU202TmNVY2gwaGhUR2E2WHpoRndBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li>
+<li>sentence-level：同时考虑所有说话者的历史utterances<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWVm9IeDl2QldhcXdXYkxBSEkvUXpVOTJ1Q1JQZUNNbHhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li>
 </ol>
-<p>作者还使用了多任务学习：</p>
+<h3 id="Decay-Function-Free-Content-and-Time-Aware-Attention"><a href="#Decay-Function-Free-Content-and-Time-Aware-Attention" class="headerlink" title="Decay-Function-Free Content-and-Time-Aware  Attention"></a>Decay-Function-Free Content-and-Time-Aware  Attention</h3><p>在上个模型的基础上，同时考虑时间和上下文内容的影响：<br>$$<br>\beta_{t}=w_{a t t}^{T} \sigma\left(h_{T}+u_{t}+b_{a t t}\right)<br>$$<br>然后已相同的方式加权求和：</p>
 <ol>
-<li>一种是纯数据驱动，无背景知识（S，R）: S代表对话历史，R代表回复</li>
-<li>一种是带有背景知识 $((f_{1},…,f_{k},S),R)$ </li>
+<li>role-level：只考虑所有相同说话者的历史utterances<br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWUSs5S2lUT0NsU1Z6N1NIbXdkYkMya04xa3gwM2dqSjZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li>
+<li>sentence-level：同时考虑所有说话者的历史utterances<br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWZlVnSktOZFgyZXJRL0luZFpTKzQ5YThPNFB6dVNHTE1RPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li>
 </ol>
-<p>多任务学习的优势在于：</p>
-<ol>
-<li>允许基于纯数据驱动来训练encoder,decoder，相当于warm start</li>
-<li>在第二个任务中如果将R替换成$f_{i}$，则任务二类似于autoencoder，使得生成的回复更有内容</li>
-</ol>
-<h3 id="Dialog-Encoder-and-Decoder"><a href="#Dialog-Encoder-and-Decoder" class="headerlink" title="Dialog  Encoder  and  Decoder"></a>Dialog  Encoder  and  Decoder</h3><p>编码器和解码器是两个独立的GRU RNN，互相不共享权重和词向量。</p>
-<h3 id="Facts-Encoder"><a href="#Facts-Encoder" class="headerlink" title="Facts  Encoder"></a>Facts  Encoder</h3><p><strong>Facts  Encoder</strong> 本质上是一个memory network，但是只有一跳（层）。</p>
-<p>形式化定义如下：给定对话历史 $S=\{s_{1},s_{2},…,s_{n}\}$ 和事实集合 $F=\{f_{1},…,f_{k}\}$（这里指已经抽取之后的），先使用RNN编码整个对话历史（当作一个long sentence），得到所有时间步的隐层状态相加得到对话历史的表示 u：</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBFMVhKcEdQUEZLNEtrbmRZS0JPNjRmZWNxUmtUbDJwUU5vR1JabHhRWnJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>其中u是一个d维向量，$r_{i}$是$f_{i}$的词袋向量，维度为v，$A,C\in R^{d \times v}$。</p>
-<p>然后将$\widetilde{u}$作为decoder的隐层状态初始化，生成回复。</p>
-<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><h3 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h3><p><em>Details in <a href="https://drive.google.com/open?id=162qQ-arsF-l7hzK_OLdM_BPxlDarS6vO" target="_blank" rel="noopener">A Knowledge-Grounded Neural Conversation Model</a></em></p>
-<h3 id="Multi-Task-Learning"><a href="#Multi-Task-Learning" class="headerlink" title="Multi-Task  Learning"></a>Multi-Task  Learning</h3><ul>
-<li>FACTS  task: $\{(f_{1},…,f_{k},S),R\}$ </li>
-<li>NOFACTStask: (S, R)</li>
-<li>AUTOENCODERtask:  $\{(f_{1},…,f_{k},S),f_{i}\}$ </li>
-</ul>
-<p>作者发现autoencoder任务有助于在回复中引入事实内容信息。</p>
-<h3 id="Decoding-and-Reranking"><a href="#Decoding-and-Reranking" class="headerlink" title="Decoding  and  Reranking"></a>Decoding  and  Reranking</h3><p>模型在解码端使用了改进的Beam Search，在选取topN的时候考虑以下三种因素：</p>
-<ul>
-<li>解码器的似然概率 $P(R|S,F)$</li>
-<li>$P(S|R)$ ：作者单独训练了一个Seq2Seq模型，但是输入是responses，输出是S（没有facts）</li>
-<li>减少生成通用回复</li>
-</ul>
-<p>最终的得分函数为：</p>
-<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBHQXlFY0c5VnIrUS9jdUtuSmx4ZFdSL2g3MkR1R2lrcHozVkk5OEU5b0Z3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBHQXlFY0c5VnIrVHB3MWhLT0VqMEFQSVh6eTZYWDBlam9uckRaUHdDT3V3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  3:  Mean  differences  in  judgments  in  human  evaluation,  together  with  95%  confidence  intervals.  Differences  sum  to  1.0. Boldface  items  are  significantly  better  (p&lt;0.05)  than  their  comparator.  (*):  Main  system,  pre-selected  on  the  basis  of  BLEU."></p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文是利用背景知识来改善对话系统中的大量无意义、通用答复，融入更多的实体，使得对话系统更贴合真实实际，基于本文，DSTC7上有一个相关评测，主要研究的是对话系统中引入背景知识。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="http://workshop.colips.org/dstc7/workshop.html" target="_blank" rel="noopener">http://workshop.colips.org/dstc7/workshop.html</a></li>
-</ul>
+<p>最终，将time-aware和content-aware的信息拼接起来：<br>$$<br>s^{h i s t}=s_{\text {time}}^{\text {hist}} \oplus s_{\text {cont}}^{\text {hist}}<br>$$</p>
+<h3 id="Speaker-Indicator"><a href="#Speaker-Indicator" class="headerlink" title="Speaker  Indicator"></a>Speaker  Indicator</h3><p>Speaker  Indicator是一个可训练参数$s^{cur}\in R^{dim}$，用来表征说话者的身份，因此，Eq1和Eq7分别变为：<br>$$<br>\alpha_{t}=w_{a t t}^{T} \sigma\left(h_{T}+d_{t}+s^{c u r}+b_{a t t}\right)\\<br>\beta_{t}=w_{a t t}^{T} \sigma\left(h_{T}+u_{t}+s^{c u r}+b_{a t t}\right)<br>$$</p>
+<h3 id="Prediction"><a href="#Prediction" class="headerlink" title="Prediction"></a>Prediction</h3><p>作者使用另一个BiLSTM进行预测，t时刻的输入为：<br>$$<br>v_{t}=w_{t} \oplus s^{h i s t}<br>$$</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWV3VVMTlKRFNjalZMUXB4aVlBazM3ckR6WE5rSnpZWEx3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWVUMybDI2TEloSjkxUTJWaXFuVUpYb251Y0tIVDlmUmlBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑不同位置的历史utterance的影响，提出了decay-function-free time-aware  attention  models；同时增加了说话者的身份特征。</p>
 
         </div>
         <footer class="article-footer">
@@ -368,20 +341,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/03/01/Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Multi-Turn Response Selection for Chatbots with Deep Attention Matching Network
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/02/23/Cluster-based Beam Search for Pointer-Generator Chatbot Grounded by Knowledge/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/05/26/Linguistic Knowledge and Transferability of Contextual Representations/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Cluster-based  Beam  Search  for  Pointer-Generator  Chatbot  Grounded  by Knowledge</p>
+        <p class="article-nav-title">Linguistic Knowledge and Transferability of Contextual Representations</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -588,7 +551,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2019/02/25/A Knowledge-Grounded Neural Conversation Model/';
+    var disqus_url = 'https://helicqin.github.io/2019/06/08/Decay-Function-Free Time-Aware Attention to Context and Speaker Indicator for Spoken Language Understanding/';
     
     (function() {
     var dsq = document.createElement('script');
