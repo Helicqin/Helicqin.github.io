@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Hi | Helic</title>
+    <title>Multi-Task Deep Neural Networks for Natural Language Understanding | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="BUPT" />
+        <meta name="keywords" content="Multi-Task Learning" />
     
-    <meta name="description" content="摘要：你好，Helic">
-<meta name="keywords" content="BUPT">
+    <meta name="description" content="本文主要研究的是结合语言模型预训练和多任务学习获取文本表示，在多个公开数据集上取得了最好的效果，同时在领域迁移实验中也取得了很好的泛化能力。ACL2019 paper linkcode link">
+<meta name="keywords" content="Multi-Task Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hi">
-<meta property="og:url" content="https://helicqin.github.io/2017/07/05/Hi/index.html">
+<meta property="og:title" content="Multi-Task Deep Neural Networks for Natural Language Understanding">
+<meta property="og:url" content="https://helicqin.github.io/2019/06/17/Multi-Task Deep Neural Networks for Natural Language Understanding/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="摘要：你好，Helic">
+<meta property="og:description" content="本文主要研究的是结合语言模型预训练和多任务学习获取文本表示，在多个公开数据集上取得了最好的效果，同时在领域迁移实验中也取得了很好的泛化能力。ACL2019 paper linkcode link">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fh9544d8lrj30hs0budky.jpg">
-<meta property="og:updated_time" content="2017-11-19T14:42:58.088Z">
+<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB5clk0NXR4TjdnNWp3UVlvNGFVRWZaUXNkRWJWa0hPN1dCeHlaSFgwdWVRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-06-17T07:03:05.656Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hi">
-<meta name="twitter:description" content="摘要：你好，Helic">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fh9544d8lrj30hs0budky.jpg">
+<meta name="twitter:title" content="Multi-Task Deep Neural Networks for Natural Language Understanding">
+<meta name="twitter:description" content="本文主要研究的是结合语言模型预训练和多任务学习获取文本表示，在多个公开数据集上取得了最好的效果，同时在领域迁移实验中也取得了很好的泛化能力。ACL2019 paper linkcode link">
+<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB5clk0NXR4TjdnNWp3UVlvNGFVRWZaUXNkRWJWa0hPN1dCeHlaSFgwdWVRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
     
@@ -146,18 +146,18 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Hi" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Multi-Task Deep Neural Networks for Natural Language Understanding" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Hi
+        Multi-Task Deep Neural Networks for Natural Language Understanding
         </h1>
     
 
@@ -167,22 +167,53 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2017/07/05/Hi/" class="article-date">
-            <time datetime="2017-07-05T09:29:50.000Z" itemprop="datePublished">2017-07-05</time>
+        <a href="/2019/06/17/Multi-Task Deep Neural Networks for Natural Language Understanding/" class="article-date">
+            <time datetime="2019-06-17T01:29:00.000Z" itemprop="datePublished">2019-06-17</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/BUPT/">BUPT</a>
+        <a class="tag-link" href="/tags/Multi-Task-Learning/">Multi-Task Learning</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>摘要：你好，Helic<br><a id="more"></a><br>你好，世界</p>
+            <p>本文主要研究的是结合语言模型预训练和多任务学习获取文本表示，在多个公开数据集上取得了最好的效果，同时在领域迁移实验中也取得了很好的泛化能力。ACL2019</p>
+<p><a href="https://drive.google.com/open?id=1g5Ua-N9pGdDzSx4silglqiqCYRzOBEcy" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/namisan/mt-dnn" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>学习通用的文本表征是很多NLP任务的基础，目前两种通用的方法是多任务学习和语言模型预训练。本文的核心思想是把这两种方法相结合，作者认为MTL和语言模型预训练是相互补充的，因此在Liu  et  al.  (2015)的基础上用Bert作为共享的编码器，提出了MT-DNN(Multi-Task  Deep  Neural  Networks)。</p>
+<h2 id="The-Proposed-MT-DNN-Model"><a href="#The-Proposed-MT-DNN-Model" class="headerlink" title="The  Proposed  MT-DNN  Model"></a>The  Proposed  MT-DNN  Model</h2><p>MT-DNN结构如下图所示：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB5clk0NXR4TjdnNWp3UVlvNGFVRWZaUXNkRWJWa0hPN1dCeHlaSFgwdWVRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Architecture  of  the  MT-DNN  model  for  representation  learning.  The  lower  layers  are  shared  across all  tasks  while  the  top  layers  are  task-specific.  The  input  X  (either  a  sentence  or  a  pair  of  sentences)  is  first represented  as  a  sequence  of  embedding  vectors,  one  for  each  word,  in  $l_{1}$.  Then  the  Transformer  encoder  captures the  contextual  information  for  each  word  and  generates  the  shared  contextual  embedding  vectors  in  $l_{2}$.  Finally,  for each  task,  additional  task-specific  layers  generate  task-specific  representations,  followed  by  operations  necessary for  classification,  similarity  scoring,  or  relevance  ranking."></p>
+<p><strong>Lexicon Encoder</strong>($l_{1}$)：设定输入为 $X=\{x_{1},…,x_{m}\}$，m为输入tokens的数量。类似于Devlin  et  al.  (2018)，输入第一个token被设置成<code>[CLS]</code>，如果输入的是句子对$(X_{1},X_{2})$，在两个句子中间插入一个<code>[SEP]</code> token。lexicon encoder将词的word, segment, positional embeddings相加，得到每一个词的表征。</p>
+<p><strong>Transformer  Encoder</strong>($l_{2}$)：论文使用了多层双向的Transformer encoder作为共享的特征表示，获取每个词的上下文表征。与Bert不同的是，MT-DNN是通过多任务学习来获取上下文表征，而不仅仅是语言模型预训练。</p>
+<p><strong>Task Specific Layers</strong>：任务特定层随任务的不同而有所差异，本文选取了GLUE中的四类任务为例：</p>
+<ul>
+<li><p><strong>Single-Sentence  Classification  Output</strong>：作者直接把<code>[CLS]</code> token对应的上下文表征作为句子表示，然后经过一个softmax分类层 $P_{r}(c | X)=\operatorname{softmax}\left(\mathbf{W}_{S S T}^{\top} \cdot \mathbf{x}\right)$</p>
+</li>
+<li><p><strong>Text  Similarity  Output</strong>：作者直接把<code>[CLS]</code> token对应的上下文表征作为句子对$(X_{1},X_{2})$表示，然后通过一个前馈层计算相似度 $\operatorname{sim}\left(X_{1}, X_{2}\right)=\mathbf{w}_{S T S}^{\top} \cdot \mathbf{x}$</p>
+</li>
+<li><p><strong>Pairwise  Text  Classification  Output</strong>：以natural  language  inference  (NLI) 任务为例，给定premise $P=(p_{1},…,p_{m})$ 和 hypothesis $H=(h_{1},…,h_{n})$，目标是预测两者之间的逻辑关系。作者采取了类似stochastic  answer  network  (SAN) (Liu  et  al.,  2018a)的方法。首先通过Transformer Encoder获取premise P和hypothesis H的上下文表征 $\mathbf{M}^{p} \in \mathbb{R}^{d \times m}$, $\mathbf{M}^{h} \in \mathbb{R}^{d \times n}$，然后基于此进行K步的推理，K是一个超参数。推理过程如下：假设初始状态 $\mathbf{s}^{0}=\sum_{j} \alpha_{j} \mathbf{M}_{j}^{h}$，$\alpha_{j}=\frac{\exp \left(\mathbf{w}_{1}^{\top} \cdot \mathbf{M}_{j}^{h}\right)}{\sum_{i} \exp \left(\mathbf{w}_{1}^{\top} \cdot \mathbf{M}_{i}^{h}\right)}$；在第$k \in \{1, 2, …,K-1\}$步时，状态 $\mathbf{s}^{k}=\mathrm{GRU}\left(\mathbf{s}^{k-1}, \mathbf{x}^{k}\right)$，这里$x^{k}$由上一步的状态$s^{k-1}$和memory $M^{p}$ 计算得到，<br>$$<br>\mathbf{x}^{k}=\sum_{j} \beta_{j} \mathbf{M}_{j}^{p}\\<br>\beta_{j}=\operatorname{softmax}\left(\mathbf{s}^{k-1} \mathbf{W}_{2}^{\top} \mathbf{M}^{p}\right)<br>$$<br>在每一个时间步k预测二者的关系，最后再把K个输出分数做平均：<br>$$<br>P_{r}^{k}=\operatorname{softmax}\left(\mathbf{W}_{3}^{\top}\left[\mathbf{s}^{k} ; \mathbf{x}^{k} ;\left|\mathbf{s}^{k}-\mathbf{x}^{k}\right| ; \mathbf{s}^{k} \cdot \mathbf{x}^{k}\right]\right)\\<br>P_{r}=\operatorname{avg}\left(\left[P_{r}^{0}, P_{r}^{1}, \ldots, P_{r}^{K-1}\right]\right)<br>$$</p>
+</li>
+<li><p><strong>Relevance  Ranking  Output</strong>：以QNLI为例，给定问题Q和候选答案集，目的是进行相关性排序。仍然以<code>[CLS]</code> token 的上下文表征作为(Q, A)对的表示，计算相关性 $\operatorname{Rel}(Q, A)=g\left(\mathbf{w}_{Q N L I}^{\top} \cdot \mathbf{x}\right)$。</p>
+</li>
+</ul>
+<h3 id="The-Training-Procedure"><a href="#The-Training-Procedure" class="headerlink" title="The  Training  Procedure"></a>The  Training  Procedure</h3><p>MT-DNN的训练包含两个步骤：预训练和多任务学习。其中，预训练参照BERT的实现，多任务学习过程如下图所示：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNjYmNJQ1dYcTdiSUJCQzZ1dFdJaVRVTVpzZTg1T2MvdFVKb3V6emFhTjN3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>对于分类任务，采用交叉熵损失函数 $-\sum_{c} \mathbb{1}(X, c) \log \left(P_{r}(c | X)\right)$；对于文本相似度任务，采用MSE $\left(y-\operatorname{Sim}\left(X_{1}, X_{2}\right)\right)^{2}$；对于排序问题，给定Q和A的集合，A分为两个部分：一个$A^{+}$的正样本，$|A|-1$个负样本。最小化正样本的负极大似然概率：<br>$$<br>-\sum_{\left(Q, A^{+}\right)} P_{r}\left(A^{+} | Q\right)\\<br>P_{r}\left(A^{+} | Q\right)=\frac{\exp \left(\gamma \operatorname{Rel}\left(Q, A^{+}\right)\right)}{\sum_{A^{\prime} \in A} \exp \left(\gamma \operatorname{Rel}\left(Q, A^{\prime}\right)\right)}<br>$$<br>实验中取$\alpha=1$。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNjYmNJQ1dYcTdiTWo5SGtqL3gwRlhiRUhXcDRiWkc1aDJoSHFWejNoT1pnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNjYmNJQ1dYcTdiUGJZSUxBUVB1ZWpZaHpHWTlkZDllcU5HejBVcjRub3F3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<ul>
+<li>$\mathbf{BERT_{LARGE}}$：baseline，使用GLUE数据进行finetuning</li>
+<li>$\mathbf{MT-DNN_{no-fine-tuning}}$：不进行finetuning</li>
+<li><strong>ST-DNN</strong>：去除多任务学习，在每一个任务上单独finetuning，其与Bert的区别仅限于特定输出层的设计。</li>
+</ul>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBOakkybWlBMnRKQmpRdW1lSFJEdktIaDlTL1BoQzRRYWlKRjNQUEdpa1V3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><strong>Improving Multi-Task Deep Neural Networks via Knowledge Distillation for Natural Language Understanding</strong>：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBOakkybWlBMnRKRWJqTzVMRC9zNVJIUUw3a21PQk1GWjJ5TmlxQjFFQUlBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文主要研究的是结合语言模型预训练和多任务学习获取文本表示，在多个公开数据集上取得了最好的效果，同时在领域迁移实验中也取得了很好的泛化能力。</p>
 
         </div>
         <footer class="article-footer">
@@ -320,20 +351,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2017/07/12/Latent-Intention-Dialogue-Models/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Latent Intention Dialogue Models
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2017/07/05/Hi (1)/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/06/13/Multi-Level Memory for Task Oriented Dialogs/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Hi</p>
+        <p class="article-nav-title">Multi-Level Memory for Task Oriented Dialogs</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -540,7 +561,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2017/07/05/Hi/';
+    var disqus_url = 'https://helicqin.github.io/2019/06/17/Multi-Task Deep Neural Networks for Natural Language Understanding/';
     
     (function() {
     var dsq = document.createElement('script');
