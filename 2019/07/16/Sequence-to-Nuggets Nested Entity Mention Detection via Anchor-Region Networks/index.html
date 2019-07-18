@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="NLU" />
+    
+    <meta name="description" content="本文解决的是嵌套命名实体识别问题，提出了基于head-driven  phrase  structures的方法ARN，并且针对于无额外anchor word标注的数据集提出了bag loss。 ACL2019 paper linkcode link">
+<meta name="keywords" content="NLU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks">
+<meta property="og:url" content="https://helicqin.github.io/2019/07/16/Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文解决的是嵌套命名实体识别问题，提出了基于head-driven  phrase  structures的方法ARN，并且针对于无额外anchor word标注的数据集提出了bag loss。 ACL2019 paper linkcode link">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJRTXhkNFdxWEkyN0gwRXlHb0pBb0NhbzkxT2U5UWRsM1pRZU5rQ3lxSE93PT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg">
+<meta property="og:updated_time" content="2019-07-18T02:09:19.724Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks">
+<meta name="twitter:description" content="本文解决的是嵌套命名实体识别问题，提出了基于head-driven  phrase  structures的方法ARN，并且针对于无额外anchor word标注的数据集提出了bag loss。 ACL2019 paper linkcode link">
+<meta name="twitter:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJRTXhkNFdxWEkyN0gwRXlHb0pBb0NhbzkxT2U5UWRsM1pRZU5rQ3lxSE93PT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://helicqin.github.io/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/NLP/NLU/">NLU</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/07/16/Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks/" class="article-date">
+            <time datetime="2019-07-16T06:57:00.000Z" itemprop="datePublished">2019-07-16</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/NLU/">NLU</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文解决的是嵌套命名实体识别问题，提出了基于head-driven  phrase  structures的方法ARN，并且针对于无额外anchor word标注的数据集提出了bag loss。 ACL2019</p>
+<p><a href="https://drive.google.com/open?id=1UyytJkKCQAaQ8WsF1yPLN1vG3L5DEdm2" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/sanmusunrise/ARNs" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>基于序列标注的命名实体识别（NER）方法，一个词只能属于于一个实体，如果遇到嵌套的(nested)的实体就会出现问题，如图1：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJRTXhkNFdxWEkyMm55K3h5cEg5eWQxelBxNHdzWHhhYkNXc2p6a3hFSUtnPT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt="Figure  1:  An  example  of  nested  entity  mentions.  Due to  the  nested  structure,  “the”,“department”,“of”  and
+“education”  belong  to  both PER and ORG mentions."></p>
+<p>在ACE2005 和 GENIA数据集中有20%、10%左右的这种实体,具体的数据集的分析见<a href="https://link.zhihu.com/?target=https%3A//aclweb.org/anthology/N18-1131" target="_blank" rel="noopener">《A Neural Layered Model for Nested Named Entity Recognition》</a>的附录，ACL2019的文章<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1906.01359.pdf" target="_blank" rel="noopener">《NNE: A Dataset for Nested Named Entity Recognition in English Newswire》</a>提出了一个新的基于PTB数据的含有55%嵌套实体的数据集。</p>
+<p>本文提出的Anchor-Region  Networks(ARNs)基于两种假设：</p>
+<ul>
+<li>尽管实体可能会有嵌套关系，但是不会共享同一个head word(anchor word)，即不同的实体具有不同的head word，同时head word与实体类型有很强的语义关系。例如图1中<code>The minister of the department of education</code> 和 <code>the department of education</code> 分别对应head words <code>minister</code> <code>department</code>，并且分别对应实体类型<strong>ORG</strong>和<strong>PER</strong>。</li>
+<li>大部分的实体具有规则的表达结构。例如图1中的两个实体共享<strong>DET  NN  of  NP</strong>的结构，<strong>NN</strong>即为head words。</li>
+</ul>
+<p>因此，ARNs识别分为两步：</p>
+<ul>
+<li>用anchor detector network找出anchor word同时判断其对应的实体类别</li>
+<li>用region recognizer network识别出以不同anchor word为中心的实体的边界</li>
+</ul>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJRTXhkNFdxWEkyN0gwRXlHb0pBb0NhbzkxT2U5UWRsM1pRZU5rQ3lxSE93PT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt="Figure  2:  The  overall  architecture  of  ARNs.  Here “minister”  and  “department”  are  detected  anchor words for  two  mentions  respectively."></p>
+<h2 id="Anchor-Region-Networks-for-Nested-Entity-Mention-Detection"><a href="#Anchor-Region-Networks-for-Nested-Entity-Mention-Detection" class="headerlink" title="Anchor-Region  Networks  for  Nested Entity  Mention  Detection"></a>Anchor-Region  Networks  for  Nested Entity  Mention  Detection</h2><h3 id="Anchor-Detector"><a href="#Anchor-Detector" class="headerlink" title="Anchor Detector"></a>Anchor Detector</h3><p>Anchor Detector是一个基于BiLSTM的softmax分类器，给定序列 $x_{1},…, x_{n}$，先得到其向量表示（由词向量，词性，字符向量组成），然后再通过BiLSTM层，最后对隐层状态做分类：</p>
+<p>$$<br>\begin{aligned} \overrightarrow{h_{i}^{A}} &amp;=\operatorname{LSTM}\left(x_{i}, \overrightarrow{h_{i-1}^{A}}\right) \ \hat{h_{i}^{A}} &amp;=\operatorname{LSTM}\left(x_{i}, \overleftarrow{h_{i+1}^{A}}\right) \ &amp;h_{i}^{A} =\left[\overrightarrow{h_{i}^{A}} ; \overleftarrow{h_{i}^{A}}\right] \end{aligned} \\<br>O_{i}^{A}=\operatorname{MLP}\left(h_{i}^{A}\right)<br>$$<br>其中$O_{i}^{A} \in R^{|C|}$，$|C|$是实体类型数（包括不属于任意实体类型NIL）。</p>
+<h3 id="Region-Recognizer"><a href="#Region-Recognizer" class="headerlink" title="Region  Recognizer"></a>Region  Recognizer</h3><p>使用region recognizer network确定mention nugget，也就是确定实体的边界，如图1确定anchor word“mnister”的mention nugget是“the department of education”。 受到指针网络的启发，作者设计了一种pointer-based结构来识别实体的边界。</p>
+<p>作者认为局部特征对于实体的识别很重要（如，动词前的名词常常是实体）。因此，作者使用CNN来提取句子的局部特征。与anchor detector类似，首先经过BiLSTM得到每个词的基于上下文的特征表示$h_{i}^{R}$，然后使用CNN计算卷积：<br>$$<br>\boldsymbol{r}_{\boldsymbol{i}}=\tanh \left(\boldsymbol{W} \boldsymbol{h}_{\boldsymbol{i}-\boldsymbol{k} : \boldsymbol{i}+\boldsymbol{k}}^{\boldsymbol{R}}+\boldsymbol{b}\right)<br>$$<br>$\boldsymbol{h}_{\boldsymbol{i}-\boldsymbol{k} : \boldsymbol{i}+\boldsymbol{k}}$是 $h_{i-k}^{R}$ 到 $h_{i+k}^{R}$的拼接，W是卷积核，k是窗口大小。最后计算achor word $w_{i}$ 左右边界在 word $w_{j}$上的分数：<br>$$<br>\begin{aligned} L_{i j} &amp;=\tanh \left(r_{j}^{T} \Lambda_{1} h_{i}^{R}+U_{1} r_{j}+b_{1}\right) \ R_{i j} &amp;=\tanh \left(r_{j}^{T} \Lambda_{2} h_{i}^{R}+U_{2} r_{j}+b_{2}\right) \end{aligned}<br>$$<br>分别选取分数最高的左边界$x_{j}$、右边界$x_{k}$就得到了完整实体。</p>
+<h3 id="Model-Learning-with-Bag-Loss"><a href="#Model-Learning-with-Bag-Loss" class="headerlink" title="Model  Learning  with  Bag  Loss"></a>Model  Learning  with  Bag  Loss</h3><p>由于现有的NER数据集并没有anchor words的标注，所以作者设计了新的Bag Loss，基于假设：每一个实体有至少一个anchor word，把属于同最内部的实体的所有词作为一个bag，从最内层开始分，如{the, minister, of}形成一个PER bag，{the, department, of education} 形成一个ORG bag，三个NIL bag {convened}, {a}和{meeting}。</p>
+<p>根据划分bag的规则，可以得到，一个词$x_{i}$对应的训练样本是一个元组  $x=(x_{i}, x_{j}, x_{k}, c_{i})$（一个实体的含有多个这种元组），对于一个词，bag loss会有两种情况：</p>
+<ul>
+<li><p>如果$x_{i}$是anchor word，loss是anchor detector loss与region recognizer loss之和。</p>
+</li>
+<li><p>如果$x_{i}$不是anchor word，$x_{i}$应该被分为NIL，loss只有anchor detector loss一部分。</p>
+</li>
+</ul>
+<p>最终的loss两种loss加权求和，得到：<br>$$<br>\begin{aligned} \mathcal{L}\left(x_{i} ; \theta\right)=&amp; \omega_{i} \cdot\left[-\log P\left(c_{i} | x_{i}\right)+L^{R}\left(x_{i} ; \theta\right)\right] \ &amp;+\left(1-\omega_{i}\right) \cdot\left[-\log P\left(N I L | x_{i}\right)\right] \end{aligned}<br>$$<br>其中$L^{R}\left(x_{i} ; \theta\right)$是region recognizer loss：<br>$$<br>\mathcal{L}^{R}\left(x_{i} ; \theta\right)=\mathcal{L}^{l e f t}\left(x_{i} ; \theta\right)+\mathcal{L}^{r i g h t}\left(x_{i} ; \theta\right) \\<br>\mathcal{L}^{l e f t}\left(x_{i} ; \theta\right)=\left\{\begin{array}{cc}{0,} &amp; {c_{i}=N I L} \ {\max \left(0, \gamma-L_{i j}+\max _{t \neq j} L_{i t}\right),} &amp; {c_{i} \neq N I L}\end{array}\right.<br>$$</p>
+<p>而权重$\omega_{i}$是anchor word与bag的类型的相关性：<br>$$<br>\omega_{i}=\left[\frac{P\left(c_{i} | x_{i}\right)}{\max _{x_{t} \in B_{i}} P\left(c_{i} | x_{t}\right)}\right]^{\alpha}<br>$$</p>
+<blockquote>
+<p>Compared  with  other  words  in  the  same  bag,  a word  $x_{i}$  should  have  larger  $w_{i}$  if  it  has  a  tighter association  with  the  bag  type.<br>$\alpha =  0$  means  that  all  words are  annotated  with  the  bag  type.  And  $\alpha \rightarrow+\infty$ means  that  Bag  Loss  will  only  choose  the  word with  highest  P(cijxi)  as  anchor  word,  while  all other  words  in  the  same  bag  will  be  regarded as  NIL.</p>
+</blockquote>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJlcDBHSHlBUnd6dmxmZ1lFWXJYSFhLRWZjN3pGQlU0bjVXZ0Q4R3BDTFB3PT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>中的Multi-CRF是对每种实体训练一个单独的CRF，能够识别嵌套命名实体。</p>
+<p>观察上表，得出：</p>
+<p>1）从LSTM-CRF与Multi-CRF模型的对比，可以看出嵌套命名实体的识别对于实体识别有着很大的影响，需要重视。</p>
+<p>2）本文的Anchor-Region Networks 可以有效地识别嵌套命名实体，在ACE2005、GENIA、ARNS数据集上达到了最好的效果。</p>
+<p>3）本文的head-driven phrase structure of entity减少了计算复杂度。</p>
+<h3 id="Error-Analysis"><a href="#Error-Analysis" class="headerlink" title="Error Analysis"></a>Error Analysis</h3><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJlcDBHSHlBUnd6dHBWelJCNzVrK2tsVXlxVXliTkV4bHFVTVBoSUFFRUhnPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br>从上表可以看出，anchor dector的F1比完整的模型ARNs的F1高8%左右，错误主要是由于region dector的错误导致的，错误举例如下:</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJlcDBHSHlBUnd6bFl5dGt1Qnp3L2ZXYmREME9BdGxKMThGeEVITmM0UU9RPT0.jpg?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>可以看出错误是由于前缀和后缀引起的，可以考虑在模型中加入句法、语法知识来解决这个问题。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文提出ARNs模型在一定程度上解决了嵌套命名实体识别的问题，但还存在问题，还可以继续优化；本文的head-driven structures可以尝试在别的NLP任务上使用，如，事件抽取。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/69356826" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/69356826</a></li>
+<li><a href="[https://arxiv.org/pdf/1906.01359.pdf](https://arxiv.org/pdf/1906.01359.pdf">NNE: A Dataset for Nested Named Entity Recognition in English Newswire</a>)</li>
+<li><a href="[https://aclweb.org/anthology/N18-1131](https://aclweb.org/anthology/N18-1131">A Neural Layered Model for Nested Named Entity Recognition</a>)</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/06/21/Jointly Optimizing Diversity and Relevance in Neural Response Generation/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Jointly Optimizing Diversity and Relevance in Neural Response Generation</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/16/Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJRTXhkNFdxWEkyN0gwRXlHb0pBb0NhbzkxT2U5UWRsM1pRZU5rQ3lxSE93PT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg)" alt="Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2019/07/16/Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks/" class="title">Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks</a></p>
+                            <p class="item-date"><time datetime="2019-07-16T06:57:00.000Z" itemprop="datePublished">2019-07-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/06/21/Jointly Optimizing Diversity and Relevance in Neural Response Generation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFaUFQrSU5xWkJSVk1BUzc1a0NRcEszTUU1UWxmWU9FNWs1N2huNUpNT3dBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Jointly Optimizing Diversity and Relevance in Neural Response Generation" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/06/21/Jointly Optimizing Diversity and Relevance in Neural Response Generation/" class="title">Jointly Optimizing Diversity and Relevance in Neural Response Generation</a></p>
+                            <p class="item-date"><time datetime="2019-06-21T02:13:00.000Z" itemprop="datePublished">2019-06-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/06/17/Multi-Task Deep Neural Networks for Natural Language Understanding/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjB5clk0NXR4TjdnNWp3UVlvNGFVRWZaUXNkRWJWa0hPN1dCeHlaSFgwdWVRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Multi-Task Deep Neural Networks for Natural Language Understanding" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/06/17/Multi-Task Deep Neural Networks for Natural Language Understanding/" class="title">Multi-Task Deep Neural Networks for Natural Language Understanding</a></p>
+                            <p class="item-date"><time datetime="2019-06-17T01:29:00.000Z" itemprop="datePublished">2019-06-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/06/13/Multi-Level Memory for Task Oriented Dialogs/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBzZzN5RzhrSnYzN3FHendBaWpLWlNPbVN4d3ZtMWRiVEVyS1NMM3E1VER3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Multi-Level Memory for Task Oriented Dialogs" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/06/13/Multi-Level Memory for Task Oriented Dialogs/" class="title">Multi-Level Memory for Task Oriented Dialogs</a></p>
+                            <p class="item-date"><time datetime="2019-06-13T11:16:00.000Z" itemprop="datePublished">2019-06-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/06/08/Decay-Function-Free Time-Aware Attention to Context and Speaker Indicator for Spoken Language Understanding/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBFcTQxcXNleXVYc1U2Tjc4TUxCVitRd3A1U3U0a1ZtKzNpWWxmT1BucTR3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2019/06/08/Decay-Function-Free Time-Aware Attention to Context and Speaker Indicator for Spoken Language Understanding/" class="title">Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding</a></p>
+                            <p class="item-date"><time datetime="2019-06-08T09:17:00.000Z" itemprop="datePublished">2019-06-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Active-Learning/">Active Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversial-Learning/">Adversial Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multi-Task-Learning/">Multi-Task Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neural-Response-Generation/">Neural Response Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pretrained-Word-Representations/">Pretrained  Word  Representations</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Response-Selection/">Response Selection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentence-Semantic-Matching/">Sentence  Semantic  Matching</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Labeling/">Sequence  Labeling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Learning/">Sequence Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer  Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VAE/">VAE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Variational-Generation/">Variational Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Active-Learning/" style="font-size: 10px;">Active Learning</a> <a href="/tags/Adversial-Learning/" style="font-size: 10px;">Adversial Learning</a> <a href="/tags/BUPT/" style="font-size: 11.25px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 15px;">Commonsense  Knowledge</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 18.75px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.25px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 12.5px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 11.25px;">Memory Network</a> <a href="/tags/Multi-Task-Learning/" style="font-size: 10px;">Multi-Task Learning</a> <a href="/tags/NLG/" style="font-size: 11.25px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 17.5px;">NLU</a> <a href="/tags/Neural-Response-Generation/" style="font-size: 10px;">Neural Response Generation</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.25px;">Object Detection</a> <a href="/tags/Pretrained-Word-Representations/" style="font-size: 10px;">Pretrained  Word  Representations</a> <a href="/tags/Python/" style="font-size: 11.25px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.75px;">Reinforcement Learning</a> <a href="/tags/Response-Selection/" style="font-size: 10px;">Response Selection</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/Sentence-Semantic-Matching/" style="font-size: 10px;">Sentence  Semantic  Matching</a> <a href="/tags/Sequence-Labeling/" style="font-size: 10px;">Sequence  Labeling</a> <a href="/tags/Sequence-Learning/" style="font-size: 10px;">Sequence Learning</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16.25px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 17.5px;">Tensorflow</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer  Learning</a> <a href="/tags/Transfer-Learning/" style="font-size: 11.25px;">Transfer Learning</a> <a href="/tags/Transformer/" style="font-size: 11.25px;">Transformer</a> <a href="/tags/VAE/" style="font-size: 10px;">VAE</a> <a href="/tags/Variational-Generation/" style="font-size: 10px;">Variational Generation</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://helicqin.github.io/about/index.html">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helicqin.github.io/2019/07/16/Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
