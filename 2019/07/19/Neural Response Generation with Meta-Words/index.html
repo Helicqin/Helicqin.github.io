@@ -3,16 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Category: Python | Helic</title>
+    <title>Neural Response Generation with Meta-Words | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Helic">
-<meta property="og:url" content="https://helicqin.github.io/categories/Programming/Python/index.html">
+        <meta name="keywords" content="Dialogue System" />
+    
+    <meta name="description" content="本文提出用meta-word来表示输入和回复间的关系，基于meta-word的架构，诸如情感对话生成、个性化对话生成等热点问题都可通过该论文提出的框架解决。ACL2019 paper link">
+<meta name="keywords" content="Dialogue System">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural Response Generation with Meta-Words">
+<meta property="og:url" content="https://helicqin.github.io/2019/07/19/Neural Response Generation with Meta-Words/index.html">
 <meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文提出用meta-word来表示输入和回复间的关系，基于meta-word的架构，诸如情感对话生成、个性化对话生成等热点问题都可通过该论文提出的框架解决。ACL2019 paper link">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBvVDNxa3BjTEFTcXBsSGNaM1RkbXBkd1hKSEY2emdXVGlGNVM3cnNrOFp3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-07-20T01:23:35.254Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Helic">
+<meta name="twitter:title" content="Neural Response Generation with Meta-Words">
+<meta name="twitter:description" content="本文提出用meta-word来表示输入和回复间的关系，基于meta-word的架构，诸如情感对话生成、个性化对话生成等热点问题都可通过该论文提出的框架解决。ACL2019 paper link">
+<meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBvVDNxa3BjTEFTcXBsSGNaM1RkbXBkd1hKSEY2emdXVGlGNVM3cnNrOFp3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
     
@@ -137,178 +146,141 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-folder-open"></i>Category: <em class="page-title-link">Python</em>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-Neural Response Generation with Meta-Words" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2018" class="archive-year"><i class="icon fa fa-calendar-o"></i>2018</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/01/09/matplotlib/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://ws1.sinaimg.cn/large/006tGRI6ly1fp01c7ivnhj30f203mq39.jpg)" alt="An Introduction to Matplotlib" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2018/01/09/matplotlib/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a>
-            </div>
-            <div class="date"><time datetime="2018-01-09T07:25:50.000Z" itemprop="datePublished">2018-01-09</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/01/09/matplotlib/">An Introduction to Matplotlib</a>
+        Neural Response Generation with Meta-Words
         </h1>
     
 
-        <p class="article-excerpt">
-            Matplotlib is a plotting library. In this section give a brief introduction to the matplotlib.pyplot module, which provides a plotting system similar to that of MATLAB.
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/07/19/Neural Response Generation with Meta-Words/" class="article-date">
+            <time datetime="2019-07-19T02:32:00.000Z" itemprop="datePublished">2019-07-19</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文提出用meta-word来表示输入和回复间的关系，基于meta-word的架构，诸如情感对话生成、个性化对话生成等热点问题都可通过该论文提出的框架解决。ACL2019</p>
+<p><a href="https://drive.google.com/open?id=1stJnkP-z4_6RUiVcwN2xxQHf-f05jY-6" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本文提出用meta-word来表示输入和回复间的关系。Meta-word代表了一组回复属性（如表1中的回复意图（Act），回复长度（Len）等）。利用meta-word进行对话生成的好处包括：（1）模型具有很好的可解释性；（2）通过订制meta-word，开发者可以控制回复生成；（3）情感，话题，人格等都可以定义为meta-word中的一个属性，因此诸如情感对话生成，个性化对话生成等热点问题都可通过该论文提出的框架解决；（4）工程师们可以通过增加或调整meta-word不断提升生成模型的性能。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBvVDNxa3BjTEFTaWFtRGdDekdteDVCeWpMbXRZdHRZQTd6YVJJTTZ5KzVRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  An  example  of  response  generation  with  meta-words.  The  underlined  word  means  it  is  copied  from the  message,  and  the  word  in  bold  means  it  corresponds  to  high  specificity."></p>
+<p>利用meta-word进行回复生成需要解决两个问题：（1）如何确保回复和输入相关；（2）如何确保回复能够如实地表达预先定义的meta-word。为了解决这两个问题，论文将meta-word的表达形式化成回复生成中的目标，提出了一个基于目标跟踪记忆网络的生成模型（如图1）。该网络由一个状态记忆板和一个状态控制器组成，前者记录生成过程中meta-word的表达情况，后者则根据当前已经生成的部分动态地更新记忆板中的存储并将目前的表达情况和最终表达目的的差距传达给解码器。在模型学习过程中，论文在传统的似然目标之外增加了一个状态更新损失，以使得目标追踪能够更好地利用训练数据中的监督信号。不仅如此，论文还提出了一个meta-word的预测方案，从而使得整个架构可以在实际中使用。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBvVDNxa3BjTEFTcXBsSGNaM1RkbXBkd1hKSEY2emdXVGlGNVM3cnNrOFp3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Architecture  of  goal  tracking  memory  enhanced  sequence-to-sequence  model."></p>
+<h2 id="Response-Generation-with-Meta-Words"><a href="#Response-Generation-with-Meta-Words" class="headerlink" title="Response  Generation  with Meta-Words"></a>Response  Generation  with Meta-Words</h2><h3 id="Problem-Formalization"><a href="#Problem-Formalization" class="headerlink" title="Problem  Formalization"></a>Problem  Formalization</h3><p>给定数据集 $D=\{(X_{i}, M_{i}, Y_{i})\}_{i=1}^{N}$，$X_{i}$是输入，$M_{i}=\left(m_{i, 1}, \ldots, m_{i, l}\right)$ 是meta-word集合，其中 $m_{i, j}=\left(m_{i, j} \cdot k, m_{i, j} \cdot t, m_{i, j} \cdot v\right)$ 代表meta-word中第j个属性的key, type, value。type是指属性值为categorical(c) or real-valued(r)。目标是估计生成概率$P(Y|X,M)$，注意这里meta-word是事先定义好的。</p>
+<h3 id="Goal-Tracking-Memory-Network"><a href="#Goal-Tracking-Memory-Network" class="headerlink" title="Goal  Tracking  Memory  Network"></a>Goal  Tracking  Memory  Network</h3><p>GTMN通过state memory panel 和 state controller来动态控制回复生成过程，前者记录生成过程中meta-word的表达情况，后者则根据当前已经生成的部分动态地更新记忆板中的存储并将目前的表达情况和最终表达目的的差距传达给解码器。</p>
+<h4 id="State-Memory-Panel"><a href="#State-Memory-Panel" class="headerlink" title="State  Memory  Panel"></a>State  Memory  Panel</h4><p>假设meta-word M由l个属性组成，则state memory panel 由l个memory cell组成 $\{M_{i}\}_{i=1}^{l}$，其中的每一个$M_{i}$由(key, goal, value)组成，记为$(\mathcal{M}_{i} . k, \mathcal{M}_{i} . g, \mathcal{M}_{i} . v)$，$M_{i}$被初始化为：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBvVDNxa3BjTEFTaDFsZ0tTTG81TloyL3FKOEY1eVdYN1g2cXpHZ0ptaTRRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBvVDNxa3BjTEFTcUswcEdsbGdIM1Z3NTJULzdXdFhOd1cwbkphNzA3aXdnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>其中$B(.)$返回输入文本的bag-of-words表示，$M_{i}.k\in R^{d}$，$M_{i}.g\in R^{d}$在解码的过程中保持不变。$M_{i}.g$代表期望的$m_{i}$表达，$M_{i}.v$代表在解码过程中实际的$m_{i}$表达，如图1中灰色的进度条，会由state controller在解码的每步后更新。</p>
+<h4 id="State-Controller"><a href="#State-Controller" class="headerlink" title="State  Controller"></a>State  Controller</h4><p>state controller位于encoder和decoder之间，负责控制state memory与decoder之间的交互。假定$s_{t}$是时刻t的解码器状态，state controller基于$s_{t}$来更新$M_{i}.v_{t-1}$到$M_{i}.v_{t}$，然后通过一个difference reading  operation来获取$M_{i}.g$与$M_{i}.v_{t}$之间的差异，也即目前的表达情况和目标表达之间的差异，基于此预测回复的第t个词。</p>
+<p><strong>State  Update  Operation</strong> 作者将状态更新分为SUB和ADD两种操作，采取soft-gate来控制二者的权重。$\Delta_{t}^{S U B}(i) \in \mathbb{R}^{d}, \Delta_{t}^{ADD}(i) \in \mathbb{R}^{d}$，$g_{t}\in R^{d\times l}$ 代表l个属性的gate向量，$g_{t}(i)\in R^{d}$即为第i个属性的gate向量。<br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNTd2Q5VE5FZ2ZmVk9jb3plYUxGTGFsTzJRNEZhR3JHbGdEaUQyZDM4bDRRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""><br>其中：<br>$$g_{t}(i)=\sigma\left(W_{g} \mathcal{S}_{t}(i)+b_{g}\right)$$<br>$$<br>\left[\begin{array}{c}{\Delta_{t}^{S U B}(i)} \ {\Delta_{t}^{A D D}(i)}\end{array}\right]=\sigma\left(\left[\begin{array}{c}{W^{S U B}} \ {W^{A D D}}\end{array}\right] \mathcal{S}_{t}(i)+\left[\begin{array}{c}{b^{S U B}} \ {b^{A D D}}\end{array}\right]\right)<br>$$<br>$$\mathcal{S}_{t}(i)=\mathcal{M}_{i}.k \oplus \mathcal{M}_{i}.v_{t-1} \oplus s_{t}$$<br>$\oplus$代表拼接。</p>
+<h3 id="Learning-Method"><a href="#Learning-Method" class="headerlink" title="Learning  Method"></a>Learning  Method</h3><h4 id="Loss-for-Model-Learning"><a href="#Loss-for-Model-Learning" class="headerlink" title="Loss  for  Model  Learning"></a>Loss  for  Model  Learning</h4><p>在模型学习过程中，论文在传统的似然目标之外增加了一个状态更新损失，以使得目标追踪能够更好地利用训练数据中的监督信号。</p>
+<p>针对于似然损失：<br>$$<br>\mathcal{L}_{N L L}(\Theta)=-\frac{1}{N} \sum_{i=1}^{N} \log P\left(Y_{i} | X_{i}, M_{i}\right)<br>$$<br>针对于状态更新损失，分为两种情况：给定$y_{1:t}$为时间t步已经生成的回复，对于$\forall m_{i} \in M$</p>
+<ul>
+<li>$\exists \mathcal{F}_{i}(\cdot)$ 使得 $\mathcal{F}_{i}\left(y_{1 : t}\right)$ 将$y_{1:t}$映射到$m_{i}.v$的空间，例如response length $\mathcal{F}_{i}\left(y_{1 : t}\right)=t$<br>$$<br>\mathcal{L}_{S U}^{1}\left(m_{i}\right)=\sum_{t=1}^{T}\left|\mathcal{M}_{i \cdot} v_{t}-\operatorname{Rep}\left(\mathcal{F}_{i}\left(y_{1 : t}\right)\right)\right|<br>$$</li>
+<li>如果无法显式定义$\mathcal{F}_{i}(\cdot)$，例如dialog act无法由部分回复得到。<br>$$<br>\mathcal{L}_{S U}^{2}\left(m_{i}\right)=\left|\mathcal{M}_{i \cdot} v_{T}-\operatorname{Rep}\left(m_{i} \cdot v\right)\right|<br>$$</li>
+</ul>
+<p>最终状态损失$\mathcal{L}_{SU}$为：<br>$$<br>\sum_{i=1}^{N} \sum_{j=1}^{l} \mathbb{I}\left[m_{i, j} \in \mathcal{C}_{1}\right] \mathcal{L}_{S U}^{1}\left(m_{i, j}\right)+\mathbb{I}\left[m_{i, j} \in \mathcal{C}_{2}\right] \mathcal{L}_{S U}^{2}\left(m_{i, j}\right)<br>$$<br>GTMES2S的损失为：<br>$$<br>\mathcal{L}(\Theta)=\mathcal{L}_{N L L}(\Theta)+\lambda \mathcal{L}_{S U}(\Theta)<br>$$</p>
+<h4 id="Meta-word-Prediction"><a href="#Meta-word-Prediction" class="headerlink" title="Meta-word  Prediction"></a>Meta-word  Prediction</h4><p>模型测试时需要meta-word，论文采取了从$\left\{\left(X_{i}, M_{i}\right)\right\}_{i=1}^{N} \subset \mathcal{D}$估计的概率分布中采样的方法。假设$h_{X}^{p}$是encoder的最后隐层状态：如果$m_{i} . t=c$，$m_{i} . v$服从指数分布，参数$\vec{p}_{i}=W_{i}^{m u l} h_{X}^{p}+b_{i}^{m u l}$；否则$m_{i} . v$服从正态分布，均值为$W_{i}^{\mu} h_{X}^{p}+b_{i}^{\mu}$，方差为$W_{i}^{\sigma} h_{X}^{p}+b_{i}^{\sigma}$。并且设定不同属性相互独立，最大化$\left\{\left(M_{i} | X_{i}\right)\right\}_{i=1}^{N}$的似然概率。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>在论文Twitter和Reddit两个数据集上考察了生成回复的相关性、多样性、“一对多“关系建模的准确性、以及meta-word表达的准确性。不仅如此，还对生成结果进行了人工评测。实验结果如下：</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjEyNUE3dnBlcFhJdEVvZTJiUnRWRER5Vi9mYTZKNU03U3ZQcEU4TFpsVWJBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjEyNUE3dnBlcFhJbzlVMWZvUWNxdVJmQW1ZaHBKWVliWm9UOUVqakdJMFlnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>当逐渐地增加meta-word中的属性变量，验证集上的PPL会逐渐降低，这也印证了“通过调整meta-word可以不断提升模型性能”的论断。<br><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjEyNUE3dnBlcFhJbjNWMldPSmRKNXFXYzcyMElmQVZ6MWR0Y1VWdTFIRXJ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
     </div>
 </article>
-    
 
-    
-    
-        
-            </div></section>
-        
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/29/Numpy-Note/" class="thumbnail">
-    
-    
-        <span style="background-image:url(data:image/jpeg;base64,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)" alt="Numpy_Note" class="thumbnail-image"></span>
-    
+    <section id="comments">
     
         
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/09/29/Numpy-Note/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a>
-            </div>
-            <div class="date"><time datetime="2017-09-29T02:12:24.000Z" itemprop="datePublished">2017-09-29</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/29/Numpy-Note/">Numpy_Note</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Python Numpy Tutorial based on http://cs231n.github.io/python-numpy-tutorial/.主要内容：Arrays,Array Indexing,Datatypes,Array Math,Broadcasting
-        </p>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-</article>
-    
 
     
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/07/15/Python处理excel/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://s14.sinaimg.cn/mw690/0039gk0jzy6PEJ1eByt6d&690)" alt="Python处理excel" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2017/07/15/Python处理excel/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Python/">Python</a>
-            </div>
-            <div class="date"><time datetime="2017-07-15T11:37:32.000Z" itemprop="datePublished">2017-07-15</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/07/15/Python处理excel/">Python处理excel</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-
-    </div></section>
-
-
+    </section>
 
 
                         </div>
@@ -369,6 +341,19 @@ ga('send', 'pageview');
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/07/16/Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Sequence-to-Nuggets Nested Entity Mention Detection via Anchor-Region Networks</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -570,11 +555,13 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
+    var disqus_url = 'https://helicqin.github.io/2019/07/19/Neural Response Generation with Meta-Words/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
