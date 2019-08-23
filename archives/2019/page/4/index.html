@@ -3,25 +3,16 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Sequential Minimal Optimization | Helic</title>
+    <title>Archive: 2019 | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Machine Learning,SVM" />
-    
-    <meta name="description" content="序列最小最优化(sequential minimal optimization, SMO)算法是支持向量机的学习算法，本文主要讲解了SMO算法，并且实现了一个简单基于SMO的SVM demo，最后简要了解封装SVM的scikit-learn库。">
-<meta name="keywords" content="Machine Learning,SVM">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Sequential Minimal Optimization">
-<meta property="og:url" content="https://helicqin.github.io/2017/08/31/Sequential-Minimal-Optimization/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Helic">
+<meta property="og:url" content="https://helicqin.github.io/archives/2019/page/4/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="序列最小最优化(sequential minimal optimization, SMO)算法是支持向量机的学习算法，本文主要讲解了SMO算法，并且实现了一个简单基于SMO的SVM demo，最后简要了解封装SVM的scikit-learn库。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2s13v8wij30hs0d53z3.jpg">
-<meta property="og:updated_time" content="2017-11-19T14:40:52.689Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sequential Minimal Optimization">
-<meta name="twitter:description" content="序列最小最优化(sequential minimal optimization, SMO)算法是支持向量机的学习算法，本文主要讲解了SMO算法，并且实现了一个简单基于SMO的SVM demo，最后简要了解封装SVM的scikit-learn库。">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2s13v8wij30hs0d53z3.jpg">
+<meta name="twitter:title" content="Helic">
     
 
     
@@ -146,149 +137,78 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    <i class="icon fa fa-archive"></i>Archive: 2019
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Sequential-Minimal-Optimization" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+                            
+
+    
+    
         
-            <header class="article-header">
-                
+        
+        <section class="archives-wrap">
+            <div class="archive-year-wrap">
+                <a href="/archives/2019" class="archive-year"><i class="icon fa fa-calendar-o"></i>2019</a>
+            </div>
+            <div class="archives">
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJEdlhZZmRDMFRpRXRaWk9iMENCS2U1Y254WHpzZ2h5c1RVSG41RHM4VjJnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Commonsense Knowledge Aware Conversation Generation with Graph Attention" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://helicqin.github.io/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/NLP/">NLP</a>
+            </div>
+            <div class="date"><time datetime="2019-01-22T06:16:00.000Z" itemprop="datePublished">2019-01-22</time></div>
+        </div>
+        
     
         <h1 class="article-title" itemprop="name">
-        Sequential Minimal Optimization
+        <a href="/2019/01/22/Commonsense Knowledge Aware Conversation Generation with Graph Attention/">Commonsense Knowledge Aware Conversation Generation with Graph Attention</a>
         </h1>
     
 
-            </header>
-        
-        
-            <div class="article-meta">
-                
-    <div class="article-date">
-        <a href="/2017/08/31/Sequential-Minimal-Optimization/" class="article-date">
-            <time datetime="2017-08-31T04:04:41.000Z" itemprop="datePublished">2017-08-31</time>
-        </a>
-    </div>
-
-                
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Machine-Learning/">Machine Learning</a>, <a class="tag-link" href="/tags/SVM/">SVM</a>
-    </div>
-
-            </div>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-            <p>序列最小最优化(sequential minimal optimization, SMO)算法是支持向量机的学习算法，本文主要讲解了SMO算法，并且实现了一个简单基于SMO的SVM demo，最后简要了解封装SVM的scikit-learn库。<br><a id="more"></a></p>
-<h3 id="1-SVM简要回顾"><a href="#1-SVM简要回顾" class="headerlink" title="1. SVM简要回顾"></a>1. SVM简要回顾</h3><p>SVM最终会得到一个对偶问题：      </p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2yeb0b1cj30dq04oweg.jpg" alt="dual problem"></p>
-<p>解决这个优化问题可以得到a;进而，</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2yqbo5yyj30k806ujrl.jpg" alt=""></p>
-<p>SVM的学习，就是通过训练数据计算出a和b，然后通过决策函数判定xj的分类。其中a是一个向量，长度与训练数据的样本数相同，如果训练数据很大，那么这个向量会很长，不过绝大部分的分量值都是0，只有支持向量的对应的分量值大于0。而SMO算法就是用来解决SVM的对偶问题。</p>
-<h3 id="2-SMO"><a href="#2-SMO" class="headerlink" title="2. SMO"></a>2. SMO</h3><p>简介：SMO是一种启发式算法，其基本思想是：如果所有变量的解都满足了此最优化问题的KKT条件，那么这个最优化问题的解就得到了。否则，选择两个变量，固定其它变量，针对这两个变量构建一个二次规划问题，然后关于这个二次规划的问题的解就更接近原始的二次归还问题的解，因为这个解使得需要优化的问题的函数值更小。</p>
-<hr>
-<h4 id="2-1-KKT-Conditions"><a href="#2-1-KKT-Conditions" class="headerlink" title="2.1 KKT Conditions"></a>2.1 KKT Conditions</h4><p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2z8ywx3uj30jm0770sw.jpg" alt="SVM KKT Conditions"></p>
-<p>引入一个误差系数<strong>ε</strong>(tolerance)，</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2zfqt8aqj30kl0hcwfv.jpg" alt=""></p>
-<h4 id="2-2-SMO-Algorithm"><a href="#2-2-SMO-Algorithm" class="headerlink" title="2.2 SMO Algorithm"></a>2.2 SMO Algorithm</h4><p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2zjsu2hkj30m309zdgr.jpg" alt="SMO Algorithm"></p>
-<p>两个关键点：变量如何选取以及如何更新</p>
-<p>变量选取:</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2zpxq2osj30lw08kq4x.jpg" alt=""></p>
-<p>变量更新：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj2zsvm8lxj30m10nsjte.jpg" alt=""></p>
-<p><em>More details in Platt’s paper:<a href="https://pdfs.semanticscholar.org/59ee/e096b49d66f39891eb88a6c84cc89acba12d.pdf?_ga=2.169761313.1496883415.1504168835-302772994.1496220698" target="_blank" rel="noopener">Sequential Minimal Optimization:<br>A Fast Algorithm for Training Support Vector Machines</a></em></p>
-<h3 id="3-SMO算法实现-python"><a href="#3-SMO算法实现-python" class="headerlink" title="3. SMO算法实现(python)"></a>3. SMO算法实现(python)</h3><ul>
-<li>只是简单版本，并未实现复杂的变量选取规则，简化如下：一次迭代中，遍历所有的ai，如果ai违反了KKT条件，那么就将它做为第一个变量，然后再遍历所有的ai，依次做为第二个变量，如果第二个变量有足够的下降，那么就更新两个变量。如果没有，就不更新。</li>
-<li>线性核</li>
-<li>原始数据：<a href="https://github.com/liuhongjiang/blog_code/blob/master/svm/svm.train" target="_blank" rel="noopener">data</a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding:utf8 -*-</span></span><br><span class="line"><span class="comment"># Created by Helic on 2017/8/31</span></span><br><span class="line"><span class="comment"># 参考 http://liuhongjiang.github.io/tech/blog/2012/12/28/svm-smo/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">samples = []</span><br><span class="line">labels = []</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">svm_params</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.a = []</span><br><span class="line">        self.b = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">params = svm_params()</span><br><span class="line">e_dict = []</span><br><span class="line"></span><br><span class="line">train_data = <span class="string">"svm.train"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loaddata</span><span class="params">()</span>:</span></span><br><span class="line">    fn = open(train_data, <span class="string">"r"</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fn:</span><br><span class="line">        line = line[:<span class="number">-1</span>]</span><br><span class="line">        vlist = line.split(<span class="string">"\t"</span>)</span><br><span class="line">        samples.append((int(vlist[<span class="number">0</span>]), int(vlist[<span class="number">1</span>])))</span><br><span class="line">        labels.append(int(vlist[<span class="number">2</span>]))</span><br><span class="line">        params.a.append(<span class="number">0.0</span>)</span><br><span class="line">    fn.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 线性核</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kernel</span><span class="params">(j, k)</span>:</span></span><br><span class="line">    ret = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(len(samples[j])):</span><br><span class="line">        ret += samples[j][idx] * samples[k][idx]   <span class="comment"># 计算内积</span></span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict_real_diff</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="string">"""return Ei=g(xi)−yi=WXi+b-yi,返回KKT条件中的Ei变量"""</span></span><br><span class="line">    diff = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(len(samples)):</span><br><span class="line">        diff += params.a[j] * labels[j] * kernel(j, i)</span><br><span class="line">    diff = diff + params.b - labels[i]</span><br><span class="line">    <span class="keyword">return</span> diff</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_e_dict</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">        e_dict.append(predict_real_diff(i))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_e_dict</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">        e_dict[i] = predict_real_diff(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(tolerance, times, C)</span>:</span></span><br><span class="line">    time = <span class="number">0</span></span><br><span class="line">    init_e_dict()</span><br><span class="line">    updated = <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">while</span> time &lt; times <span class="keyword">and</span> updated:</span><br><span class="line">        updated = <span class="keyword">False</span></span><br><span class="line">        time += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">            ai = params.a[i]</span><br><span class="line">            Ei = e_dict[i]</span><br><span class="line">            <span class="comment"># 违反KKT</span></span><br><span class="line">            <span class="comment"># agaist the KKT</span></span><br><span class="line">            <span class="keyword">if</span> (labels[i] * Ei &lt; -tolerance <span class="keyword">and</span> ai &lt; C) <span class="keyword">or</span> (labels[i] * Ei &gt; tolerance <span class="keyword">and</span> ai &gt; <span class="number">0</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">                    <span class="keyword">if</span> j == i: <span class="keyword">continue</span></span><br><span class="line">                    eta = kernel(i, i) + kernel(j, j) - <span class="number">2</span> * kernel(i, j)</span><br><span class="line">                    <span class="keyword">if</span> eta &lt;= <span class="number">0</span>:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                    new_aj = params.a[j] + labels[j] * (e_dict[i] - e_dict[j]) / eta</span><br><span class="line">                    L = <span class="number">0.0</span></span><br><span class="line">                    H = <span class="number">0.0</span></span><br><span class="line">                    <span class="keyword">if</span> labels[i] == labels[j]:</span><br><span class="line">                        L = max(<span class="number">0</span>, params.a[j] + params.a[i] - C)</span><br><span class="line">                        H = min(C, params.a[j] + params.a[i])</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        L = max(<span class="number">0</span>, params.a[j] - params.a[i])</span><br><span class="line">                        H = min(C, C + params.a[j] - params.a[i])</span><br><span class="line">                    <span class="keyword">if</span> new_aj &gt; H:</span><br><span class="line">                        new_aj = H</span><br><span class="line">                    <span class="keyword">if</span> new_aj &lt; L:</span><br><span class="line">                        new_aj = L</span><br><span class="line">                    <span class="comment"># 《统计学习方法》公式7.109（下同）</span></span><br><span class="line">                    <span class="comment"># formula 7.109</span></span><br><span class="line">                    new_ai = params.a[i] + labels[i] * labels[j] * (params.a[j] - new_aj)</span><br><span class="line"></span><br><span class="line">                    <span class="comment"># 第二个变量下降是否达到最小步长</span></span><br><span class="line">                    <span class="comment"># decline enough for new_aj</span></span><br><span class="line">                    <span class="keyword">if</span> abs(params.a[j] - new_aj) &lt; <span class="number">0.001</span>:</span><br><span class="line">                        <span class="keyword">print</span> <span class="string">"j = %d, is not moving enough"</span> % j</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">                    <span class="comment"># formula 7.115</span></span><br><span class="line">                    new_b1 = params.b - e_dict[i] - labels[i]*kernel(i,i)*(new_ai-params.a[i]) - labels[j]*kernel(j,i)*(new_aj-params.a[j])</span><br><span class="line">                    <span class="comment"># formula 7.116</span></span><br><span class="line">                    new_b2 = params.b - e_dict[j] - labels[i]*kernel(i,j)*(new_ai-params.a[i]) - labels[j]*kernel(j,j)*(new_aj-params.a[j])</span><br><span class="line">                    <span class="keyword">if</span> new_ai &gt; <span class="number">0</span> <span class="keyword">and</span> new_ai &lt; C: new_b = new_b1</span><br><span class="line">                    <span class="keyword">elif</span> new_aj &gt; <span class="number">0</span> <span class="keyword">and</span> new_aj &lt; C: new_b = new_b2</span><br><span class="line">                    <span class="keyword">else</span>: new_b = (new_b1 + new_b2) / <span class="number">2.0</span></span><br><span class="line"></span><br><span class="line">                    params.a[i] = new_ai</span><br><span class="line">                    params.a[j] = new_aj</span><br><span class="line">                    params.b = new_b</span><br><span class="line">                    update_e_dict()</span><br><span class="line">                    updated = <span class="keyword">True</span></span><br><span class="line">                    <span class="keyword">print</span> <span class="string">"iterate: %d, changepair: i: %d, j:%d"</span> %(time, i, j)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">(tolerance, C)</span>:</span></span><br><span class="line">    plt.xlabel(<span class="string">u"x1"</span>)</span><br><span class="line">    plt.xlim(<span class="number">0</span>, <span class="number">100</span>)</span><br><span class="line">    plt.ylabel(<span class="string">u"x2"</span>)</span><br><span class="line">    plt.ylim(<span class="number">0</span>, <span class="number">100</span>)</span><br><span class="line">    plt.title(<span class="string">"SVM - %s, tolerance %f, C %f"</span> % (train_data, tolerance, C))</span><br><span class="line">    ftrain = open(train_data, <span class="string">"r"</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> ftrain:</span><br><span class="line">        line = line[:<span class="number">-1</span>]</span><br><span class="line">        sam = line.split(<span class="string">"\t"</span>)</span><br><span class="line">        <span class="keyword">if</span> int(sam[<span class="number">2</span>]) &gt; <span class="number">0</span>:</span><br><span class="line">            plt.plot(sam[<span class="number">0</span>],sam[<span class="number">1</span>], <span class="string">'or'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            plt.plot(sam[<span class="number">0</span>],sam[<span class="number">1</span>], <span class="string">'og'</span>)</span><br><span class="line"></span><br><span class="line">    w1 = <span class="number">0.0</span></span><br><span class="line">    w2 = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(labels)):</span><br><span class="line">        w1 += params.a[i] * labels[i] * samples[i][<span class="number">0</span>]</span><br><span class="line">        w2 += params.a[i] * labels[i] * samples[i][<span class="number">1</span>]</span><br><span class="line">    w = - w1 / w2</span><br><span class="line"></span><br><span class="line">    b = - params.b / w2</span><br><span class="line">    r = <span class="number">1</span> / w2</span><br><span class="line"></span><br><span class="line">    lp_x1 = [<span class="number">10</span>, <span class="number">90</span>]</span><br><span class="line">    lp_x2 = []</span><br><span class="line">    lp_x2up = []</span><br><span class="line">    lp_x2down = []</span><br><span class="line">    <span class="keyword">for</span> x1 <span class="keyword">in</span> lp_x1:</span><br><span class="line">        lp_x2.append(w * x1 + b)</span><br><span class="line">        lp_x2up.append(w * x1 + b + r)</span><br><span class="line">        lp_x2down.append(w * x1 + b - r)</span><br><span class="line">    plt.plot(lp_x1, lp_x2, <span class="string">'b'</span>)</span><br><span class="line">    plt.plot(lp_x1, lp_x2up, <span class="string">'b--'</span>)</span><br><span class="line">    plt.plot(lp_x1, lp_x2down, <span class="string">'b--'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    loaddata()</span><br><span class="line">    <span class="keyword">print</span> samples</span><br><span class="line">    <span class="keyword">print</span> labels</span><br><span class="line">    <span class="comment"># 惩罚系数</span></span><br><span class="line">    <span class="comment"># penalty for mis classify</span></span><br><span class="line">    C = <span class="number">10</span></span><br><span class="line">    <span class="comment"># 计算精度</span></span><br><span class="line">    <span class="comment"># computational accuracy</span></span><br><span class="line">    tolerance = <span class="number">0.0001</span></span><br><span class="line">    train(tolerance, <span class="number">100</span>, C)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"a = "</span>, params.a</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"b = "</span>, params.b</span><br><span class="line">    support =  []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(params.a)):</span><br><span class="line">        <span class="keyword">if</span> params.a[i] &gt; <span class="number">0</span> <span class="keyword">and</span> params.a[i] &lt; C:</span><br><span class="line">            support.append(samples[i])</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"support vector = "</span>, support</span><br><span class="line">    draw(tolerance, C)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>运行结果：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tGRI6ly1fj307c9gwij30hs0d53z3.jpg" alt=""></p>
-<h3 id="4-封装SVM的scikit-learn库"><a href="#4-封装SVM的scikit-learn库" class="headerlink" title="4. 封装SVM的scikit-learn库"></a>4. 封装SVM的scikit-learn库</h3><p>在实际使用中，并不需要自己亲手书写SVM算法实现，scikit-learn SVM算法库封装了libsvm 和 liblinear 的实现，仅仅重写了算法了接口部分。</p>
-<hr>
-<p>scikit-learn中SVM的算法库分为两类，一类是分类的算法库，包括SVC， NuSVC，和LinearSVC 3个类。另一类是回归算法库，包括SVR， NuSVR，和LinearSVR 3个类。相关的类都包裹在sklearn.svm模块之中。</p>
-<p>对于SVC， NuSVC，和LinearSVC 3个分类的类，SVC和 NuSVC差不多，区别仅仅在于对损失的度量方式不同，而LinearSVC从名字就可以看出，他是线性分类，也就是不支持各种低维到高维的核函数，仅仅支持线性核函数，对线性不可分的数据不能使用。</p>
-<p>同样的，对于SVR， NuSVR，和LinearSVR 3个回归的类， SVR和NuSVR差不多，区别也仅仅在于对损失的度量方式不同。LinearSVR是线性回归，只能使用线性核函数。</p>
-<p><em>More details in <a href="http://www.cnblogs.com/pinard/p/6117515.html" target="_blank" rel="noopener">http://www.cnblogs.com/pinard/p/6117515.html</a></em></p>
-<h3 id="5-Summary"><a href="#5-Summary" class="headerlink" title="5. Summary"></a>5. Summary</h3><p>SVM是一种相当高效的算法，在手写体数字识别取得不错的效果，适用范围很广，可以解决高维特征；更重要的一点是，kernel并非SVM所独有，kernel的本质是将低维映射到高维，在一些其他算法中也可以应用，如感知器算法。
-　　　　</p>
-
-        </div>
-        <footer class="article-footer">
-            
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-
-        </footer>
+        <p class="article-excerpt">
+            本文研究的是基于大规模常识知识图谱的开放域对话系统，作者在传统的encoder-decoder模型中增加静态图注意力和动态图注意力机制。给定用户的一段输入，该模型从常识知识图谱中检索出相关的子图，进行静态图注意力编码，进而增强对用户输入的语义理解。然后在生成的过程中，模型通过动态的图注意力机制与检索出来的知识图谱以及其中的三元组进行交互。与之前的方法相比，本模型是把一个知识图谱看作一个整体，而不是单独的使用图谱中三元组。paper linkcode link
+        </p>
     </div>
 </article>
-
-    <section id="comments">
     
-        
-    <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-
+        </div>
     
-    </section>
+
+
+    </div></section>
+
+
+    <nav id="page-nav">
+        <span class="pages">Page 4 of 4</span>
+        <a class="extend prev" rel="prev" href="/archives/2019/page/3/">&laquo;</a><a class="page-number" href="/archives/2019/">1</a><a class="page-number" href="/archives/2019/page/2/">2</a><a class="page-number" href="/archives/2019/page/3/">3</a><span class="page-number current">4</span>
+    </nav>
 
 
                         </div>
@@ -349,29 +269,6 @@ ga('send', 'pageview');
             
         </ul>
     </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2017/09/04/RNNLG/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            RNNLG
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
-    
-    
-        <a href="/2017/08/31/Sequential-Minimal-Optimization (1)/" id="article-nav-older" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Sequential Minimal Optimization</p>
-        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
-        </a>
-    
-</nav>
-
     
     <div class="widgets-container">
         
@@ -573,13 +470,11 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2017/08/31/Sequential-Minimal-Optimization/';
-    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
