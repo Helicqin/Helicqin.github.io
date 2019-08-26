@@ -8,19 +8,19 @@
     
         <meta name="keywords" content="Dialogue System,NLU" />
     
-    <meta name="description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper linkcode link">
+    <meta name="description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper link)code link">
 <meta name="keywords" content="Dialogue System,NLU">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding">
 <meta property="og:url" content="https://helicqin.github.io/2019/06/08/Decay-Function-Free Time-Aware Attention to Context and Speaker Indicator for Spoken Language Understanding/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper linkcode link">
+<meta property="og:description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper link)code link">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBFcTQxcXNleXVYc1U2Tjc4TUxCVitRd3A1U3U0a1ZtKzNpWWxmT1BucTR3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-06-08T14:14:32.734Z">
+<meta property="og:updated_time" content="2019-08-26T02:40:31.513Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding">
-<meta name="twitter:description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper linkcode link">
+<meta name="twitter:description" content="本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019 paper link)code link">
 <meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBFcTQxcXNleXVYc1U2Tjc4TUxCVitRd3A1U3U0a1ZtKzNpWWxmT1BucTR3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
@@ -183,7 +183,7 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
             <p>本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019</p>
-<p><a href="https://drive.google.com/open?id=1mD17UBEZfDPJZYwlMmMZtIFqB71aD6Jy" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/jgkimi/Decay-Function-Free-Time-Aware" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<p><a href="[https://arxiv.org/pdf/1903.08450.pdf](https://arxiv.org/pdf/1903.08450.pdf">paper link</a>)<br><a href="https://github.com/jgkimi/Decay-Function-Free-Time-Aware" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在对话的场景下去考虑SLU任务，上下文信息的重要性是变化的，以图1为例，当识别<code>&quot;We have Sungei Buloh which is on the Northwest of Singapore.&quot;</code>这句话时，最重要的历史信息应该是<code>&quot;What  are  the  places  that  I can  have  some  memorable  experiences  there?&quot;</code>，而非前一句<code>&quot;Right&quot;</code>。因此，手工设定的time-delay function是无法表达出这种复杂性。</p>
 <p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJXYkRlUzMvdUNXdjBscnl4WTI0WFUvSXJ2cWc0VWY1WTlaVGwweWRCMzZBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <p>目前大部分研究time-aware的SLU模型使用人工设定的单一time-delay function或者多个线性组合，这类手动设定的函数不够灵活。本文提出了一种可以自动学习time-delay tendency的方法，同时还引入了当前说话者的身份信息。</p>
