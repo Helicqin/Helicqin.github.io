@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Python处理excel | Helic</title>
+    <title>Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Excel Python" />
+        <meta name="keywords" content="Question Answering" />
     
-    <meta name="description" content="摘要：本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter">
-<meta name="keywords" content="Excel Python">
+    <meta name="description" content="本文提出了基于不完整KB与文本文档的QA模型，主要有两个创新点：（1）通过图注意力机制来获取question-related  knowledge进而辅助实体编码；（2）在编码文本时，设计了新型gate mechanism来融合KB实体知识。ACL2019 paper linkcode link">
+<meta name="keywords" content="Question Answering">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python处理excel">
-<meta property="og:url" content="https://helicqin.github.io/2017/07/15/Python处理excel (1)/index.html">
+<meta property="og:title" content="Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader">
+<meta property="og:url" content="https://helicqin.github.io/2019/08/28/Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="摘要：本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter">
+<meta property="og:description" content="本文提出了基于不完整KB与文本文档的QA模型，主要有两个创新点：（1）通过图注意力机制来获取question-related  knowledge进而辅助实体编码；（2）在编码文本时，设计了新型gate mechanism来融合KB实体知识。ACL2019 paper linkcode link">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://s14.sinaimg.cn/mw690/0039gk0jzy6PEJ1eByt6d&690">
-<meta property="og:updated_time" content="2017-07-28T08:27:26.000Z">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJrRE42Rm03TjZra0pvbk9Ta3FVK0pHVk9POVNZWkRLa0NNeDNXakp4RVRBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-08-31T09:43:41.242Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python处理excel">
-<meta name="twitter:description" content="摘要：本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter">
-<meta name="twitter:image" content="http://s14.sinaimg.cn/mw690/0039gk0jzy6PEJ1eByt6d&690">
+<meta name="twitter:title" content="Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader">
+<meta name="twitter:description" content="本文提出了基于不完整KB与文本文档的QA模型，主要有两个创新点：（1）通过图注意力机制来获取question-related  knowledge进而辅助实体编码；（2）在编码文本时，设计了新型gate mechanism来融合KB实体知识。ACL2019 paper linkcode link">
+<meta name="twitter:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJrRE42Rm03TjZra0pvbk9Ta3FVK0pHVk9POVNZWkRLa0NNeDNXakp4RVRBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
     
@@ -146,18 +146,18 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Python处理excel (1)" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Python处理excel
+        Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader
         </h1>
     
 
@@ -167,45 +167,51 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2017/07/15/Python处理excel (1)/" class="article-date">
-            <time datetime="2017-07-15T11:37:32.000Z" itemprop="datePublished">2017-07-15</time>
+        <a href="/2019/08/28/Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader/" class="article-date">
+            <time datetime="2019-08-28T09:40:00.000Z" itemprop="datePublished">2019-08-28</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Excel-Python/">Excel Python</a>
+        <a class="tag-link" href="/tags/Question-Answering/">Question Answering</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>摘要：本文主要记录一下Python处理excel表格的一些常用包，包括读取模块xlrd,写入模块xlwt和xlsxwriter<br><a id="more"></a></p>
-<h3 id="1-xlrd"><a href="#1-xlrd" class="headerlink" title="1. xlrd"></a>1. xlrd</h3><h4 id="note"><a href="#note" class="headerlink" title="note:"></a><strong>note</strong>:</h4><ul>
-<li>xlrd可以读取xls(2003)、xlsx(2007及以上)</li>
-<li>xls的行数限制为65536，最大列数是256列；xlsx的行数限制为1048576，最大列数是1638列</li>
+            <p>本文提出了基于不完整KB与文本文档的QA模型，主要有两个创新点：（1）通过图注意力机制来获取question-related  knowledge进而辅助实体编码；（2）在编码文本时，设计了新型gate mechanism来融合KB实体知识。<br>ACL2019</p>
+<p><a href="https://drive.google.com/open?id=1j4DY9Sd089DTzyVaRquf8fRYwIWhzMRY" target="_blank" rel="noopener">paper link</a><br><a href="https://github.com/xwhan/Knowledge-Aware-Reader" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在问答系统中，知识库（Knowledge Base，KB）用于辅助机器的理解。但是，KB 常常是不完整的，并且针对开放性问题，KB 不可能覆盖到所有的信息。另一方面，人们可以使用大规模的网络文本作为知识来源，并且也取得了一些成绩，但是这些工作更多的针对的是单文档，针对多文档的工作目前还相对较少。作者推测一个可能的原因就是虽然这些文本可以提供更大规模的只是覆盖，但是缺少背景知识，这么多的文档反而会引入很高的噪声。因此作者考虑将这部分整合起来，通过不完整的 KB 获取必要的和问题相关的背景知识，基于这些信息在多文档中抽取合适的信息并最终回答答案。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJYR2VBOFIvc0dMa3ZKUEFzaXh3b01RY1Q1MkNwSHhjb3dHY0k5WHRURVZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>模型主要包括：</p>
+<ul>
+<li>graph-attention based KB reader</li>
+<li>knowledge-aware text reader   </li>
 </ul>
-<p>基本操作：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开Excel表格</span></span><br><span class="line">workbook = xlrd.open_workbook(<span class="string">r'D:\programming\pycharm\pythonProject\helic\test.xlsx'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取所有sheet  </span></span><br><span class="line"><span class="keyword">print</span> workbook.sheet_names() <span class="comment"># [u'sheet1', u'sheet2']  </span></span><br><span class="line">sheet2_name = workbook.sheet_names()[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据sheet索引或者名称获取sheet内容  </span></span><br><span class="line">sheet2 = workbook.sheet_by_index(<span class="number">1</span>) <span class="comment"># sheet索引从0开始  </span></span><br><span class="line">sheet2 = workbook.sheet_by_name(<span class="string">'sheet2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sheet的名称，行数，列数  </span></span><br><span class="line"><span class="keyword">print</span> sheet2.name,sheet2.nrows,sheet2.ncols</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取整行和整列的值（数组）  </span></span><br><span class="line">rows = sheet2.row_values(<span class="number">3</span>) <span class="comment"># 获取第四行内容  </span></span><br><span class="line">cols = sheet2.col_values(<span class="number">2</span>) <span class="comment"># 获取第三列内容  </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取单元格内容  </span></span><br><span class="line"><span class="keyword">print</span> sheet2.cell(<span class="number">1</span>,<span class="number">0</span>).value.encode(<span class="string">'utf-8'</span>)  </span><br><span class="line"><span class="keyword">print</span> sheet2.cell_value(<span class="number">1</span>,<span class="number">0</span>).encode(<span class="string">'utf-8'</span>)  </span><br><span class="line"><span class="keyword">print</span> sheet2.row(<span class="number">1</span>)[<span class="number">0</span>].value.encode(<span class="string">'utf-8'</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取单元格内容的数据类型，类型 0 empty,1 string, 2 number, 3 date, 4 boolean, 5 error</span></span><br><span class="line"><span class="keyword">print</span> sheet2.cell(<span class="number">1</span>,<span class="number">0</span>).ctype</span><br></pre></td></tr></table></figure>
-<hr>
-<p>python读取excel中单元格类型为date(有的日期是以string格式存储，无需用此方式读取，依照上述基本操作)；date类型的ctype=3，这时需要使用xlrd的xldate_as_tuple来处理为date格式，先判断表格的ctype,如果等于3，则用时间格式处理:</p>
-<pre><code>if sheet.cell(row,col).ctype == 3:         
-    date_value = xlrd.xldate_as_tuple(sheet.cell_value(rows,3),workbook.datemode)      # (1992, 2, 22, 0, 0, 0)
-    date_tmp = date(*date_value[:3]).strftime(&apos;%Y/%m/%d&apos;) # &apos;1992/02/22&apos;
-</code></pre><hr>
-<p>读取合并单元格的内容(合并的单元格只是合并的第一个单元格的有值，其它的为空;只能获取合并单元格的第一个cell的行列索引，才能读到值;合并行单元格读取行的第一个索引，合并列单元格读取列的第一个索引):</p>
-<p><img src="http://files.jb51.net/file_images/article/201501/2015129105612767.jpg?2015029105627" alt="">                   </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> sheet2.col_values(<span class="number">4</span>)[<span class="number">1</span>]  <span class="comment"># 好朋友</span></span><br><span class="line"><span class="keyword">print</span> sheet2.row_values(<span class="number">7</span>)[<span class="number">2</span>]  <span class="comment"># 暂无</span></span><br></pre></td></tr></table></figure>
-<p>获取合并单元格的位置:读取文件的时候需要将formatting_info参数设置为True，默认是False</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">workbook = xlrd.open_workbook(<span class="string">r'F:\demo.xlsx'</span>,formatting_info=<span class="keyword">True</span>)  </span><br><span class="line">sheet2 = workbook.sheet_by_name(<span class="string">'sheet2'</span>)  </span><br><span class="line"><span class="keyword">print</span> sheet2.merged_cells  <span class="comment"># [(7, 8, 2, 5), (1, 3, 4, 5), (3, 6, 4, 5)]</span></span><br></pre></td></tr></table></figure>
-<p>merged_cells返回的这四个参数的含义是：(row,row_range,col,col_range),其中[row,row_range)包括row,不包括row_range,col也是一样，即(1, 3, 4, 5)的含义是：第2到3行（不包括第4行）合并，(7, 8, 2, 5)的含义是：第3到5列合并。<strong>获取merge_cells返回的row和col低位的索引即可</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> sheet2.cell_value(<span class="number">1</span>,<span class="number">4</span>)  <span class="comment">#(1, 3, 4, 5)  好朋友  </span></span><br><span class="line"><span class="keyword">print</span> sheet2.cell_value(<span class="number">3</span>,<span class="number">4</span>)  <span class="comment">#(3, 6, 4, 5)  同学  </span></span><br><span class="line"><span class="keyword">print</span> sheet2.cell_value(<span class="number">7</span>,<span class="number">2</span>)  <span class="comment">#(7, 8, 2, 5)  暂无</span></span><br><span class="line"></span><br><span class="line">merge = []  </span><br><span class="line"><span class="keyword">for</span> (rlow,rhigh,clow,chigh) <span class="keyword">in</span> sheet2.merged_cells:  <span class="comment"># [(7, 8, 2, 5), (1, 3, 4, 5), (3, 6, 4, 5)]</span></span><br><span class="line">    merge.append([rlow,clow])</span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> merge:   <span class="comment"># [[7, 2], [1, 4], [3, 4]]  </span></span><br><span class="line">    <span class="keyword">print</span> sheet2.cell_value(index[<span class="number">0</span>],index[<span class="number">1</span>])</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-xlwt-与-xlsxwriter"><a href="#2-xlwt-与-xlsxwriter" class="headerlink" title="2. xlwt 与 xlsxwriter"></a>2. xlwt 与 xlsxwriter</h3><ul>
-<li>xlwt只能写.xls(2003)文件，xlsxwriter只能写.xlsx(2007及以后)表格</li>
-</ul>
-<h4 id="1-xlwt"><a href="#1-xlwt" class="headerlink" title="( 1 ) xlwt"></a>( 1 ) xlwt</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">style0 = xlwt.easyxf(<span class="string">'font: name 等线, color-index black, bold off, height 220'</span>)</span><br><span class="line">style1 = xlwt.easyxf(<span class="string">'font: name 等线, color-index red, bold off, height 220'</span>)</span><br><span class="line"></span><br><span class="line">f = xlwt.Workbook()                                      <span class="comment"># 创建工作簿</span></span><br><span class="line">female = f.add_sheet(<span class="string">u'female'</span>, cell_overwrite_ok=<span class="keyword">True</span>)  <span class="comment"># 创建sheet</span></span><br><span class="line">female.write(<span class="number">0</span>, <span class="number">0</span>, <span class="string">'test'</span>, style1)</span><br><span class="line">female.write(<span class="number">0</span>, <span class="number">1</span>, <span class="string">'test'</span>, style0)</span><br><span class="line">f.save(<span class="string">"demo.xls"</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="2-xlsxwriter"><a href="#2-xlsxwriter" class="headerlink" title="( 2 ) xlsxwriter"></a>( 2 ) xlsxwriter</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">workbook = xlsxwriter.Workbook(<span class="string">'hello.xlsx'</span>)  <span class="comment"># 建立文件</span></span><br><span class="line"><span class="comment"># Add a bold format to use to highlight cells. 设置粗体，默认是False</span></span><br><span class="line">bold = workbook.add_format(&#123;<span class="string">'bold'</span>: <span class="keyword">False</span>, <span class="string">'color'</span>: <span class="string">'black'</span>, <span class="string">'font_name'</span>: <span class="string">'等线'</span>, <span class="string">'font_size'</span>: <span class="string">'11'</span>&#125;)</span><br><span class="line"><span class="comment"># 建立sheet， 可以work.add_worksheet('employee')来指定sheet名，但中文名会报UnicodeDecodeErro的错误</span></span><br><span class="line">worksheet = workbook.add_worksheet(<span class="string">'female'</span>)</span><br><span class="line">worksheet.write(<span class="number">0</span>, <span class="number">0</span>, <span class="string">'Hello world'</span>, bold)  <span class="comment"># 向A1写入</span></span><br><span class="line">workbook.close()</span><br></pre></td></tr></table></figure>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJrRE42Rm03TjZra0pvbk9Ta3FVK0pHVk9POVNZWkRLa0NNeDNXakp4RVRBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="SubGraph-Reader-SGREADER"><a href="#SubGraph-Reader-SGREADER" class="headerlink" title="SubGraph Reader(SGREADER)"></a>SubGraph Reader(SGREADER)</h3><p>SGREADER的作用是为每一个实体节点输出一个向量表征，通过编码其邻居节点和关系信息得到。主要考虑以下两个因素：（1）邻居关系与问题的相关性；（2）邻居节点是否为问题中出现过的topic entity。</p>
+<p><strong>Question-Relation  Matching</strong> 作者首先通过一个 LSTM 处理问题，得到问题$\left\{w_{1}^{q}, w_{2}^{q}, \dots, w_{l_{q}}^{q}\right\}$的隐层状态表示$\mathbf{h}^{\mathbf{q}} \in \mathbb{R}^{l_{q} \times d_{h}}$，同时使用相同的 LSTM 得到关系$\left\{w_{1}^{r}, w_{2}^{r}, \dots, w_{l_{r}}^{r}\right\}$的隐层状态表示$\mathbf{h}^{\mathbf{r}} \in \mathbb{R}^{l_{r} \times d_{h}}$。接下来作者使用 self-attention 得到关系的语义表示：<br>$$<br>\vec{r}=\sum_{i} \alpha_{i} \vec{h}_{i}^{r}, \alpha_{i} \propto \exp \left(\vec{w}_{r} \cdot \vec{h}_{i}^{r}\right)<br>$$<br>其中$\vec{w}_{r}$是训练参数。由于问题需要和不同的关系进行匹配，而每个关系只关注到问题的其中一部分信息，因此，作者使用得到的关系表示对问题的每个token对应的隐层状态进行注意力计算，得到问题的语义表示，然后内积得到关系与问题的匹配分数：<br>$$<br>s_{r}=\vec{r} \cdot \sum_{j} \beta_{j} \vec{h}_{j}^{q}, \beta_{j} \propto \exp \left(\vec{r} \cdot \vec{h}_{j}^{q}\right)<br>$$</p>
+<p><strong>Extra  Attention  over  Topic  Entity  Neighbors</strong> 同时，作者还发现topic entity的binary  indicator  feature非常有用，如果一个节点连接到topic entity，那么对应 KB 中的三元组将会比那些非topic entity连接的节点更有用，因此在邻居节点$(r_{i}, e_{i})$上的注意力值最终表示为：</p>
+<p>$$<br>\tilde{s}_{\left(r_{i}, e_{i}\right)} \propto \exp \left(I\left[e_{i} \in \mathcal{E}_{0}\right]+s_{r_{i}}\right)<br>$$</p>
+<p><strong>Information  Propagation  from  Neighbors</strong> 最终每个实体$e$可以通过如下方式计算出来：</p>
+<p>$$<br>\overrightarrow{e^{\prime}}=\gamma^{e} \vec{e}+\left(1-\gamma^{e}\right) \sum_{\left(e_{i}, r_{i}\right) \in N_{e}} \tilde{s}_{\left(r_{i}, e_{i}\right)} \sigma\left(\mathbf{W}_{e}\left[\vec{r}_{i} ; \vec{e}_{i}\right]\right)<br>$$<br>其中$\vec{e}$, $\vec{e}_{i}$ 是预先计算的图编码，$\mathbf{W}_{\mathbf{c}} \in \mathbb{R}^{h_{d} \times 2 h_{d}}$，$N_{e}$ 是节点$e$所有的邻居节点。</p>
+<p>$$<br>\gamma^{e}=g\left(\vec{e}, \sum_{\left(e_{i}, r_{i}\right) \in N_{e}} \tilde{s}_{\left(r_{i}, e_{i}\right)} \sigma\left(\mathbf{W}_{\mathbf{e}}\left[\vec{r}_{i} ; \vec{e}_{i}\right]\right)\right)<br>$$<br>其中$g(x, y)=\operatorname{sigmoid}(\mathbf{W}[x ; y]) \in(0,1)$</p>
+<h3 id="Knowledge-Aware-Text-Reader-KAREADER"><a href="#Knowledge-Aware-Text-Reader-KAREADER" class="headerlink" title="Knowledge-Aware Text Reader(KAREADER)"></a>Knowledge-Aware Text Reader(KAREADER)</h3><p>在上个模块，我们得到了每个子图实体的 embedding 表示，那么在这部分要做的就是利用这些表示增强对问题和文档的理解，从而得到最后的答案。这部分作者使用了一个现有的做阅读理解的模型。</p>
+<p>首先是利用学习到的知识对问题进行更新表示。作者首先利用 self-attention 得到问题的原始表示$\vec{q}=\sum_{i}b_{i}\vec{h}_{i}^{q}$，然后获取问题的topic entity知识$\overrightarrow{e^{q}}=\sum_{e \in \mathcal{E}_{0}} \vec{e}^{\prime} /\left|\mathcal{E}_{0}\right|$，然后使用一个门结构将这些信息进行融合：</p>
+<p>$$<br>\overrightarrow{q^{\prime}}=\gamma^{q} \vec{q}+\left(1-\gamma^{q}\right) \tanh \left(\mathbf{W}^{\mathbf{q}}\left[\vec{q}, \vec{e}^{q}, \vec{q}-\vec{e}^{q}\right]\right)<br>$$</p>
+<p>其中 $\gamma^{q}=sigmoid\left(\mathbf{W}^{\mathrm{gq}}\left[\vec{q}, \vec{e}^{q}, \vec{q}-\vec{e}^{q}\right]\right)$。</p>
+<p>得到了对问题的更新表示之后，就是使用学习到的知识对文档进行增强表示，首先对文档使用 Bi-LSTM 进行处理，作者设计了一种新的基于问题表示的门机制，该结构允许模型能够动态选择跟问题相关的输入，从而得到更好的文档语义表示。<br>$$<br>\begin{aligned} \vec{i}_{w_{i}}^{d} =\gamma^{d} \vec{e}_{w_{i}}+\left(1-\gamma^{d}\right) \vec{f}_{w_{i}}^{d}, \text { where }  \gamma^{d} =\operatorname{sigmoid}\left(\mathbf{W}^{\mathrm{gd}}\left[\vec{q} \cdot \vec{e}^{\prime}_{w_{i}} ; \vec{q} \cdot \vec{f}_{w_{i}}^{d}\right]\right) \end{aligned}<br>$$<br>其中$w_{i}^{d}$是一个输入token，$\vec{f}_{w_{i}}^{d}$是其对应的token feature，$\vec{e}^{\prime}_{w_{i}}$是SGREADER学习的实体表示（如果这个token不是KB中的实体，则只有token feature）。</p>
+<p>最后作者将从 Text Reader 中得到的信息进行融合，首先使用一个 co-attention 计算问题和 Bi-LSTM 的隐层状态的相关程度$\lambda_{i}=\vec{q^{\prime}}^{T} \vec{h}_{w_{i}}^{d}$，然后对这些隐层状态进行加权和$\vec{d}=\sum_{i} \lambda_{i} \vec{h}_{w_{i}}^{d}$，对于多个包含实体的文档，作者使用了均值池化得到最后的表示$\vec{e}_{d}=\frac{1}{\left|\mathcal{D}^{e}\right|} \sum_{d \in \mathcal{D}^{e}} \vec{d}$。</p>
+<h3 id="Answer-Prediction"><a href="#Answer-Prediction" class="headerlink" title="Answer  Prediction"></a>Answer  Prediction</h3><p>作者使用实体表征和问题向量进行匹配得到最后的输出：</p>
+<p>$$<br>s^{e}=\sigma_{s}\left(\overrightarrow{q^{\prime}}^{T} \mathbf{W}_{s}\left[\overrightarrow{e^{\prime}} ; \vec{e}_{d}\right]\right)<br>$$</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>作者在一个公开数据集 WebQSP 上进行模型的效果验证，同时为了更好的验证模型的效果，作者还人为控制了 KB 的完整程度。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJYR2VBOFIvc0dMcjFYMXRhREUzSEZ4M201R1hNUHJma3FrZndaT1hhb09RPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Comparisons  with  Key-Value  Memory  Networks  and  GRAFT-Nets  under  different  KB  settings."></p>
+<p><strong>Ablation  Study</strong><br><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJYR2VBOFIvc0dMbjJEYWtNcGR3Sit0dkJiUW94U0ZFTHhQUUlKQmJzTkV3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  Ablation  on  dev  under  the  30%  KB  setting."></p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJYR2VBOFIvc0dMbUNVdzdVdytwRGJZVmlJUWF5WSswRUlQY1o5ZG1ud3FnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文提出了基于不完整KB与文本文档的QA模型，主要有两个创新点：（1）通过图注意力机制来获取question-related  knowledge进而辅助实体编码；（2）在编码文本时，设计了新型gate mechanism来融合KB实体知识。</p>
 
         </div>
         <footer class="article-footer">
@@ -343,20 +349,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2017/08/01/本周进展/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            本周进展
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2017/07/15/Python处理excel/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/08/21/Deep Residual Output Layers for Neural Language Generation/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Python处理excel</p>
+        <p class="article-nav-title">Deep Residual Output Layers for Neural Language Generation</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -563,7 +559,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2017/07/15/Python处理excel (1)/';
+    var disqus_url = 'https://helicqin.github.io/2019/08/28/Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader/';
     
     (function() {
     var dsq = document.createElement('script');
