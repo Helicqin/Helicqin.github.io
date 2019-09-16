@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Meta-Learning  Learning to Learn | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Meta-Learning" />
+    
+    <meta name="description" content="Learner and Meta-LearnerAnother popular view of meta-learning decomposes the model update into two stages:  A classifier  $f_{\theta}$  is the “learner” model, trained for operating a given task; In">
+<meta name="keywords" content="Meta-Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Meta-Learning  Learning to Learn">
+<meta property="og:url" content="https://helicqin.github.io/2019/09/09/Meta-Learning Learning to Learn/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="Learner and Meta-LearnerAnother popular view of meta-learning decomposes the model update into two stages:  A classifier  $f_{\theta}$  is the “learner” model, trained for operating a given task; In">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjF3MlJOdGJYN0x6MkY4OGQrVisxUU9walJtcmcxckx4MWpuNnFOQnVjVDNnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-09-16T14:52:59.395Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Meta-Learning  Learning to Learn">
+<meta name="twitter:description" content="Learner and Meta-LearnerAnother popular view of meta-learning decomposes the model update into two stages:  A classifier  $f_{\theta}$  is the “learner” model, trained for operating a given task; In">
+<meta name="twitter:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjF3MlJOdGJYN0x6MkY4OGQrVisxUU9walJtcmcxckx4MWpuNnFOQnVjVDNnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Meta-Learning Learning to Learn" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Meta-Learning  Learning to Learn
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/09/09/Meta-Learning Learning to Learn/" class="article-date">
+            <time datetime="2019-09-09T06:59:00.000Z" itemprop="datePublished">2019-09-09</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Meta-Learning/">Meta-Learning</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <a id="more"></a>
+<h2 id="Learner-and-Meta-Learner"><a href="#Learner-and-Meta-Learner" class="headerlink" title="Learner and Meta-Learner"></a>Learner and Meta-Learner</h2><p>Another popular view of meta-learning decomposes the model update into two stages:</p>
+<ul>
+<li>A classifier  $f_{\theta}$  is the “learner” model, trained for operating a given task;</li>
+<li>In the meantime, a optimizer $g_{\phi}$  learns how to update the learner model’s parameters via the support set $S$, $\theta’ = g_\phi(\theta, S)$<h2 id="Common-Approaches-to-Meta-Learning"><a href="#Common-Approaches-to-Meta-Learning" class="headerlink" title="Common Approaches to Meta-Learning"></a>Common Approaches to Meta-Learning</h2>There are three common approaches to meta-learning: metric-based, model-based, and optimization-based.</li>
+</ul>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBiWGRISlJTeVR2NzZtZnd1cjJFajVteWZiRWQ0cVdGbzlVNTZ4cnJUTTF3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="Metric-Based"><a href="#Metric-Based" class="headerlink" title="Metric-Based"></a>Metric-Based</h3><p>The core idea in metric-based meta-learning is similar to nearest neighbors algorithms (i.e., <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="noopener">k-NN</a> classificer and <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank" rel="noopener">k-means</a> clustering) and <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation" target="_blank" rel="noopener">kernel density estimation</a>. The predicted probability over a set of known labels $y$ is a weighted sum of labels of support set samples. The weight is generated by a kernel function $k_{\theta}$, measuring the similarity between two data samples.</p>
+<p>$$P_\theta(y \vert \mathbf{x}, S) = \sum_{(\mathbf{x}_i, y_i) \in S} k_\theta(\mathbf{x}, \mathbf{x}_i)y_i$$<br>where $S$ is the support set. </p>
+<blockquote>
+<p>To learn a good kernel is crucial to the success of a metric-based meta-learning model. <a href="https://en.wikipedia.org/wiki/Similarity_learning#Metric_learning" target="_blank" rel="noopener">Metric learning</a> is well aligned with this intention, as it aims to learn a metric or distance function over objects. The notion of a good metric is problem-dependent. It should represent the relationship between inputs in the task space and facilitate problem solving.</p>
+</blockquote>
+<h4 id="Convolutional-Siamese-Neural-Network"><a href="#Convolutional-Siamese-Neural-Network" class="headerlink" title="Convolutional Siamese Neural Network"></a>Convolutional Siamese Neural Network</h4><p><a href="https://papers.nips.cc/paper/769-signature-verification-using-a-siamese-time-delay-neural-network.pdf" target="_blank" rel="noopener">Siamese Neural Network</a> 由两个孪生的网络组成，它们的输出通过一个相似度函数来衡量输入数据点之间的相似性，这两个孪生网络实际上是完全相同的特征提取器，然后再将提取出来的两个特征向量通过一个核函数计算关系。</p>
+<p><a href="http://www.cs.toronto.edu/~rsalakhu/papers/oneshot1.pdf" target="_blank" rel="noopener">Koch, Zemel &amp; Salakhutdinov (2015)</a> 提出了基于Siamese Neural Network的方法来解决one-shot的图像分类任务（每一类图片仅有一个标注样本）。整体结构图如下：</p>
+<p><img src="https://lilianweng.github.io/lil-log/assets/images/siamese-conv-net.png" alt="The architecture of convolutional siamese neural network for few-show image classification._"></p>
+<p>首先基于给定的$K$类数据集来构建很多二分类数据集（Support Set），然后在所有二分类数据集上训练一个鉴别模型：判断输入的两张图片是否来自同一个类别。在预测阶段，训练后的siamese network预测所有的输入图片-支持集图片对，最终的结果类别为相似度最高的支持集图片对应的类别。</p>
+<h4 id="Matching-Networks"><a href="#Matching-Networks" class="headerlink" title="Matching Networks"></a>Matching Networks</h4><p>The task of <strong>Matching Networks</strong> (<a href="http://papers.nips.cc/paper/6385-matching-networks-for-one-shot-learning.pdf" target="_blank" rel="noopener">Vinyals et al., 2016</a>) is to learn a classifier $c_{S}$ for any given (small) support set $S=\{x_{i},y_{i}\}^{k}_{i=1}$(k-class classification). This classifier defines a probability distribution over output labels $y$ given a test example $x$. Similar to other metric-based models, the classifier output is defined as a sum of labels of support samples weighted by attention kernel $a(x,x_{i})$ - which should be proportional to the similarity between $x$ and $x_{i}$.</p>
+<p>$$c_S(\mathbf{x}) = P(y \vert \mathbf{x}, S) = \sum_{i=1}^k a(\mathbf{x}, \mathbf{x}_i) y_i<br>\text{, where }S=\{(\mathbf{x}_i, y_i)\}_{i=1}^k$$</p>
+<p><img src="https://lilianweng.github.io/lil-log/assets/images/matching-networks.png" alt="The architecture of Matching Networks."></p>
+<p>The attention kernel depends on two embedding functions, $f$ and $g$, for encoding the test sample and the support set samples respectively. The attention weight between two data points is the cosine similarity, $cosine(\cdot)$, between their embedding vectors, normalized by softmax:<br>$$a(\mathbf{x}, \mathbf{x}_i) = \frac{\exp(\text{cosine}(f(\mathbf{x}), g(\mathbf{x}_i))}{\sum_{j=1}^k\exp(\text{cosine}(f(\mathbf{x}), g(\mathbf{x}_j))}$$</p>
+<p><strong>Simple Embedding</strong> In the simple version, an embedding function is a neural network with a single data sample as input. Potentially we can set  $f=g$.</p>
+<p><strong>Full Context Embeddings</strong> The embedding vectors are critical inputs for building a good classifier. Taking a single data point as input might not be enough to efficiently gauge the entire feature space. Therefore, the Matching Network model further proposed to enhance the embedding functions by taking as input the whole support set $S$ in addition to the original input, so that the learned embedding can be adjusted based on the relationship with other support samples.<br><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjMzUzlDUnJlNkt6Z3phSVZUQnB5UEhpTU51NlRUWGMvQ2NxdHY5TnF6cDFRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h4 id="Relation-Network"><a href="#Relation-Network" class="headerlink" title="Relation Network"></a>Relation Network</h4><p><strong>Relation Network (RN)</strong>  (<a href="http://openaccess.thecvf.com/content_cvpr_2018/papers_backup/Sung_Learning_to_Compare_CVPR_2018_paper.pdf" target="_blank" rel="noopener">Sung et al., 2018</a>) is similar to  <a href="https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html#convolutional-siamese-neural-network" target="_blank" rel="noopener">siamese network</a>  but with a few differences:</p>
+<ol>
+<li>The relationship is not captured by a simple L1 distance in the feature space, but predicted by a CNN classifier $g_{\phi}$. The relation score between a pair of inputs, $x_{i}$ and $x_{j}$, is $r_{ij}=g_{\phi}([x_{i},x_{j}])$ where $[]$ is concatenation.</li>
+<li>The objective function is MSE loss instead of cross-entropy, because conceptually RN focuses more on predicting relation scores which is more like regression, rather than binary classification. $\mathcal{L}(B) = \sum_{(\mathbf{x}_i, \mathbf{x}_j, y_i, y_j)\in B} (r_{ij} - \mathbf{1}_{y_i=y_j})^2$</li>
+</ol>
+<p><img src="https://lilianweng.github.io/lil-log/assets/images/relation-network.png" alt="Relation Network architecture for a 5-way 1-shot problem with one query example."></p>
+<h4 id="Prototypical-Networks"><a href="#Prototypical-Networks" class="headerlink" title="Prototypical Networks"></a>Prototypical Networks</h4><p><strong>Prototypical Networks</strong> (<a href="http://papers.nips.cc/paper/6996-prototypical-networks-for-few-shot-learning.pdf" target="_blank" rel="noopener">Snell, Swersky &amp; Zemel, 2017</a>) use an embedding function $f_{\theta}$ to encode each input into a $M$-dimensional feature vector. A <em>prototype</em> feature vector is defined for every class $c\in C$, as the mean vector of the embedded support data samples in this class.</p>
+<p>$$\mathbf{v}_c = \frac{1}{|S_c|} \sum_{(\mathbf{x}_i, y_i) \in S_c} f_\theta(\mathbf{x}_i)$$</p>
+<p><img src="https://lilianweng.github.io/lil-log/assets/images/prototypical-networks.png" alt="Prototypical networks in the few-shot and zero-shot scenarios."></p>
+<p>$$P(y=c\vert\mathbf{x})=\text{softmax}(-d_\varphi(f_\theta(\mathbf{x}), \mathbf{v}_c)) = \frac{\exp(-d_\varphi(f_\theta(\mathbf{x}), \mathbf{v}_c))}{\sum_{c’ \in \mathcal{C}}\exp(-d_\varphi(f_\theta(\mathbf{x}), \mathbf{v}_{c’}))}$$</p>
+<p>where  $d_\varphi$  can be any distance function as long as $\varphi$  is differentiable. In the paper, they used the squared euclidean distance. The loss function is the negative log-likelihood: $\mathcal{L}(\theta) = -\log P_\theta(y=c\vert\mathbf{x})$</p>
+<h3 id="Model-Based"><a href="#Model-Based" class="headerlink" title="Model-Based"></a>Model-Based</h3><blockquote>
+<p>Model-based meta-learning models make no assumption on the form of $P_{\theta}(y|x)$. Rather it depends on a model designed specifically for fast learning — a model that updates its parameters rapidly with a few training steps. This rapid parameter update can be achieved by its internal architecture or controlled by another meta-learner model.</p>
+</blockquote>
+<h4 id="Memory-Augmented-Neural-Networks"><a href="#Memory-Augmented-Neural-Networks" class="headerlink" title="Memory-Augmented Neural Networks"></a>Memory-Augmented Neural Networks</h4><p>A family of model architectures use external memory storage to facilitate the learning process of neural networks, including <a href="https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html#neural-turing-machines" target="_blank" rel="noopener">Neural Turing Machines</a> and <a href="https://arxiv.org/abs/1410.3916" target="_blank" rel="noopener">Memory Networks</a>. Such a model is known as <strong>MANN</strong>, short for “<strong>Memory-Augmented Neural Network</strong>”. Note that recurrent neural networks with only _internal memory_ such as vanilla RNN or LSTM are not MANNs.</p>
+<p><strong>MANN for Meta-Learning</strong> The training described in <a href="http://proceedings.mlr.press/v48/santoro16.pdf" target="_blank" rel="noopener">Santoro et al., 2016</a> happens in an interesting way so that the memory is forced to hold information for longer until the appropriate labels are presented later. In each training episode, the truth label $y_{t}$ is presented with <strong>one step offset</strong>, $(x_{t+1},y_{t})$: it is the true label for the input at the previous time step $t$, but presented as part of the input at time step $t+1$.<br><img src="https://lilianweng.github.io/lil-log/assets/images/mann-meta-learning.png" alt="Task setup in MANN for meta-learning"></p>
+<h4 id="Meta-Networks"><a href="#Meta-Networks" class="headerlink" title="Meta Networks"></a>Meta Networks</h4><p><strong>Meta Networks</strong> (<a href="https://arxiv.org/abs/1703.00837" target="_blank" rel="noopener">Munkhdalai &amp; Yu, 2017</a>), short for <strong>MetaNet</strong>, is a meta-learning model with architecture and training process designed for _rapid_ generalization across tasks.</p>
+<p><strong>Fast Weights</strong> The rapid generalization of MetaNet relies on “fast weights”. Normally weights in the neural networks are updated by stochastic gradient descent in an objective function and this process is known to be slow. One faster way to learn is to utilize one neural network to predict the parameters of another neural network and the generated weights are called <em>fast weights</em>. In comparison, the ordinary SGD-based weights are named <em>slow weights</em>.</p>
+<p>In MetaNet, loss gradients are used as  _meta information_  to populate models that learn fast weights. Slow and fast weights are combined to make predictions in neural networks.</p>
+<p><img src="https://lilianweng.github.io/lil-log/assets/images/combine-slow-fast-weights.png" alt="Combining slow and fast weights in a MLP. $\bigoplus$ is element-wise sum."></p>
+<p><img src="https://lilianweng.github.io/lil-log/assets/images/meta-network.png" alt="The MetaNet architecture."></p>
+<p><em>More details in <a href="https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html#meta-networks" target="_blank" rel="noopener">https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html#meta-networks</a></em></p>
+<h3 id="Optimization-Based"><a href="#Optimization-Based" class="headerlink" title="Optimization-Based"></a>Optimization-Based</h3><blockquote>
+<p>Deep learning models learn through backpropagation of gradients. However, the gradient-based optimization is neither designed to cope with a small number of training samples, nor to converge within a small number of optimization steps. Is there a way to adjust the optimization algorithm so that the model can be good at learning with a few examples? This is what optimization-based approach meta-learning algorithms intend for.</p>
+</blockquote>
+<h4 id="LSTM-Meta-Learner"><a href="#LSTM-Meta-Learner" class="headerlink" title="LSTM Meta-Learner"></a>LSTM Meta-Learner</h4><p>The optimization algorithm can be explicitly modeled.  <a href="https://openreview.net/pdf?id=rJY0-Kcll" target="_blank" rel="noopener">Ravi &amp; Larochelle (2017)</a>  did so and named it “meta-learner”, while the original model for handling the task is called “learner”. The goal of the meta-learner is to efficiently update the learner’s parameters using a small support set so that the learner can adapt to the new task quickly.</p>
+<p>Let’s denote the learner model as  parameterized by  , the meta-learner as  with parameters  , and the loss function. The meta-learner is modeled as a LSTM, because:</p>
+<ol>
+<li>There is similarity between the gradient-based update in backpropagation and the cell-state update in LSTM.</li>
+<li>Knowing a history of gradients benefits the gradient update; think about how  <a href="http://ruder.io/optimizing-gradient-descent/index.html#momentum" target="_blank" rel="noopener">momentum</a>  works.</li>
+</ol>
+<p>The update for the learner’s parameters at time step $t$ with a learning rate $\alpha_{t}$ is:<br>$$\theta_t = \theta_{t-1} - \alpha_t \nabla_{\theta_{t-1}}\mathcal{L}_t$$<br>It has the same form as the cell state update in LSTM, if we set forget gate $f_{t}=1$, input gate $i_{t}=\alpha_{t}$, cell state $c_{t}=\theta_{t}$, and new cell state $\tilde{c}_t = -\nabla_{\theta_{t-1}}\mathcal{L}_t$:<br>$$c_t = f_t \odot c_{t-1} + i_t \odot \tilde{c}_t<br>    = \theta_{t-1} - \alpha_t\nabla_{\theta_{t-1}}\mathcal{L}_t$$<br>While fixing $f_{t}=1$ and $i_{t}=\alpha_{t}$ might not be the optimal, both of them can be learnable and adaptable to different datasets.<br><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjJuTzlFMkp5VjJ5bGZ1SnBMN0wybmRrOENEd3kxK3NqUHYvZDJ2eFJmOWNBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><strong>Model Setup</strong><br>During each training epoch, we first sample a dataset $\mathcal{D} = (\mathcal{D}_\text{train}, \mathcal{D}_\text{test}) \in \hat{\mathcal{D}}_\text{meta-train}$ and then sample mini-batches out of $D_{train}$ to update $\theta$ for $T$ rounds. The final state of the learner parameter $\theta_{T}$ is used to train the meta-learner on the test data $D_{test}$.<br><img src="https://lilianweng.github.io/lil-log/assets/images/lstm-meta-learner.png" alt="How the learner  $M_{\theta}$  and the meta-learner  $R_{\Theta}$ are trained."></p>
+<p><img src="https://lilianweng.github.io/lil-log/assets/images/train-meta-learner.png" alt=""></p>
+<h4 id="MAML"><a href="#MAML" class="headerlink" title="MAML"></a>MAML</h4><p><strong>MAML</strong>, short for <strong>Model-Agnostic Meta-Learning</strong> (<a href="https://arxiv.org/abs/1703.03400" target="_blank" rel="noopener">Finn, et al. 2017</a>) is a fairly general optimization algorithm, compatible with any model that learns through gradient descent. </p>
+<p><img src="https://lilianweng.github.io/lil-log/assets/images/maml.png" alt="Diagram of MAML."><br><img src="https://lilianweng.github.io/lil-log/assets/images/maml-algo.png" alt="The general form of MAML algorithm."></p>
+<p>在Meta-Train阶段，更新得到 $\theta’_{i}$时，使用的是每个任务的train数据集；而在外层更新$\theta$时 ，loss函数是在test集合上的loss，对原 $\theta$（注意不是对$\theta’_{i}$）进行梯度下降。</p>
+<blockquote>
+<p>The meta-optimization step above relies on second derivatives. To make the computation less expensive, a modified version of MAML omits second derivatives, resulting in a simplified and cheaper implementation, known as <strong>First-Order MAML (FOMAML)</strong>.</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html" target="_blank" rel="noopener">https://lilianweng.github.io/lil-log/2018/11/30/meta-learning.html</a></li>
+<li><a href="http://metalearning-symposium.ml/files/vinyals.pdf" target="_blank" rel="noopener">http://metalearning-symposium.ml/files/vinyals.pdf</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/08/28/Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/09/09/Meta-Learning Learning to Learn/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjF3MlJOdGJYN0x6MkY4OGQrVisxUU9walJtcmcxckx4MWpuNnFOQnVjVDNnPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Meta-Learning  Learning to Learn" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/09/09/Meta-Learning Learning to Learn/" class="title">Meta-Learning  Learning to Learn</a></p>
+                            <p class="item-date"><time datetime="2019-09-09T06:59:00.000Z" itemprop="datePublished">2019-09-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/08/28/Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjJrRE42Rm03TjZra0pvbk9Ta3FVK0pHVk9POVNZWkRLa0NNeDNXakp4RVRBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/08/28/Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader/" class="title">Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader</a></p>
+                            <p class="item-date"><time datetime="2019-08-28T09:40:00.000Z" itemprop="datePublished">2019-08-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/08/21/Deep Residual Output Layers for Neural Language Generation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBOQ2g5bytKRWh5cnVKa0NNaXRTdkdhMW5zQWFxL1VCSkF3T1FXRldGTmtBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="Deep Residual Output Layers for Neural Language Generation" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/08/21/Deep Residual Output Layers for Neural Language Generation/" class="title">Deep Residual Output Layers for Neural Language Generation</a></p>
+                            <p class="item-date"><time datetime="2019-08-21T14:54:00.000Z" itemprop="datePublished">2019-08-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/08/20/Imposing Label-Relational Inductive Bias for Extremely Fine-Grained Entity Typing/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjFmQm5IN3dzcmN5STVHQkhMZExSTHJWOWxsdlJsYzlibFdvWDNTcVIxL2tRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Imposing Label-Relational Inductive Bias for Extremely Fine-Grained Entity Typing" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/08/20/Imposing Label-Relational Inductive Bias for Extremely Fine-Grained Entity Typing/" class="title">Imposing Label-Relational Inductive Bias for Extremely Fine-Grained Entity Typing</a></p>
+                            <p class="item-date"><time datetime="2019-08-20T02:00:00.000Z" itemprop="datePublished">2019-08-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/07/19/Neural Response Generation with Meta-Words/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBvVDNxa3BjTEFTcXBsSGNaM1RkbXBkd1hKSEY2emdXVGlGNVM3cnNrOFp3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Neural Response Generation with Meta-Words" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/07/19/Neural Response Generation with Meta-Words/" class="title">Neural Response Generation with Meta-Words</a></p>
+                            <p class="item-date"><time datetime="2019-07-19T02:32:00.000Z" itemprop="datePublished">2019-07-19</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Active-Learning/">Active Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversial-Learning/">Adversial Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Entity-Typing/">Entity Typing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Meta-Learning/">Meta-Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multi-Task-Learning/">Multi-Task Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neural-Response-Generation/">Neural Response Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pretrained-Word-Representations/">Pretrained  Word  Representations</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Question-Answering/">Question Answering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Response-Selection/">Response Selection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentence-Semantic-Matching/">Sentence  Semantic  Matching</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Labeling/">Sequence  Labeling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Learning/">Sequence Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer  Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VAE/">VAE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Variational-Generation/">Variational Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Active-Learning/" style="font-size: 10px;">Active Learning</a> <a href="/tags/Adversial-Learning/" style="font-size: 10px;">Adversial Learning</a> <a href="/tags/BUPT/" style="font-size: 11.25px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 15px;">Commonsense  Knowledge</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 18.75px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Entity-Typing/" style="font-size: 10px;">Entity Typing</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.25px;">Keras</a> <a href="/tags/Machine-Learning/" style="font-size: 12.5px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 11.25px;">Memory Network</a> <a href="/tags/Meta-Learning/" style="font-size: 10px;">Meta-Learning</a> <a href="/tags/Multi-Task-Learning/" style="font-size: 10px;">Multi-Task Learning</a> <a href="/tags/NLG/" style="font-size: 11.25px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 17.5px;">NLU</a> <a href="/tags/Neural-Response-Generation/" style="font-size: 10px;">Neural Response Generation</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.25px;">Object Detection</a> <a href="/tags/Pretrained-Word-Representations/" style="font-size: 10px;">Pretrained  Word  Representations</a> <a href="/tags/Python/" style="font-size: 11.25px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Question-Answering/" style="font-size: 10px;">Question Answering</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.75px;">Reinforcement Learning</a> <a href="/tags/Response-Selection/" style="font-size: 10px;">Response Selection</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/Sentence-Semantic-Matching/" style="font-size: 10px;">Sentence  Semantic  Matching</a> <a href="/tags/Sequence-Labeling/" style="font-size: 10px;">Sequence  Labeling</a> <a href="/tags/Sequence-Learning/" style="font-size: 10px;">Sequence Learning</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 16.25px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 17.5px;">Tensorflow</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer  Learning</a> <a href="/tags/Transfer-Learning/" style="font-size: 11.25px;">Transfer Learning</a> <a href="/tags/Transformer/" style="font-size: 11.25px;">Transformer</a> <a href="/tags/VAE/" style="font-size: 10px;">VAE</a> <a href="/tags/Variational-Generation/" style="font-size: 10px;">Variational Generation</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://helicqin.github.io/about/index.html">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helicqin.github.io/2019/09/09/Meta-Learning Learning to Learn/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
