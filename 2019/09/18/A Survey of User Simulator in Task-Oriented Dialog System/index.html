@@ -17,7 +17,7 @@
 <meta property="og:description" content="Introduction任务导向型对话系统用于帮助用户完成某个任务如查电影、找餐馆等，它一般由四个模块组成：自然语言理解模块（Natural Language Understanding, NLU）、对话状态跟踪模块（Dialog State Tracking, DST）、对话策略模块（Dialog Policy, DP）和自然语言生成模块（Natural language Generation">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNGNkZab0Y4R1lCM2xWVExqRlJnMFcxRE9KanlYK2xIcGE1RFRSWTIxYUN3PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-09-20T07:43:12.641Z">
+<meta property="og:updated_time" content="2019-09-20T07:44:57.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A Survey of User Simulator in Task-Oriented Dialog System">
 <meta name="twitter:description" content="Introduction任务导向型对话系统用于帮助用户完成某个任务如查电影、找餐馆等，它一般由四个模块组成：自然语言理解模块（Natural Language Understanding, NLU）、对话状态跟踪模块（Dialog State Tracking, DST）、对话策略模块（Dialog Policy, DP）和自然语言生成模块（Natural language Generation">
@@ -197,9 +197,8 @@ ga('send', 'pageview');
 <li><p>用户目标（User Goal）：用户模拟的第一步就是生成一个用户对话的目标，对话系统对此是不可知的，但它需要通过多轮对话交互来帮助用户完成该目标。一般来说，用户目标的定义和两种槽位相关: 可告知槽（informable slots）和可问询槽（requestable slots），前者形如“槽=值”是用户用于查询的约束条件，后者则是用户希望向系统问询的属性。例如：用户目标是 “inform(type=movie, genre=action, location=San Francisco, date=this weekend),request(price)”表达的是用户的目标是想要找一部本周在 San Francisco 上映的动作片，找到电影后再进一步问询电影票的价格属性。有了明确的对用户目标的建模，我们就可以保证用户的回复具有一定的任务导向，而不是闲聊。</p>
 </li>
 <li><p>用户模型（User Model）：用户模型对应着对话系统的对话管理模块，它的任务是根据对话历史生成当前的用户动作。用户动作是预先定义好的语义标签，例如“inform, request, greet, bye”等等。用户动作的选择应当合理且多样，能够模拟出真实用户的行为。用户模型是用户模拟器的核心组成部分，在接下来的章节里我们将会详细介绍各种具体模型和方法。</p>
-<ol start="3">
-<li>误差模型（Error Model）：它接在 User Model 下游，负责模拟噪声，对用户行为进行扰动以模拟真实交互环境下不确定性。简单的方式有：随机用不正确的意图替换正确的意图、随机替换为不正确的槽位、随机替换为不正确的槽值等；复杂的方式有模拟基于 ASR 或 NLU 混淆的错误。</li>
-</ol>
+</li>
+<li><p>误差模型（Error Model）：它接在 User Model 下游，负责模拟噪声，对用户行为进行扰动以模拟真实交互环境下不确定性。简单的方式有：随机用不正确的意图替换正确的意图、随机替换为不正确的槽位、随机替换为不正确的槽值等；复杂的方式有模拟基于 ASR 或 NLU 混淆的错误。</p>
 </li>
 <li><p>自然语言生成（NLG）：如果用户模拟器需要输出自然语言回复，就需要 NLG 模型将用户动作转换成自然语言表述。例如用户动作标签“inform(type=movie, genre=action, date=this weekend)” 进行 NLG 模块后生成自然语句“Are there any action movies to see this weekend?”。</p>
 </li>
