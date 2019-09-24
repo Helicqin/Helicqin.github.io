@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems | Helic</title>
+    <title>Few-Shot  Text  Classification  With Distributional  Signatures | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Commonsense  Knowledge,Dialogue System" />
+        <meta name="keywords" content="NLP,Meta-Learning" />
     
-    <meta name="description" content="本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。 paper link">
-<meta name="keywords" content="Commonsense  Knowledge,Dialogue System">
+    <meta name="description" content="本文提出了一种少样本下的元学习方法，用于文本分类，在多个数据集上取得较好效果。  paper:  https://drive.google.com/open?id=19HtiZOH1jKWtEu_pq38wVYtYOwNIvPiPcode: https://github.com/YujiaBao/Distributional-Signaturessource: Work in Progress f">
+<meta name="keywords" content="NLP,Meta-Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems">
-<meta property="og:url" content="https://helicqin.github.io/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/index.html">
+<meta property="og:title" content="Few-Shot  Text  Classification  With Distributional  Signatures">
+<meta property="og:url" content="https://helicqin.github.io/2019/09/23/Few-Shot Text Classification With Distributional Signatures/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。 paper link">
+<meta property="og:description" content="本文提出了一种少样本下的元学习方法，用于文本分类，在多个数据集上取得较好效果。  paper:  https://drive.google.com/open?id=19HtiZOH1jKWtEu_pq38wVYtYOwNIvPiPcode: https://github.com/YujiaBao/Distributional-Signaturessource: Work in Progress f">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uR3lHQjBwYTZGTlFQd1I3bUxSb3o3dWJVakNhWWdKRzlBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-04-11T06:35:13.258Z">
+<meta property="og:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjI2NkdWdExraTJMQW9JVkhUbmZXRnJPNUF4V2dkZE55K0FhYXlTdC96T1lRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-09-24T07:25:40.324Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems">
-<meta name="twitter:description" content="本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。 paper link">
-<meta name="twitter:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uR3lHQjBwYTZGTlFQd1I3bUxSb3o3dWJVakNhWWdKRzlBPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0">
+<meta name="twitter:title" content="Few-Shot  Text  Classification  With Distributional  Signatures">
+<meta name="twitter:description" content="本文提出了一种少样本下的元学习方法，用于文本分类，在多个数据集上取得较好效果。  paper:  https://drive.google.com/open?id=19HtiZOH1jKWtEu_pq38wVYtYOwNIvPiPcode: https://github.com/YujiaBao/Distributional-Signaturessource: Work in Progress f">
+<meta name="twitter:image" content="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjI2NkdWdExraTJMQW9JVkhUbmZXRnJPNUF4V2dkZE55K0FhYXlTdC96T1lRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
     
@@ -150,14 +150,14 @@ ga('send', 'pageview');
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Learning to Select Knowledge for Response Generation in Dialog Systems" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Few-Shot Text Classification With Distributional Signatures" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Learning  to  Select  Knowledge  for  Response  Generation  in  Dialog  Systems
+        Few-Shot  Text  Classification  With Distributional  Signatures
         </h1>
     
 
@@ -167,56 +167,64 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/" class="article-date">
-            <time datetime="2019-04-08T06:03:00.000Z" itemprop="datePublished">2019-04-08</time>
+        <a href="/2019/09/23/Few-Shot Text Classification With Distributional Signatures/" class="article-date">
+            <time datetime="2019-09-23T03:18:00.000Z" itemprop="datePublished">2019-09-23</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a>, <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>
+        <a class="tag-link" href="/tags/Meta-Learning/">Meta-Learning</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>本文主要研究的是开放域对话系统，使用后验知识分布来指导知识选择过程，以生成包含更多有效信息的回复。</p>
-<p><a href="https://drive.google.com/open?id=1Lnx1_S_lPP43lix9P1spQLAFh2kHKcdM" target="_blank" rel="noopener">paper link</a><br><a id="more"></a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>现有的方法缺乏对知识选择和使用的研究，本文的核心在于提出了一种后验知识分布的方法来指导知识的选择过程，然后使用Concatenated和Hierarchical  Gated  Fusion  Unit两种解码器来融合选择的知识。</p>
-<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uSDlsWmp3QmtSZWZyMWhGRTEyRk5VNStGd1dPcG1Na3ZRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  Comparison  between  Various  Responses  Generated  with/without  Correct  Knowledge"></p>
-<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJOWnAzRGtQOG1uRWU3eUN2ZXBGUHVOMnhvaGdkbTIxczIvTDJOWk43R2VnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Architecture  Overview"></p>
-<p>模型主要包括三个部分：句子和知识编码器，知识管理器，解码器。整体结构仍然是seq2seq+attention。</p>
-<h3 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h3><p>作者使用两个独立的BiLSTM分别编码句子和知识，以最后时刻的隐层状态作为特征表达，分别得到输入句子和知识的表征向量。</p>
-<h3 id="Knowledge-Manager"><a href="#Knowledge-Manager" class="headerlink" title="Knowledge  Manager"></a>Knowledge  Manager</h3><p>模型中的知识管理模块，最重要的作用是从所有的外部知识中，选出所需的知识。在训练过程中，已有的生成回复也作为选择知识的标准，是一种后验概率。所以在训练的过程中，X和Y都被用于训练，通过以下式子来计算每条知识被选择的概率（使用内积来衡量知识 $k_{i}$ 与输入X Y的相似度）。</p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBuQ2ltdVIvVzhtMkxRalQ4SlZTbnlOQzdWN2dJUStGNVZKSUJObkhwcURnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>而在预测时，Y是未知的，只能通过输入X来进行知识选择。具体式子如下：</p>
-<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBuQ2ltdVIvVzhtOUowS3A4OStCWWdVaXNVcGFsUVJnMUlFRjdSTlpzUmJBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<p>训练和预测时的参考依据不同，肯定会影响整个系统的设计。因此在知识管理器中，设计了如下的损失函数KLDivLoss（KL散度），目标是让前两式不断接近，已达到训练和预测时的同步。</p>
-<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBuQ2ltdVIvVzhtME5xTWdULzdUV0l4eEM5VWhZdlg2dGZBcVBQOG9WeG5RPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
-<h3 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h3><p>与传统的Seq2Seq解码器不同，该模型将知识$k_{i}$融入到响应生成$y_{t}$中。 作者使用了两种解码器，第一个是“硬”解码 <strong>Standard  GRU  with  Concatenated  Inputs</strong>，使用标准的GRU作为解码器，第二个是具有分级门控融合单元的“软”解码器 <strong>Hierarchical  Gated  Fusion  Unit  (HGFU)</strong>。</p>
-<p><strong>Standard  GRU  with  Concatenated  Inputs</strong>： 直接将选择的知识$k_{i}$与GRU上一步的输出$y_{t-1}$拼接</p>
-<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBuQ2ltdVIvVzhtd1pzUnNRUGczenFOWjdEWFBHelVYRmhFd09WRzN4UUhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+            <p>本文提出了一种少样本下的元学习方法，用于文本分类，在多个数据集上取得较好效果。</p>
 <blockquote>
-<p>However,  it forces  knowledge  $k_{i}$  to  attend  decoding,  which  is less  flexible  and  is  not  desirable  in  some  scenarios.</p>
+<p>paper:  <a href="https://drive.google.com/open?id=19HtiZOH1jKWtEu_pq38wVYtYOwNIvPiP" target="_blank" rel="noopener">https://drive.google.com/open?id=19HtiZOH1jKWtEu_pq38wVYtYOwNIvPiP</a><br>code: <a href="https://github.com/YujiaBao/Distributional-Signatures" target="_blank" rel="noopener">https://github.com/YujiaBao/Distributional-Signatures</a><br>source: Work in Progress for ICLR2020<br><a id="more"></a></p>
 </blockquote>
-<p><strong>Hierarchical  Gated  Fusion  Unit  (HGFU)</strong>：总共包括utterance GRU和knowledge GRU，然后使用门函数融合两个GRU的隐层状态<br>$$<br>\begin{aligned}<br>\mathbf{s}_{t}^{y} &amp;=\operatorname{GRU}\left(y_{t-1}, \mathbf{s}_{t-1}, \mathbf{c}_{t}\right) \\<br>\mathbf{s}_{t}^{k} &amp;=\operatorname{GRU}\left(\mathbf{k}_{i}, \mathbf{s}_{t-1}, \mathbf{c}_{t}\right) \\<br>\mathbf{r} &amp;=\sigma\left(\mathbf{W}_{z}\left[\tanh \left(\mathbf{W}_{y} \mathbf{s}_{t}^{y}\right) ; \tanh \left(\mathbf{W}_{k} \mathbf{s}_{t}^{k}\right)\right]\right)\\<br>\mathbf{s}_{t} &amp;=\mathbf{r} \odot \mathbf{s}_{t}^{y}+(\mathbf{1}-\mathbf{r}) \odot \mathbf{s}_{t}^{k} \\<br>y_{t} \sim \mathbf{p}_{t} &amp;=\operatorname{softmax}\left(\mathbf{s}_{t}, \mathbf{c}\right)<br>\end{aligned}<br>$$</p>
-<h3 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h3><p>模型共使用了三个损失函数：</p>
-<ol>
-<li>KL loss</li>
-<li>NLL loss: $\mathcal{L}_{N L L}(\theta)=-\frac{1}{m} \sum_{t=1}^{m} \log p_{\theta}\left(y_{t} | y_{&lt;t}, \mathbf{x}, \mathbf{k}_{i}\right)$，decoder端交叉熵损失函数</li>
-<li>BOW loss: $\mathcal{L}_{B O W}(\theta)=-\frac{1}{m} \sum_{t=1}^{m} \log p_{\theta}\left(y_{t} | \mathbf{k}_{i}\right), p_{\theta}\left(y_{t} | \mathbf{k}_{i}\right)=\frac{\exp \left(\mathbf{w}_{y_{t}}\right)}{\sum_{v \in V} \exp \left(\mathbf{w}_{v}\right)}$</li>
-</ol>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>近些年，元学习（meta-learning）在处理少数据集的任务上十分流行，所谓元学习，就是让一个算法能够扩展到一个新的标注任务（类）上，这个标注任务（类）有不同于原有任务的标注类别，而且训练集很少。</p>
+<p>目前元学习主要在CV上取得了较大成功，对NLP，还未有广泛的成功。元学习不易处理NLP的主要原因还是在CV和NLP的内在区别：CV的低级别模型，如边、颜色、点在不同任务上都是通用的；而NLP的不同任务，即使是同一个句子，其重点都是不同的。比如下图是<code>HuffPost</code>数据集中共41个类别不同词的相关度：</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjMvWTA3blNORkpRVW10Z3JjNUt1UVdlNitlY0JzUUJMSEZoVWNrUG9NZ0p3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>从图中可以看到，词和类别是高度相关的，但是对不同任务（类）而言，同一个词的重要性又是不同的。比如下图，同样是在数据集<code>HuffPost</code>中，如果把类别<code>fifty</code>抹去，之前的网络根本无法找出最重要的词来：</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjMvWTA3blNORkpRZmNKbkpwRUZpTHRjTkV0QWFWUjNZYnQvb2xGb0E1em5BPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>但是本文提出的方法可以很好地找到最重要的词，从而判断正确的类别。本文提出了一个元学习模型用于少样本下的文本分类模型。总的来说，本文贡献如下：</p>
+<ul>
+<li>不直接考虑词，本文的方法使用词的分布式特征</li>
+<li>提出了一个少样本下的元学习文本分类模型</li>
+<li>使用了一个注意力生成器（Attention Generator）和一个岭回归器（Ridge Regressor）</li>
+<li>在跨类别迁移上模型表现良好</li>
+</ul>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p><strong>Problem Statement</strong>  现在我们有一个类别$y^{train}$集合，对这些类别，我们有足够的标注数据。又有一个类别$y^{test}$集合，但是标注数据很少。我们的目标是通过类别集$y^{train}$的标注数据使得模型能够在类别集$y^{test}$的数据上也有较好的效果。注意$y^{train}$与$y^{test}$是不相交的。</p>
+<p><strong>Meta-Learning</strong> 我们把元学习分为元学习训练（Meta-Training）和元学习测试（Meta-Testing），对于元学习训练，我们要创造若干个训练段（training episode），同理我们也有若干测试段（testing episode）。为了创造一个训练段，我们首先从$y^{train}$中随机取$N$个类别，再从每个类别中取$K$个训练样本作为训练集和$L$个样本作为测试集，所以就有$NK$个训练样本和$NL$个测试样本。一般来说，我们把这$NK$个训练样本称为支持集（support set），把$NL$个测试样本称为询问集（query set）。这个过程会重复多次以获得多个training episodes，其中每一个都包含N个类别。此任务又被称为 _N-way K-shot classification_。在元学习测试阶段，对每个测试段，我们都先从$y^{test}$中随机取$N$个类，然后再从这$N$个类中取支持集和询问集，然后在所有段的询问集中验证模型效果。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjMvWTA3blNORkpRY0VvNTIxcjRLQ1YzaHpaelQyQmdhQnJyL2FNeWVOQnhnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><strong>Extension</strong> 在上图中还出现了一个source pool，这就是本文的一个扩展。具体地，在元学习训练时，对每个训练段，我们把所有没被选择的类的数据作为source pool；在元学习测试阶段，source pool包括所有类的训练数据。</p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>模型主要分为两个模块：</p>
+<ul>
+<li>注意力生成器：该模块通过结合source pool的分布式特征和支持集，生成以类为基础的注意力大小，然后生成的注意力被用于岭回归器来修正词重要度的偏差</li>
+<li>岭回归器：对每个段，该模块接受注意力值并构建词汇表示，然后在询问集上进行预测</li>
+</ul>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNOcHZhN2tSS0Y2dXU2RXhEbzdsc3E3S3RmWS91WE43MlBsZjNHdUlMSlBRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h3 id="注意力生成器"><a href="#注意力生成器" class="headerlink" title="注意力生成器"></a>注意力生成器</h3><p>注意力生成器的目标是评估词的重要度，我们使用source pool来得到词的<strong>一般</strong>重要度，使用支持集得到<strong>类相关</strong>重要度。</p>
+<p>由于出现越频繁的词重要度越低，所以用下式得到一般重要度：<br>$$<br>s\left(x_{i}\right)=\frac{\epsilon}{\epsilon+P\left(x_{i}\right)}, \epsilon=10^{-3}<br>$$<br>其中$x_{i}$是输入句子$x$的第i个词，$P(x_{i})$ 是source pool中$x_{i}$的unigram的似然概率。然后用下式得到类相关重要度：<br>$$<br>t\left(x_{i}\right)=\mathcal{H}\left(P\left(y | x_{i}\right)\right)^{-1}<br>$$<br>这里条件似然$P(y|x_{i})$是在支持集中使用正则线性分类器（Regularized Linear Classifier，具体请参考原文附录A.1）得到的，$\mathcal{H}$为求熵。显然，$t(x_{i})$得到的是词$x_{i}$在类别$y$中的不确定度，从而也是重要度。</p>
+<p>但是只用这些数据效果不好，原因有二：（1）source pool和支持集包含的是互补的数据，模型无法确定如何结合；（2）这些数据只是词重要度在分类问题上的估计。于是，我们使用BiLSTM结合这些数据：$h=biLSTM([s(x);t(x)])$，然后得到下面的注意力值：<br>$$<br>\alpha_{i}=\frac{\exp \left(v^{T} h_{i}\right)}{\sum_{j} \exp \left(v^{T} h_{j}\right)}<br>$$<br>其中$v$是一个训练参数。</p>
+<h3 id="岭回归器"><a href="#岭回归器" class="headerlink" title="岭回归器"></a>岭回归器</h3><p>对于岭回归器，我们首先得到样本的表示：<br>$$<br>\phi(x)=\sum_{i} \alpha_{i} \cdot f_{\mathrm{ebd}}\left(x_{i}\right), \quad f_{\mathrm{ebd}}\left(x_{i}\right) \in \mathbb{R}^{E}<br>$$<br>$f_{\mathrm{ebd}}\left(x_{i}\right)$ 是词$x_{i}$对应的词向量。</p>
+<p><strong>Training  from  the  support  set</strong> 然后令$\Phi_{S} \in \mathbb{R}^{N K \times E}$是支持集的表示，$Y_{S} \in \mathbb{R}^{N K \times N}$是类别的one-hot表示。然后最小化下面的loss：<br>$$<br>\mathcal{L}^{R R}(W)=\left|\Phi_{S} W-Y_{S}\right|_{F}^{2}+\lambda|W|_{F}^{2}, \quad W \in \mathbb{R}^{E \times N}<br>$$</p>
+<p><strong>Inference  on  the  query  set</strong>  对询问集，令$\Phi(Q)$是其表示，于是我们直接预测其标签：<br>$$<br>\hat{Y}_{Q}=a \Phi_{Q} W+b, \quad a \in \mathbb{R}^{+}, b \in \mathbb{R}<br>$$<br>最后我们用softmax得到$\hat{P}_{Q}$，用交叉熵进行反向传播即可。</p>
 <blockquote>
-<p>The  BOW  loss (<a href="https://drive.google.com/open?id=1-kv8CuK_hqZwoIp1IV9Fd3KRsFd0OGWX" target="_blank" rel="noopener">Learning  Discourse-level  Diversity  for  Neural  Dialog  Models  using Conditional  Variational  Autoencoders</a>) is  designed  to  ensure  the  accuracy  of  the  sampled knowledge  $k_{i}$  by  enforcing  the  relevancy  between the  knowledge  and  the  target  response.</p>
+<p>We note that the attention generator is optimized over all training episodes, while the ridge regressor is trained from scratch for each episode. </p>
 </blockquote>
-<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBLSmZ3bWNUSkVRK1RmZUtRWm5GMWttVUFDOVcrRGtrcGNyZXdnOVE4VjVRPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Table  2:  Automatic  and  Manual  Evaluation  on  Persona-chat  and  Wizard-of-Wikipedia"></p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文核心的创新点在于利用后验分布来辅助选择正确的知识，从而生成有意义的回复。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>本文在下面的数据集上进行了实验：<code>20 Newsgroups</code>，<code>RCV1</code>，<code>Reuters-21578</code>，<code>Amazon product data</code>，<code>HuffPost headlines</code>和<code>FewRel</code>。</p>
+<p>下表是6个数据集在不同表示（Rep.）和不同学习算法（Alg.）上的表现，其中NN是1近邻分类，FT是首先在所有训练样本上进行预训练，然后在支持集微调。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNOcHZhN2tSS0Y2cHJzSlUwc0dFM1FmNjZMYUZIeXN1YzhzQ21YS2h6T2lnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>平均来说，本文的模型在$N=5, K=1$时提高6.26%的准确率，在$N=5, K=5$时提高3.84%准确率。下图说明了本文模型可以有效地避免过拟合：<br><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNOcHZhN2tSS0Y2aVdQZzY3clA5eGpMS2IxY0RYSXU3bE5PMEQ2aTk2amR3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文提出了一种少样本下的元学习方法，用于文本分类，在多个数据集上取得较好效果。本方法利用词的分布式特征得到注意力值，从而与词重要度建立联系，很好地缓解了过去单纯使用tf-idf或单纯使用词向量的不足。此外，在测试的时候，不需要经过复杂网络，只需用一个线性变换即可进行预测，在效果好的同时也很快，一举两得。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/58893025" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/58893025</a></li>
-<li><a href="https://drive.google.com/open?id=1-kv8CuK_hqZwoIp1IV9Fd3KRsFd0OGWX" target="_blank" rel="noopener">Learning  Discourse-level  Diversity  for  Neural  Dialog  Models  using Conditional  Variational  Autoencoders</a></li>
-<li><a href="https://drive.google.com/open?id=1Lnx1_S_lPP43lix9P1spQLAFh2kHKcdM" target="_blank" rel="noopener">Learning to Select Knowledge for Response Generation in Dialog Systems</a></li>
+<li><a href="https://arxiv.org/pdf/1908.06039.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1908.06039.pdf</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/79950457" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/79950457</a></li>
 </ul>
 
         </div>
@@ -355,20 +363,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2019/04/10/Wizard of Wikipedia Knowledge-powered conversational agents/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Wizard of Wikipedia Knowledge-powered conversational agents
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2019/04/05/Adversarial Active Learning for Sequence Labeling and Generation/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2019/09/18/A Survey of User Simulator in Task-Oriented Dialog System/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Adversarial  Active  Learning  for  Sequence  Labeling  and  Generation</p>
+        <p class="article-nav-title">A Survey of User Simulator in Task-Oriented Dialog System</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -575,7 +573,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2019/04/08/Learning to Select Knowledge for Response Generation in Dialog Systems/';
+    var disqus_url = 'https://helicqin.github.io/2019/09/23/Few-Shot Text Classification With Distributional Signatures/';
     
     (function() {
     var dsq = document.createElement('script');
