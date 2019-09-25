@@ -3,20 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>About Me | Helic</title>
+    <title>Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="description" content="Research AreaCurrently, I am working on neural conversational AI:  natural language understanding: Natural language understanding parses (speech) input to the semantic meaning, including intent classi">
-<meta property="og:type" content="website">
-<meta property="og:title" content="About Me">
-<meta property="og:url" content="https://helicqin.github.io/about/index.html">
+        <meta name="keywords" content="Dialogue System,NLP" />
+    
+    <meta name="description" content="本文研究个性化检索式对话系统，传统的个性化方法利用persona编码增强context表示，然后再与response匹配，而本文提出了DIM模型，核心是context与response，persona与response进行双匹配。  paper: https://drive.google.com/open?id=1WIBSG2pRGhpVmkV4OGNx0X2xQzSu-v2Ccode: http">
+<meta name="keywords" content="Dialogue System,NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots">
+<meta property="og:url" content="https://helicqin.github.io/2019/09/25/Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="Research AreaCurrently, I am working on neural conversational AI:  natural language understanding: Natural language understanding parses (speech) input to the semantic meaning, including intent classi">
+<meta property="og:description" content="本文研究个性化检索式对话系统，传统的个性化方法利用persona编码增强context表示，然后再与response匹配，而本文提出了DIM模型，核心是context与response，persona与response进行双匹配。  paper: https://drive.google.com/open?id=1WIBSG2pRGhpVmkV4OGNx0X2xQzSu-v2Ccode: http">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-17T03:26:32.208Z">
+<meta property="og:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBseVViZGt6NFlRVGEzMlA3WHNPQS8rbUxnZERYSk5JcVh4V09wdyt0ZHVBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
+<meta property="og:updated_time" content="2019-09-25T13:08:03.850Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About Me">
-<meta name="twitter:description" content="Research AreaCurrently, I am working on neural conversational AI:  natural language understanding: Natural language understanding parses (speech) input to the semantic meaning, including intent classi">
+<meta name="twitter:title" content="Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots">
+<meta name="twitter:description" content="本文研究个性化检索式对话系统，传统的个性化方法利用persona编码增强context表示，然后再与response匹配，而本文提出了DIM模型，核心是context与response，persona与response进行双匹配。  paper: https://drive.google.com/open?id=1WIBSG2pRGhpVmkV4OGNx0X2xQzSu-v2Ccode: http">
+<meta name="twitter:image" content="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBseVViZGt6NFlRVGEzMlA3WHNPQS8rbUxnZERYSk5JcVh4V09wdyt0ZHVBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
 
     
@@ -141,64 +146,66 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <em class="page-title-link" data-url="/about/index.html">About Me</em>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="page-" class="article article-single article-type-page" itemscope itemprop="blogPost">
+                            <article id="post-Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        About Me
+        Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots
         </h1>
     
 
             </header>
         
         
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/09/25/Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots/" class="article-date">
+            <time datetime="2019-09-25T13:07:00.000Z" itemprop="datePublished">2019-09-25</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Dialogue-System/">Dialogue System</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
+    </div>
+
+            </div>
+        
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="Research-Area"><a href="#Research-Area" class="headerlink" title="Research Area"></a>Research Area</h2><p>Currently, I am working on <strong>neural conversational AI</strong>:</p>
-<ul>
-<li><code>natural language understanding</code>: Natural language understanding parses (speech) input to the semantic meaning, including intent classification and slot tagging. The tough challenge is the diversity of natural language and poor supervision resources. Domain adaption and transfer learning are attracting more attention.</li>
-<li><code>dialog policy learning</code>: We take the task-oriented dialogue as the optimal decision-making process to find optimal policy $\pi$, which could be modeled as a typical reinforcement learning(RL) problem. By maximizing average long-term reward, we could learn the optimal action $a$ to state $s$. Although some challenges remain, such as efficient sampling, reward setting, and dialogue evaluation metric, etc.</li>
-<li><code>adversarial learning</code>: Adversarial learning in natural language processing has achieved great success in many aspects, especially for semi-supervision learning, transfer learning from low-resource to high-resource, and active learning, etc. Now I’m focusing on adversarial learning in domain adaption and transfer learning.</li>
-</ul>
-<h2 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h2><ul>
-<li>2018-now, Master in Artificial Intelligence, BEIJING UNIVERSITY OF POSTS AND TELECOMMUNICATIONS</li>
-</ul>
-<ul>
-<li>2014-2018, Bachelor in Communication Engineering, BEIJING UNIVERSITY OF POSTS AND TELECOMMUNICATIONS </li>
-</ul>
-<h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><ol>
-<li>Research Intern in <strong>PRIS LAB</strong>, MAR 2017 - SEP 2017<ul>
-<li>Maintained and organized the Automatic TaskOriented Dialogue System.</li>
-<li>Research area in task-oriented dialogue system and deep reinforcement learning.</li>
-</ul>
-</li>
-</ol>
-<ol start="2">
-<li>Research and engineering Intern in <strong>GBSAA, IBM</strong>, SEP 2017 - FEB 2018<ul>
-<li>Research area in object detection and tracking Participated in the sports video analysis system of Ministry of Culture and the General Administration of Sport.</li>
-<li>Teamwork with colleagues and mentors in practical and challenging problems.</li>
-</ul>
-</li>
-</ol>
-<ol start="3">
-<li>Research Intern in <strong>SENTINEL TEC</strong>, JUL 2018 - SEP 2018<ul>
-<li>Research area in dialogue system and knowledge representation.</li>
-<li>Monitored the automatic customer service quality checking system of CHINA CITIC BANK and put into practice.</li>
-</ul>
-</li>
-</ol>
-<h2 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a><span id="contact">Contact</span></h2><ul>
-<li>Address: Beijing, China</li>
-<li>Email: <a href="mailto:helicbupt@gmail.com" target="_blank" rel="noopener">helicbupt@gmail.com</a></li>
-<li>Blog: <a href="https://helicqin.github.io">https://helicqin.github.io</a></li>
-</ul>
+            <p>本文研究个性化检索式对话系统，传统的个性化方法利用persona编码增强context表示，然后再与response匹配，而本文提出了DIM模型，核心是context与response，persona与response进行双匹配。</p>
+<blockquote>
+<p>paper: <a href="https://drive.google.com/open?id=1WIBSG2pRGhpVmkV4OGNx0X2xQzSu-v2C" target="_blank" rel="noopener">https://drive.google.com/open?id=1WIBSG2pRGhpVmkV4OGNx0X2xQzSu-v2C</a><br>code: <a href="https://github.com/JasonForJoy/DIM" target="_blank" rel="noopener">https://github.com/JasonForJoy/DIM</a><br>source: EMNLP 2019</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本文研究的是个性化对话系统，如下图所示：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBseVViZGt6NFlRZVF6cG5hNko3RWhSOHBxckpwN3VNTWM3bGVvZ0NsU1N3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt="Table  1:  An  example  dialogue  from  the  PERSONA-CHAT  dataset."></p>
+<p><a href="https://helicqin.github.io/2019/03/21/Personalizing%20Dialogue%20Agents_%20I%20have%20a%20dog,%20do%20you%20have%20pets%20too_/">Personalizing Dialogue Agents I have a dog, do you have pets too?</a> 提出了一种个性化模型，首先基于context表征来对persona中每一句做注意力得到persona表征，然后将个性编码与context拼接，最终与候选回复计算相似度。这种方法存在两个问题：（1）context被当做一个整体处理，忽略了context不同utterance的区别；（2）获取个性表征时用户个性与回复之间的交互没有被考虑。</p>
+<p>本文提出了一种基于 <strong>interactive matching  network(IMN)</strong> 的检索式个性化对话系统，考虑细粒度的context与persona交互；同时还提出了 <strong>dually  interactive  matching  network  (DIM)</strong> 模型，使得context与response，persona与response进行双匹配。</p>
+<h2 id="IMN-Based-Persona-Fusion"><a href="#IMN-Based-Persona-Fusion" class="headerlink" title="IMN-Based  Persona  Fusion"></a>IMN-Based  Persona  Fusion</h2><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBseVViZGt6NFlRUWtOZDVFTE1mbmN6VnUrM1FWd0ZpYldMdW83UXR0L2hBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt="Figure  1:  Comparison  of  the  model  architectures  for (a)  context-level  persona  fusion  and  (b)  utterance-level persona  fusion."></p>
+<p>以$\{\mathbf{u}_{m}\}_{m=1}^{n_{c}}$代表context utterances，$\mathbf{c}$代表concatenation  of  context utterances，$\{\mathbf{p}_{n}\}_{n=1}^{n_{p}}$ 代表profile sentences。Fig (a) 以下列方式计算persona：<br>$$<br>\mathbf{c}^{+}=\mathbf{c}+\sum_{n} \operatorname{Softmax}\left(\mathbf{c} \cdot \mathbf{p}_{n}\right) \mathbf{p}_{n}<br>$$</p>
+<p>Fig (b)考虑context中的每一句utterance：<br>$$<br>\mathbf{u}_{m}^{+}=\mathbf{u}_{m}+\sum_{n} \operatorname{Softmax}\left(\mathbf{u}_{m} \cdot \mathbf{p}_{n}\right) \mathbf{p}_{n}<br>$$</p>
+<p>再使用聚合层得到增强的context表征（可以是RNN或者注意力机制）：<br>$$<br>\mathbf{c}^{+}=\text {Aggregation }\left(\left\{\mathbf{u}_{m}^{+}\right\}_{m=1}^{n_{c}}\right)<br>$$</p>
+<h2 id="Dually-Interactive-Matching-Network"><a href="#Dually-Interactive-Matching-Network" class="headerlink" title="Dually  Interactive  Matching  Network"></a>Dually  Interactive  Matching  Network</h2><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBseVViZGt6NFlRVGEzMlA3WHNPQS8rbUxnZERYSk5JcVh4V09wdyt0ZHVBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  An  overview  of  our  proposed  DIM  model."></p>
+<p><strong>Sentence  Encoding  Layer</strong> </p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjM2TVZlTGR0NWp4dDJuUUR2Z2tkbUs1cXVGazZ6WUhOQm55Yk82eE5MN1l3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><strong>Matching  Layer</strong> 匹配层由cross-attention实现，具体实现见原文。<br><strong>Aggregation  Layer</strong> 聚合层的目的是将匹配层的输出映射为一个特征向量，具体实现如下。首先将匹配层的结果分别通过一个共享的BiLSTM（注意persona和context都是多句话，因此对应多个向量序列）：<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjM2TVZlTGR0NWp4dEszYnlmRTRDcWQ2OHhaY2JLSW9WYjlBc2EraW5UbytnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>然后分别取max-pooling以及RNN最后的隐层状态得到句子表示：<br><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjM2TVZlTGR0NWp4bjJWb2RzdENYRmRIM0tPNjIxcHlvUzU0Yk8wcjhwUW13PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>针对于context，作者又使用了另一个BiLSTM编码context中多个句子表征，同样分别取max-pooling以及RNN最后的隐层状态得到context表示：<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjM2TVZlTGR0NWp4Z1ZDY1dtTVdyM1pyNHN4OEFUYm54RFd6MUlNWG5vVSt3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>而对于persona，作者使用注意力获取最终表征：<br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjM2TVZlTGR0NWp4bFMvMUs4UExWaXF2dTl5YWYraU1WN2JXNkExZnRyK0F3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>最终将上述结果拼接：<br>$$<br>\mathbf{m}=\left[\hat{\mathbf{c}}^{a g r} ; \hat{\mathbf{r}}^{a g r} ; \hat{\mathbf{p}}^{a g r} ; \hat{\mathbf{r}}^{a g r t}\right]<br>$$</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBGNzBOMDRGa050VzQyQVhCQnNCaGM4QUJwcmVLZEN0bVR1b3ZqSzNDU0FRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBGNzBOMDRGa050V0tvRFhKcmpDTG1ROFRrTTNSS3FiajhCalhmM2VGWU1nPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文研究个性化检索式对话系统，传统的个性化方法利用persona编码增强context表示，然后再与response匹配，而本文提出了DIM模型，核心是context与response，persona与response进行双匹配。</p>
 
         </div>
         <footer class="article-footer">
@@ -332,6 +339,19 @@ ga('send', 'pageview');
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/09/23/Few-Shot Text Classification With Distributional Signatures/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Few-Shot  Text  Classification  With Distributional  Signatures</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -533,7 +553,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/about/index.html';
+    var disqus_url = 'https://helicqin.github.io/2019/09/25/Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots/';
     
     (function() {
     var dsq = document.createElement('script');
