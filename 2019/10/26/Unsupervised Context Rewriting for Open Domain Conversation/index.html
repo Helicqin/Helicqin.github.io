@@ -17,7 +17,7 @@
 <meta property="og:description" content="本文主要目的是生成自包含的（self-contained）句子，使其没有指代和依赖于对话历史中的其他句，进而促进回复选择和生成任务。  paper: https://drive.google.com/open?id=1B4ts8jU3Xx_TJuS9rgcBP3E17DFbegK6">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjI5QloweThMc0swbThQa2ZVOHZMUkp5OWZvaytrNU5QWFBnQVdoZlh4Vi93PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2019-10-26T14:24:21.243Z">
+<meta property="og:updated_time" content="2019-10-26T14:46:37.624Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unsupervised  Context  Rewriting  for  Open  Domain  Conversation">
 <meta name="twitter:description" content="本文主要目的是生成自包含的（self-contained）句子，使其没有指代和依赖于对话历史中的其他句，进而促进回复选择和生成任务。  paper: https://drive.google.com/open?id=1B4ts8jU3Xx_TJuS9rgcBP3E17DFbegK6">
@@ -200,12 +200,12 @@ ga('send', 'pageview');
 <p>模型的核心是Seq2Seq+CopyNet，编码器和解码器都是双向GRU。在解码端的每一时间步，CRN融合了context c, last utterance q以及上一步隐层状态作为输入：<br>$$<br>z_{t}=W_{f}^{T}\left[s_{t} ; \sum_{i=1}^{n q} \alpha_{q_{i}} h_{q_{i}} ; \sum_{i=1}^{n c} \alpha_{c_{i}} h_{c_{i}}\right]+b<br>$$<br>其中$\alpha_{q}, \alpha_{c}$都是注意力权重。<br>$$<br>\begin{aligned} \alpha_{i} &amp;=\frac{\exp \left(e_{i}\right)}{\sum_{j=1}^{n} \exp \left(e_{j}\right)} \\ &amp; e_{i}=h_{i} W_{a} s_{t} \end{aligned}<br>$$</p>
 <p>模型最后使用CopyNet来预测目标词：<br>$$<br>\begin{aligned} p\left(y_{t} | s_{t}, H_{Q}, H_{C}\right) &amp;=p_{p r}\left(y_{t} | z_{t}\right) \cdot p_{m}\left(p r | z_{t}\right) \\ &amp;+p_{c o}\left(y_{t} | z_{t}\right) \cdot p_{m}\left(c o | z_{t}\right) \end{aligned} \\<br>p_{m}\left(p r | z_{t}\right)=\frac{e^{\psi_{p r}\left(y_{t}, H_{Q}, H_{C}\right)}}{e^{\psi_{p r}\left(y_{t}, H_{Q}, H_{C}\right)}+e^{\psi_{c o}\left(y_{t}, H_{Q}, H_{C}\right)}}<br>$$</p>
 <p><strong>Pre-training  with  Pseudo  Data</strong><br>因为数据集中并没有改写句的标注，因此作者从对话历史中抽取关键词来构造模拟数据。具体来说，作者使用了PMI来抽取一段文本中的关键词，核心是下式：<br>$$<br>\operatorname{PMI}\left(w_{c}, w_{r}\right)=-\log \frac{p_{c}\left(w_{c}\right)}{p\left(w_{c} | w_{r}\right)}<br>$$</p>
-<p>$w_{c}$ 是context word，$w_{r}$ 是response word。为了选择对回复来说最重要的词，作者也计算了$PMI(w_{c}, w_{q})$ （$w_{q}$是last utterance的词），最终的PMI分数为：<br>$$<br>\operatorname{norm}\left(\operatorname{PMI}\left(w_{c}, q\right)\right)+\operatorname{norm}\left(\operatorname{PMI}\left(w_{c}, r\right)\right) \\<br>\operatorname{PMI}\left(w_{c}, q\right)=\sum_{w_{q} \in q} \operatorname{PMI}\left(w_{c}, w_{q}\right)<br>$$<br>然后选择PMI分数最高的20%词插入last utterance，这里通过语言模型来选择插入位置，保留前3个改写后的句子。接着使用对话生成和回复选择模型来从总挑选最佳改写句作为标注，具体来说，通过以下两个损失函数的值来选择：<br>$$<br>\begin{array}{l}{L_{M_{s 2 s}\left(r | s^{_}\right)}=-\frac{1}{n} \sum_{i=1}^{n} \log p\left(r_{1}, \ldots, r_{n} | s^{_}\right)} \\ {L_{M_{i r}}\left(p o, n e, s^{_}\right)=M_{i r}\left(p o, s^{_}\right)-M_{i r}\left(n e, s^{*}\right)}\end{array}<br>$$</p>
+<p>$w_{c}$ 是context word，$w_{r}$ 是response word。为了选择对回复来说最重要的词，作者也计算了$PMI(w_{c}, w_{q})$ （$w_{q}$是last utterance的词），最终的PMI分数为：<br>$$<br>\operatorname{norm}\left(\operatorname{PMI}\left(w_{c}, q\right)\right)+\operatorname{norm}\left(\operatorname{PMI}\left(w_{c}, r\right)\right) \\<br>\operatorname{PMI}\left(w_{c}, q\right)=\sum_{w_{q} \in q} \operatorname{PMI}\left(w_{c}, w_{q}\right)<br>$$<br>然后选择PMI分数最高的20%词插入last utterance，这里通过语言模型来选择插入位置，保留前3个改写后的句子。接着使用对话生成和回复选择模型来从总挑选最佳改写句作为标注，具体来说，通过以下两个损失函数的值来选择：<br><img src="https://user-images.githubusercontent.com/21177644/67621452-5c34b980-f842-11e9-8c75-65b2398338f3.PNG" alt=""></p>
 <p><strong>Fine-Tuning  with  Reinforcement Learning</strong><br>上述生成模拟数据难免包含错误，作者又使用了RL来优化CRN的性能。作者首先在模拟数据上预训练CRN模型，然后使用该模型产生候选改写句$q_{r}$，在生成过程中应用policy gradient算法：<br>$$<br>\nabla_{\theta} J(\theta)=E\left[R \cdot \nabla \log \left(P\left(y_{t} | x\right)\right)\right] \\<br>L_{c o m}=L_{r l}^{*}+\lambda L_{M L E}<br>$$<br>论文使用下游任务来给定奖励：</p>
 <ul>
-<li><p>回复生成：$R_{g}\left(r, q^{_}, q_{r}\right)=L_{M_{s 2 s}}\left(r | q^{_}\right)-L_{M_{s 2 s}}\left(r | q_{r}\right)(14)$</p>
+<li><p>回复生成：<br>$$R_{g}\left(r, q^{_}, q_{r}\right)=L_{M_{s 2 s}}\left(r | q^{_}\right)-L_{M_{s 2 s}}\left(r | q_{r}\right)(14)$$</p>
 </li>
-<li><p>回复选择：$\begin{aligned} R_{i r}\left(p o, n e, q^{_}, q_{r}\right) &amp;=L_{M_{i r}}\left(p o, n e, q_{r}\right) -L_{M_{i r}}\left(p o, n e, q^{_}\right) \end{aligned}$</p>
+<li><p>回复选择：<br>$$R_{i r}\left(p o, n e, q^{_}, q_{r}\right) =L_{M_{i r}}\left(p o, n e, q_{r}\right) -L_{M_{i r}}\left(p o, n e, q^{_}\right) $$</p>
 </li>
 </ul>
 <h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>作者使用了四种评价指标来评估模型性能：改写质量，回复生成，回复选择，检索式chatbot。</p>
