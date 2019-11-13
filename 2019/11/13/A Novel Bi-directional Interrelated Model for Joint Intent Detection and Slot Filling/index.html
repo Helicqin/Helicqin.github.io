@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="NLU" />
+    
+    <meta name="description" content="本文研究的是联合意图识别和序列标注问题，在slot-gate基础上综合考虑ID-&amp;gt;SF和SF-&amp;gt;ID两方面的影响，同时提出了一种多重交互的机制来增强两个任务之间的联系，在ATIS和Snips公开数据集上取得了很好的效果。  paper: https://drive.google.com/open?id=13fCcaL87EMYgDq6R_mH5a56LqSQ2axglsource: A">
+<meta name="keywords" content="NLU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling">
+<meta property="og:url" content="https://helicqin.github.io/2019/11/13/A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文研究的是联合意图识别和序列标注问题，在slot-gate基础上综合考虑ID-&amp;gt;SF和SF-&amp;gt;ID两方面的影响，同时提出了一种多重交互的机制来增强两个任务之间的联系，在ATIS和Snips公开数据集上取得了很好的效果。  paper: https://drive.google.com/open?id=13fCcaL87EMYgDq6R_mH5a56LqSQ2axglsource: A">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG">
+<meta property="og:updated_time" content="2019-11-13T09:09:03.874Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling">
+<meta name="twitter:description" content="本文研究的是联合意图识别和序列标注问题，在slot-gate基础上综合考虑ID-&amp;gt;SF和SF-&amp;gt;ID两方面的影响，同时提出了一种多重交互的机制来增强两个任务之间的联系，在ATIS和Snips公开数据集上取得了很好的效果。  paper: https://drive.google.com/open?id=13fCcaL87EMYgDq6R_mH5a56LqSQ2axglsource: A">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/11/13/A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling/" class="article-date">
+            <time datetime="2019-11-13T07:52:00.000Z" itemprop="datePublished">2019-11-13</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/NLU/">NLU</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文研究的是联合意图识别和序列标注问题，在slot-gate基础上综合考虑ID-&gt;SF和SF-&gt;ID两方面的影响，同时提出了一种多重交互的机制来增强两个任务之间的联系，在ATIS和Snips公开数据集上取得了很好的效果。</p>
+<blockquote>
+<p>paper: <a href="https://drive.google.com/open?id=13fCcaL87EMYgDq6R_mH5a56LqSQ2axgl" target="_blank" rel="noopener">https://drive.google.com/open?id=13fCcaL87EMYgDq6R_mH5a56LqSQ2axgl</a><br>source: ACL 2019 short paper<br>code: <a href="https://github.com/ZephyrChenzf/SF-ID-Network-For-NLU" target="_blank" rel="noopener">https://github.com/ZephyrChenzf/SF-ID-Network-For-NLU</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>目前大部分关于NLU的工作集中于将两个子任务Intent Detection和Slot Filling联合优化，早期的论文只是隐式的将损失函数相加，而<strong>Slot-gated  modeling  for  joint  slot filling  and  intent  prediction</strong>提出了将ID的信息融合进SF的识别过程中，发现能够促进SF的效果。本文在此基础上，综合考虑了ID-&gt;SF和SF-&gt;ID两方面的影响，同时提出了一种多重交互的机制来不断增强两个任务之间的联系，在ATIS和Snips公开数据集上取得了很好的效果。</p>
+<h2 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h2><p><img src="https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG" alt="Figure  1:  The  structure  of  the  proposed  model  based  on  SF-ID  network"></p>
+<p>在编码输入句子上，模型使用了类似的结构，首先使用Bi-LSTM编码，然后进行自注意力计算：<br>$$<br>c_{s l o t}^{i}=\sum_{j=1}^{T} \alpha_{i, j}^{S} h_{j}<br>$$<br>同样，使用最后时刻的隐层状态$h_{T}$计算自注意力得到$c_{inte}$。</p>
+<h3 id="SF-ID-Network"><a href="#SF-ID-Network" class="headerlink" title="SF-ID  Network"></a>SF-ID  Network</h3><p> SF-ID  Network 由两个模块组成：SF, ID。根据这两个模块执行顺序的不同，SF-ID  Network可以分为两种：</p>
+<ul>
+<li>SF-First  Mode</li>
+<li>ID-First  Mode</li>
+</ul>
+<p>这两种仅是执行顺序不同，内在的运算类似。</p>
+<h3 id="SF-First-Mode"><a href="#SF-First-Mode" class="headerlink" title="SF-First  Mode"></a>SF-First  Mode</h3><p><strong>SF  subnet</strong> 首先通过意图信息$c_{inte}$和槽信息$c_{slot}^{i}$计算一个相关因子$f$：<br>$$<br>f=\sum V _ \tanh \left(c_{\text {slot}}^{i}+W _ c_{\text {inte}}\right)<br>$$<br>这里的操作借鉴自SlotGate模型。然后得到增强后的slot vector：$r_{\text {slot}}^{i}=f \cdot c_{\text {slot}}^{i}$。</p>
+<p><strong>ID  subnet</strong> 将slot信息融合到意图识别任务中，作者认为混合的多粒度信息有助于ID：<br>$$<br>r=\sum_{i=1}^{T} \alpha_{i} \cdot r_{s l o t}^{i} \\<br>\alpha_{i}=\frac{\exp \left(e_{i, i}\right)}{\sum_{j=1}^{T} \exp \left(e_{i, j}\right)} \\<br>e_{i, j}=W _ \tanh \left(V_{1} _ r_{\text {slot}}^{i}+V_{2} * h_{j}+b\right)<br>$$<br>最终得到新的context vector： $r_{\text {inte}}=r+c_{\text {inte}}$。</p>
+<p><strong>Iteration  Mechanism</strong> 反过来，$r_{\text {inte}}$也可以被输入到SF subnet中重新计算$f$：<br>$$<br>f=\sum V _ \tanh \left(c_{s l o t}^{i}+W _ r_{i n t e}\right)<br>$$<br>继而得到新的$r_{slot}^{i}$和$r_{inte}$，这个过程可以重复进行。作者在之后的实验中发现迭代3次能取得最好的效果。</p>
+<p>迭代结束后，$r_{slot}^{i}$和$r_{inte}$被用来做最后的预测：<br>$$<br>y_{i n t e}=\operatorname{softmax}\left(W_{i n t e}^{h y} \operatorname{concat}\left(h_{T}, r_{i n t e}\right)\right) \\<br>y_{s l o t}^{i}=\operatorname{softmax}\left(W_{s l o t}^{h y} \operatorname{concat}\left(h_{i}, r_{s l o t}^{i}\right)\right)<br>$$<br>实际操作中作者还增加了CRF层辅助SF。</p>
+<h3 id="ID-First-Mode"><a href="#ID-First-Mode" class="headerlink" title="ID-First  Mode"></a>ID-First  Mode</h3><p>在ID-First  Mode下，先进行ID  subnet运算，再通过SF  subnet。顺序改变会带来一些细节上的变化。</p>
+<p><strong>ID  subnet</strong><br><img src="https://user-images.githubusercontent.com/21177644/68747354-52c69200-0635-11ea-89d9-1d450dc243f2.PNG" alt=""></p>
+<p>在计算$r_{inte}$的时候需要把$r_{slot}^{i}$替换成$c_{slot}^{i}$，其余操作不变。</p>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p><img src="https://user-images.githubusercontent.com/21177644/68747672-ffa10f00-0635-11ea-93bf-b57fb80cdcba.PNG" alt=""></p>
+<p><img src="https://user-images.githubusercontent.com/21177644/68748364-47746600-0637-11ea-8f11-bcd47fa87f23.PNG" alt=""></p>
+<p>作者发现SF-first在ID任务上优于ID-first，而在SF任务上劣于ID-first。原因是SF-first把ID当作更重要的任务，融合SF的信息到ID中。</p>
+<p><img src="https://user-images.githubusercontent.com/21177644/68748799-0a5ca380-0638-11ea-8b73-073f1df279e8.PNG" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文研究的是联合意图识别和序列标注问题，在slot-gate基础上综合考虑ID-&gt;SF和SF-&gt;ID两方面的影响，同时提出了一种多重交互的机制来增强两个任务之间的联系，在ATIS和Snips公开数据集上取得了很好的效果。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2019/10/28/Enhancing Pre-Trained Language Representations with Rich Knowledge for Machine Reading Comprehension/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Enhancing Pre-Trained Language Representations with Rich Knowledge for Machine Reading Comprehension</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/11/13/A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG)" alt="A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/11/13/A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling/" class="title">A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling</a></p>
+                            <p class="item-date"><time datetime="2019-11-13T07:52:00.000Z" itemprop="datePublished">2019-11-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/10/28/Enhancing Pre-Trained Language Representations with Rich Knowledge for Machine Reading Comprehension/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/67645160-03f4d900-f962-11e9-9b20-ad0f8452b700.PNG)" alt="Enhancing Pre-Trained Language Representations with Rich Knowledge for Machine Reading Comprehension" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/10/28/Enhancing Pre-Trained Language Representations with Rich Knowledge for Machine Reading Comprehension/" class="title">Enhancing Pre-Trained Language Representations with Rich Knowledge for Machine Reading Comprehension</a></p>
+                            <p class="item-date"><time datetime="2019-10-28T01:02:00.000Z" itemprop="datePublished">2019-10-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/10/26/Unsupervised Context Rewriting for Open Domain Conversation/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjI5QloweThMc0swbThQa2ZVOHZMUkp5OWZvaytrNU5QWFBnQVdoZlh4Vi93PT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Unsupervised  Context  Rewriting  for  Open  Domain  Conversation" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/10/26/Unsupervised Context Rewriting for Open Domain Conversation/" class="title">Unsupervised  Context  Rewriting  for  Open  Domain  Conversation</a></p>
+                            <p class="item-date"><time datetime="2019-10-26T13:57:00.000Z" itemprop="datePublished">2019-10-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/09/25/Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBseVViZGt6NFlRVGEzMlA3WHNPQS8rbUxnZERYSk5JcVh4V09wdyt0ZHVBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/09/25/Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots/" class="title">Dually Interactive Matching Network for Personalized Response Selection in Retrieval-Based Chatbots</a></p>
+                            <p class="item-date"><time datetime="2019-09-25T13:07:00.000Z" itemprop="datePublished">2019-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/09/23/Few-Shot Text Classification With Distributional Signatures/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjI2NkdWdExraTJMQW9JVkhUbmZXRnJPNUF4V2dkZE55K0FhYXlTdC96T1lRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Few-Shot  Text  Classification  With Distributional  Signatures" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/09/23/Few-Shot Text Classification With Distributional Signatures/" class="title">Few-Shot  Text  Classification  With Distributional  Signatures</a></p>
+                            <p class="item-date"><time datetime="2019-09-23T03:18:00.000Z" itemprop="datePublished">2019-09-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">55</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Active-Learning/">Active Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversial-Learning/">Adversial Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Context-Rewriting/">Context  Rewriting</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Entity-Typing/">Entity Typing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Reading-Comprehension/">Machine  Reading  Comprehension</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Meta-Learning/">Meta-Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multi-Task-Learning/">Multi-Task Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neural-Response-Generation/">Neural Response Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pretrained-Word-Representations/">Pretrained  Word  Representations</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Question-Answering/">Question Answering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Response-Selection/">Response Selection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentence-Semantic-Matching/">Sentence  Semantic  Matching</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Labeling/">Sequence  Labeling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Learning/">Sequence Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer  Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VAE/">VAE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Variational-Generation/">Variational Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Active-Learning/" style="font-size: 10px;">Active Learning</a> <a href="/tags/Adversial-Learning/" style="font-size: 10px;">Adversial Learning</a> <a href="/tags/BUPT/" style="font-size: 11.25px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 15px;">Commonsense  Knowledge</a> <a href="/tags/Context-Rewriting/" style="font-size: 10px;">Context  Rewriting</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 18.75px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Entity-Typing/" style="font-size: 10px;">Entity Typing</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.25px;">Keras</a> <a href="/tags/Machine-Reading-Comprehension/" style="font-size: 10px;">Machine  Reading  Comprehension</a> <a href="/tags/Machine-Learning/" style="font-size: 12.5px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 11.25px;">Memory Network</a> <a href="/tags/Meta-Learning/" style="font-size: 11.25px;">Meta-Learning</a> <a href="/tags/Multi-Task-Learning/" style="font-size: 10px;">Multi-Task Learning</a> <a href="/tags/NLG/" style="font-size: 11.25px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 17.5px;">NLU</a> <a href="/tags/Neural-Response-Generation/" style="font-size: 10px;">Neural Response Generation</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.25px;">Object Detection</a> <a href="/tags/Pretrained-Word-Representations/" style="font-size: 10px;">Pretrained  Word  Representations</a> <a href="/tags/Python/" style="font-size: 11.25px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Question-Answering/" style="font-size: 10px;">Question Answering</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.75px;">Reinforcement Learning</a> <a href="/tags/Response-Selection/" style="font-size: 10px;">Response Selection</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/Sentence-Semantic-Matching/" style="font-size: 10px;">Sentence  Semantic  Matching</a> <a href="/tags/Sequence-Labeling/" style="font-size: 10px;">Sequence  Labeling</a> <a href="/tags/Sequence-Learning/" style="font-size: 10px;">Sequence Learning</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 16.25px;">Tensorflow</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer  Learning</a> <a href="/tags/Transfer-Learning/" style="font-size: 11.25px;">Transfer Learning</a> <a href="/tags/Transformer/" style="font-size: 11.25px;">Transformer</a> <a href="/tags/VAE/" style="font-size: 10px;">VAE</a> <a href="/tags/Variational-Generation/" style="font-size: 10px;">Variational Generation</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://helicqin.github.io/about/index.html">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helicqin.github.io/2019/11/13/A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
