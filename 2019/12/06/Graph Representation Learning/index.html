@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Graph Representation Learning | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Graph,Graph Representation Learning" />
+    
+    <meta name="description" content="本文是一篇关于Graph Representation Learning的综述。网络特征学习（network representation learning / network embedding）是近年来兴起的一个特征学习的研究分支。作为一种降维方法，网络特征学习试图将一个网络中的节点或者边映射到一个低维连续向量空间中，并在该低维空间中保持原有网络的结构信息，以辅助后续的连接预测、节点分类、推荐">
+<meta name="keywords" content="Graph,Graph Representation Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graph Representation Learning">
+<meta property="og:url" content="https://helicqin.github.io/2019/12/06/Graph Representation Learning/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文是一篇关于Graph Representation Learning的综述。网络特征学习（network representation learning / network embedding）是近年来兴起的一个特征学习的研究分支。作为一种降维方法，网络特征学习试图将一个网络中的节点或者边映射到一个低维连续向量空间中，并在该低维空间中保持原有网络的结构信息，以辅助后续的连接预测、节点分类、推荐">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG">
+<meta property="og:updated_time" content="2019-12-21T15:12:13.657Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Graph Representation Learning">
+<meta name="twitter:description" content="本文是一篇关于Graph Representation Learning的综述。网络特征学习（network representation learning / network embedding）是近年来兴起的一个特征学习的研究分支。作为一种降维方法，网络特征学习试图将一个网络中的节点或者边映射到一个低维连续向量空间中，并在该低维空间中保持原有网络的结构信息，以辅助后续的连接预测、节点分类、推荐">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Graph/">Graph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Graph/">Graph</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Graph Representation Learning" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Graph Representation Learning
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/12/06/Graph Representation Learning/" class="article-date">
+            <time datetime="2019-12-06T08:01:00.000Z" itemprop="datePublished">2019-12-06</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Graph/">Graph</a>, <a class="tag-link" href="/tags/Graph-Representation-Learning/">Graph Representation Learning</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文是一篇关于Graph Representation Learning的综述。网络特征学习（network representation learning / network embedding）是近年来兴起的一个特征学习的研究分支。作为一种降维方法，网络特征学习试图将一个网络中的节点或者边映射到一个低维连续向量空间中，并在该低维空间中保持原有网络的结构信息，以辅助后续的连接预测、节点分类、推荐系统、聚类、可视化等任务。</p>
+<h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>首先简单介绍一下 Graph Representation Learning 的定义，中文可以称之为图特征学习或者网络特征学习。其主要目的在于，<strong>将图中每一个节点都映射到一个低维向量空间，并且在此空间内保持原有图的结构信息或距离信息</strong>。</p>
+<p>以上并非官方权威定义，Graph Representation Learning 目前没有任何官方定义或名字，它也可以被称作 Network Embedding、Graph Embedding 或 GRL。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjE2c2xLcXZzRFZCQjIwamhsd1EzM1d3SU5PQjZlUEJvbENFbEVnNzFnZTZ3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>我们来看上图中的简单例子，左图有三个节点和三条边，其中的数字表示各边的权值 weight，我们通过 GRL 将其映射到一个二维空间中。可以发现，如果两个点之间的 weight 越大，那么它们之间的距离就越近。这就是 GRL 的精髓所在，即<strong>在低维空间中保持原有图的结构信息</strong>。</p>
+<p>Graph Representation Learning 的应用相当广泛，它可以被用于链路预测、 节点分类、推荐系统、视觉、知识图谱表示、聚类、Text Embedding 以及社会网络分析。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaNDg2b1YraFZQV0dlZWo3dFRLb2xKMm1wWTJoY29tdzFnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Taxonomy"><a href="#Taxonomy" class="headerlink" title="Taxonomy"></a>Taxonomy</h2><p>我们将 GRL 的方法按照三种不同分类来进行简单介绍。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaM3RpV1ZvWkRtdlNtbGxWdFVhaVhRZ1J2dkx1aFpUelFnPT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br>首先按输入进行分类，既然是 GRL，那么其输入肯定是一张图，但图的种类有很多：</p>
+<ol>
+<li><p><strong>第一种叫同构图</strong>，即图中的节点和边都只有一种，比如引用网络，其中的节点表示每篇 paper，边表示引用关系。同构图又可以根据是否有加权进行细分，即其边是否权值、边是否有向，以及边是否有正负号。</p>
+</li>
+<li><p><strong>第二种是异构图</strong>，即网络中的节点和边不止一种，一般分为两种情况：</p>
+<ul>
+<li>多媒体网络。比如有的 paper 就考虑过一张图具备图像和文本两种节点，以及图像文本、图像图像和文本文本这三种边。</li>
+<li>知识图谱。图中节点表示的是实体，边表示的关系。每一个三元，HRT 都表示头节点 H 和尾节点 T 有关系 R。由于关系 R 可以有很多种，因此 KG 也属于一种异构图。</li>
+</ul>
+</li>
+<li><p><strong>第三种是 Graph with side information</strong>，side information 即为辅助信息。这种图是指除了边和点之外，节点和边都会带有辅助信息，比如边和点都有 label，边和点都有 attribute，或者 node 有 feature。它们的区别在于 label 是类别型的，attribute 可以是离散的，也可以是连续的，而 feature 就可能是文本或图像等更复杂的一些特征。</p>
+</li>
+<li><p><strong>第四种是 Graph Transformed from non-relational data</strong>，即从非关系型数据中转换成的图，一般是指在高维空间中的一些数据。这通常是早期 GRL 方法会用到的数据，其中最为典型的例子是稍后还将提到的流形学习，我们可以将这种方法理解为一种降维方法。</p>
+</li>
+</ol>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaOTdwOWpTcGdRZXBGdkFURFhrazIrOElSUE1MVTB3cTV3PT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>按输出内容我们也可以对 GRL 方法进行分类。</p>
+<ol>
+<li><strong>第一种方法会输出 node embedding</strong>，即为每个节点输出 embedding，这也是最常见的一种输出。</li>
+<li><p><strong>第二种方法是输出 edge embedding</strong>，即为每个边输出 embedding。这种输出有两种情况，一种是在 KG 里面，我们会为每一个 relation，也就是每条边都有输出。在 link prediction 的应用中，我们也会为每一条边来输出一个特征，并在后续工作中将其作为边的特征来进行一些分类任务。</p>
+</li>
+<li><p><strong>第三种方法会输出 sub-graph embedding</strong>，也就是子图的 embedding，包括子结构或团体的 embedding。</p>
+</li>
+<li><p><strong>第四种是全图的 embedding</strong>，即为一个整图来输出 embedding。如果我们对蛋白质、分子这类数量较多的小图进行 embedding，就可以对比两个分子的相似性。</p>
+</li>
+</ol>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaL3lhdnRxemRVUW94S1V5cVNmNzVlZE5IZ3dDUFFPaGF3PT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>第三种分类方法是按照方法来进行分类。</p>
+<ol>
+<li><p><strong>第一种方法是基于矩阵分解</strong>。一般来说矩阵分解包含奇异值分解和谱分解，谱分解就是我们常说的特征分解，这种方法是比较传统的方法。</p>
+</li>
+<li><p><strong>第二种方法是基于随机游走</strong>。这种方法盛名在外，我们后面会提到的 Deep Walk 就是基于随机游走的方法。</p>
+</li>
+<li><p><strong>第三种方法是基于深度学习</strong>。其中包括基于自编码器以及基于卷积神经网络。</p>
+</li>
+<li><p><strong>第四种方法是基于一些自定义的损失函数</strong>。这其中又包括三种情况，第一种是最大化边重建概率，第二种是最小化基于距离的损失函数，第三种是最小化 margin-based ranking loss，这种方法常见于 KG embedding。</p>
+</li>
+</ol>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaNnJsUmVTdTBFTVYyZ090K0ZXeTVwcTMvMVRxZGpOYnNRPT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>按照时间顺序可将它们分为三类，第一类是传统方法，包含 PCA、LDA、MDS 等降维方法。2000 年左右出现了一批较为经典的方法，包括 ISOMAP 同态映射，LLE 局部线性镶嵌，LE 拉普拉斯特征分解。</p>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaM1F4OU5XQlk1aEtJY1lrVjFSRm9BMytBbnJzOVlhTkh3PT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p><strong>LDA 线性判别分析是一种传统的有监督降维方法</strong>。我们可以看到，右图里面有两类点，有正号表示的一类和有负号表示的一类。</p>
+<p>我们需要将二维的点映射到一维上去，LDA 的目标在于让这些投影相同类的点在投影过后，同类的点之间距离尽可能变近，即让它们的协方差尽可能小，而不同类的点之间的距离尽可能远。只有这样，它才能在低维空间中对这些点进行分类或聚类操作。</p>
+<p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0Fad3Q0VnZSN2tFa2hxUGxMcXZBWTIxUGNLY1ZCd3ppTkR3PT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br><strong>Locally Linear Embedding 是一种典型的流形学习方法</strong>，它是指将高维空间中的输入映射到低维空间，并且在低维空间中保持邻居之间的线性依赖关系。</p>
+<p>左下图就是一个很典型的流形学习，流形指的是在高维空间中存在某些低维结构，比如说图 A 很像一个瑞士卷，它其实就是一个典型的在三维空间中的二维结构。通过 LLE 我们将其展成一个二维结构。</p>
+<p>这种方法的目的在于保持高维空间中的邻居信息。其具体做法如下：对于每一个点 Xi，首先需要确定其邻居集合，然后再来计算 Wik Wij 这些参数。这些参数的意思是，我想用这些邻居来重新构建 Xi，这个会有唯一的解析解。在拿到 W 参数之后，我们再在低维空间中用 W 进行约束，学习得到低维的一个 embedding。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaL0FDR1kzT3JELzZDQW1oTzNCaFU5L2cvVVBPZTVxYWNnPT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br>Word2vec 的本质其实是 word embedding，不是 network embedding。但由于它对后续的 network embedding 方法影响深远，所以我们来简单介绍一下。</p>
+<p>Word2vec 中有一个 skip-gram 模型，这个模型的本质在于为每个词得到一个特征，并用这个特征来预测周围的词。因此，其具体方法就是将概率最大化。这个概率是指，给定一个中心词 WT，在以它为中心、窗口为 T 的范围中的每个词的概率。</p>
+<p>这个概率实际上是使用 softmax 进行计算的。由于 softmax 开销很大，我们通常会用 negative sampling 来进行代替。negative sampling 是指为每个词从整个词表中选择一些 negative samples，把他们作为负样本。</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0Fad2hMQm9KNE14QVR3WmZ0alByczZvdjhKMm42TnVRN2x3PT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br>Word2vec 在 Nerwork Embedding 中有两篇很典型的工作，分别是 DeepWalk和 Node2vec。这两篇工作分别发表于 KDD 14 和 KDD 16。DeepWalk 相当于 random walk + word2vec。从图中的每个节点出发，随机进行 random walk，从当前节点均匀、随机地选择下一个节点，然后再从下个节点均匀、随机地选择下一个节点。这样重复 N 次之后会得到一个 path，这个 path 就可以被当做一个 sentence。这样一来，就将问题完全转换到了 Word2vec 的领域。</p>
+<p>Node2vec 在 DeepWalk 的基础上又做了改进。它把原来的 random walk 改成了 biased random walk。在 DeepWalk 里，我们是均匀地选择下一个节点。但在 Node2vec 里，则是不均匀地选择下一个节点。我们可以选择模仿 DFS 不断往图的深处走, 也可以模仿 BFS 绕着一个点打转。因此，Node2vec 相比 DeepWalk 也就是新增了一个简单改进。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaNy95WGwyWkljNUdUSHhkWjdOMjFqMXFZM0MvRS9QVGtRPT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br>LINE 的全称是 Large-scale Network Information Embedding。这篇文章发表于 WWW 15。这个工作属于我们之前提到的自定义损失函数，因为它定义了两种损失函数，一种是一阶的临近关系，另一种是二级临近关系。</p>
+<p>所谓的一阶临近关系就是指两个点之间是否只有相连。在右图中我们可以看到，点六和点七之间有边相连，那就可以认为它们拥有一阶临近关系。</p>
+<p>二阶关系是指两个点的邻居的相似度。右图中点五和点六虽然没有直接相连，但它们的邻居是完全重合的，因此可以认为点五和点六的二阶临近关系很强。基于这样一种临近关系，LINE 定义了两个损失函数 O1 和 O2，然后基于这两个损失函数来进行 network embedding 的学习。</p>
+<p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaNUVCMDRtRXBvaWJiazdEeGxzQjduWXdmZGhtM2hGclRnPT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br>TransX 表示一系列方法，X 可以指代任何字母，这些方法都是基于 KG embedding。KG embedding 是指将 KG 中的每个 entity 和 relation 都映射到一个低维连续空间中，并且保持原来的图结构信息。比较经典的方法有 TransE、TransH 和 TransR，统称为基于翻译的方法。TransE 思路很简单，就是强制让 Head Embedding + relation embedding = tail embedding。换而言之，也就是把 head 加 relation 给翻译成 tail。</p>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjBlblNpcnN5N0FaeW5TUjZtV2c3Z3d4emZwTmFtQUV1YkN5VHYwVk8wbjJ3PT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""><br>SDNE，全名为 Structured Deep Network Embedding。这篇文章发表于 KDD 15，其本质就是基于 auto encoder 的一种 network embedding。</p>
+<p>尽管右图看着比较复杂，其实它的思路非常简单。作者设计了一个 auto encoder，其输入是每个点的邻接向量。损失一共有三项，第一项是重建损失，第二项是 proximity loss term，意思是如果两个节点有边连接，那它们的 embedding 必须尽量接近，具体接近程度取决于它们的权重。weight 越大，那么对这项损失的惩罚力度就越大。第三项是正则化项。</p>
+<p><strong>GCN</strong>[Semi-supervised classification with graph convolutional  networks]的定义如下：</p>
+<p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjA3QlEzQmdheGFSTlBYQUhvV2xaQlIvZ2ppQXZaWXNnWTNuTVVqYjUzNnlnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>这个公式中：</p>
+<ul>
+<li>$\widetilde{A}=A+I$，$I$是单位矩阵，$A$是邻接矩阵（可以是无向图、有向图、带权图）。只使用A的话，由于A的对角线上都是0，所以在和特征矩阵H相乘的时候，只会计算一个node的所有邻居的特征的加权和，该node自己的特征却被忽略了。因此，给A加上一个单位矩阵I，这样就让对角线元素变成1了。</li>
+<li>$\widetilde{D}$是$\widetilde{A}$的度矩阵（degree matrix），公式为  $\widetilde{D}_{ii}=\sum _{j} \widetilde{A}_{ij}$</li>
+<li>$H^{(l)}$是第l层的特征，对于输入层的话，H就是所有节点的初始特征矩阵X，N×D维（N为节点数，D为节点特征维数）</li>
+<li>σ是非线性激活函数</li>
+</ul>
+<p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNuZ09vMXN0Qjc0V0RuVEFsZmxmd01PbHJZUDErR2tXUnQ3eGZhelNhcTdnPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>上图中的GCN输入一个图，通过若干层GCN每个node的特征从X变成了Z，但是，无论中间有多少层，node之间的连接关系，即A都是共享的。假设我们构造一个两层的GCN，激活函数分别采用ReLU和Softmax，则整体的正向传播的公式为：<br><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjNuZ09vMXN0Qjc0WHYzTDAvNEJ2R2RKci83VXZ2bVVqdzQ2MGtITHhMbndRPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>最后，我们针对所有带标签的节点计算cross entropy损失函数：<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjNuZ09vMXN0Qjc0Vms4NXFUbXZuVW1tMzBWZm5OQXdNeW9SMjhHTUhCc29RPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>由于即使只有很少的node有标签也能训练，作者称他们的方法为<strong>半监督分类</strong>。_不同的GCN传播算法稍有差异，但本质上都是从邻居节点聚合信息以及上一层的自身表示来更新当前节点的表示。_</p>
+<p><strong>metapath2vec</strong>：图表征算法deepwalk, node2vec, line等大多数都是针对同构网络的，忽略了网络的异质性，只考虑一种节点对象中的一种关系。然而，现实生活中更多存在的网络是包含不多种类的节点以及连接。比如在DBLP网络，节点种类有会议，论文，作者等，而不同种类节点之间的连接也代表着不同语义，比如说论文和论文之间存在着引用和被引用关系，作者和作者存在合著关系，论文和会议存在发表／被发表关系。因此相比于同构网络，异构网络融合了更多信息，以及包含更丰富的语义信息。所以作者提出了两个在异构网络做network embedding的算法模型，metapath2vec以及metapath2vec++。随机游走从局部上一定程度保持了节点与它邻居之间的连接性，即网络结构信息，然而对于异构信息网络来说，由于节点与连接的异质性的存在，所以异构network embedding最大的难点在于如何有效地在多种类型节点之间保存“节点上下文”的概念。论文提出的想法是：基于预先指定的元路径来进行随机游走，构造路径，从而能够保持“节点上下文”的概念。<br><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjNEcG9HUE5lei9KaVlKOGpXL2pIem1NYlgwK0tLVjVHSEJWa1RHWXdDd2JRPT0.jpg?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0&amp;type=jpg" alt=""></p>
+<p>这样一来就可以产生一条在不同类型的节点之间且能同时捕捉到网络结构信息以及语义的路径。在得到随机游走路径后，就可以进行skip-gram的建模。论文提出了两种算法：metapath2vec以及metapath2vec++，它们唯一的不同是skip-gram不同。在metapath2vec中，softmax值是在所有节点无论什么类型上进行归一化；而在metapath2vec++中，softmax值是在相同类型节点上进行归一化。</p>
+<p>softmax in metapath2vec: <img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNEcG9HUE5lei9KcE1DRHU2UXplZlh6NnhRZHNUa0h5d0xhNnlzVWdoVFNnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p>softmax in metapath2vec++:<img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjNEcG9HUE5lei9KdmJnWEVNeGY0Q0VMQllPdHk3TkcrTlBCV3hnMTdOMkZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<p><strong>GATNE-T, GATNE-I</strong></p>
+<ol>
+<li><p>KDD 2019，<a href="https://arxiv.org/abs/1905.01669" target="_blank" rel="noopener">论文链接</a></p>
+</li>
+<li><p>在阿里电商场景下，由用户和商品构成的图是异构的，不仅包含异构的节点（用户和商品），而且包含异构的边（用户和商品的多种交互行为，比如点击、购买等）。不仅如此，图中的节点还包含着丰富的属性。本文处理的就是这种包含异构节点和异构边的图的表示学习。下图是一个带节点属性的异构图的例子。在左侧原始的图中，用户包含了性别、年龄等属性，商品包含了价格、类目等属性。用户与商品之间包含了4种类型的边，分别对应点击、收藏、加入购物车以及购买行为。<br><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjNnc1d1aHZ3VC9DOU8vRlo5dmZTWnRqVTNLVEZqeEhVV1ZWOXRtZDIvY2FRPT0.png?imageView&amp;thumbnail=1960y966&amp;type=png&amp;quality=96&amp;stripmeta=0" alt=""><br>传统的graph embedding算法比如DeepWalk的做法会忽略图中边的类型以及节点的特征，然后转换成一个HON。如果将边的类型考虑进去，那么就得到一个MHEN，能够取得非常明显的效果。此外，如果将节点的属性也同时考虑进去，那么就利用了原图的所有信息，可以得到最好的效果。下图是作者对目前已有的图表征方法做的总结：<br><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjNnc1d1aHZ3VC9DNHZOazhvYzBvclpQNS9IcUx6eG9yakdwdzhBcWtJdlN3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+</li>
+<li><p>模型：由于有多种类型的边(比如点击、购买)，论文认为每个节点在每种边类型下都需要学习一个表示。比如给用户和商品在点击场景下学一种表示，在购买场景下学一种表示。但是这两种表示之间并不是完全独立的，是通过某种机制互相影响的。本文主要考虑的就是如何来建模不同类型的表示之间相互影响的方式。对于GATNE-T(T for transductive)来说，每个节点在每种edge type下的embedding由两个部分组成，分别是base embedding和edge embedding。base embedding是每个节点在每种edge type下共享的，而edge embedding是通过相邻节点的edge embedding计算得到的。由于实际问题中会遇到冷启动等问题，需要给没有在训练集中出现过的节点也求得embedding。而transductive model不具备这种能力。所以引入了节点的特征提出了相应的inductive model，记为GATNE-I。具体来说，原先在GATNE-T中和都是随机初始化的。但是在GATNE-I，这两个embedding都是基于节点的特征，也就是通过节点的特征经过某种变换(比如线性变换或者神经网络等)得到的。GATNE-T/I模型的训练方式基于meta-path-based random walk和heterogeneous skip gram。<br><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjNnc1d1aHZ3VC9DekZ0Z1lERzBEdW1aR2V0aEVIWk9MTkZZN1ZxUHVFT1pBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2></li>
+</ol>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/33227420" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33227420</a></li>
+<li><a href="https://drive.google.com/open?id=1AxoSGpZA1xL3NSSPO8GnCVmRFqwUZ8Lz" target="_blank" rel="noopener">https://drive.google.com/open?id=1AxoSGpZA1xL3NSSPO8GnCVmRFqwUZ8Lz</a></li>
+<li>A  Comprehensive  Survey  of  Graph  Embedding:  Problems,  Techniques  and  Applications,  TKDE  2017</li>
+<li><a href="https://github.com/thunlp/NRLPapers" target="_blank" rel="noopener">https://github.com/thunlp/NRLPapers</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/12/16/Summary of SLU/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Summary of SLU
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/12/06/Graph-Based Applications/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Graph-Based Applications</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/12/16/Summary of SLU/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG)" alt="Summary of SLU" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2019/12/16/Summary of SLU/" class="title">Summary of SLU</a></p>
+                            <p class="item-date"><time datetime="2019-12-16T06:27:00.000Z" itemprop="datePublished">2019-12-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/12/06/Graph Representation Learning/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG)" alt="Graph Representation Learning" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Graph/">Graph</a></p>
+                            <p class="item-title"><a href="/2019/12/06/Graph Representation Learning/" class="title">Graph Representation Learning</a></p>
+                            <p class="item-date"><time datetime="2019-12-06T08:01:00.000Z" itemprop="datePublished">2019-12-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/12/06/Graph-Based Applications/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjEzUWJkQ3ZHVEd5Z3ovK0Q4b3NRMHdYaTErQjhIcUFQaGZrb2dnaUIwWTNnPT0.png?imageView&thumbnail=1824y1036&type=png&quality=96&stripmeta=0)" alt="Graph-Based Applications" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Graph/">Graph</a></p>
+                            <p class="item-title"><a href="/2019/12/06/Graph-Based Applications/" class="title">Graph-Based Applications</a></p>
+                            <p class="item-date"><time datetime="2019-12-06T08:00:00.000Z" itemprop="datePublished">2019-12-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/12/03/Spam Review Detection with Graph Convolutional Networks/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjA3QlEzQmdheGFSQ3dlRnhEOFFENlpjRjN1TEJnSTduZGlVcVN1dUU3NXJBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Spam Review Detection with Graph Convolutional Networks" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Graph/">Graph</a></p>
+                            <p class="item-title"><a href="/2019/12/03/Spam Review Detection with Graph Convolutional Networks/" class="title">Spam Review Detection with Graph Convolutional Networks</a></p>
+                            <p class="item-date"><time datetime="2019-12-03T03:48:00.000Z" itemprop="datePublished">2019-12-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/11/13/A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG)" alt="A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2019/11/13/A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling/" class="title">A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling</a></p>
+                            <p class="item-date"><time datetime="2019-11-13T07:52:00.000Z" itemprop="datePublished">2019-11-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Graph/">Graph</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">56</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Active-Learning/">Active Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversial-Learning/">Adversial Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Context-Rewriting/">Context  Rewriting</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Entity-Typing/">Entity Typing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph/">Graph</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Convolutional-Networks/">Graph Convolutional Networks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Representation-Learning/">Graph Representation Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Reading-Comprehension/">Machine  Reading  Comprehension</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Meta-Learning/">Meta-Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multi-Task-Learning/">Multi-Task Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Natural-Language-Understanding/">Natural Language Understanding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neural-Response-Generation/">Neural Response Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pretrained-Word-Representations/">Pretrained  Word  Representations</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Question-Answering/">Question Answering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Response-Selection/">Response Selection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentence-Semantic-Matching/">Sentence  Semantic  Matching</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Labeling/">Sequence  Labeling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Learning/">Sequence Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer  Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VAE/">VAE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Variational-Generation/">Variational Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Active-Learning/" style="font-size: 10px;">Active Learning</a> <a href="/tags/Adversial-Learning/" style="font-size: 10px;">Adversial Learning</a> <a href="/tags/BUPT/" style="font-size: 11.25px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 15px;">Commonsense  Knowledge</a> <a href="/tags/Context-Rewriting/" style="font-size: 10px;">Context  Rewriting</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 18.75px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Entity-Typing/" style="font-size: 10px;">Entity Typing</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph/" style="font-size: 11.25px;">Graph</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Graph-Convolutional-Networks/" style="font-size: 10px;">Graph Convolutional Networks</a> <a href="/tags/Graph-Representation-Learning/" style="font-size: 10px;">Graph Representation Learning</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.25px;">Keras</a> <a href="/tags/Machine-Reading-Comprehension/" style="font-size: 10px;">Machine  Reading  Comprehension</a> <a href="/tags/Machine-Learning/" style="font-size: 12.5px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 11.25px;">Memory Network</a> <a href="/tags/Meta-Learning/" style="font-size: 11.25px;">Meta-Learning</a> <a href="/tags/Multi-Task-Learning/" style="font-size: 10px;">Multi-Task Learning</a> <a href="/tags/NLG/" style="font-size: 11.25px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 17.5px;">NLU</a> <a href="/tags/Natural-Language-Understanding/" style="font-size: 10px;">Natural Language Understanding</a> <a href="/tags/Neural-Response-Generation/" style="font-size: 10px;">Neural Response Generation</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.25px;">Object Detection</a> <a href="/tags/Pretrained-Word-Representations/" style="font-size: 10px;">Pretrained  Word  Representations</a> <a href="/tags/Python/" style="font-size: 11.25px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Question-Answering/" style="font-size: 10px;">Question Answering</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.75px;">Reinforcement Learning</a> <a href="/tags/Response-Selection/" style="font-size: 10px;">Response Selection</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/Sentence-Semantic-Matching/" style="font-size: 10px;">Sentence  Semantic  Matching</a> <a href="/tags/Sequence-Labeling/" style="font-size: 10px;">Sequence  Labeling</a> <a href="/tags/Sequence-Learning/" style="font-size: 10px;">Sequence Learning</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 16.25px;">Tensorflow</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer  Learning</a> <a href="/tags/Transfer-Learning/" style="font-size: 11.25px;">Transfer Learning</a> <a href="/tags/Transformer/" style="font-size: 11.25px;">Transformer</a> <a href="/tags/VAE/" style="font-size: 10px;">VAE</a> <a href="/tags/Variational-Generation/" style="font-size: 10px;">Variational Generation</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://helicqin.github.io/about/index.html">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2019 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helicqin.github.io/2019/12/06/Graph Representation Learning/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
