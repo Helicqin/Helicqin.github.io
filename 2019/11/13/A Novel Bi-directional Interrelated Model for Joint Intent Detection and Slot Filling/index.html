@@ -17,7 +17,7 @@
 <meta property="og:description" content="本文研究的是联合意图识别和序列标注问题，在slot-gate基础上综合考虑ID-&amp;gt;SF和SF-&amp;gt;ID两方面的影响，同时提出了一种多重交互的机制来增强两个任务之间的联系，在ATIS和Snips公开数据集上取得了很好的效果。  paper: https://drive.google.com/open?id=13fCcaL87EMYgDq6R_mH5a56LqSQ2axglsource: A">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG">
-<meta property="og:updated_time" content="2019-11-13T09:09:03.874Z">
+<meta property="og:updated_time" content="2019-12-21T15:33:13.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling">
 <meta name="twitter:description" content="本文研究的是联合意图识别和序列标注问题，在slot-gate基础上综合考虑ID-&amp;gt;SF和SF-&amp;gt;ID两方面的影响，同时提出了一种多重交互的机制来增强两个任务之间的联系，在ATIS和Snips公开数据集上取得了很好的效果。  paper: https://drive.google.com/open?id=13fCcaL87EMYgDq6R_mH5a56LqSQ2axglsource: A">
@@ -197,8 +197,8 @@ ga('send', 'pageview');
 </ul>
 <p>这两种仅是执行顺序不同，内在的运算类似。</p>
 <h3 id="SF-First-Mode"><a href="#SF-First-Mode" class="headerlink" title="SF-First  Mode"></a>SF-First  Mode</h3><p><strong>SF  subnet</strong> 首先通过意图信息$c_{inte}$和槽信息$c_{slot}^{i}$计算一个相关因子$f$：<br>$$<br>f=\sum V _ \tanh \left(c_{\text {slot}}^{i}+W _ c_{\text {inte}}\right)<br>$$<br>这里的操作借鉴自SlotGate模型。然后得到增强后的slot vector：$r_{\text {slot}}^{i}=f \cdot c_{\text {slot}}^{i}$。</p>
-<p><strong>ID  subnet</strong> 将slot信息融合到意图识别任务中，作者认为混合的多粒度信息有助于ID：<br>$$<br>r=\sum_{i=1}^{T} \alpha_{i} \cdot r_{s l o t}^{i} \\<br>\alpha_{i}=\frac{\exp \left(e_{i, i}\right)}{\sum_{j=1}^{T} \exp \left(e_{i, j}\right)} \\<br>e_{i, j}=W _ \tanh \left(V_{1} _ r_{\text {slot}}^{i}+V_{2} * h_{j}+b\right)<br>$$<br>最终得到新的context vector： $r_{\text {inte}}=r+c_{\text {inte}}$。</p>
-<p><strong>Iteration  Mechanism</strong> 反过来，$r_{\text {inte}}$也可以被输入到SF subnet中重新计算$f$：<br>$$<br>f=\sum V _ \tanh \left(c_{s l o t}^{i}+W _ r_{i n t e}\right)<br>$$<br>继而得到新的$r_{slot}^{i}$和$r_{inte}$，这个过程可以重复进行。作者在之后的实验中发现迭代3次能取得最好的效果。</p>
+<p><strong>ID  subnet</strong> 将slot信息融合到意图识别任务中，作者认为混合的多粒度信息有助于ID：<br>$$<br>r=\sum_{i=1}^{T} \alpha_{i} \cdot r_{s l o t}^{i} \\<br>\alpha_{i}=\frac{\exp \left(e_{i, i}\right)}{\sum_{j=1}^{T} \exp \left(e_{i, j}\right)} \\<br>e_{i, j}=W \ast  \tanh \left(V_{1} \ast  r_{\text {slot}}^{i}+V_{2} \ast  h_{j}+b\right)<br>$$<br>最终得到新的context vector： $r_{\text {inte}}=r+c_{\text {inte}}$。</p>
+<p><strong>Iteration  Mechanism</strong> 反过来，$r_{\text {inte}}$也可以被输入到SF subnet中重新计算$f$：<br>$$<br>f=\sum V \ast  \tanh \left(c_{s l o t}^{i}+W \ast r_{i n t e}\right)<br>$$<br>继而得到新的$r_{slot}^{i}$和$r_{inte}$，这个过程可以重复进行。作者在之后的实验中发现迭代3次能取得最好的效果。</p>
 <p>迭代结束后，$r_{slot}^{i}$和$r_{inte}$被用来做最后的预测：<br>$$<br>y_{i n t e}=\operatorname{softmax}\left(W_{i n t e}^{h y} \operatorname{concat}\left(h_{T}, r_{i n t e}\right)\right) \\<br>y_{s l o t}^{i}=\operatorname{softmax}\left(W_{s l o t}^{h y} \operatorname{concat}\left(h_{i}, r_{s l o t}^{i}\right)\right)<br>$$<br>实际操作中作者还增加了CRF层辅助SF。</p>
 <h3 id="ID-First-Mode"><a href="#ID-First-Mode" class="headerlink" title="ID-First  Mode"></a>ID-First  Mode</h3><p>在ID-First  Mode下，先进行ID  subnet运算，再通过SF  subnet。顺序改变会带来一些细节上的变化。</p>
 <p><strong>ID  subnet</strong><br><img src="https://user-images.githubusercontent.com/21177644/68747354-52c69200-0635-11ea-89d9-1d450dc243f2.PNG" alt=""></p>
