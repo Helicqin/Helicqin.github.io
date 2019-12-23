@@ -17,7 +17,7 @@
 <meta property="og:description" content="总结一下最新的SLU模型。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://user-images.githubusercontent.com/21177644/68743720-07f54c00-062e-11ea-990d-988a2c384ad9.PNG">
-<meta property="og:updated_time" content="2019-12-23T06:36:10.494Z">
+<meta property="og:updated_time" content="2019-12-23T07:10:13.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Summary of SLU">
 <meta name="twitter:description" content="总结一下最新的SLU模型。">
@@ -183,7 +183,15 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
             <p>总结一下最新的SLU模型。<br><a id="more"></a></p>
-<h2 id="SLU-Models"><a href="#SLU-Models" class="headerlink" title="SLU Models"></a>SLU Models</h2><h3 id="Slot-Gated-Modeling-for-Joint-Slot-Filling-and-Intent-Prediction"><a href="#Slot-Gated-Modeling-for-Joint-Slot-Filling-and-Intent-Prediction" class="headerlink" title="Slot-Gated Modeling for Joint Slot Filling and Intent Prediction"></a>Slot-Gated Modeling for Joint Slot Filling and Intent Prediction</h3><blockquote>
+<h2 id="SLU-Models"><a href="#SLU-Models" class="headerlink" title="SLU Models"></a>SLU Models</h2><p>从研究方向来看，SLU模型分为以下几类：</p>
+<ol>
+<li><strong>基础的SLU模型</strong>：例如Joint Seq (Hakkani-Tur, 2016)，Attention BiRNN  (Liu and Lane, 2016)，Slot-Gated Attention (Goo et al., 2018)，CAPSULE-NLU (Zhang et al., 2019)，SF-ID Network  (E et al., 2019)，BERT  (Devlin et al., 2019)等等，这些模型属于SLU任务中最核心的基线模型，在研究类似于跨领域、跨语言迁移、zero/few-shot等特定场景下SLU任务时，一般会以这些模型作为骨干。</li>
+<li><strong>跨语言迁移SLU</strong>：Sequence Tagging with Contextual and Non-Contextual Subword Representations: A Multilingual Evaluation</li>
+<li><strong>跨领域迁移SLU</strong>：A Progressive Model to Enable Continual Learning for Semantic Slot Filling，Concept Transfer Learning for Adaptive Language Understanding</li>
+<li><strong>数据增强</strong>：Data Augmentation with Atomic Templates for Spoken Language Understanding，Data Augmentation by Data Noising for Open-vocabulary Slots in Spoken Language Understanding</li>
+<li><strong>zero/few-shot</strong>：Robust Zero-Shot Cross-Domain Slot Filling with Example Values</li>
+</ol>
+<h3 id="Slot-Gated-Modeling-for-Joint-Slot-Filling-and-Intent-Prediction"><a href="#Slot-Gated-Modeling-for-Joint-Slot-Filling-and-Intent-Prediction" class="headerlink" title="Slot-Gated Modeling for Joint Slot Filling and Intent Prediction"></a>Slot-Gated Modeling for Joint Slot Filling and Intent Prediction</h3><blockquote>
 <p>note: <a href="https://helicqin.github.io/2018/12/03/Slot-Gated%20Modeling%20for%20Joint%20Slot%20Filling%20and%20Intent%20Prediction/">https://helicqin.github.io/2018/12/03/Slot-Gated%20Modeling%20for%20Joint%20Slot%20Filling%20and%20Intent%20Prediction/</a><br>NAACL 2018</p>
 </blockquote>
 <p>本文通过提出的slot-gate建立intent到slot的联系。</p>
@@ -249,10 +257,8 @@ ga('send', 'pageview');
 <h3 id="Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference"><a href="#Memory-Consolidation-for-Contextual-Spoken-Language-Understanding-with-Dialogue-Logistic-Inference" class="headerlink" title="Memory  Consolidation  for  Contextual  Spoken  Language  Understanding with  Dialogue  Logistic  Inference"></a><a href="https://drive.google.com/open?id=1FzGjziO20CwQTVOUjGTgJaiNXDYbeAgx" target="_blank" rel="noopener">Memory  Consolidation  for  Contextual  Spoken  Language  Understanding with  Dialogue  Logistic  Inference</a></h3><ul>
 <li>date: 2019/11/28</li>
 <li>tags: Spoken  Language  Understanding</li>
-<li>summary: 本文研究的是结合对话上下文的自然语言理解系统，一般的SLU只处理单个句子，而本文则是希望利用整个context信息来辅助理解。论文的创新点在于在SLU任务的基础上联合了句子顺序预测的任务，通过多任务学习来更好的理解context。<ul>
+<li>summary: 本文研究的是结合对话上下文的自然语言理解系统，一般的SLU只处理单个句子，而本文则是希望利用整个context信息来辅助理解。论文的创新点在于在SLU任务的基础上联合了句子顺序预测的任务，通过多任务学习来更好的理解context。</li>
 <li>conference: ACL 2019</li>
-</ul>
-</li>
 </ul>
 <p><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjFqTHhXZk5DN3NHcm01eTV5bEtVYW1jcXhlY0FjVzduc2dDalYrNERNNmJBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p>
 <p>从上图可以看出，在不考虑对话上下文的前提下，是没法预测“6“这个token的。</p>
@@ -302,8 +308,8 @@ ga('send', 'pageview');
 <p>The first one aims to use the context of each word to predict the label of that word and the goal of the second auxiliary task is to use the global context information to predict sentence level labels.</p>
 </blockquote>
 <ul>
-<li>Predicting Word Label: $P_{i}\left(\cdot |\left\{x_{1}, x_{2}, \ldots, x_{n}\right\} / x_{i}\right)=<br>\operatorname{softmax}\left(W_{2} _\left(W_{1} _ h_{i}^{c}\right)\right)$</li>
-<li>Predicting Sentence Labels:<br>  $$H=\operatorname{MaxPooling}\left(h_{1}, h_{2}, \ldots, h_{N}\right) \\ P\left(. | x_{1}, x_{2}, \ldots, x_{N}\right)=\sigma\left(W_{2} _\left(W_{1} _ H\right)\right)$$ </li>
+<li>Predicting Word Label: $P_{i}\left(\cdot |\left\{x_{1}, x_{2}, \ldots, x_{n}\right\} / x_{i}\right)=<br>\operatorname{softmax}\left(W_{2} \ast \left(W_{1} \ast h_{i}^{c}\right)\right)$</li>
+<li>Predicting Sentence Labels:<br>  $$H=\operatorname{MaxPooling}\left(h_{1}, h_{2}, \ldots, h_{N}\right) \\ P\left(. | x_{1}, x_{2}, \ldots, x_{N}\right)=\sigma\left(W_{2} \ast \left(W_{1} \ast H\right)\right)$$ </li>
 </ul>
 <p>实验做的很糟糕。</p>
 
