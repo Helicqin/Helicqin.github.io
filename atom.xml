@@ -6,7 +6,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="https://helicqin.github.io/"/>
-  <updated>2019-12-23T07:10:13.836Z</updated>
+  <updated>2020-02-24T04:57:46.423Z</updated>
   <id>https://helicqin.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>reference resolution in dialogues</title>
+    <link href="https://helicqin.github.io/2020/02/24/reference%20resolution%20in%20dialogues/"/>
+    <id>https://helicqin.github.io/2020/02/24/reference resolution in dialogues/</id>
+    <published>2020-02-24T04:54:00.000Z</published>
+    <updated>2020-02-24T04:57:46.423Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要介绍了多轮对话系统中的指代问题，整理了一些相关文章，包括数据集和方法。<br><a id="more"></a></p><h2 id="A-dataset-for-resolving-referring-expressions-in-spoken-dialogue-via-contextual-query-rewrites-CQR"><a href="#A-dataset-for-resolving-referring-expressions-in-spoken-dialogue-via-contextual-query-rewrites-CQR" class="headerlink" title="A dataset for resolving referring expressions in spoken dialogue via contextual query rewrites (CQR)"></a>A dataset for resolving referring expressions in spoken dialogue via contextual query rewrites (CQR)</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>在多轮对话系统中，用户在交互的一个轮次里可能给与不完整信息，而剩下的槽值需要根据上下文指代关系来提取，例如：</p><p>这种指代关系可以分为显式指代(explicit reference)和隐式指代(implicit reference or zero anaphora)，其中显式指代又分为：</p><ul><li><p>名词回指：nominal anaphoric reference (“that coffee shop”)</p></li><li><p>位置词：locative form (“there”)</p></li><li><p>代词：pronominal form(e.g., “it”)</p></li></ul><p>本文的核心贡献是引入了 <strong>CQR(contextual query rewrites)</strong> 任务来解决对话中的指代问题，避免slot value的carryover，进而促进对话建模；收集了一个CQR数据集：<a href="https://github.com/alexa/alexa-dataset-contextual-query-rewrite" target="_blank" rel="noopener">https://github.com/alexa/alexa-dataset-contextual-query-rewrite</a> 。</p><p>CQR任务定义：</p><ul><li><p>输入：前D轮对话 ，当前轮用户输入 ，以及与之相关的槽值集合。</p></li><li><p>输出：改写后的当前轮用户输入 。</p></li></ul><p>CQR任务的难点在于改写过程需要隐式地选择与当前轮相关的槽值。</p><h3 id="Dataset-amp-amp-Experiment"><a href="#Dataset-amp-amp-Experiment" class="headerlink" title="Dataset &amp;&amp; Experiment"></a>Dataset &amp;&amp; Experiment</h3><p>因为本文的重点是CQR对于对话建模的促进作用，所以论文没有提出任何CQR模型，只是利用人工标注的CQR数据集验证了对下游任务的促进作用。</p><p>数据集统计： 领域以及对应的槽 Weather (location, date, weather attribute); Navigation (point of interest type, point of interest, address, traffic information, distance); and Calendar scheduling (date, time, location, party, agenda)</p><p>在SLU任务上的实验结果：（Original和Gold CQR分别代表同样的SLU模型运行在原始的数据集和改写后的数据集，相当于多轮对话转化为单轮）</p><h2 id="Scaling-Multi-Domain-Dialogue-State-Tracking-via-Query-Reformulation"><a href="#Scaling-Multi-Domain-Dialogue-State-Tracking-via-Query-Reformulation" class="headerlink" title="Scaling Multi-Domain Dialogue State Tracking via Query Reformulation"></a>Scaling Multi-Domain Dialogue State Tracking via Query Reformulation</h2><ol><li>本文是上篇论文的续作（均出自Amazon Alexa），主要引入了pointer-generator模型来解决CQR任务。</li></ol><ol start="2"><li><p>模型结构：</p></li><li><p>实验结果：</p></li></ol><h2 id="Improving-Multi-turn-Dialogue-Modelling-with-Utterance-ReWriter"><a href="#Improving-Multi-turn-Dialogue-Modelling-with-Utterance-ReWriter" class="headerlink" title="Improving Multi-turn Dialogue Modelling with Utterance ReWriter"></a>Improving Multi-turn Dialogue Modelling with Utterance ReWriter</h2><ol><li><p>为了解决多轮对话中的共指关系和信息缺失的问题，本文的思路是训练一个言语重写器将多轮对话转换成单轮对话，其目的就和下图所示，将Utterance3改成Utterrance3`。由于把信息补全了，所以此时的多轮就相当于单轮对话了，将其输入到对话系统中，就可以按照单轮对话来处理了。</p></li><li><p>为了训练语言重写器，文章创建了包含2万个多轮对话数据集，并且每句话都是成对的存在的。 数据集统计：</p></li><li><p>提出了一种高效的基于转换的话语改写器，其性能优于其它几个比较强的基线版本。模型结构：</p></li><li><p>实验结果：</p></li></ol><p>利用重写后的数据集进行下游任务：</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要介绍了多轮对话系统中的指代问题，整理了一些相关文章，包括数据集和方法。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="NLP" scheme="https://helicqin.github.io/categories/NLP/"/>
+    
+    
+      <category term="Dialogue System" scheme="https://helicqin.github.io/tags/Dialogue-System/"/>
+    
+  </entry>
   
   <entry>
     <title>Summary of SLU</title>
@@ -217,9 +239,9 @@
       <category term="NLP" scheme="https://helicqin.github.io/categories/NLP/"/>
     
     
-      <category term="Dialogue System" scheme="https://helicqin.github.io/tags/Dialogue-System/"/>
-    
       <category term="NLP" scheme="https://helicqin.github.io/tags/NLP/"/>
+    
+      <category term="Dialogue System" scheme="https://helicqin.github.io/tags/Dialogue-System/"/>
     
   </entry>
   
@@ -480,33 +502,6 @@
       <category term="Dialogue System" scheme="https://helicqin.github.io/tags/Dialogue-System/"/>
     
       <category term="Memory Network" scheme="https://helicqin.github.io/tags/Memory-Network/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Decay-Function-Free  Time-Aware  Attention  to  Context  and  Speaker Indicator  for  Spoken  Language Understanding</title>
-    <link href="https://helicqin.github.io/2019/06/08/Decay-Function-Free%20Time-Aware%20Attention%20to%20Context%20and%20Speaker%20Indicator%20for%20Spoken%20Language%20Understanding/"/>
-    <id>https://helicqin.github.io/2019/06/08/Decay-Function-Free Time-Aware Attention to Context and Speaker Indicator for Spoken Language Understanding/</id>
-    <published>2019-06-08T09:17:00.000Z</published>
-    <updated>2019-08-26T02:40:31.513Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019</p><p><a href="[https://arxiv.org/pdf/1903.08450.pdf](https://arxiv.org/pdf/1903.08450.pdf">paper link</a>)<br><a href="https://github.com/jgkimi/Decay-Function-Free-Time-Aware" target="_blank" rel="noopener">code link</a><br><a id="more"></a></p><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在对话的场景下去考虑SLU任务，上下文信息的重要性是变化的，以图1为例，当识别<code>&quot;We have Sungei Buloh which is on the Northwest of Singapore.&quot;</code>这句话时，最重要的历史信息应该是<code>&quot;What  are  the  places  that  I can  have  some  memorable  experiences  there?&quot;</code>，而非前一句<code>&quot;Right&quot;</code>。因此，手工设定的time-delay function是无法表达出这种复杂性。</p><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjJXYkRlUzMvdUNXdjBscnl4WTI0WFUvSXJ2cWc0VWY1WTlaVGwweWRCMzZBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p><p>目前大部分研究time-aware的SLU模型使用人工设定的单一time-delay function或者多个线性组合，这类手动设定的函数不够灵活。本文提出了一种可以自动学习time-delay tendency的方法，同时还引入了当前说话者的身份信息。</p><h2 id="Proposed-Model"><a href="#Proposed-Model" class="headerlink" title="Proposed Model"></a>Proposed Model</h2><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjBFcTQxcXNleXVYc1U2Tjc4TUxCVitRd3A1U3U0a1ZtKzNpWWxmT1BucTR3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p><h3 id="Decay-Function-Free-Time-Aware-Attention"><a href="#Decay-Function-Free-Time-Aware-Attention" class="headerlink" title="Decay-Function-Free  Time-Aware Attention"></a>Decay-Function-Free  Time-Aware Attention</h3><p>作者使用一个距离矩阵描述当前utterance与所有历史utterance之间的相关性，记为$D\in R^{dim \times|D|}$，其中第t个历史utterance对应的距离向量为$d_{t}$，这个矩阵是随模型训练而自动更新的。得到距离向量后，作者使用注意力机制计算$t_{th}$历史utterance的重要性：<br>$$<br>\alpha_{t}=w_{a t t}^{T} \sigma\left(h_{T}+d_{t}+b_{a t t}\right)<br>$$<br>其中$b_{att}$是可训练的偏差参数。得到注意力分数后，有两种加权求和的变体：</p><ol><li>role-level：只考虑所有相同说话者的历史utterances<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWYlVPb0piMk9KOEpkU202TmNVY2gwaGhUR2E2WHpoRndBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li><li>sentence-level：同时考虑所有说话者的历史utterances<br><img src="http://imglf5.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWVm9IeDl2QldhcXdXYkxBSEkvUXpVOTJ1Q1JQZUNNbHhnPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li></ol><h3 id="Decay-Function-Free-Content-and-Time-Aware-Attention"><a href="#Decay-Function-Free-Content-and-Time-Aware-Attention" class="headerlink" title="Decay-Function-Free Content-and-Time-Aware  Attention"></a>Decay-Function-Free Content-and-Time-Aware  Attention</h3><p>在上个模型的基础上，同时考虑时间和上下文内容的影响：<br>$$<br>\beta_{t}=w_{a t t}^{T} \sigma\left(h_{T}+u_{t}+b_{a t t}\right)<br>$$<br>然后已相同的方式加权求和：</p><ol><li>role-level：只考虑所有相同说话者的历史utterances<br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWUSs5S2lUT0NsU1Z6N1NIbXdkYkMya04xa3gwM2dqSjZ3PT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li><li>sentence-level：同时考虑所有说话者的历史utterances<br><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWZlVnSktOZFgyZXJRL0luZFpTKzQ5YThPNFB6dVNHTE1RPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></li></ol><p>最终，将time-aware和content-aware的信息拼接起来：<br>$$<br>s^{h i s t}=s_{\text {time}}^{\text {hist}} \oplus s_{\text {cont}}^{\text {hist}}<br>$$</p><h3 id="Speaker-Indicator"><a href="#Speaker-Indicator" class="headerlink" title="Speaker  Indicator"></a>Speaker  Indicator</h3><p>Speaker  Indicator是一个可训练参数$s^{cur}\in R^{dim}$，用来表征说话者的身份，因此，Eq1和Eq7分别变为：<br>$$<br>\alpha_{t}=w_{a t t}^{T} \sigma\left(h_{T}+d_{t}+s^{c u r}+b_{a t t}\right)\\<br>\beta_{t}=w_{a t t}^{T} \sigma\left(h_{T}+u_{t}+s^{c u r}+b_{a t t}\right)<br>$$</p><h3 id="Prediction"><a href="#Prediction" class="headerlink" title="Prediction"></a>Prediction</h3><p>作者使用另一个BiLSTM进行预测，t时刻的输入为：<br>$$<br>v_{t}=w_{t} \oplus s^{h i s t}<br>$$</p><h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWV3VVMTlKRFNjalZMUXB4aVlBazM3ckR6WE5rSnpZWEx3PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjMyTURnMGdyRVJWVUMybDI2TEloSjkxUTJWaXFuVUpYb251Y0tIVDlmUmlBPT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt=""></p><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑不同位置的历史utterance的影响，提出了decay-function-free time-aware  attention  models；同时增加了说话者的身份特征。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本文研究的是对话系统中的SLU任务，论文重点关注于对话中不同出现时间的上下文信息，即考虑对话时间的影响，同时增加了说话者的身份特征。NAACL2019&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;[https://arxiv.org/pdf/1903.08450.pdf](https://arxiv.org/pdf/1903.08450.pdf&quot;&gt;paper link&lt;/a&gt;)&lt;br&gt;&lt;a href=&quot;https://github.com/jgkimi/Decay-Function-Free-Time-Aware&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;code link&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="https://helicqin.github.io/categories/NLP/"/>
-    
-      <category term="NLU" scheme="https://helicqin.github.io/categories/NLP/NLU/"/>
-    
-    
-      <category term="NLU" scheme="https://helicqin.github.io/tags/NLU/"/>
-    
-      <category term="Dialogue System" scheme="https://helicqin.github.io/tags/Dialogue-System/"/>
     
   </entry>
   
