@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     
-    <title>A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling | Helic</title>
+    <title>Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content="MRC" />
@@ -11,15 +11,15 @@
     <meta name="description" content="本文研究的是对话阅读理解问题，提出了层次注意力结构（turn-level+word-level）来促进对话理解。实验证明了本文采用的turn-based的建模方式优于utterance-based，并且在长对话以及包含未知实体的对话中（论文称之为out-of-distribution）优势更加明显。  paper: https://drive.google.com/open?id=17nTPUAS">
 <meta name="keywords" content="MRC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling">
+<meta property="og:title" content="Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension">
 <meta property="og:url" content="https://helicqin.github.io/2020/03/02/Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension/index.html">
 <meta property="og:site_name" content="Helic">
 <meta property="og:description" content="本文研究的是对话阅读理解问题，提出了层次注意力结构（turn-level+word-level）来促进对话理解。实验证明了本文采用的turn-based的建模方式优于utterance-based，并且在长对话以及包含未知实体的对话中（论文称之为out-of-distribution）优势更加明显。  paper: https://drive.google.com/open?id=17nTPUAS">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBoTTNwY284aFBLbWZDYjM4aWp4bFhpOFNnS2Y1UTNmU1htK1BoRGhXSmVBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
-<meta property="og:updated_time" content="2020-03-02T04:59:25.551Z">
+<meta property="og:updated_time" content="2020-03-02T06:58:05.021Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling">
+<meta name="twitter:title" content="Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension">
 <meta name="twitter:description" content="本文研究的是对话阅读理解问题，提出了层次注意力结构（turn-level+word-level）来促进对话理解。实验证明了本文采用的turn-based的建模方式优于utterance-based，并且在长对话以及包含未知实体的对话中（论文称之为out-of-distribution）优势更加明显。  paper: https://drive.google.com/open?id=17nTPUAS">
 <meta name="twitter:image" content="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBoTTNwY284aFBLbWZDYjM4aWp4bFhpOFNnS2Y1UTNmU1htK1BoRGhXSmVBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0">
     
@@ -157,7 +157,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-        A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling
+        Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension
         </h1>
     
 
@@ -193,7 +193,7 @@ ga('send', 'pageview');
 <p><strong>Sequence  Encoding  Layer</strong>：作者使用BiLSTM分别对问题和对话进行编码，使用最后一个隐层状态作为问题表示；在编码对话时，作者以turn作为分隔符，使用上图中的$W_{1}, W_{7}$作为一个对话turn的表示，这个表征会用来计算turn-level注意力。</p>
 <p><strong>Question-Aware  Modeling  Layer</strong>：这里作者直接把问题表征与对话中每一个词的表征拼接，融合两种信息，这里记为 $H’$。</p>
 <p><strong>Turn-Level  Attention  Layer</strong>：turn-level注意力主要用来区分不同对话轮次的重要性。<br>$$<br>A^{\text {turn}}=\operatorname{softmax}\left(W_{\alpha} H^{\text {turn}}+b_{\alpha}\right)<br>$$<br>其中$H^{turn}$即为所有turn的表征，$W_{q}$是一个自学习的query向量，$A^{turn}$是注意力分数。</p>
-<p><strong>Word-Level  Attention  Layer</strong>：作者认为一个词的注意力分数应该与其所在的对话轮次的注意力分数保持一致，只有这个词对应的turn很重要，这个词才可能重要。这里，作者直接用turn attention score $a_{i}^{turn}$与词表征相乘得到$C’$，然后计算word-level注意力分数$A^{word}$。<br>$$<br>A^{\text {word}}=\operatorname{softmax}\left(W_{\beta}\left(H^{\prime} _ A^{\prime}\right)+b_{\beta}\right)<br>$$<br>然后得到$C’’=H’_A^{word}$。</p>
+<p><strong>Word-Level  Attention  Layer</strong>：作者认为一个词的注意力分数应该与其所在的对话轮次的注意力分数保持一致，只有这个词对应的turn很重要，这个词才可能重要。这里，作者直接用turn attention score $a_{i}^{turn}$与词表征相乘得到$C’$，然后计算word-level注意力分数$A^{word}$。<br>$$<br>A^{\text {word}}=\operatorname{softmax}\left(W_{\beta}\left(H^{\prime} \ast A^{\prime}\right)+b_{\beta}\right)<br>$$<br>然后得到$C’’=H’ \ast A^{word}$。</p>
 <p><strong>Answer  Pointer  Layer</strong>：作者直接将$C’,C’’,h_{q}$拼接输入到LSTM中，分别预测answer span的开始和结束位置。</p>
 <p><strong>Loss  function</strong>：作者增加了一个额外的损失$\mathcal{L}_{turn_attn}$ ，主要是用来衡量turn-level和word-level注意力分数的一致性。<br>$$<br>\mathcal{L}_{\text {total }}=\mathcal{L}_{\mathrm{Span}}+\lambda \mathcal{L}_{turn_attn}<br>$$</p>
 <p>这个损失出自 <strong>A  Unified  Model  for  Extractive  and  Abstractive  Summarization using  Inconsistency  Loss</strong>：<br>$$<br>L_{i n c}=-\frac{1}{T} \sum_{t=1}^{T} \log \left(\frac{1}{|\mathcal{K}|} \sum_{m \in \mathcal{K}} \alpha_{m}^{t} \times \beta_{n(m)}\right)<br>$$<br>其中，$\alpha, \beta$分别代表word, turn score，$\mathcal{K}$代表top K选择的词，$T$代表生成摘要的长度（本文里并不包含这项）。</p>
@@ -364,7 +364,7 @@ ga('send', 'pageview');
                             <a href="/2020/03/02/Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension/" class="thumbnail">
     
     
-        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBoTTNwY284aFBLbWZDYjM4aWp4bFhpOFNnS2Y1UTNmU1htK1BoRGhXSmVBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling" class="thumbnail-image"></span>
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjBoTTNwY284aFBLbWZDYjM4aWp4bFhpOFNnS2Y1UTNmU1htK1BoRGhXSmVBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension" class="thumbnail-image"></span>
     
     
 </a>
@@ -373,7 +373,7 @@ ga('send', 'pageview');
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2020/03/02/Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension/" class="title">A Novel Bi-directional Interrelated Model for Joint Intent Detection and Slot Filling</a></p>
+                            <p class="item-title"><a href="/2020/03/02/Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension/" class="title">Reading Turn by Turn：Hierarchical Attention Architecture for Spoken Dialogue Comprehension</a></p>
                             <p class="item-date"><time datetime="2020-03-02T03:56:00.000Z" itemprop="datePublished">2020-03-02</time></p>
                         </div>
                     </li>
