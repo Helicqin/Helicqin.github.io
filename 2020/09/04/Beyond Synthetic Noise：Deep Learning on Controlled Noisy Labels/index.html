@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="MentorNet,Mixup" />
+    
+    <meta name="description" content="本文研究的是深度模型在有噪数据上的泛化能力，提出了MentorMix方法来克服真实和人工合成的噪声标签。  paper: https://ai.googleblog.com/2020/08/understanding-deep-learning-on.html?utm_source=feedburner&amp;amp;utm_medium=feed&amp;amp;utm_campaign=Feed%3A+bl">
+<meta name="keywords" content="MentorNet,Mixup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels">
+<meta property="og:url" content="https://helicqin.github.io/2020/09/04/Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="本文研究的是深度模型在有噪数据上的泛化能力，提出了MentorMix方法来克服真实和人工合成的噪声标签。  paper: https://ai.googleblog.com/2020/08/understanding-deep-learning-on.html?utm_source=feedburner&amp;amp;utm_medium=feed&amp;amp;utm_campaign=Feed%3A+bl">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://user-images.githubusercontent.com/21177644/92206232-d1890600-eeb9-11ea-8e0e-36e8f721ef32.png">
+<meta property="og:updated_time" content="2020-09-06T06:09:29.991Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels">
+<meta name="twitter:description" content="本文研究的是深度模型在有噪数据上的泛化能力，提出了MentorMix方法来克服真实和人工合成的噪声标签。  paper: https://ai.googleblog.com/2020/08/understanding-deep-learning-on.html?utm_source=feedburner&amp;amp;utm_medium=feed&amp;amp;utm_campaign=Feed%3A+bl">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/21177644/92206232-d1890600-eeb9-11ea-8e0e-36e8f721ef32.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Graph/">Graph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2020/09/04/Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels/" class="article-date">
+            <time datetime="2020-09-04T02:48:00.000Z" itemprop="datePublished">2020-09-04</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/MentorNet/">MentorNet</a>, <a class="tag-link" href="/tags/Mixup/">Mixup</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>本文研究的是深度模型在有噪数据上的泛化能力，提出了MentorMix方法来克服真实和人工合成的噪声标签。</p>
+<blockquote>
+<p>paper: <a href="https://ai.googleblog.com/2020/08/understanding-deep-learning-on.html?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed%3A+blogspot%2FgJZg+%28Google+AI+Blog%29" target="_blank" rel="noopener">https://ai.googleblog.com/2020/08/understanding-deep-learning-on.html?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed%3A+blogspot%2FgJZg+%28Google+AI+Blog%29</a><br>source: ICML 2020<br>code: <a href="https://github.com/google-research/google-research/tree/master/mentormix" target="_blank" rel="noopener">https://github.com/google-research/google-research/tree/master/mentormix</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>深度神经网络的成功依赖于高质量标记的训练数据。训练数据中存在标记错误（标记噪声，即Noisy Labels）会大大降低模型在干净测试数据上的准确性。不幸的是，大型数据集几乎总是包含带有不正确或不准确的标签。这导致了一个悖论：一方面，大型数据集对于深度网络的训练是非常必要的，而另一方面，深度网络往往会记住训练标签噪声，从而在实践中导致较差的模型性能。</p>
+<p>学界已经意识到这个问题的重要性，一直在试图理解理解标签噪声，和发明新的鲁棒学习方法来克服它们。在这个过程中，受控实验扮演着至关重要的角色。好比研发一种新的药物，我们需要受控实验来对影响实验结果的无关因素加以控制。在本问题里，最重要的是研究不同的噪声水平（即数据集中带有错误标签的样本的百分比）对模型性能的影响。但是，当前的受控实验仅局限在<strong>人工合成噪声</strong>，而不是<strong>真实的噪声</strong>。与实际经验相比，人工合成噪音会导致研究结果大相径庭。来看一个例子：“神经网络是否对于人工噪音数据敏感？”，前人给出了截然相反的答案：</p>
+<blockquote>
+<p><strong>_”Deep neural networks easily fit random labels” (<a href="https://openreview.net/forum?id=Sy8gdB9xx&amp;noteId=Sy8gdB9xx" target="_blank" rel="noopener">Zhang et al. 2017</a>)_</strong></p>
+</blockquote>
+<p><strong>_VS_</strong></p>
+<blockquote>
+<p><strong>_“Deep learning is robust to massive label noise” (<a href="https://arxiv.org/abs/1705.10694" target="_blank" rel="noopener">Rolnick et al. 2017</a>)_</strong></p>
+</blockquote>
+<p>更重要的是，本文发现：在人工噪声上表现良好的方法，在现实世界的噪声数据集上效果可能并不理想。</p>
+<p>本文的三点贡献：</p>
+<ul>
+<li>首先，我们建立了第一个受控的噪声数据集，一个来自真实世界的标签噪声（即Web标签噪声）。</li>
+<li>其次，我们提出了一种简单而有效的方法来克服真实和人工行合成的噪声标签。</li>
+<li>最后，我们进行了迄今为止最大的实验，比较了人工和真实噪声在各种训练环境下的区别。</li>
+</ul>
+<p><strong>人工合成标签噪声与真实标签噪声的区别</strong></p>
+<p>人工噪声与真实标签噪声的分布之间存在许多差异，以图像举例：</p>
+<ol>
+<li>首先，带有真实标签噪声的图像在视觉或语义上与干净的正样本更加一致。</li>
+<li>其次，人工标签噪声处于类级别（即同一类中的所有样本均同样嘈杂），而现实世界中的标签噪声处于实例级（与相关类无关，某些图片会比其他图片更有可能被错误标注）。例如，“本田思域”和“本田雅阁”的侧面图片会比正面拍摄的图片更容易混淆。</li>
+<li>第三，带有真实标签噪声的图像来自开放的词汇，这些词汇可能不会与特定数据集的类词汇重叠。例如，“ ladybug”的噪声图像包括诸如“ fly”之类的图片，然而”fly”很可能是一个background class，也就是并不是我们训练集合定义的class的一部分。</li>
+</ol>
+<p>基于以上原因，一个受控标签噪声的数据集将有助于更好地定量研究人工合成和实际标签噪声之间的差异。<br><img src="https://user-images.githubusercontent.com/21177644/92207324-9ee00d00-eebb-11ea-9c1d-67e0b72767f0.png" alt="人工合成标签噪音和Web标签噪音的比较。从左到右的列是Mini-ImageNet或Stanford Cars数据集中的真实正样本，带有人工合成噪声的图像，以及带有错误Web标签的图像"></p>
+<p><strong>数据集构建过程</strong><br>本文提出的Web噪声数据集合建立在两个公共数据集上：<a href="https://link.zhihu.com/?target=https%3A//github.com/yaoyao-liu/mini-imagenet-tools" target="_blank" rel="noopener">Mini-ImageNet</a>（用于粗粒度图像分类）和<a href="https://link.zhihu.com/?target=https%3A//ai.stanford.edu/~jkrause/cars/car_dataset.html" target="_blank" rel="noopener">Stanford Cars</a>（用于细粒度图像分类）。遵循人工合成数据集的<a href="https://link.zhihu.com/?target=https%3A//openreview.net/forum%3Fid%3DSy8gdB9xx%26noteId%3DSy8gdB9xx" target="_blank" rel="noopener">构建方法</a>，我们逐渐将这些数据集中的干净图像替换为从网络上收集的标签错误的图像。</p>
+<p>为此，我们使用类名（例如“ ladybug”）作为关键字从网络上收集图像，这是一种自动方法来收集Web上带有噪声标签的图像，完全无需人工注释。然后，我们使用<a href="https://link.zhihu.com/?target=https%3A//cloud.google.com/ai-platform/data-labeling/docs" target="_blank" rel="noopener">Google Cloud Labeling Service的</a>标注人员检查每个检索到的图像，这些标注人员将识别给定的Web标签是否正确。我们使用带有错误标签的Web图像来替换原始Mini-ImageNet和Stanford Cars数据集中的一定比例的干净训练图像。我们创建了10个不同的数据集，它们的标签噪声逐渐升高（从0％的完全干净数据，到80％的带有错误标签的数据）。数据集已在“ <a href="https://link.zhihu.com/?target=https%3A//google.github.io/controlled-noisy-web-labels/index.html" target="_blank" rel="noopener">受控噪声网络标签”网站上</a>开源。</p>
+<h2 id="MentorMix"><a href="#MentorMix" class="headerlink" title="MentorMix"></a>MentorMix</h2><p>给定一个含有未知噪声的数据集，我们的目标是训练一个鲁棒的模型，该模型可以很好地推广到干净的测试数据上。我们介绍了一种简单有效的方法来处理噪声标签，称为MentorMix，该方法是在本文提出的数据集上开发得到的。</p>
+<p>MentorMix是一种基于<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1712.05055" target="_blank" rel="noopener">MentorNet</a>和<a href="https://link.zhihu.com/?target=https%3A//github.com/hongyi-zhang/mixup" target="_blank" rel="noopener">Mixup</a>两种现有技术的迭代方法，包括四个步骤：加权，抽样，混合和再加权。第一步，通过MentorNet网络在mini-batch中为每个样本计算权重，并将权重normalize为分布。在此处的示例中，MentorNet使用StudentNet训练loss来确定分布中的权重。</p>
+<p><img src="https://user-images.githubusercontent.com/21177644/92207955-c2578780-eebc-11ea-9ae4-3d5f0209daa3.gif" alt=""></p>
+<p>MentorMix方法的四个步骤的图示：加权，采样，混合和再加权。</p>
+<p>接下来，对于每个样本，我们使用<a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Importance_sampling%23%3A~%3Atext%3DIn%2520statistics%252C%2520importance%2520sampling%2520is%2Cumbrella%2520sampling%2520in%2520computational%2520physics" target="_blank" rel="noopener">重要性采样</a>根据分布在同一个mini-batch中选择另一个样本。由于权重较高的样本往往带有正确的标签，因此在采样过程中会受到青睐。然后，我们使用Mixup混合原始样本和采样得到的样本，以便模型在两者之间进行插值，并避免过度拟合噪声。最后，我们可以为混合的样本计算一个新的权重，来计算最终的example loss。对于高噪声水平，上述二次加权的影响变得更加明显。</p>
+<p>上面的动画演示了MentorMix中的四个关键步骤，其中StudentNet是要在噪声标签数据上进行训练的模型。正如<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1712.05055" target="_blank" rel="noopener">Jiang等人</a>所述，我们采用了非常简单的MentorNet版本（self-paced课程学习，一种规则式的启发方法），以计算每个样本的权重。</p>
+<p><img src="https://user-images.githubusercontent.com/21177644/92208125-21b59780-eebd-11ea-98ae-244cf87ae49f.PNG" alt=""></p>
+<p>我们在五个数据集上验证了MentorMix的有效性。其中<a href="https://link.zhihu.com/?target=https%3A//data.vision.ee.ethz.ch/cvl/webvision/dataset2017.html" target="_blank" rel="noopener">WebVision 1.0</a>是一个包含有现实噪声标签的220万张图像的大型数据集。MentorMix在WebVision数据集上获得最佳的结果，就<a href="https://link.zhihu.com/?target=http%3A//www.image-net.org/challenges/LSVRC/" target="_blank" rel="noopener">ImageNet ILSVRC12</a>验证集的top-1分类准确性而言，将以前的最佳方法提高了约3％。</p>
+<p><img src="https://user-images.githubusercontent.com/21177644/92208260-69d4ba00-eebd-11ea-9a4e-c8d2921b9c2b.PNG" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文提出了三个有关Web标签噪声的新发现：</p>
+<ul>
+<li>深度神经网络可以更好地泛化在Web标签噪声。</li>
+<li>在神经网络标签噪声上，深度神经网络可能不会率先学习模式 (Learning the early patterns first)。</li>
+<li>当神经网络在噪声数据上微调时，更先进的ImageNet架构会在带有噪声的训练数据集上表现的更好。</li>
+</ul>
+<p>针对在噪声数据上训练深度神经网络的实用建议：</p>
+<ol>
+<li>处理噪声标签的一种简单方法是finetune在干净的数据集（如ImageNet）上预训练的模型。预训练的模型越好，则可以更好地推广到下游含有噪声的训练任务上。</li>
+<li>提前停止（Early Stopping）可能对网络上的实际的标签噪音无效。</li>
+<li>在人工噪声上表现良好的方法，在现实世界的噪声数据集上效果可能并不理想。</li>
+<li>Web标签噪声似乎危害较小，但是对于我们当前的robust Learning的学习方法而言，解决起来却更加困难。这个发现鼓励更多的未来研究。</li>
+<li>MentorMix可以更好地克服人工合成和现实噪音标签。</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/195637841" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/195637841</a></li>
+<li><a href="https://kami.app/0NMYN1hTynZ8" target="_blank" rel="noopener">MentorNet</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2020/08/14/A Survey of Adversarial Attack/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Survey of Adversarial Training</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/04/Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/92206232-d1890600-eeb9-11ea-8e0e-36e8f721ef32.png)" alt="Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a></p>
+                            <p class="item-title"><a href="/2020/09/04/Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels/" class="title">Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels</a></p>
+                            <p class="item-date"><time datetime="2020-09-04T02:48:00.000Z" itemprop="datePublished">2020-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/08/14/A Survey of Adversarial Attack/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/90974521-b4217700-e55e-11ea-8428-bc2986c134d6.jpg)" alt="A Survey of Adversarial Training" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/08/14/A Survey of Adversarial Attack/" class="title">A Survey of Adversarial Training</a></p>
+                            <p class="item-date"><time datetime="2020-08-14T09:06:00.000Z" itemprop="datePublished">2020-08-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/07/18/Contrastive Learning/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/17290197/80175407-0f327400-8628-11ea-91fd-4d058246318e.png)" alt="A Summary of Contrastive Learning" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/07/18/Contrastive Learning/" class="title">A Summary of Contrastive Learning</a></p>
+                            <p class="item-date"><time datetime="2020-07-18T15:35:00.000Z" itemprop="datePublished">2020-07-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/04/27/A Robust Adversarial Training Approach to Machine Reading Comprehension/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjFUTWtBRlF5NmNyN051TFBWSWFVUFpObW9ncjdMclJUUVp4TTdiaUprV2dRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0)" alt="A Robust Adversarial Training Approach to Machine Reading Comprehension" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/04/27/A Robust Adversarial Training Approach to Machine Reading Comprehension/" class="title">A Robust Adversarial Training Approach to Machine Reading Comprehension</a></p>
+                            <p class="item-date"><time datetime="2020-04-27T06:11:00.000Z" itemprop="datePublished">2020-04-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/04/16/A Survey of Zero-Shot Learning Settings, Methods, and Applications/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://imglf6.nosdn0.126.net/img/bG1jbzEvdHVjVjNuZXlQMW1yWldGbDBNTE5PdWk1dmVWVGJyQjM1a0lXc3A1K3hsS1phMk9nPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)" alt="A Survey of Zero-Shot Learning：Settings, Methods, and Applications" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2020/04/16/A Survey of Zero-Shot Learning Settings, Methods, and Applications/" class="title">A Survey of Zero-Shot Learning：Settings, Methods, and Applications</a></p>
+                            <p class="item-date"><time datetime="2020-04-16T04:16:00.000Z" itemprop="datePublished">2020-04-16</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Graph/">Graph</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">64</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Active-Learning/">Active Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversarial-Training/">Adversarial Training</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversial-Learning/">Adversial Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Context-Rewriting/">Context  Rewriting</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Contrastive-Learning/">Contrastive Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Entity-Typing/">Entity Typing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph/">Graph</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Convolutional-Networks/">Graph Convolutional Networks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Representation-Learning/">Graph Representation Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MRC/">MRC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Reading-Comprehension/">Machine  Reading  Comprehension</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MentorNet/">MentorNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Meta-Learning/">Meta-Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mixup/">Mixup</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multi-Task-Learning/">Multi-Task Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neural-Response-Generation/">Neural Response Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pointer-Generator/">Pointer Generator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pretrained-Word-Representations/">Pretrained  Word  Representations</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Question-Answering/">Question Answering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Response-Selection/">Response Selection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentence-Semantic-Matching/">Sentence  Semantic  Matching</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Labeling/">Sequence  Labeling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Learning/">Sequence Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer  Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VAE/">VAE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Variational-Generation/">Variational Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zero-shot-Learning/">Zero-shot Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/domain-adaptation/">domain adaptation</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Active-Learning/" style="font-size: 10px;">Active Learning</a> <a href="/tags/Adversarial-Training/" style="font-size: 10px;">Adversarial Training</a> <a href="/tags/Adversial-Learning/" style="font-size: 10px;">Adversial Learning</a> <a href="/tags/BUPT/" style="font-size: 11.25px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 15px;">Commonsense  Knowledge</a> <a href="/tags/Context-Rewriting/" style="font-size: 10px;">Context  Rewriting</a> <a href="/tags/Contrastive-Learning/" style="font-size: 10px;">Contrastive Learning</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 18.75px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Entity-Typing/" style="font-size: 10px;">Entity Typing</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph/" style="font-size: 11.25px;">Graph</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Graph-Convolutional-Networks/" style="font-size: 10px;">Graph Convolutional Networks</a> <a href="/tags/Graph-Representation-Learning/" style="font-size: 10px;">Graph Representation Learning</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.25px;">Keras</a> <a href="/tags/MRC/" style="font-size: 11.25px;">MRC</a> <a href="/tags/Machine-Reading-Comprehension/" style="font-size: 10px;">Machine  Reading  Comprehension</a> <a href="/tags/Machine-Learning/" style="font-size: 12.5px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 11.25px;">Memory Network</a> <a href="/tags/MentorNet/" style="font-size: 10px;">MentorNet</a> <a href="/tags/Meta-Learning/" style="font-size: 11.25px;">Meta-Learning</a> <a href="/tags/Mixup/" style="font-size: 10px;">Mixup</a> <a href="/tags/Multi-Task-Learning/" style="font-size: 10px;">Multi-Task Learning</a> <a href="/tags/NLG/" style="font-size: 11.25px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 17.5px;">NLU</a> <a href="/tags/Neural-Response-Generation/" style="font-size: 10px;">Neural Response Generation</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/Object-Detection/" style="font-size: 11.25px;">Object Detection</a> <a href="/tags/Pointer-Generator/" style="font-size: 10px;">Pointer Generator</a> <a href="/tags/Pretrained-Word-Representations/" style="font-size: 10px;">Pretrained  Word  Representations</a> <a href="/tags/Python/" style="font-size: 11.25px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Question-Answering/" style="font-size: 10px;">Question Answering</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.75px;">Reinforcement Learning</a> <a href="/tags/Response-Selection/" style="font-size: 10px;">Response Selection</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/Sentence-Semantic-Matching/" style="font-size: 10px;">Sentence  Semantic  Matching</a> <a href="/tags/Sequence-Labeling/" style="font-size: 10px;">Sequence  Labeling</a> <a href="/tags/Sequence-Learning/" style="font-size: 10px;">Sequence Learning</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 16.25px;">Tensorflow</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer  Learning</a> <a href="/tags/Transfer-Learning/" style="font-size: 11.25px;">Transfer Learning</a> <a href="/tags/Transformer/" style="font-size: 11.25px;">Transformer</a> <a href="/tags/VAE/" style="font-size: 10px;">VAE</a> <a href="/tags/Variational-Generation/" style="font-size: 10px;">Variational Generation</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a> <a href="/tags/Zero-shot-Learning/" style="font-size: 10px;">Zero-shot Learning</a> <a href="/tags/domain-adaptation/" style="font-size: 10px;">domain adaptation</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://helicqin.github.io/about/index.html">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2020 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helicqin.github.io/2020/09/04/Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
