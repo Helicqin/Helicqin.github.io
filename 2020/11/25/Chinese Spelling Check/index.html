@@ -17,7 +17,7 @@
 <meta property="og:description" content="Chinese Spelling Check (CSC)相关论文">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://user-images.githubusercontent.com/21177644/100177899-e223a800-2f0d-11eb-926e-49cfba661a12.png">
-<meta property="og:updated_time" content="2020-11-30T13:23:56.037Z">
+<meta property="og:updated_time" content="2020-11-30T14:55:14.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chinese Spelling Check">
 <meta name="twitter:description" content="Chinese Spelling Check (CSC)相关论文">
@@ -188,11 +188,11 @@ ga('send', 'pageview');
 </li>
 <li><p>本文提出了一种新的神经结构，称为SoftMasked BERT。软屏蔽BERT包含两个网络，一个检测网络和一个基于BERT的校正网络。校正网络与单纯使用BERT的方法相似。检测网络是Bi-GRU网络，可以预测字符在每个位置出现错误的概率。然后利用该概率进行在该位置嵌入字符的软掩蔽。软掩蔽是传统的“硬掩蔽”的延伸，当误差概率等于1时，前者退化为后者。然后将每个位置的软掩蔽嵌入信息输入到校正网络中。校正网络使用BERT进行误差校正。该方法可以在端到端联合训练过程中，在检测网络的帮助下，强制模型学习正确的上下文进行错误纠正。</p>
 </li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177894-e059e480-2f0d-11eb-8a2d-008c7a1d11c2.png" alt="undefined"></p>
+<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177894-e059e480-2f0d-11eb-8a2d-008c7a1d11c2.png" alt=""></p>
 </li>
 <li><p>具体细节：如图所示，软掩蔽BERT由一个基于Bi-GRU的检测网络和一个基于BERT的校正网络组成。检测网络预测误差的概率，修正网络预测误差修正的概率，而检测网络利用软掩蔽将预测结果传递给修正网络。更具体地说，首先为输入语句中的每个字符创建嵌入，称为输入嵌入。接下来，它使用检测网络以嵌入序列作为输入和输出字符序列(嵌入)的错误概率。然后计算输入嵌入和[MASK]嵌入的加权和，并根据误差概率进行加权。计算得到的嵌入以一种软的方式掩盖了序列中可能出现的错误。然后，以软屏蔽嵌入序列作为输入，使用修正网络输出误差修正的概率，这是一个BERT模型，它的最后一层由一个针对所有字符的softmax函数组成。在输入嵌入项和最终层的嵌入项之间还有剩余的连接。</p>
 </li>
-<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177896-e223a800-2f0d-11eb-9b72-6643a60ca43f.png" alt="undefined"></p>
+<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177896-e223a800-2f0d-11eb-9b72-6643a60ca43f.png" alt=""></p>
 </li>
 <li><p>soft-mask的意义：纠错模型不仅要学习正确的上下文，还要给定上下文条件下学习（错字-正字）之间的映射关系（比如正确的字一般都为错字的音近形近字），mask掉错字，很有可能一开始就已经南辕北辙了。</p>
 </li>
@@ -202,9 +202,9 @@ ga('send', 'pageview');
 </li>
 <li><p>本工作的亮点，在于把混淆集做成了“图”，又加到了单字的embedding里。把混淆集做成GCN，每个字不仅是它自己融合上下文特征后的embedding，在embedding里也加入了音近、形近字的影子。于是进行多分类的时候，每个混淆集里的字都更倾向于分为混淆集里的其他字。具体实现上，分别基于已知混淆集建立音似图和形似图，使用BERT作为GCN初始化，两个图之间使用注意力聚合，最后使用GCN的输出做分类。</p>
 </li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177899-e223a800-2f0d-11eb-926e-49cfba661a12.png" alt="undefined"></p>
+<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177899-e223a800-2f0d-11eb-926e-49cfba661a12.png" alt=""></p>
 </li>
-<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177900-e2bc3e80-2f0d-11eb-87e6-809230bbe836.png" alt="undefined"></p>
+<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177900-e2bc3e80-2f0d-11eb-87e6-809230bbe836.png" alt=""></p>
 </li>
 </ol>
 <h3 id="Confusionset-guided-Pointer-Networks-for-Chinese-Spelling-Check"><a href="#Confusionset-guided-Pointer-Networks-for-Chinese-Spelling-Check" class="headerlink" title="Confusionset-guided Pointer Networks for Chinese Spelling Check"></a>Confusionset-guided Pointer Networks for Chinese Spelling Check</h3><ol>
@@ -212,9 +212,9 @@ ga('send', 'pageview');
 </li>
 <li><p>seq2seq模式，结合指针网络，从混淆集生成以及原句中copy得到最终的纠错结果。</p>
 </li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177901-e354d500-2f0d-11eb-918b-9977316125b8.png" alt="undefined"></p>
+<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177901-e354d500-2f0d-11eb-918b-9977316125b8.png" alt=""></p>
 </li>
-<li><p>实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177903-e3ed6b80-2f0d-11eb-9f62-25599c931aa4.png" alt="undefined"></p>
+<li><p>实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177903-e3ed6b80-2f0d-11eb-9f62-25599c931aa4.png" alt=""></p>
 </li>
 </ol>
 <h3 id="A-Hybrid-Approach-to-Automatic-Corpus-Generation-for-Chinese-Spelling-Check"><a href="#A-Hybrid-Approach-to-Automatic-Corpus-Generation-for-Chinese-Spelling-Check" class="headerlink" title="A Hybrid Approach to Automatic Corpus Generation for Chinese Spelling Check"></a>A Hybrid Approach to Automatic Corpus Generation for Chinese Spelling Check</h3><ol>
@@ -222,9 +222,9 @@ ga('send', 'pageview');
 </li>
 <li><p>中文错字的自动检查是一个富有挑战又十分有意义的任务，该任务不仅用于许多自然语言处理应用的预处理阶段，而且可以极大促进人们的日常读写。数据驱动的方法在中文错字检查十分有效，然而却面临着标注数据缺乏的挑战。本工作提出了一种自动构造用于拼写检查数据集的方法，分别通过基于 OCR 和 SR 的方法构造视觉上和听觉上相似的字来模拟错字。利用本文提出的方法，研究人员构造了一个大规模的数据集用于训练不同的错字自动检查模型，在三个标准的测试集上的实验结果证明了本文自动构造数据集方法的合理性和有效性。</p>
 </li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177904-e4860200-2f0d-11eb-8e01-29127c1d97b5.png" alt="undefined"></p>
+<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177904-e4860200-2f0d-11eb-8e01-29127c1d97b5.png" alt=""></p>
 </li>
-<li><p>实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177907-e51e9880-2f0d-11eb-93de-d3e0fb188600.png" alt="undefined"></p>
+<li><p>实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177907-e51e9880-2f0d-11eb-93de-d3e0fb188600.png" alt=""></p>
 </li>
 </ol>
 <h3 id="Adversarial-Semantic-Decoupling-for-Recognizing-Open-Vocabulary-Slots"><a href="#Adversarial-Semantic-Decoupling-for-Recognizing-Open-Vocabulary-Slots" class="headerlink" title="Adversarial Semantic Decoupling for Recognizing Open-Vocabulary Slots"></a>Adversarial Semantic Decoupling for Recognizing Open-Vocabulary Slots</h3><ol>
@@ -232,9 +232,9 @@ ga('send', 'pageview');
 </li>
 <li><p>本文是作者发表在EMNLP2020上的工作，主要解决罕见实体识别问题，核心思想是利用对抗攻击来做数据增强。可以借鉴到我们的线上纠错数据集，增强模型的鲁棒性。</p>
 </li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177908-e51e9880-2f0d-11eb-8540-f650d59f4a84.png" alt="undefined"></p>
+<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177908-e51e9880-2f0d-11eb-8540-f650d59f4a84.png" alt=""></p>
 </li>
-<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177909-e5b72f00-2f0d-11eb-8f6a-a21b76c372ec.png" alt="undefined"></p>
+<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177909-e5b72f00-2f0d-11eb-8f6a-a21b76c372ec.png" alt=""></p>
 </li>
 </ol>
 
