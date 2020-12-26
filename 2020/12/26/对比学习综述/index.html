@@ -17,7 +17,7 @@
 <meta property="og:description" content="总结最新的一些对比学习的论文和资源，对比CV和NLP的一些区别。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://user-images.githubusercontent.com/21177644/103147636-5a41ef80-4792-11eb-84e5-0c7cc920b171.jpg">
-<meta property="og:updated_time" content="2020-12-26T08:22:49.340Z">
+<meta property="og:updated_time" content="2020-12-26T08:29:11.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对比学习综述">
 <meta name="twitter:description" content="总结最新的一些对比学习的论文和资源，对比CV和NLP的一些区别。">
@@ -259,8 +259,8 @@ ga('send', 'pageview');
 </ol>
 </li>
 </ol>
-<pre><code>训练步骤虽然简洁，但为什么work却有很多学问。简单的解释是，对于整体目标的优化可以看作一个EM过程，左右两边交替更新，所以在更新左侧encoder时可以将右侧看成常数。更多的细节可以参考[Andy的详解](https://mp.weixin.qq.com/s?__biz=MzUxMjE1NzA2MA==&amp;mid=2247484517&amp;idx=1&amp;sn=d48650c5c7a842d24931bdf2c1cf7914&amp;scene=21#wechat_redirect)。
-</code></pre><h2 id="自然语言处理领域的对比学习"><a href="#自然语言处理领域的对比学习" class="headerlink" title="自然语言处理领域的对比学习"></a>自然语言处理领域的对比学习</h2><p>NLP领域的对比学习主要是借鉴自CV，主要在data augmentation方面有所不同。</p>
+<p>训练步骤虽然简洁，但为什么work却有很多学问。简单的解释是，对于整体目标的优化可以看作一个EM过程，左右两边交替更新，所以在更新左侧encoder时可以将右侧看成常数。更多的细节可以参考<a href="https://mp.weixin.qq.com/s?__biz=MzUxMjE1NzA2MA==&amp;mid=2247484517&amp;idx=1&amp;sn=d48650c5c7a842d24931bdf2c1cf7914&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">Andy的详解</a>。</p>
+<h2 id="自然语言处理领域的对比学习"><a href="#自然语言处理领域的对比学习" class="headerlink" title="自然语言处理领域的对比学习"></a>自然语言处理领域的对比学习</h2><p>NLP领域的对比学习主要是借鉴自CV，主要在data augmentation方面有所不同。</p>
 <h3 id="改进语言模型预训练目标"><a href="#改进语言模型预训练目标" class="headerlink" title="改进语言模型预训练目标"></a>改进语言模型预训练目标</h3><h4 id="CAPT-Contrastive-Pre-Training-for-Learning-Denoised-Sequence-Representations"><a href="#CAPT-Contrastive-Pre-Training-for-Learning-Denoised-Sequence-Representations" class="headerlink" title="CAPT: Contrastive Pre-Training for Learning Denoised Sequence Representations"></a>CAPT: Contrastive Pre-Training for Learning Denoised Sequence Representations</h4><p><img src="https://user-images.githubusercontent.com/21177644/103147637-5ada8600-4792-11eb-8302-ded658b64ef2.png" alt=""></p>
 <ol>
 <li><p>语言模型预训练阶段目标改进</p>
@@ -325,11 +325,11 @@ ga('send', 'pageview');
 <p>1.语义质量（Semantic Quality），即生成的摘要在语义上和原文的匹配程度。例如：是否覆盖原文的关键信息、和原文的一致性等等。</p>
 <p>2.句法质量（Linguistic Quality），即在句法层面，生成摘要的流畅程度。<br><img src="https://user-images.githubusercontent.com/21177644/103147654-6037d080-4792-11eb-93c1-b80f1ac29697.png" alt=""><br><img src="https://user-images.githubusercontent.com/21177644/103147648-5dd57680-4792-11eb-92dd-508066f56a6d.png" alt=""></p>
 </li>
-<li>随后，作者通过构造自监督的辅助任务，利用对比损失训练摘要评价系统。通过规则对生成的摘要添加噪声：随机删除词语，添加额外句子，打乱词序。负样本和正样本分别和文档配对输入模型，构建对比损失（原始摘要和噪声摘要构建max-margin损失，注意这里只有样本内的损失，没有考虑不同文档之间的关系）。<br><img src="https://user-images.githubusercontent.com/21177644/103147649-5e6e0d00-4792-11eb-946e-0418e3bab54f.png" alt=""><br><img src="https://user-images.githubusercontent.com/21177644/103147647-5d3ce000-4792-11eb-844c-ad56c383fc22.png" alt=""><h3 id="对比学习中的数据增强方法探索"><a href="#对比学习中的数据增强方法探索" class="headerlink" title="对比学习中的数据增强方法探索"></a>对比学习中的数据增强方法探索</h3></li>
+<li>随后，作者通过构造自监督的辅助任务，利用对比损失训练摘要评价系统。通过规则对生成的摘要添加噪声：随机删除词语，添加额外句子，打乱词序。负样本和正样本分别和文档配对输入模型，构建对比损失（原始摘要和噪声摘要构建max-margin损失，注意这里只有样本内的损失，没有考虑不同文档之间的关系）。<br><img src="https://user-images.githubusercontent.com/21177644/103147649-5e6e0d00-4792-11eb-946e-0418e3bab54f.png" alt=""><br><img src="https://user-images.githubusercontent.com/21177644/103147647-5d3ce000-4792-11eb-844c-ad56c383fc22.png" alt=""></li>
 </ol>
 </li>
 </ol>
-<h4 id="CoDA-Contrast-enhanced-and-Diversity-promoting-Data-Augmentation-for-Natural-Language-Understanding"><a href="#CoDA-Contrast-enhanced-and-Diversity-promoting-Data-Augmentation-for-Natural-Language-Understanding" class="headerlink" title="CoDA: Contrast-enhanced and Diversity-promoting Data Augmentation for Natural Language Understanding"></a>CoDA: Contrast-enhanced and Diversity-promoting Data Augmentation for Natural Language Understanding</h4><ol>
+<h3 id="对比学习中的数据增强方法探索"><a href="#对比学习中的数据增强方法探索" class="headerlink" title="对比学习中的数据增强方法探索"></a>对比学习中的数据增强方法探索</h3><h4 id="CoDA-Contrast-enhanced-and-Diversity-promoting-Data-Augmentation-for-Natural-Language-Understanding"><a href="#CoDA-Contrast-enhanced-and-Diversity-promoting-Data-Augmentation-for-Natural-Language-Understanding" class="headerlink" title="CoDA: Contrast-enhanced and Diversity-promoting Data Augmentation for Natural Language Understanding"></a>CoDA: Contrast-enhanced and Diversity-promoting Data Augmentation for Natural Language Understanding</h4><ol>
 <li><p>ICLR2021</p>
 </li>
 <li><p>由于文本的离散属性，难以生成标签不变（Label Preserving）的增强版本，本文主要探索NLP领域中的数据增强策略，以及将其用于对比学习的效果。</p>
