@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Helic">
 <meta property="og:description" content="Research AreaCurrently, I am working on neural conversational AI:  Natural Language Understanding: Natural language understanding parses (speech) input to the semantic meaning, including intent classi">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-01T07:05:43.044Z">
+<meta property="og:updated_time" content="2021-04-17T16:38:10.009Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About Me">
 <meta name="twitter:description" content="Research AreaCurrently, I am working on neural conversational AI:  Natural Language Understanding: Natural language understanding parses (speech) input to the semantic meaning, including intent classi">
@@ -167,6 +167,7 @@ ga('send', 'pageview');
 <li><code>Dialog Policy Learning</code>: We take the task-oriented dialogue as the optimal decision-making process to find optimal policy $\pi$, which could be modeled as a typical reinforcement learning(RL) problem. By maximizing average long-term reward, we could learn the optimal action $a$ to state $s$. I’m focusing on improving the user simulator and sampling better user goals.</li>
 <li><code>Graph Convolutional Network</code>: GCNs have demonstrated their effectiveness in capturing graph structure. We propose a novel joint model that applies a graph convolution network over dependency trees to integrate the syntactic structure for learning slot filling and intent detection jointly.</li>
 <li><code>Out-of-Domain Detection</code>: Detecting unknown or OOD (Out-of-Domain) intents from user queries is an essential component that aims to know when a query falls outside their range of predefined supported intents. We focus on the unsupervised OOD detection scenario where there are no labeled OOD samples except for labeled in-domain data and propose a strong generative distance-based classifier to detect OOD samples.</li>
+<li><code>Dialogue Summarization</code>: Traditional document summarization models cannot handle dialogue summarization tasks perfectly because of multiple speakers and complex personal pronouns referential relationships in the conversation. We propose a hierarchical transformer-based model for dialogue summarization. It encodes the dialogue from words to utterances and distinguishes the relationships between speakers and their corresponding personal pronouns clearly. Experiments show that our model can generate summaries more accurately and relieve the confusion of personal pronouns.</li>
 </ul>
 <h2 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h2><ul>
 <li>2018-now, Master in Artificial Intelligence, BEIJING UNIVERSITY OF POSTS AND TELECOMMUNICATIONS</li>
@@ -207,6 +208,30 @@ ga('send', 'pageview');
 </li>
 </ol>
 <h2 id="Publication"><a href="#Publication" class="headerlink" title="Publication"></a>Publication</h2><ol>
+<li><p><strong>Adversarial Self-Supervised Learning for Out-of-Domain Detection</strong>, NAACL2021</p>
+<ul>
+<li>Zhiyuan Zeng, <strong>Keqing He</strong>, Yuanmeng Yan, Hong Xu, Weiran Xu</li>
+<li>Abstract: Detecting out-of-domain (OOD) intents is crucial for the deployed task-oriented dialogue system. Previous unsupervised OOD detection methods only extract discriminative features of different in-domain intents while supervised counterparts can directly distinguish OOD and in-domain intents but require extensive labeled OOD data. To combine the benefits of both types, we propose a self-supervised contrastive learning framework to model discriminative semantic features of both in-domain intents and OOD intents from unlabeled data. Besides, we introduce an adversarial augmentation neural module to improve the efficiency and robustness of contrastive learning. Experiments on two public benchmark datasets show that our method can consistently outperform the baselines with a statistically significant margin.</li>
+</ul>
+</li>
+<li><p><strong>Dynamically Disentangling Social Bias from Task-Oriented Representations with Adversarial Attack</strong>, NAACL2021</p>
+<ul>
+<li>Liwen Wang*, Yuanmeng Yan*, <strong>Keqing He</strong>, Yanan Wu, Weiran Xu</li>
+<li>Abstract: Representation learning is widely used in NLP for a vast range of tasks. However, representations derived from text corpora often reflect social biases. This phenomenon is pervasive and consistent across different neural models, causing serious concern. Previous methods mostly rely on a pre-specified, user-provided direction or suffer from unstable training. In this paper, we propose an adversarial disentangled debiasing model to dynamically decouple social bias attributes from the intermediate representations trained on the main task. We aim to denoise bias information while training on the downstream task, rather than completely remove social bias and pursue static unbiased representations. Experiments show the effectiveness of our method, both on the effect of debiasing and the main task performance.</li>
+</ul>
+</li>
+<li><p><strong>Hierarchical Speaker-Aware Sequence-to-Sequence Model for Dialogue Summarization</strong>, ICASSP2021</p>
+<ul>
+<li>Yuejie Lei, Yuanmeng Yan, Zhiyuan Zeng, <strong>Keqing He</strong>, Ximing Zhang, Weiran Xu</li>
+<li>Abstract: Traditional document summarization models cannot handle dialogue summarization tasks perfectly. In situations with multiple speakers and complex personal pronouns referential relationships in the conversation. The predicted summaries of these models are always full of personal pronoun confusion. In this paper, we propose a hierarchical transformer-based model for dialogue summarization. It encodes dialogues from words to utterances and distinguishes the relationships between speakers and their corresponding personal pronouns clearly. In such a from-coarse-to-fine procedure, our model can generate summaries more accurately and relieve the confusion of personal pronouns. Experiments are based on a dialogue summarization dataset SAMsum, and the results show that the proposed model achieved a comparable result against other strong baselines. Empirical experiments have shown that our method can relieve the confusion of personal pronouns in predicted summaries.</li>
+</ul>
+</li>
+<li><p><strong>Adversarial Generative Distance-Based Classifier for Robust Out-of-Domain Detection</strong>, ICASSP2021</p>
+<ul>
+<li>Zhiyuan Zeng*, Hong Xu*, <strong>Keqing He</strong>, Yuanmeng Yan, Sihong Liu, Zijun Liu, Weiran Xu</li>
+<li>Abstract: Detecting out-of-domain (OOD) intents is critical in a task-oriented dialog system. Existing methods rely heavily on extensive manually labeled OOD samples and lack robustness. In this paper, we propose an efficient adversarial attack mechanism to augment hard OOD samples and design a novel generative distance-based classifier to detect OOD samples instead of a traditional threshold-based discriminator classifier. Experiments on two public benchmark datasets show that our method can consistently outperform the baselines with a statistically significant margin.</li>
+</ul>
+</li>
 <li><p><strong>Contrastive Zero-Shot Learning for Cross-Domain Slot Filling with Adversarial Attack</strong>, COLING2020</p>
 <ul>
 <li><strong>Keqing He</strong>, Jinchao Zhang, Yuanmeng Yan, Weiran XU, Cheng Niu, Jie Zhou</li>
@@ -225,7 +250,7 @@ ga('send', 'pageview');
 <ul>
 <li>Hong Xu, <strong>Keqing He</strong>, Yuanmeng Yan, Sihong Liu, Zijun Liu, Weiran XU</li>
 <li>Abstract: Detecting out-of-domain (OOD) input intents is critical in the task-oriented dialog system. Different from most existing methods that rely heavily on manually labeled OOD samples, we focus on the unsupervised OOD detection scenario where there are no labeled OOD samples except for labeled in-domain data. In this paper, we propose a simple but strong generative distance-based classifier to detect OOD samples. We estimate the class-conditional distribution on feature spaces of DNNs via Gaussian discriminant analysis (GDA) to avoid over-confidence problems. And we use two distance functions, Euclidean and Mahalanobis distances, to measure the confidence score of whether a test sample belongs to OOD. Experiments on four benchmark datasets show that our method can consistently outperform the baselines.</li>
-<li><a href="https://www.aclweb.org/anthology/2020.coling-main.125/" target="_blank" rel="noopener">paper</a></li>
+<li><a href="https://www.aclweb.org/anthology/2020.coling-main.125/" target="_blank" rel="noopener">paper</a>, <a href="https://github.com/pris-nlp/Generative_distance-based_OOD" target="_blank" rel="noopener">code</a></li>
 </ul>
 </li>
 <li><p><strong>Adversarial Semantic Decoupling for Recognizing Open-Vocabulary Slots</strong>, EMNLP2020</p>
