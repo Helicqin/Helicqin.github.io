@@ -6,7 +6,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="https://helicqin.github.io/"/>
-  <updated>2021-03-28T02:14:24.047Z</updated>
+  <updated>2021-04-17T15:54:15.499Z</updated>
   <id>https://helicqin.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Energy-based  Out-of-distribution Detection</title>
+    <link href="https://helicqin.github.io/2021/04/17/Energy-based%20Out-of-distribution%20Detection/"/>
+    <id>https://helicqin.github.io/2021/04/17/Energy-based Out-of-distribution Detection/</id>
+    <published>2021-04-17T08:17:00.000Z</published>
+    <updated>2021-04-17T15:54:15.499Z</updated>
+    
+    <content type="html"><![CDATA[<p>作者提出了一个用energy score检测OOD的统一框架，其既可以用于预训练网络分类器作为scoring fuction，也可以作为一个trainable cost function来微调分类模型。<br><a id="more"></a></p><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>当机器学习模型看到与其训练数据不同的输入时，就会出现 out-of-distribution （OOD）uncertainty，因此模型很难对他们进行正确预测（也即在与训练数据分布差距较大的数据点上表现极差）。对于将 ML 应用于安全关键的应用（如罕见疾病鉴定）而言，确定输入是否超出了分布范围是一个基本问题。</p><p>OOD（Out-of-distribution）检测的传统方法之一是基于 softmax confidence。直觉上来看，对于 in distribution 的数据点，我们有高可信度给他们一个结果（就分类问题而言即将一张猫的图片分类为“猫”的概率很高），<strong>那么可信度低的就是 OOD inputs</strong>。但是因为 DNN 在样本空间的过拟合，经常会对OOD的样本（比如对抗样本）一个很高的可信度。</p><p>另一种检测方法是基于生成模型的，这类方法从生成建模的角度推导出似然分数log p(x) ，主要利用 Variational Autoencoder 的 reconstruction error 或者其他度量方式来判断一个样本是否属于 ID 或 OOD 样本。主要的假设是，Autoencoder 的隐含空间（latent space）能够学习出 ID 数据的明显特征 (silent vector)，而对于 OOD 样本则不行，因此 OOD 样本会产生较高的 reconstruction error。这类方法的缺点在于生成模型难以优化而且不稳定，因为它需要对样本空间的归一化密度进行估计。</p><p>在本文中，作者使用 energy score 来检测 OOD 输入，ID 的数据 energy score 低，OOD 的数据 energy score 高。作者详尽证明了 energy score 优于基于 softmax 的得分和基于生成模型的方法。相比于基于 softmax 可信度得分的方法，energy score 不太受到 NN 在样本空间过拟合的影响。相比于基于生成模型的方法，energy score 又不需要进行显式的密度估计。</p><h2 id="Background-Energy-based-Models"><a href="#Background-Energy-based-Models" class="headerlink" title="Background:  Energy-based  Models"></a>Background:  Energy-based  Models</h2><p>基于能量的模型（EBM）的本质是构建一个函数 $E(x): \mathbb{R}^{D} \rightarrow \mathbb{R}$，它将输入空间中的每个点 $x$ 映射到一个称为能量的单个 non-probabilistic scalar。通过 Gibbs 分布我们可以将能量转化为概率密度：<br>$$<br>p(y \mid \mathbf{x})=\frac{e^{-E(\mathbf{x}, y) / T}}{\int_{y^{\prime}} e^{-E\left(\mathbf{x}, y^{\prime}\right) / T}}=\frac{e^{-E(\mathbf{x}, y) / T}}{e^{-E(\mathbf{x}) / T}}<br>$$<br>分母被称为配分函数，$T$ 是温度参数。此时我们可以得到任意点的自由能 $E(x)$ 为：<br>$$<br>E(\mathbf{x})=-T \cdot \log \int_{y^{\prime}} e^{-E\left(\mathbf{x}, y^{\prime}\right) / T}<br>$$<br>我们可以轻易的联系分类模型与能量模型，考虑一个 $K$ 类的 NN 分类器 $f(x): \mathbb{R}^{D} \rightarrow \mathbb{R}^{K}$ 将输入映射到 $K$ 个对数值，通过 softmax 归一化得到属于某一类别的概率，分类分布如下：<br>$$<br>p(y \mid \mathbf{x})=\frac{e^{f_{y}(\mathbf{x}) / T}}{\sum_{i}^{K} e^{f_{i}(\mathbf{x}) / T}}<br>$$<br>这里的 $f_{y}(x)$ 即 $f(x)$ 的第 $y$ 个值，而此时我们可以定义能量为 $E(x, y)=-f_{y}(x)$ 即负对数。同时我们可以得到关于 $x$ 的自由能：<br>$$<br>E(x, f)=-T \log \sum_{i=1}^{K} e^{f_{i}(x) / T}<br>$$<br>这里需要强调一下，这个能量已经与数据本身的标签无关了，可以看作是输出向量 $f(x)$ 的一种范数。</p><h2 id="Energy-based-Out-of-distribution-Detection"><a href="#Energy-based-Out-of-distribution-Detection" class="headerlink" title="Energy-based  Out-of-distribution  Detection"></a>Energy-based  Out-of-distribution  Detection</h2><h3 id="Energy-as-Inference-time-OOD-Score"><a href="#Energy-as-Inference-time-OOD-Score" class="headerlink" title="Energy  as  Inference-time  OOD  Score"></a>Energy  as  Inference-time  OOD  Score</h3><p>OOD是一个二分类问题，判别IND or OOD。自然想到可以利用数据的密度函数，认为低似然的例子为OOD。而利用基于能量的模型可以得到判别模型的密度函数：<br>$$<br>p(\mathbf{x})=\frac{e^{-E(\mathbf{x} ; f) / T}}{\int_{\mathbf{x}} e^{-E(\mathbf{x} ; f) / T}}<br>$$<br>其分母Z为配分函数，是未知的归一化函数，很难对输入空间进行计算，甚至难以进行可靠的估计。对上式两边取对数：<br>$$<br>\log p(\mathbf{x})=-E(\mathbf{x} ; f) / T-\underbrace{\log Z}_{\text {constant for all } \mathbf{x}}<br>$$<br>因为Z是样本独立的，不影响总体能量得分分布，所以-E(x;f)实际上与对数似然函数是线性对齐的，具有较高能量(较低可能性)的例子更可能为OOD数据。因此，可以使用能量函数E(x;f)进行OOD检测：<br>$$<br>G(\mathbf{x} ; \tau, f)=\left\{\begin{array}{ll}<br>0 &amp; \text { if }-E(\mathbf{x} ; f) \leq \tau \\<br>1 &amp; \text { if }-E(\mathbf{x} ; f)&gt;\tau<br>\end{array}\right.<br>$$<br>在实际应用中，我们使用分布内的数据来选择阈值，从而使大量的输入被OOD检测器正确地分类。这里我们使用负能量得分-E(x;f)，以符合正样本(IND)有更高的分数。能量分数本质上是非概率的，可以通过logsumexp运算符方便地计算出来。与JEM不同，我们的方法不需要明确估计密度Z，因为Z是样本独立的，不影响总体能量得分分布。</p><p><strong>Energy Score vs. Softmax Score</strong><br>作者从理论上证明softmax score无法对齐概率密度，对于任何预先训练过的神经网络，energy方法都可以作为softmax置信度简单而有效的替代，具体见原文。</p><h3 id="Energy-bounded-Learning-for-OOD-Detection"><a href="#Energy-bounded-Learning-for-OOD-Detection" class="headerlink" title="Energy-bounded  Learning  for  OOD  Detection"></a>Energy-bounded  Learning  for  OOD  Detection</h3><p>虽然能量分数对于预先训练的神经网络是有用的，但分布内和分布外之间的能量差距可能并不总是最优的分化。因此，我们还提出了一个有能量边界的学习目标，通过将较低的能量分配给IND数据，将较高的能量分配给OOD数据，对神经网络进行微调，以明确创建一个能量差距。学习过程允许更大的灵活性来对比塑造能量表面，从而产生更多可区分的分布内和分布外数据。具体来说，我们的基于能量的分类器使用以下目标进行训练:<br>$$<br>\min _{\theta} \mathbb{E}_{(\mathbf{x}, y) \sim \mathcal{D}_{\text {in }}^{\text {train }}}\left[-\log F_{y}(\mathbf{x})\right]+\lambda \cdot L_{\text {energy }}<br>$$<br>整体 = 交叉熵损失+能量约束项，其中F(x)是softmax输出，$D_{in}^{train}$ 是IND训练数据。<br>$$<br>\begin{aligned}<br>L_{\text {energy }} &amp;=\mathbb{E}_{\left(\mathbf{x}_{\text {in }}, y\right) \sim \mathcal{D}_{\text {in }}^{\text {train }}}\left(\max \left(0, E\left(\mathbf{x}_{\text {in }}\right)-m_{\text {in }}\right)\right)^{2} \\<br>&amp;+\mathbb{E}_{\mathbf{x}_{\text {out }} \sim \mathcal{D}_{\text {out }}^{\text {train }}}\left(\max \left(0, m_{\text {out }}-E\left(\mathbf{x}_{\text {out }}\right)\right)\right)^{2}<br>\end{aligned}<br>$$<br>正则损失部分，用了两个平方的 hinge loss 来分别惩罚能量高于$m_{in}$的IND数据，和能量低于$m_{out}$的OOD数据。</p><h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p>实验中有一点需要注意，作者采用了两个 setting：</p><ul><li><p>No fine-tune: 使用 backbone 的输出，只是将 softmax confidence 换成能量得分。注意样本的能量我们定义为  $E(x, f)=-T \log \sum_{i=1}^{K} e^{f_{i}(x) / T}$，其中 $f_{i}(x)$ 即 backbone 的第 $i$ 维输出。</p></li><li><p>Fine-tune：使用上述的损失函数对 backbone 进行 fine-tune，然后使用 energy score 进行 OOD 检测。</p></li></ul><p>实验统一使用 WideResNet 作为预训练分类模型，在六种 OOD 数据集上的表现如下，可以看到在不进行 fine-tune 的情况下基本碾压了基于 softmax confidence 的方法。有 fine-tune 的情况下，也比目前的 sota-OE 好很多。<br><img src="https://user-images.githubusercontent.com/21177644/115107563-36ebbc00-9f9e-11eb-9643-c668403657f8.png" alt=""><br><img src="https://user-images.githubusercontent.com/21177644/115107570-43701480-9f9e-11eb-9c38-cffa706985a5.png" alt=""></p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol><li><a href="https://mp.weixin.qq.com/s/1YUeGXcjqHEpelR5T3hqjQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/1YUeGXcjqHEpelR5T3hqjQ</a></li><li><a href="https://www.notion.so/OOD-b06ddba0c19b44abb2fbba8a090d282c" target="_blank" rel="noopener">https://www.notion.so/OOD-b06ddba0c19b44abb2fbba8a090d282c</a></li><li><a href="https://github.com/wetliu/energy_ood" target="_blank" rel="noopener">https://github.com/wetliu/energy_ood</a></li><li><a href="https://kami.app/mQn-6S6-qN7" target="_blank" rel="noopener">https://kami.app/mQn-6S6-qN7</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;作者提出了一个用energy score检测OOD的统一框架，其既可以用于预训练网络分类器作为scoring fuction，也可以作为一个trainable cost function来微调分类模型。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="NLP" scheme="https://helicqin.github.io/categories/NLP/"/>
+    
+      <category term="NLU" scheme="https://helicqin.github.io/categories/NLP/NLU/"/>
+    
+    
+      <category term="OOD" scheme="https://helicqin.github.io/tags/OOD/"/>
+    
+      <category term="Energy" scheme="https://helicqin.github.io/tags/Energy/"/>
+    
+  </entry>
   
   <entry>
     <title>Self-Training综述</title>
@@ -478,33 +504,6 @@
       <category term="Commonsense  Knowledge" scheme="https://helicqin.github.io/tags/Commonsense-Knowledge/"/>
     
       <category term="Machine  Reading  Comprehension" scheme="https://helicqin.github.io/tags/Machine-Reading-Comprehension/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Unsupervised  Context  Rewriting  for  Open  Domain  Conversation</title>
-    <link href="https://helicqin.github.io/2019/10/26/Unsupervised%20Context%20Rewriting%20for%20Open%20Domain%20Conversation/"/>
-    <id>https://helicqin.github.io/2019/10/26/Unsupervised Context Rewriting for Open Domain Conversation/</id>
-    <published>2019-10-26T13:57:00.000Z</published>
-    <updated>2019-10-26T14:55:19.149Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文主要目的是生成自包含的（self-contained）句子，使其没有指代和依赖于对话历史中的其他句，进而促进回复选择和生成任务。</p><blockquote><p>paper: <a href="https://drive.google.com/open?id=1B4ts8jU3Xx_TJuS9rgcBP3E17DFbegK6" target="_blank" rel="noopener">https://drive.google.com/open?id=1B4ts8jU3Xx_TJuS9rgcBP3E17DFbegK6</a></p></blockquote><a id="more"></a><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本文研究的是对话重写任务，给定一段对话和回复，目的是将多轮的对话上下文改写为单句话，如下图所示：</p><p><img src="http://imglf4.nosdn0.126.net/img/bG1jbzEvdHVjVjI5QloweThMc0swdkJwRDE2R2hYTm4zQ2dMcGdVOUFWSkIzTTZjdWhhb3ZBPT0.png?imageView&amp;thumbnail=500x0&amp;quality=96&amp;stripmeta=0" alt=""></p><p>本文主要目的是生成自包含的（self-contained）句子，使其没有指代和依赖于对话历史中的其他句，主要有三个作用：</p><ul><li>有助于检索式chatbot的检索过程</li><li>有助于可解释和可控对话建模</li><li>重写后的结果可以让多轮问答变成单轮问答任务，单论问答的技术更加成熟。</li></ul><h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p> 本文提出了一种上下文重写网络（context rewriting network），融合对话上下文的关键信息与对话最后一句来改写，进而提高回复的准确率。模型结构如下：</p><p><img src="http://imglf3.nosdn0.126.net/img/bG1jbzEvdHVjVjI5QloweThMc0swbThQa2ZVOHZMUkp5OWZvaytrNU5QWFBnQVdoZlh4Vi93PT0.png?imageView&amp;thumbnail=1680x0&amp;quality=96&amp;stripmeta=0" alt="Figure  2:  The  Detail  of  CRN"></p><p>模型的核心是Seq2Seq+CopyNet，编码器和解码器都是双向GRU。在解码端的每一时间步，CRN融合了context c, last utterance q以及上一步隐层状态作为输入：<br>$$<br>z_{t}=W_{f}^{T}\left[s_{t} ; \sum_{i=1}^{n q} \alpha_{q_{i}} h_{q_{i}} ; \sum_{i=1}^{n c} \alpha_{c_{i}} h_{c_{i}}\right]+b<br>$$<br>其中$\alpha_{q}, \alpha_{c}$都是注意力权重。<br>$$<br>\begin{aligned} \alpha_{i} &amp;=\frac{\exp \left(e_{i}\right)}{\sum_{j=1}^{n} \exp \left(e_{j}\right)} \\ &amp; e_{i}=h_{i} W_{a} s_{t} \end{aligned}<br>$$</p><p>模型最后使用CopyNet来预测目标词：<br>$$<br>\begin{aligned} p\left(y_{t} | s_{t}, H_{Q}, H_{C}\right) &amp;=p_{p r}\left(y_{t} | z_{t}\right) \cdot p_{m}\left(p r | z_{t}\right) \\ &amp;+p_{c o}\left(y_{t} | z_{t}\right) \cdot p_{m}\left(c o | z_{t}\right) \end{aligned} \\<br>p_{m}\left(p r | z_{t}\right)=\frac{e^{\psi_{p r}\left(y_{t}, H_{Q}, H_{C}\right)}}{e^{\psi_{p r}\left(y_{t}, H_{Q}, H_{C}\right)}+e^{\psi_{c o}\left(y_{t}, H_{Q}, H_{C}\right)}}<br>$$</p><p><strong>Pre-training  with  Pseudo  Data</strong><br>因为数据集中并没有改写句的标注，因此作者从对话历史中抽取关键词来构造模拟数据。具体来说，作者使用了PMI来抽取一段文本中的关键词，核心是下式：<br>$$<br>\operatorname{PMI}\left(w_{c}, w_{r}\right)=-\log \frac{p_{c}\left(w_{c}\right)}{p\left(w_{c} | w_{r}\right)}<br>$$</p><p>$w_{c}$ 是context word，$w_{r}$ 是response word。为了选择对回复来说最重要的词，作者也计算了$PMI(w_{c}, w_{q})$ （$w_{q}$是last utterance的词），最终的PMI分数为：<br>$$<br>\operatorname{norm}\left(\operatorname{PMI}\left(w_{c}, q\right)\right)+\operatorname{norm}\left(\operatorname{PMI}\left(w_{c}, r\right)\right) \\<br>\operatorname{PMI}\left(w_{c}, q\right)=\sum_{w_{q} \in q} \operatorname{PMI}\left(w_{c}, w_{q}\right)<br>$$<br>然后选择PMI分数最高的20%词插入last utterance，这里通过语言模型来选择插入位置，保留前3个改写后的句子。接着使用对话生成和回复选择模型来从总挑选最佳改写句作为标注，具体来说，通过以下两个损失函数的值来选择：<br><img src="https://user-images.githubusercontent.com/21177644/67621452-5c34b980-f842-11e9-8c75-65b2398338f3.PNG" alt=""></p><p><strong>Fine-Tuning  with  Reinforcement Learning</strong><br>上述生成模拟数据难免包含错误，作者又使用了RL来优化CRN的性能。作者首先在模拟数据上预训练CRN模型，然后使用该模型产生候选改写句$q_{r}$，在生成过程中应用policy gradient算法：<br>$$<br>\nabla_{\theta} J(\theta)=E\left[R \cdot \nabla \log \left(P\left(y_{t} | x\right)\right)\right] \\<br>L_{c o m}=L_{r l}^{*}+\lambda L_{M L E}<br>$$<br>论文使用下游任务来给定奖励：</p><ul><li><p>回复生成：<br><img src="https://user-images.githubusercontent.com/21177644/67621605-6f945480-f843-11e9-9954-5baecabec5bc.PNG" alt=""></p></li><li><p>回复选择：<br><img src="https://user-images.githubusercontent.com/21177644/67621615-89ce3280-f843-11e9-954b-8e90ca88a60b.PNG" alt=""></p></li></ul><h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>作者使用了四种评价指标来评估模型性能：改写质量，回复生成，回复选择，检索式chatbot。</p><p><strong>Rewriting  Quality  Evaluation</strong><br><img src="https://user-images.githubusercontent.com/21177644/67620759-d5c9a900-f83c-11e9-8297-d4f806166929.PNG" alt=""></p><p><strong>Multi-turn  Response  Generation</strong><br><img src="https://user-images.githubusercontent.com/21177644/67620825-951e5f80-f83d-11e9-8fab-1c1a7c71e577.PNG" alt=""></p><p><strong>Multi-turn  Response  Selection</strong><br><img src="https://user-images.githubusercontent.com/21177644/67620846-f0505200-f83d-11e9-9334-100962869f9b.PNG" alt=""></p><p><strong>End-to-End  Multi-turn  Response Selection</strong><br>这个任务主要是评估改写句对检索的影响，因为大部分的工作集中于从检索后的候选集做匹配，而本文更加关注如何来得到这个候选集。当然，评价指标仍然是匹配结果，因为检索结果不好衡量。<br><img src="https://user-images.githubusercontent.com/21177644/67620893-58069d00-f83e-11e9-9384-139c816aff65.PNG" alt=""></p><p><strong>Case  Study</strong><br><img src="https://user-images.githubusercontent.com/21177644/67620965-ce0b0400-f83e-11e9-93f8-89c56c3f5355.PNG" alt=""></p><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文研究了开放域对话建模问题，提出了一种无监督对话重写方法，促进了下游对话生成和选择任务。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本文主要目的是生成自包含的（self-contained）句子，使其没有指代和依赖于对话历史中的其他句，进而促进回复选择和生成任务。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;paper: &lt;a href=&quot;https://drive.google.com/open?id=1B4ts8jU3Xx_TJuS9rgcBP3E17DFbegK6&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://drive.google.com/open?id=1B4ts8jU3Xx_TJuS9rgcBP3E17DFbegK6&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="https://helicqin.github.io/categories/NLP/"/>
-    
-    
-      <category term="Dialogue System" scheme="https://helicqin.github.io/tags/Dialogue-System/"/>
-    
-      <category term="Context  Rewriting" scheme="https://helicqin.github.io/tags/Context-Rewriting/"/>
     
   </entry>
   
