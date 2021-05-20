@@ -6,17 +6,17 @@
     <title>About Me | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="description" content="Research AreaCurrently, I am working on neural conversational AI:  Natural Language Understanding: Natural language understanding parses (speech) input to the semantic meaning, including intent classi">
+    <meta name="description" content="NEWS! We have three papers accepted by ACL2021, including Novel Slot Detection: A Benchmark for Discovering Unknown Slot Types in the Task-Oriented Dialogue System; Modeling Discriminative Representat">
 <meta property="og:type" content="website">
 <meta property="og:title" content="About Me">
 <meta property="og:url" content="https://helicqin.github.io/about/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="Research AreaCurrently, I am working on neural conversational AI:  Natural Language Understanding: Natural language understanding parses (speech) input to the semantic meaning, including intent classi">
+<meta property="og:description" content="NEWS! We have three papers accepted by ACL2021, including Novel Slot Detection: A Benchmark for Discovering Unknown Slot Types in the Task-Oriented Dialogue System; Modeling Discriminative Representat">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-04-17T16:38:10.009Z">
+<meta property="og:updated_time" content="2021-05-20T13:54:04.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About Me">
-<meta name="twitter:description" content="Research AreaCurrently, I am working on neural conversational AI:  Natural Language Understanding: Natural language understanding parses (speech) input to the semantic meaning, including intent classi">
+<meta name="twitter:description" content="NEWS! We have three papers accepted by ACL2021, including Novel Slot Detection: A Benchmark for Discovering Unknown Slot Types in the Task-Oriented Dialogue System; Modeling Discriminative Representat">
     
 
     
@@ -161,7 +161,8 @@ ga('send', 'pageview');
         
         
         <div class="article-entry" itemprop="articleBody">
-            <h2 id="Research-Area"><a href="#Research-Area" class="headerlink" title="Research Area"></a>Research Area</h2><p>Currently, I am working on <strong>neural conversational AI</strong>:</p>
+            <p><strong>NEWS! We have three papers accepted by ACL2021, including <code>Novel Slot Detection: A Benchmark for Discovering Unknown Slot Types in the Task-Oriented Dialogue System</code>; <code>Modeling Discriminative Representations for Out-of-Domain Detection with Supervised Contrastive Learning</code>; <code>Scheduled Dialog Policy Learning: An Automatic Curriculum Learning Framework for Task-oriented Dialog System</code></strong></p>
+<h2 id="Research-Area"><a href="#Research-Area" class="headerlink" title="Research Area"></a>Research Area</h2><p>Currently, I am working on <strong>neural conversational AI</strong>:</p>
 <ul>
 <li><code>Natural Language Understanding</code>: Natural language understanding parses (speech) input to the semantic meaning, including intent classification and slot tagging. The tough challenge is the diversity of natural language and poor supervision resources. I’m focusing on transferring external knowledge to enable the few-shot even zero-shot learning. Here the external knowledge is defined as three-fold: Cross-lingual resources, Output latent structure, Background knowledge, etc. Please refer to the following Publication section for details.</li>
 <li><code>Dialog Policy Learning</code>: We take the task-oriented dialogue as the optimal decision-making process to find optimal policy $\pi$, which could be modeled as a typical reinforcement learning(RL) problem. By maximizing average long-term reward, we could learn the optimal action $a$ to state $s$. I’m focusing on improving the user simulator and sampling better user goals.</li>
@@ -208,6 +209,24 @@ ga('send', 'pageview');
 </li>
 </ol>
 <h2 id="Publication"><a href="#Publication" class="headerlink" title="Publication"></a>Publication</h2><ol>
+<li><p><strong>Novel Slot Detection: A Benchmark for Discovering Unknown Slot Types in the Task-Oriented Dialogue System</strong>, ACL2021</p>
+<ul>
+<li>Yanan Wu*, Zhiyuan Zeng*, <strong>Keqing He</strong>*, Hong Xu, Yuanmeng Yan, Huixing Jiang and Weiran Xu</li>
+<li>Abstract: Existing slot filling models can only recognize pre-defined in-domain slot types from a limited slot set. In the practical application, a reliable dialogue system should know what it does not know. In this paper, we introduce a new task, Novel Slot Detection (NSD), in the task-oriented dialogue system. NSD aims to discover unknown or out-of-domain slot types to strengthen the capability of a dialogue system based on in-domain training data. Besides, we construct two public NSD datasets, propose several strong NSD baselines, and establish a benchmark for future work. Finally, we conduct exhaustive experiments and qualitative analysis to comprehend key challenges and provide new guidance for future directions.</li>
+</ul>
+</li>
+<li><p><strong>Modeling Discriminative Representations for Out-of-Domain Detection with Supervised Contrastive Learning</strong>, ACL2021</p>
+<ul>
+<li>Zhiyuan Zeng*, <strong>Keqing He</strong>*, Yuanmeng Yan, Zijun Liu, Yanan Wu, Hong Xu, Huixing Jiang and Weiran Xu</li>
+<li>Abstract: Detecting Out-of-Domain (OOD) or unknown intents from user queries is essential in a task-oriented dialog system. A key challenge of OOD detection is to learn discriminative semantic features. Traditional cross-entropy loss only focuses on whether a sample is correctly classified, and does not explicitly distinguish the margins between categories. In this paper, we propose a supervised contrastive learning objective to minimize intra-class variance by pulling together in-domain intents belonging to the same class and maximize inter-class variance by pushing apart samples from different classes. Besides, we employ an adversarial augmentation mechanism to obtain pseudo diverse views of a sample in the latent space. Experiments on two public datasets prove the effectiveness of our method capturing discriminative representations for OOD detection.</li>
+</ul>
+</li>
+<li><p><strong>Scheduled Dialog Policy Learning: An Automatic Curriculum Learning Framework for Task-oriented Dialog System</strong>, ACL2021 Findings</p>
+<ul>
+<li>Sihong Liu, Jinchao Zhang, <strong>Keqing He</strong>, Weiran Xu and Jie Zhou</li>
+<li>Abstract: In reinforcement learning (RL) based task-oriented dialogue systems, users act as the environment and the agent learns the policy by interacting with users. However, due to the subjectivity of different users, the complexity of user-generated training conversations varies greatly, which leads to different difficulties for the agent to learn. Therefore, it is necessary for modeling dialogue complexity and make a reasonable learning schedule for efficiently training the agent. Towards that, we propose Scheduled Dialog Policy Learning, an automatic curriculum learning framework for jointing curriculum learning and policy optimization in the task-oriented dialog system. To our best knowledge, it is the first RL framework that improves dialogue policy learning by scheduling its learning process. Specifically, we introduce an automatic measurement to evaluate the dialogue complexity, and based on this automatic measurement, we train the dialog agent from easy dialogues to complex ones. Experiments demonstrate that our approach can be applied to the task-oriented dialogue policy learning and outperforms the previous state-of-the-art model, which increases 9.6% and 10.0% in the accuracy on the dialog success rate, respectively on the MultiWoz and Movie-Ticket Booking datasets.</li>
+</ul>
+</li>
 <li><p><strong>Adversarial Self-Supervised Learning for Out-of-Domain Detection</strong>, NAACL2021</p>
 <ul>
 <li>Zhiyuan Zeng, <strong>Keqing He</strong>, Yuanmeng Yan, Hong Xu, Weiran Xu</li>
