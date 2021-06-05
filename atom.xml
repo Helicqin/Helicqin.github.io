@@ -6,7 +6,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="https://helicqin.github.io/"/>
-  <updated>2021-04-17T15:54:15.499Z</updated>
+  <updated>2021-06-05T01:15:47.533Z</updated>
   <id>https://helicqin.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Few-shot Natural Language Generation for Task-Oriented Dialog</title>
+    <link href="https://helicqin.github.io/2021/05/31/Few-shot%20Natural%20Language%20Generation%20for%20Task-Oriented%20Dialog/"/>
+    <id>https://helicqin.github.io/2021/05/31/Few-shot Natural Language Generation for Task-Oriented Dialog/</id>
+    <published>2021-05-31T08:13:00.000Z</published>
+    <updated>2021-06-05T01:15:47.533Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在任务型对话系统中，NLG（Natural Language Generation）负责将Diaact转化为自然语言，如下图所示：</p><p><img src="https://user-images.githubusercontent.com/21177644/120259839-42354580-c2c7-11eb-9fcf-09b90fa031c6.png" alt=""></p><p>与传统的文本生成任务不同的是，NLG的输入是结构化的Diaact，本质上是意图和槽值对的集合，因此，NLG的重点是在保证事实一致性（意图和槽位一致）的前提下，尽可能增加自然语言文本的流畅性和多样性。</p><p>现有的NLG模型分为两类：</p><ol><li>Template-based methods: 人工构建模板，然后使用Diaact中的槽值替换模板的placeholder。</li><li>Statistical  language  models: 在语言模型中融入Diaact的信息，使用端到端的生成模型。一个比较早期的工作是SC-LSTM，缺点是需要大量的监督数据。</li></ol><p>因此，本文提出了一种基于预训练语言模型GPT的NLG模型SC-GPT，使用三阶段的训练策略：纯文本预训练+NLG数据预训练+目标域finetune。同时，本文基于MultiWOZ和Cambridge  NLG数据集构造了一个低资源的NLG benchmark FEWSHOT-WOZ，共包含7个领域，每个领域仅有50个标注样本用作目标域finetune。</p><h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>如下图所示，SC-GPT类似于GPT-2模型，只是增加了Diaact的输入，作者直接以拼接的方式进行输入，同时在生成的文本序列加入[BOS]和[EOS]标识符，训练过程中只计算生成文本的损失。<br><img src="https://user-images.githubusercontent.com/21177644/120261532-a4437a00-c2ca-11eb-8409-4ef9e1dd05f3.png" alt="Illustration  of  SC-GPT.  In this example, SC-GPT  generates  a  new  word  token  (e.g.,  “confirm”  or “center”)  by  attending  the  entire  dialog  act  and  word  tokens  on  the  left  within  the  response."></p><p>作者设计三阶段的训练目标：</p><ol><li>Massive  Plain  Language  Pre-training: 类似GPT-2的预训练方式</li><li>Dialog-Act  Controlled  Pre-training: 在收集的Schema-Guided Dialog corpus, MultiWOZ corpus, Frame corpus, and Facebook Multilingual Dialog Corpus上进行NLG的预训练，整个数据集的规模大约为400k。</li><li>Fine-tuning: 在目标域finetune，仅有50个标注样本。</li></ol><h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><h3 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h3><p><img src="https://user-images.githubusercontent.com/21177644/120262902-3ba9cc80-c2cd-11eb-8dcf-fb97ce61a7ef.png" alt="Comparison  of  existing  NLG  datasets,  including  E2E  NLG  (Novikova  et  al.,  2017),  BAGEL(Mairesse et  al.,  2010),  Cambridge  NLG(Wen  et  al.,  2016a)  and  the  proposed  FEWSHOTWOZ."></p><p><img src="https://user-images.githubusercontent.com/21177644/120263854-1f0e9400-c2cf-11eb-8360-d7fe731a5ab0.png" alt="FEWSHOTWOZ  statistics  over  7  different  domains."></p><h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><p><img src="https://user-images.githubusercontent.com/21177644/120265924-83335700-c2d3-11eb-9729-f0f0d97c67ae.png" alt=""></p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol><li><a href="https://doi.org/10.18653/v1/D15-1199" target="_blank" rel="noopener">Semantically  conditioned  LSTM-based  natural  language  generation  for  spoken  dialogue  systems</a>, EMNLP 2015</li><li><a href="https://kami.app/pAC-iFi-sHg" target="_blank" rel="noopener">https://kami.app/pAC-iFi-sHg</a></li><li><a href="https://github.com/pengbaolin/SC-GPT" target="_blank" rel="noopener">https://github.com/pengbaolin/SC-GPT</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;在任务型对话系统中，NL
+      
+    
+    </summary>
+    
+      <category term="NLP" scheme="https://helicqin.github.io/categories/NLP/"/>
+    
+      <category term="NLG" scheme="https://helicqin.github.io/categories/NLP/NLG/"/>
+    
+    
+      <category term="Natural Language Generation" scheme="https://helicqin.github.io/tags/Natural-Language-Generation/"/>
+    
+  </entry>
   
   <entry>
     <title>Energy-based  Out-of-distribution Detection</title>
@@ -477,33 +505,6 @@
     
     
       <category term="NLU" scheme="https://helicqin.github.io/tags/NLU/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Enhancing Pre-Trained Language Representations with Rich Knowledge for Machine Reading Comprehension</title>
-    <link href="https://helicqin.github.io/2019/10/28/Enhancing%20Pre-Trained%20Language%20Representations%20with%20Rich%20Knowledge%20for%20Machine%20Reading%20Comprehension/"/>
-    <id>https://helicqin.github.io/2019/10/28/Enhancing Pre-Trained Language Representations with Rich Knowledge for Machine Reading Comprehension/</id>
-    <published>2019-10-28T01:02:00.000Z</published>
-    <updated>2019-10-28T12:54:23.952Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文研究在BERT预训练模型的基础上增加外部KB知识，实验证明在MRC任务上取得了优于BERT的表现。</p><blockquote><p>paper: <a href="https://drive.google.com/open?id=156rShpAzTax0Pzql1yuHVuT-tg6Qf_xX" target="_blank" rel="noopener">https://drive.google.com/open?id=156rShpAzTax0Pzql1yuHVuT-tg6Qf_xX</a><br>source: ACL 2019<br>code: <a href="http://github.com/paddlepaddle/models/tree/develop/PaddleNLP/Research/ACL2019-KTNET" target="_blank" rel="noopener">http://github.com/paddlepaddle/models/tree/develop/PaddleNLP/Research/ACL2019-KTNET</a></p></blockquote><a id="more"></a><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本文的出发点是BERT预训练模型通过语言模型只能获取语言知识（linguistic regularities），而在MRC任务中，也需要外部KB提供背景知识，如下所示：</p><p><img src="https://user-images.githubusercontent.com/21177644/67646001-dd856c80-f966-11e9-916f-b854d5b24391.PNG" alt="Figure  1:  An  example  from  ReCoRD,  with  answer  candidates  marked  (underlined)  in  the  passage.  The  vanilla BERT  model  fails  to  predict  the  correct  answer.  But  it succeeds  after  integrating  background  knowledge  collected  from  WordNet  and  NELL."></p><p>本文使用的外部KB包括WordNet（records  lexical  relations  between  words）和NELL（stores  beliefs  about  entities），在融合KB知识的过程并没有使用符号事实（symbolic facts）的方法，而是使用分布式Embedding的方法。这样做有两个优势：（1）融合的KB知识不仅与阅读文本局部相关，而且也包含KB的整体知识；（2）能够同时融入多个KB知识源，而不需要task-specific engineering。</p><h2 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h2><p>KT-NET主要有四个模块：BERT encoding layer负责获取问题和段落的上下文表示；knowledge  integration  layer<br>使用注意力机制选择最相关的KB编码，然后与BERT表示融合；self-matching layer构建BERT与KB编码之间的交互；output layer预测最终的答案。整体结构如下所示：</p><p><img src="https://user-images.githubusercontent.com/21177644/67645160-03f4d900-f962-11e9-9b20-ad0f8452b700.PNG" alt="Figure  2:  Overall  architecture  of  KT-NET  (left),  with the  knowledge  integration  module  illustrated  (right)."></p><p>本文解决的任务是机器阅读理解（MRC），给定段落 $P= \{p_{i}\}^{m}_{i=1}$ 和问题 $Q= \{q_{j}\}^{n}_{j=1}$，我们的目的是预测答案$A= \{p_{i}\}^{b}_{i=a}$，限定答案只能从段落中取一个片段，实际转化为预测两个边界。</p><p><strong>Knowledge  Embedding  and  Retrieval</strong><br>给定段落P和问题Q，模型使用所有的词 $w \in P \cup Q$ 做检索，得到潜在相关的KB concept集合$C(w)$，其中每一个concept $c \in C(w)$ 都会对应一个向量表示 $\textbf{c}$。具体来说，作者使用了两个KB：WordNet和NELL。二者都以 (subject, relation, object) 的格式存储，每一个三元组都代表了两个实体之间的特定关系。WordNet存储的是同义词（word synsets）之间的词级别关联，而NELL存储的是 beliefs between entities，其中subject一般是真实世界中的实体，而object可以是实体：_(Coca  Cola,  headquartered  in,  Atlanta)_，也可以是concept：_(Coca  Cola,  is_a,  company)_，在本文里则不区分之间的差别，统一称之为实体（entity）。</p><p>作者使用BILINEAR模型来获取实体和关系表征。在本文中，所有的WordNet synsets和NELL concepts都是从KB中检索得到的，类似于 <a href="https://arxiv.org/pdf/1902.09091.pdf" target="_blank" rel="noopener">Leveraging knowledge  bases  in  lstms  for  improving  machine reading</a>。对于WordNet，给定段落或者问题中的一个词，模型返回其所有的同义词作为candidate KB concepts；对于NELL，首先进行NER，然后使用字符串匹配的方法用识别出的命名实体去检索出相关的NELL concepts做候选集。注意同一个命名实体中的所有词以及同一个词中的所有子词共享同一个concept，例如对于_Coca_和_Cola_都对应同一个concept: _Company_，而每一个concept都会对应一个向量表征。作者认为这样做的好处在于可以兼顾局部信息以及KB全局信息，并且方便同时融合多个KB。</p><p><strong>BERT  Encoding  Layer</strong> 首先将段落P和问题Q拼接成 $S=[\langle\mathrm{CLS}\rangle, Q,\langle\mathrm{SEP}\rangle, P,\langle\mathrm{SEP}\rangle]$，对S中的每一个token，使用 token, position, segment 编码 $\mathbf{h}_{i}^{0}=\mathbf{s}_{i}^{\mathrm{tok}}+\mathbf{s}_{i}^{\mathrm{pos}}+\mathbf{s}_{i}^{\mathrm{seg}}$，Q中的所有词认为是同一个segment，共享相同的segment embedding，而P中的所有词则共享另一个segment embedding，然后通过Transformer encoders，最终得到 $\left\{\mathbf{h}_{i}^{L}\right\}_{i=1}^{m+n+3} \in \mathbb{R}^{d_{1}}$。</p><p><strong>Knowledge  Integration  Layer</strong> 这个模块负责将上下文信息与KB知识相融合，是整个模型的核心。本质上利用BERT表示$\mathbf{h}_{i}^{L} \in \mathbb{R}^{d_{1}}$对KB concepts候选集$C(s_{i})$做注意力，来选取最相关的KB concepts。作者使用 $\alpha_{i j} \propto \exp \left(\mathbf{c}_{j}^{\top} \mathbf{W h}_{i}^{L}\right)$ 计算注意力权重。因为KB concepts不一定与token密切相关，作者采取了类似<a href="https://arxiv.org/pdf/1902.09091.pdf" target="_blank" rel="noopener">Leveraging knowledge  bases  in  lstms  for  improving  machine reading</a>的方法，引入了一个 knowledge sentinel $\overline{\mathbf{c}} \in \mathbb{R}^{d_{2}}$，同样计算相似度：$\beta_{i} \propto \exp \left(\mathbf{\overline{c}}^{\top} \mathbf{W} \mathbf{h}_{i}^{L}\right)$，然后：<br>$$<br>\mathbf{k}_{i}=\sum_{j} \alpha_{i j} \mathbf{c}_{j}+\beta_{i} \overline{\mathbf{c}}<br>$$<br>其中$\sum_{j} \alpha_{i j}+\beta_{i}=1$，如果token $s_{i}$对应的concepts集合为空，则$\mathbf{k}_{i}=0$。然后输出 $\textbf{u}_{i}=[\mathbf{h}_{i}^{L}, \mathbf{k}_{i}] \in \mathbb{R}^{d_{1}+d_{2}}$，因此同时捕获context-aware和knowledge-aware的知识。</p><p><strong>Self-Matching  Layer</strong> 本质上是一个自注意力层，目的是构建context embedding $\mathbf{h}_{i}^{L}$ 与 knowledge embedding $\mathbf{k}_{i}$ 之间的交互。作者构建了两层交互：direct 和 indirect。首先通过 $r_{i j}=\mathbf{w}^{\top}\left[\mathbf{u}_{i}, \mathbf{u}_{j}, \mathbf{u}_{i} \odot \mathbf{u}_{j}\right]$ 得到相似度矩阵$\textbf{R}$ 以及按行softmax归一化后的权重矩阵$\textbf{A}$。直接交互是指$\mathbf{v}_{i}=\sum_{j} a_{i j} \mathbf{u}_{j}$，而间接交互是指：<br>$$<br>\begin{aligned} \mathbf{\overline{A}} &amp;=\mathbf{A}^{2} \\ \overline{\mathbf{v}}_{i} &amp;=\sum_{j} \bar{a}_{i j} \mathbf{u}_{j} \end{aligned}<br>$$<br>最终得到输出$\textbf{o}_{i}=\left[\mathbf{u}_{i}, \mathbf{v}_{i}, \mathbf{u}_{i}-\mathbf{v}_{i}, \mathbf{u}_{i} \odot \mathbf{v}_{i}, \mathbf{\overline{v}}_{i}, \mathbf{u}_{i}-\overline{\mathbf{v}}_{i}\right] \in \mathbb{R}^{6 d_{1}+6 d_{2}}$。</p><p><strong>Output  Layer</strong> 输出层与原始的NERT保持一致，只是简单的线性层，分别预测左右边界。<br>$$<br>p_{i}^{1}=\frac{\exp \left(\mathbf{w}_{1}^{\top} \mathbf{o}_{i}\right)}{\sum_{j} \exp \left(\mathbf{w}_{1}^{\top} \mathbf{o}_{j}\right)}, \quad p_{i}^{2}=\frac{\exp \left(\mathbf{w}_{2}^{\top} \mathbf{o}_{i}\right)}{\sum_{j} \exp \left(\mathbf{w}_{2}^{\top} \mathbf{o}_{j}\right)}<br>$$<br>损失函数为极大似然：$\mathcal{L}=-\frac{1}{N} \sum_{j=1}^{N}\left(\log p_{y_{j}^{1}}^{1}+\log p_{y_{j}^{2}}^{2}\right)$。</p><h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><img src="https://user-images.githubusercontent.com/21177644/67658480-a4fc8780-f994-11e9-8749-5ea414d2a3e3.PNG" alt="Table  2:  Results  on  ReCoRD.  The  top  5  systems  are  all single  models  and  chosen  for  comparison."></p><p><img src="https://user-images.githubusercontent.com/21177644/67658527-c2315600-f994-11e9-8b03-cb59f41f8b05.PNG" alt="Table  3:  Results  on  SQuAD1.1.  The  top  5  single  models  are  chosen  for  comparison."></p><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本文提出了KT-NET模型，使用外部KB知识增强BERT，论文使用了WordNet和NELL两个KB，在MRC任务取得了不错的表现。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本文研究在BERT预训练模型的基础上增加外部KB知识，实验证明在MRC任务上取得了优于BERT的表现。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;paper: &lt;a href=&quot;https://drive.google.com/open?id=156rShpAzTax0Pzql1yuHVuT-tg6Qf_xX&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://drive.google.com/open?id=156rShpAzTax0Pzql1yuHVuT-tg6Qf_xX&lt;/a&gt;&lt;br&gt;source: ACL 2019&lt;br&gt;code: &lt;a href=&quot;http://github.com/paddlepaddle/models/tree/develop/PaddleNLP/Research/ACL2019-KTNET&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://github.com/paddlepaddle/models/tree/develop/PaddleNLP/Research/ACL2019-KTNET&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="https://helicqin.github.io/categories/NLP/"/>
-    
-    
-      <category term="Commonsense  Knowledge" scheme="https://helicqin.github.io/tags/Commonsense-Knowledge/"/>
-    
-      <category term="Machine  Reading  Comprehension" scheme="https://helicqin.github.io/tags/Machine-Reading-Comprehension/"/>
     
   </entry>
   
