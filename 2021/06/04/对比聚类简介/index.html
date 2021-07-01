@@ -17,7 +17,7 @@
 <meta property="og:description" content="基于对比学习的聚类以及新意图发现">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://user-images.githubusercontent.com/21177644/120795394-fe169f00-c56b-11eb-8834-d33ce7f4ad0d.png">
-<meta property="og:updated_time" content="2021-06-15T14:59:00.538Z">
+<meta property="og:updated_time" content="2021-07-01T15:23:56.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对比聚类简介">
 <meta name="twitter:description" content="基于对比学习的聚类以及新意图发现">
@@ -206,6 +206,12 @@ ga('send', 'pageview');
 <h3 id="Open-Intent-Discovery-through-Unsupervised-Semantic-Clustering-and-Dependency-Parsing"><a href="#Open-Intent-Discovery-through-Unsupervised-Semantic-Clustering-and-Dependency-Parsing" class="headerlink" title="Open  Intent  Discovery  through  Unsupervised  Semantic  Clustering  and Dependency  Parsing"></a>Open  Intent  Discovery  through  Unsupervised  Semantic  Clustering  and Dependency  Parsing</h3><ol>
 <li><a href="https://kami.app/irm-CbU-kFE" target="_blank" rel="noopener">paper</a></li>
 <li>作者定义了一个新任务：Open  Intent  Discovery，是指从无标注的对话数据中自动挖掘意图集合，并进行分类，整体框架如下：<img src="https://user-images.githubusercontent.com/21177644/122067615-4b292980-ce26-11eb-9870-f21536ff8027.png" alt=""></li>
+</ol>
+<h3 id="Discovering-New-Intents-with-Deep-Aligned-Clustering"><a href="#Discovering-New-Intents-with-Deep-Aligned-Clustering" class="headerlink" title="Discovering  New  Intents  with  Deep  Aligned  Clustering"></a>Discovering  New  Intents  with  Deep  Aligned  Clustering</h3><ol>
+<li>AAAI2021, <a href="https://kami.app/3g9-afv-ym8" target="_blank" rel="noopener">paper</a>, <a href="https://github.com/thuiar/DeepAligned-Clustering" target="_blank" rel="noopener">code</a></li>
+<li>本文提出了一种半监督意图聚类方法，能有效利用少量先验知识指导新意图发现。该方法将少量有标签已知意图样本信息泛化到无标签意图上，并在新意图类别数量未知时有效估计意图数量。为了提升聚类效果，论文提出了一种对齐策略，能结合聚类簇中心和簇分配信息，构建高质量自监督信号用于表示学习。</li>
+<li>模型主要分为三个部分: 意图特征提取，知识迁移，深度对齐聚类。首先，利用BERT作为特征提取器获得深度意图特征表示。其次，利用有限的已知意图标注数据进行知识迁移，即将少量已知意图先验知识泛化到大量无标签意图（包括已知和未知意图）上。最后，提出了一个聚类对齐策略，利用对齐的簇分配作为自监督信号用于意图表示学习。在训练收敛之后，再一次聚类对模型进行评估。<br><img src="https://user-images.githubusercontent.com/21177644/122579199-40210400-d087-11eb-9700-6f6d3d9705a1.png" alt=""><br><strong>意图特征提取</strong>: 利用BERT语言模型提取意图特征。对于输入BERT的一句话，经过全部Transformer编码层之后，提取最后一层输出的词嵌入表示。然后，通过平均池化（mean-pooling）操作获得句向量表示，再经过一层致密层（Dense Layer）获得意图特征。<br><strong>知识迁移</strong>: 为了充分利用少量有标签已知意图样本进行知识迁移，我们进行预训练和预测意图数量K两个步骤。预训练是利用简单的交叉熵损失函数，将已知意图分类作为下游任务，微调BERT模型参数，对意图特征进行初始化。为了预测意图数量K，我们事先定义一个较大的簇数目K’（如实际值两倍），然后利用经过初始化的意图特征进行聚类。当聚类簇个数较大的时候，不同簇的大小往往有差别，我们将簇包含的样本数量看作其置信度。真正的意图簇由于簇内样本之间相似性较高，置信度会更大。尽管意图特征只在已知意图上进行训练，但是其学到的弱语义相似性特征仍然有助于新意图聚类。因此，我们通过移除低置信度聚类簇，计算满足条件的簇个数（置信度高于阈值）来预测K:<br>$$<br>K=\sum_{i=1}^{K^{\prime}} \delta\left(\left|S_{i}\right|&gt;=t\right)<br>$$<br>其中，阈值t设置为平均置信度，即以训练样本数量为全集、$K^{\prime}$为划分数的平均簇大小。为了进一步将已知意图知识迁移到无监督数据上，我们去掉预训练好的模型分类层，并保留剩余部分参数信息用于新意图发现。<br><strong>深度对齐聚类</strong>: 分为两个步骤，无监督聚类和利用对齐伪标签进行自监督学习。首先，我们利用K-Means算法进行无监督聚类，产生最优簇分配和簇中心，利用簇分配作为伪标签用于特征的自监督学习。在这个过程中，深度神经网络训练和强大的特征提取能力会获得对聚类友好的特征表示，聚类过程则结合特征相似性为神经网络产生训练目标（即簇分配），二者交替进行彼此促进。然而，由于聚类簇分配序号是随机的，直接利用簇分配作为监督信号会导致不同迭代目标不一致的问题。因此，DeepCluster需要每轮迭代之前重新初始化分类层参数，无法保存历史模型参数信息，效果仍然不够理想。我们观察到DeepCluster只利用簇分配作为训练目标，而忽略了聚类簇中心。但是在每次聚类过程中，簇中心恰恰是产生簇分配的来源，即每一样本结合欧式距离最近的簇中心产生簇分配序号。我们假设相邻迭代之间，同一意图簇中心欧式距离位置较近，利用Hungarian算法（The Hungarian method  for  the  assignment  problem）在欧式空间上获得当前迭代簇中心Cc和上一迭代簇中心Cl的对齐映射G:<br>$$<br>\boldsymbol{C}^{c}=G\left(\boldsymbol{C}^{l}\right)<br>$$<br>相邻迭代簇中心和簇分配的对齐映射是一致的，由于Hungarian算法产生的是一一映射，我们将逆映射作用在当前迭代产生的簇分配，获得和上一迭代对齐的簇分配作为伪标签。我们使用结合交叉熵损失函数，利用对齐伪标签作为自监督学习目标，通过下游分类任务微调模型参数。</li>
+<li>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/122580944-179a0980-d089-11eb-938b-b088905663d0.png" alt="The  clustering  results  on  two  datasets.  We  evaluate  both  unsupervised  and  semi-supervised  clustering  methods."></li>
 </ol>
 <h2 id="Referecne"><a href="#Referecne" class="headerlink" title="Referecne"></a>Referecne</h2><ol>
 <li><a href="https://mp.weixin.qq.com/s/qg56LhHj9WzZGoEtSfTMog" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/qg56LhHj9WzZGoEtSfTMog</a></li>
