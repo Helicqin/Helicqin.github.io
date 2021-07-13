@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Prompt-based Language Models | Helic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Pretraining" />
+    
+    <meta name="description" content="基于 Prompt（模版）增强的微调范式">
+<meta name="keywords" content="Pretraining">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prompt-based Language Models">
+<meta property="og:url" content="https://helicqin.github.io/2021/07/07/Prompt-based Language Models/index.html">
+<meta property="og:site_name" content="Helic">
+<meta property="og:description" content="基于 Prompt（模版）增强的微调范式">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://user-images.githubusercontent.com/21177644/124762528-92a65f80-df65-11eb-9e0b-a1e31686b4c1.png">
+<meta property="og:updated_time" content="2021-07-13T15:33:21.900Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Prompt-based Language Models">
+<meta name="twitter:description" content="基于 Prompt（模版）增强的微调范式">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/21177644/124762528-92a65f80-df65-11eb-9e0b-a1e31686b4c1.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="Helic" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/fa.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-129698255-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Helic He</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/">CV</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/CNN/">CNN</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CV/Object-Detection/">Object Detection</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Graph/">Graph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/">Machine Learning</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/">NLP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLG/">NLG</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/NLU/">NLU</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Python/">Python</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Prompt-based Language Models" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Prompt-based Language Models
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2021/07/07/Prompt-based Language Models/" class="article-date">
+            <time datetime="2021-07-07T11:34:00.000Z" itemprop="datePublished">2021-07-07</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Pretraining/">Pretraining</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>基于 Prompt（模版）增强的微调范式<br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>基于 Prompt（模版）增强的微调范式在少样本学习等场景下可以有效提升下游任务上的效果，Prompt最初诞生于GPT系列的自回归预训练语言模型，GPT 模型在零样本场景下的运行方式是：基于一定的任务描述（task description），按这一描述的指定生成文本：<br><img src="https://user-images.githubusercontent.com/21177644/124762528-92a65f80-df65-11eb-9e0b-a1e31686b4c1.png" alt=""><br>仅仅几个单词组成的任务描述，就可以为语言模型的预测提供指导，这启发了一些少样本领域的工作——在缺少训练数据的场景下，利用任务描述能很好地提升模型的效果。</p>
+<p>另一个灵感来自预训练语言模型的 Masked Language Model/MLM 任务：在 BERT 的训练中，有 15% 的输入词被选中，其中的绝大部分又被替换为 [MASK] 标签或者随机的其他词，并在最终的 hidden states 中对被遮盖的词进行预测，通过还原遮盖词让模型学习单词级别的上下文信息。</p>
+<p>将这两个灵感融合，就得到了以下将介绍的 Pattern-Exploiting Training，或 PET 方法。</p>
+<h2 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h2><h3 id="Exploiting-Cloze-Questions-for-Few-Shot-Text-Classiﬁcation-and-Natural-Language-Inference"><a href="#Exploiting-Cloze-Questions-for-Few-Shot-Text-Classiﬁcation-and-Natural-Language-Inference" class="headerlink" title="Exploiting Cloze Questions for Few Shot Text Classiﬁcation and Natural Language Inference"></a>Exploiting Cloze Questions for Few Shot Text Classiﬁcation and Natural Language Inference</h3><p>PET 来自 2020 年的论文（已发表在 EACL 2021）《<strong>Exploiting Cloze Questions for Few Shot Text Classiﬁcation and Natural Language Inference</strong>》，其中介绍了一种基于模版和词遮盖将文本分类任务转换为完形填空（cloze）任务的半监督训练方法，仅使用 RoBERTa-base 模型就在多个半监督场景下取得了 SOTA：<br><img src="https://user-images.githubusercontent.com/21177644/124853501-8dcec380-dfd8-11eb-9003-7c0f63020182.png" alt=""></p>
+<ol>
+<li><p>首先，针对少量样本设计描述的模版（pattern），如上图中对 “Best pizza ever!” 的情感分类任务，生成一个 “It was ___” 的句子并拼接在原始输入后作为补充；</p>
+<ul>
+<li>对模版中遮盖的词（即下划线部分），设计候选词对应不同的情感极性（图中 great 对应 positive，bad 对应 negative），然后将模型预测 “great” 的概率作为原来预测 “positive” 的概率，从而将情感分类任务转换为完形填空任务。</li>
+<li>当然，原文中对 NLI 任务也进行了模版构建，其操作有所不同，在此不展开；</li>
+<li>注意，完形填空和 MLM 不是一个任务，虽然二者都是词分类任务，但是类别一个是候选词集，一个是模型中全部的词集；</li>
+</ul>
+</li>
+<li><p>对有标签样本集设计不同的模版，然后对每一个模版，分别训练模型；</p>
+<ul>
+<li>因为有标签样本比较少，所以训练成本低于全量数据训练一个完整的模型；</li>
+<li>这里的训练因为是有监督的，所以结合了完形填空的词分类 loss 和 MLM Loss 进行训练：$L=(1-\alpha) \cdot L_{\mathrm{CE}}+\alpha \cdot L_{\mathrm{MLM}}$，其中 MLM loss 占较小比重（1e-4）；</li>
+</ul>
+</li>
+<li><p>使用上面训练得到的一堆模型，在无标签数据上进行预测，按不同 pattern 的模型 acc 对应权重对所有的预测进行归一化，作为 soft label 蒸馏一个最终模型；</p>
+<ul>
+<li>这里最终模型并不进行 pattern 的学习；</li>
+<li>在这里的训练中，不涉及 MLM loss。</li>
+</ul>
+</li>
+</ol>
+<p>在 PET 的基础上，为了让不同模版训练出的模型互相学习，文中还提出了一种迭代式的 PET 训练（Iterative PET，iPET）：</p>
+<ul>
+<li>其实就是进行多代交叉的蒸馏，随机选取每一代的模型为无标签数据进行标记，并基于此进一步训练下一代模型；</li>
+<li>最终和 PET 一样，用不同模型标注的无标签数据进行预测，蒸馏一个统一的模型。</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/21177644/124854062-76dca100-dfd9-11eb-897a-13321a17edb8.png" alt=""></p>
+<p>说完了训练过程，我们看看这里的模版（pattern）：  </p>
+<ul>
+<li>情感分类（Yelp）：<br><img src="https://user-images.githubusercontent.com/21177644/124854251-ab505d00-dfd9-11eb-8a82-d9c9ae1712b4.png" alt=""></li>
+<li>文本蕴含（MNLI）：<img src="https://user-images.githubusercontent.com/21177644/124854268-b0151100-dfd9-11eb-8a1e-b7469bdea038.png" alt=""></li>
+</ul>
+<p>可以看出，人工构建的模板比较简单，语义上也和任务具有较好的关联。</p>
+<p>在这一半监督场景工作的基础上，本文作者进一步在 NAACL 2021 上发表了《<strong>It’s Not Just Size That Matters: Small Language Models Are Also Few-Shot Learners</strong>》，通过将小模型（ALBERT）和 GPT-3 这一巨无霸在 SuperGLUE benchmark 上进行对比，进一步挖掘 PET 训练在少样本场景下的潜力。由于使用的基本是同一个方法（补充了实际训练中 multi-token 的 mask 预测），所以不再重复，在此贴出论文的实验结果：<br><img src="https://user-images.githubusercontent.com/21177644/124857936-bd34fe80-dfdf-11eb-834e-fedbbc4e0b9f.png" alt=""></p>
+<p>_<a href="https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&amp;mid=2247512167&amp;idx=1&amp;sn=cc7695d92362e3b18a6e8969fb14dc27&amp;chksm=96ea6fe7a19de6f1be86b965e268df1b9c6320810cf32b6d64ddd3d238bf9088be41fb36adfe&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">中文实验</a>_</p>
+<h3 id="自动构建Prompt"><a href="#自动构建Prompt" class="headerlink" title="自动构建Prompt"></a>自动构建Prompt</h3><p>人工构建 pattern/prompt 就像在进行手工的特征工程，对输入特征进行人工的选择和组合，手工选取模版的方法自然会被自动选取特征的方法取代：<br><img src="https://user-images.githubusercontent.com/21177644/124858441-a17e2800-dfe0-11eb-89dc-26e8dc12672a.png" alt="不同 pattern 对效果影响巨大（来自 GPT Understands, Too）"></p>
+<h4 id="LM-Prompt-And-Query-Archive"><a href="#LM-Prompt-And-Query-Archive" class="headerlink" title="LM Prompt And Query Archive"></a>LM Prompt And Query Archive</h4><p>最早提出自动构建模版的工作应该是发表在 TACL 2020 的《How Can We Know What Language Models Know?》，其中提出了一个 LPAQA（LM Prompt And Query Archive）方法以进行模版的自动搜索。</p>
+<p>具体而言，LPAQA 包含两部分生成方法：</p>
+<ol>
+<li><p>Mining-based Generation：基于远程监督的假设（即，出现相同实体对的句子表达相同的关系），在 Wikipedia sentence 中寻找包含头尾实体 h、t 的句子，然后进一步提出了两种 prompt 抽取方法：</p>
+<ul>
+<li>Middle-word Prompts：对于 h、t 中间包含文本的句子形式，将 h、t 中间的文本当作 prompt；</li>
+<li>Dependency-based Prompts：对于其他句子，使用句法依赖解析来提取 h 和 t 最短的路径，并将路径上的词作为 prompt。</li>
+</ul>
+</li>
+<li><p>Paraphrasing-based Generation：类似查询拓展技术，在保持原 prompt 语义同时增加词汇的多样性。这种方法依赖反向翻译（back-translation），即翻译到另一种语言再翻译回来，构成多个样本后根据往返概率（round-trip probability）筛选 prompt。</p>
+</li>
+</ol>
+<p>显然，第一种方法会引入噪音，而第二种也具有不稳定性。因此，需要进一步筛选高质量的生成语句，为此本文提出了 selection 和 ensemble 的方法：</p>
+<ul>
+<li>Top-1 Prompt Selection：就是用 LM 测一测看看效果，取 acc 最高的 prompt；</li>
+<li>Rank-based Ensemble：除了 Top-1 方案，有时候需要保持多个模版来增强效果，即选取前 K 个模版；</li>
+<li>Optimized Ensemble：通过 LM 的预测为不同的 prompt 赋权。</li>
+</ul>
+<h4 id="AUTOPROMPT"><a href="#AUTOPROMPT" class="headerlink" title="AUTOPROMPT"></a>AUTOPROMPT</h4><p>这是来自 EMNLP 2020 的文章《AUTOPROMPT: Eliciting Knowledge from Language Models with Automatically Generated Prompts》，提出了一种基于梯度的模版搜索方案，如下图：<br><img src="https://user-images.githubusercontent.com/21177644/124858912-84962480-dfe1-11eb-8dfa-d6d9b96f43f8.png" alt="The overview of AutoPrompt. The trigger tokens are retrieved to optimize for the target outputs across all inputs."><br>AutoPrompt根据模板$\lambda$，将原始任务输入$x$与一系列触发令牌$x_{trig}$相结合，构建一个提示符。注意触发器令牌在所有输入中共享，因此普遍有效。</p>
+<p>AutoPrompt使用梯度搜索机制来寻找触发词$x_{trig}$，本质上是计算监督损失的一阶导数：$$<br>e_{\mathrm{trig}}^{(t+1)}=\arg \min _{e \in \mathcal{V}}\left[e-e_{\mathrm{trig}}^{(t)}\right]^{\top} \nabla_{e_{\mathrm{trig}}^{(t)}} \mathcal{L}<br>$$<br>类似于计算扰动然后找knn近邻。示意图如下：<img src="https://lilianweng.github.io/lil-log/assets/images/universal-adv-triggers.png" alt="We search for trigger tokens by updating their embeddings with the gradient of the task loss per batch."></p>
+<p>生成prompt之后，通过[MASK]来预测下游任务。这里作者做了一些简化：对于由词表中的词生成的标签，直接通过[MASK]预测；而对于类似positive/negative这种二分类任务，作者首先通过一个二分类模型预测每个类别对应的类别词，然后对类别下所有类别词的生成概率进行求和，作为最终的预测概率。<br>$$<br>p\left(y \mid \boldsymbol{x}_{\text {prompt }}\right)=\sum_{w \in \mathcal{V}_{y}} p\left([\mathrm{MASK}]=w \mid \boldsymbol{x}_{\text {prompt }}\right)<br>$$<br>实验结果：<img src="https://lilianweng.github.io/lil-log/assets/images/autoprompt-examples.png" alt="Example prompts discovered by AutoPrompt for different tasks."></p>
+<h4 id="Better-Few-shot-Fine-tuning-of-Language-Models"><a href="#Better-Few-shot-Fine-tuning-of-Language-Models" class="headerlink" title="Better Few-shot Fine-tuning of Language Models"></a>Better Few-shot Fine-tuning of Language Models</h4><p>这一工作来自 Danqi Chen 大佬的小组：《Making Pre-trained Language Models Better Few-shot Learners》，探究少样本场景下 Prompt 的作用，基于谷歌的 T5 模型构建了一个自动化的 pipeline：<br><img src="https://user-images.githubusercontent.com/21177644/124880533-f92c8b80-e000-11eb-9414-13648e5b9e6d.png" alt=""><br>同样注意到 PET 方法的低效，这一工作提出了一种名为 LM-BFF 的架构，引入了T5（Text-to-Text Transfer Transformer）生成模型用于自动化生成 Prompt；此外还加入了 demonstrations（示例）与 prompt 一并输入以为预测提供指导。这一灵感来自于 GPT 在少样本场景的工作方式，即将示例样本与任务描述一并输入模型：<br><img src="https://user-images.githubusercontent.com/21177644/124880909-5c1e2280-e001-11eb-9c21-b76682650148.png" alt=""></p>
+<p> LM-BFF包含两个方面，一是自动搜索标签词和模板，一是自适应引入Demonstration。</p>
+<p> 对于自动标签词搜索，目标是找到一组可以最大化验证集上性能的标签词，给定一个人工模板，一种简单的方法是暴力搜索所有单词组合。但这样不太可行，因为搜索空间是类数量的指数级别，并且该方法容易导致伪相关和过拟合。我们的做法是，首先为每个类 构建一个候选词集 ：用 表示类 的所有训练样本，给定模板和 ，我们找到能最大化的 [MASK] 处的 LM 概率的top-k个词。然后我们枚举 的所有单词组合，并找到最大化训练集上的零样本准确率的 top-n 组合。最后，我们对所有 n 个组合进行微调，并根据验证集上的表现对它们重排序（rerank）。我们发现剪枝空间中的暴力搜索和微调重排序对于提升最终性能都很有帮助。</p>
+<p><img src="https://user-images.githubusercontent.com/21177644/124882452-f7fc5e00-e002-11eb-88af-1bb12bfc9867.png" alt=""><br>对于自动模板搜索，目标是相似的：在给定人工标签词的情况下，找到使验证集上准确率最高的模板。我们使用T5，开箱即用，生成了许多候选模板，然后通过验证集表现对它们进行rerank。T5 是一个 seq-to-seq 模型，使用完形填空的目标进行了预训练，非常适合用来生成模板。以情感分类（上图）为例，我们将输入样本和对应的标签词连接起来，并在标签词周围插入<x>和<y>（T5的mask tokens）。要注意，我们希望 T5 模型基于所有few-shot训练样本做条件生成，因此在每个位置，我们取所有示例的log likelihood之和（具体细节参考论文）。最后，我们使用大宽度（100）的beam search来获取大量高质量的模板。</y></x></p>
+<p>引入Demonstration：前文已经介绍了 GPT-3 如何在上下文中使用demonstration：从训练集中随机抽样并以任意顺序连接它们，这样其实在很多方面都会有问题：预训练的 LM 的输入长度是有限的，尤其是对于较小的（通常是512）来说；如果样本以随机顺序连接，则很难得到有意义的pattern；与输入实例相差太大的demonstration可能会没有帮助，甚至会引起混淆。因此，我们提出了一种动态地、有选择地方式来引入demonstration：</p>
+<ul>
+<li>在训练和推理期间，我们从训练集中为每个类随机抽取一个样本并将它们连接起来。对于推理，我们对抽取多组demonstration，并在最后对结果进行集成。</li>
+<li>我们只采样与输入密切相关的demonstration。例如，如果输入是电影评论，就对电影评论进行采样，而不是餐厅评论。我们采用 SBERT ( Reimers and Gurevych, 2019 ) 对句子进行编码，计算输入与训练集中所有样本之间的余弦相似度，然后仅从前 50% 的样本中进行采样。</li>
+</ul>
+<p>实验结果如下：</p>
+<ul>
+<li>可以看出 prompt FT(auto) + demonstrations &gt; prompt FT(auto) &gt; prompt FT(man) &gt; FT；</li>
+<li>但是全量数据 FT 还是比不过。</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/21177644/124883807-4b22e080-e004-11eb-8345-9e0f59896eb4.png" alt=""></p>
+<h4 id="Prefix-Tuning-Optimizing-Continuous-Prompts-for-Generation"><a href="#Prefix-Tuning-Optimizing-Continuous-Prompts-for-Generation" class="headerlink" title="Prefix-Tuning: Optimizing Continuous Prompts for Generation"></a>Prefix-Tuning: Optimizing Continuous Prompts for Generation</h4><ol>
+<li>2021.1<blockquote>
+<p>Smart prompt design essentially produces efficient context that can lead to desired completion.</p>
+</blockquote>
+</li>
+<li>Prefix-Tuning指在输入序列(命名为prefix)的开头指定少量可训练的参数来控制LM， [prefix;x;y]。Let  $P_{idx}$  be a set of prefix indices and  dim($h_{i}$)  be the embedding size. The prefix parameters  $P_{\theta}$  has the dimension $|P_{idx}| \times dim(h_{i})$  and the hidden state takes the form:$$<br>h_{i}=\left\{\begin{array}{ll}<br>P_{\theta}[i,:], &amp; \text { if } i \in \mathcal{P}_{\text {idx }} \\<br>\operatorname{LM}_{\phi}\left(z_{i}, h_{&lt;i}\right), &amp; \text { otherwise }<br>\end{array}\right.<br>$$</li>
+<li>注意训练时预训练模型的参数固定：<img src="https://lilianweng.github.io/lil-log/assets/images/prefix-tuning.png" alt="Illustations of fine-tuning versus prefix-tuning."></li>
+<li>实验结果：<br><img src="https://lilianweng.github.io/lil-log/assets/images/prefix-tuning-length.png" alt="Task performance, summarization (left) and table-to-text (right), as a function of prefix length."></li>
+<li>结论：<blockquote>
+<p>Fine-tuned models achieve better task performance but they can fail in the low data regime. Both AutoPrompt and Prefix-Tuning were found to outperform fine-tuning in the regime where the training dataset is small (i.e. 10^2 − 10^3 samples). As an alternative to fine-tuning, prompt design or learning the context embedding is much cheaper. AutoPrompt improves the accuracy for sentiment classification a lot more than manual prompts and achieves similar performance as linear probing. For the NLI task, AutoPrompt obtains higher accuracy than linear probing. It is able to retrieve facts more accurately than manual prompts too. In low data regime, Prefix-Tuning achieves performance comparable with fine-tuning on table-to-text generation and summarization.</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="P-tuning"><a href="#P-tuning" class="headerlink" title="P-tuning"></a>P-tuning</h4><p><img src="https://user-images.githubusercontent.com/21177644/124886841-3431bd80-e007-11eb-83e5-2d0fa2ab7d22.png" alt=""></p>
+<p>为了（1）保持语义的关联、（2）保持 token 间的上下文依赖关系，作者使用一个可训练 LSTM 模型——即上图（b）中的 Prompt Encoder——生成的 embedding 替换模版中的词。</p>
+<ul>
+<li>在这一基础上，对某些和任务相关的 token 进行保留（task-related anchors），比将它们也随机训练带来的效果更好。</li>
+<li>然后在少样本场景，只训练 LSTM（即只进行寻找 prompt）；</li>
+<li>在全量数据场景，全部参数进行 fine-tuning（即寻找 prompt 和 fine-tuning 共同进行）。</li>
+</ul>
+<p>在SuperGLUE上，对比 BERT-large 和 GPT2-medium（和 base 结果类似，这里只贴一个）：</p>
+<p><img src="https://user-images.githubusercontent.com/21177644/124887356-ac987e80-e007-11eb-8a0e-38df6c3e5e4a.png" alt=""></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://mp.weixin.qq.com/s/w0BH7Uty3In09QIHdVEG8" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/w0BH7Uty3In09QIHdVEG8</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&amp;mid=2247512167&amp;idx=1&amp;sn=cc7695d92362e3b18a6e8969fb14dc27&amp;chksm=96ea6fe7a19de6f1be86b965e268df1b9c6320810cf32b6d64ddd3d238bf9088be41fb36adfe&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&amp;mid=2247512167&amp;idx=1&amp;sn=cc7695d92362e3b18a6e8969fb14dc27&amp;chksm=96ea6fe7a19de6f1be86b965e268df1b9c6320810cf32b6d64ddd3d238bf9088be41fb36adfe&amp;scene=21#wechat_redirect</a></li>
+<li><a href="https://helicqin.github.io/2021/02/05/Controllable%20Neural%20Text%20Generation/">https://helicqin.github.io/2021/02/05/Controllable%20Neural%20Text%20Generation/</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&amp;mid=2247524141&amp;idx=1&amp;sn=d834270cad058931e04392dce844a643&amp;chksm=96ea40ada19dc9bb7f490e9f025b138aa3ed77e66aed544dd310eb6b85bc6018a255f8f4af6b&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&amp;mid=2247524141&amp;idx=1&amp;sn=d834270cad058931e04392dce844a643&amp;chksm=96ea40ada19dc9bb7f490e9f025b138aa3ed77e66aed544dd310eb6b85bc6018a255f8f4af6b&amp;scene=21#wechat_redirect</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/Helicqin/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2021/06/15/Solving Inefficiency of Self-supervised Representation Learning/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Solving Inefficiency of Self-supervised Representation Learning</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/07/07/Prompt-based Language Models/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/124762528-92a65f80-df65-11eb-9e0b-a1e31686b4c1.png)" alt="Prompt-based Language Models" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2021/07/07/Prompt-based Language Models/" class="title">Prompt-based Language Models</a></p>
+                            <p class="item-date"><time datetime="2021-07-07T11:34:00.000Z" itemprop="datePublished">2021-07-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/15/Solving Inefficiency of Self-supervised Representation Learning/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/121988152-69623b80-cdcc-11eb-9296-6b3ac356cab4.png)" alt="Solving Inefficiency of Self-supervised Representation Learning" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2021/06/15/Solving Inefficiency of Self-supervised Representation Learning/" class="title">Solving Inefficiency of Self-supervised Representation Learning</a></p>
+                            <p class="item-date"><time datetime="2021-06-15T03:22:00.000Z" itemprop="datePublished">2021-06-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/06/04/对比聚类简介/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/120795394-fe169f00-c56b-11eb-8834-d33ce7f4ad0d.png)" alt="对比聚类简介" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2021/06/04/对比聚类简介/" class="title">对比聚类简介</a></p>
+                            <p class="item-date"><time datetime="2021-06-04T08:44:00.000Z" itemprop="datePublished">2021-06-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/05/31/Few-shot Natural Language Generation for Task-Oriented Dialog/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/120259839-42354580-c2c7-11eb-9fcf-09b90fa031c6.png)" alt="Few-shot Natural Language Generation for Task-Oriented Dialog" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLG/">NLG</a></p>
+                            <p class="item-title"><a href="/2021/05/31/Few-shot Natural Language Generation for Task-Oriented Dialog/" class="title">Few-shot Natural Language Generation for Task-Oriented Dialog</a></p>
+                            <p class="item-date"><time datetime="2021-05-31T08:13:00.000Z" itemprop="datePublished">2021-05-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/04/17/Energy-based Out-of-distribution Detection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://user-images.githubusercontent.com/21177644/115106664-b1194200-9f98-11eb-9d0c-3239471f237a.png)" alt="Energy-based  Out-of-distribution Detection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/NLP/NLU/">NLU</a></p>
+                            <p class="item-title"><a href="/2021/04/17/Energy-based Out-of-distribution Detection/" class="title">Energy-based  Out-of-distribution Detection</a></p>
+                            <p class="item-date"><time datetime="2021-04-17T08:17:00.000Z" itemprop="datePublished">2021-04-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/">CV</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CV/CNN/">CNN</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CV/Object-Detection/">Object Detection</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Graph/">Graph</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Reinforcement-Learning/">Reinforcement Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/Tensorflow/">Tensorflow</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">73</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLG/">NLG</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/NLU/">NLU</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/State-Tracking/">State Tracking</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Python/">Python</a><span class="category-list-count">3</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Active-Learning/">Active Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversarial-Training/">Adversarial Training</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adversial-Learning/">Adversial Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BUPT/">BUPT</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CNN/">CNN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CONTRASTIVE-LEARNING/">CONTRASTIVE LEARNING</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CV/">CV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Commonsense-Knowledge/">Commonsense  Knowledge</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Context-Rewriting/">Context  Rewriting</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Contrastive-Learning/">Contrastive Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DQN/">DQN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DST/">DST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DSTC7/">DSTC7</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dialogue-System/">Dialogue System</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eager/">Eager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Embedding/">Embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Energy/">Energy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Entity-Typing/">Entity Typing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Excel-Python/">Excel Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GAN/">GAN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph/">Graph</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Attention/">Graph Attention</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Convolutional-Networks/">Graph Convolutional Networks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graph-Representation-Learning/">Graph Representation Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Information-Retrieval/">Information Retrieval</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Keras/">Keras</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MRC/">MRC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Reading-Comprehension/">Machine  Reading  Comprehension</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Matplotlib/">Matplotlib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Memory-Network/">Memory Network</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MentorNet/">MentorNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Meta-Learning/">Meta-Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mixup/">Mixup</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multi-Task-Learning/">Multi-Task Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLG/">NLG</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">28</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLU/">NLU</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Natural-Language-Generation/">Natural Language Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Neural-Response-Generation/">Neural Response Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Numpy/">Numpy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOD/">OOD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/">Object Detection</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pointer-Generator/">Pointer Generator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pretrained-Word-Representations/">Pretrained  Word  Representations</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pretraining/">Pretraining</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QA/">QA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Question-Answering/">Question Answering</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Reinforcement-Learning/">Reinforcement Learning</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Response-Selection/">Response Selection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/">SVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Search/">Search</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Self-Training/">Self-Training</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentence-Semantic-Matching/">Sentence  Semantic  Matching</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Labeling/">Sequence  Labeling</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sequence-Learning/">Sequence Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/State-Tracking/">State Tracking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Task-Oriented-Dialogue/">Task Oriented Dialogue</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Text-Generation/">Text Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer  Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transfer-Learning/">Transfer Learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/">Transformer</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VAE/">VAE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Variational-Generation/">Variational Generation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/">YOLO</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zero-shot-Learning/">Zero-shot Learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/domain-adaptation/">domain adaptation</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Active-Learning/" style="font-size: 10px;">Active Learning</a> <a href="/tags/Adversarial-Training/" style="font-size: 10px;">Adversarial Training</a> <a href="/tags/Adversial-Learning/" style="font-size: 10px;">Adversial Learning</a> <a href="/tags/BUPT/" style="font-size: 11.25px;">BUPT</a> <a href="/tags/CNN/" style="font-size: 10px;">CNN</a> <a href="/tags/CONTRASTIVE-LEARNING/" style="font-size: 12.5px;">CONTRASTIVE LEARNING</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Commonsense-Knowledge/" style="font-size: 15px;">Commonsense  Knowledge</a> <a href="/tags/Context-Rewriting/" style="font-size: 10px;">Context  Rewriting</a> <a href="/tags/Contrastive-Learning/" style="font-size: 10px;">Contrastive Learning</a> <a href="/tags/DQN/" style="font-size: 10px;">DQN</a> <a href="/tags/DST/" style="font-size: 10px;">DST</a> <a href="/tags/DSTC7/" style="font-size: 10px;">DSTC7</a> <a href="/tags/Dialogue-System/" style="font-size: 18.75px;">Dialogue System</a> <a href="/tags/Eager/" style="font-size: 10px;">Eager</a> <a href="/tags/Embedding/" style="font-size: 10px;">Embedding</a> <a href="/tags/Energy/" style="font-size: 10px;">Energy</a> <a href="/tags/Entity-Typing/" style="font-size: 10px;">Entity Typing</a> <a href="/tags/Excel-Python/" style="font-size: 10px;">Excel Python</a> <a href="/tags/GAN/" style="font-size: 10px;">GAN</a> <a href="/tags/Graph/" style="font-size: 11.25px;">Graph</a> <a href="/tags/Graph-Attention/" style="font-size: 10px;">Graph Attention</a> <a href="/tags/Graph-Convolutional-Networks/" style="font-size: 10px;">Graph Convolutional Networks</a> <a href="/tags/Graph-Representation-Learning/" style="font-size: 10px;">Graph Representation Learning</a> <a href="/tags/Information-Retrieval/" style="font-size: 10px;">Information Retrieval</a> <a href="/tags/Keras/" style="font-size: 11.25px;">Keras</a> <a href="/tags/MRC/" style="font-size: 11.25px;">MRC</a> <a href="/tags/Machine-Reading-Comprehension/" style="font-size: 10px;">Machine  Reading  Comprehension</a> <a href="/tags/Machine-Learning/" style="font-size: 12.5px;">Machine Learning</a> <a href="/tags/Matplotlib/" style="font-size: 10px;">Matplotlib</a> <a href="/tags/Memory-Network/" style="font-size: 11.25px;">Memory Network</a> <a href="/tags/MentorNet/" style="font-size: 10px;">MentorNet</a> <a href="/tags/Meta-Learning/" style="font-size: 11.25px;">Meta-Learning</a> <a href="/tags/Mixup/" style="font-size: 10px;">Mixup</a> <a href="/tags/Multi-Task-Learning/" style="font-size: 10px;">Multi-Task Learning</a> <a href="/tags/NLG/" style="font-size: 11.25px;">NLG</a> <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/NLU/" style="font-size: 17.5px;">NLU</a> <a href="/tags/Natural-Language-Generation/" style="font-size: 10px;">Natural Language Generation</a> <a href="/tags/Neural-Response-Generation/" style="font-size: 10px;">Neural Response Generation</a> <a href="/tags/Numpy/" style="font-size: 10px;">Numpy</a> <a href="/tags/OOD/" style="font-size: 10px;">OOD</a> <a href="/tags/Object-Detection/" style="font-size: 11.25px;">Object Detection</a> <a href="/tags/Pointer-Generator/" style="font-size: 10px;">Pointer Generator</a> <a href="/tags/Pretrained-Word-Representations/" style="font-size: 10px;">Pretrained  Word  Representations</a> <a href="/tags/Pretraining/" style="font-size: 10px;">Pretraining</a> <a href="/tags/Python/" style="font-size: 11.25px;">Python</a> <a href="/tags/QA/" style="font-size: 10px;">QA</a> <a href="/tags/Question-Answering/" style="font-size: 10px;">Question Answering</a> <a href="/tags/Reinforcement-Learning/" style="font-size: 13.75px;">Reinforcement Learning</a> <a href="/tags/Response-Selection/" style="font-size: 10px;">Response Selection</a> <a href="/tags/SVM/" style="font-size: 10px;">SVM</a> <a href="/tags/Search/" style="font-size: 10px;">Search</a> <a href="/tags/Self-Training/" style="font-size: 10px;">Self-Training</a> <a href="/tags/Sentence-Semantic-Matching/" style="font-size: 10px;">Sentence  Semantic  Matching</a> <a href="/tags/Sequence-Labeling/" style="font-size: 10px;">Sequence  Labeling</a> <a href="/tags/Sequence-Learning/" style="font-size: 10px;">Sequence Learning</a> <a href="/tags/State-Tracking/" style="font-size: 10px;">State Tracking</a> <a href="/tags/Task-Oriented-Dialogue/" style="font-size: 15px;">Task Oriented Dialogue</a> <a href="/tags/Tensorflow/" style="font-size: 16.25px;">Tensorflow</a> <a href="/tags/Text-Generation/" style="font-size: 10px;">Text Generation</a> <a href="/tags/Transfer-Learning/" style="font-size: 10px;">Transfer  Learning</a> <a href="/tags/Transfer-Learning/" style="font-size: 11.25px;">Transfer Learning</a> <a href="/tags/Transformer/" style="font-size: 11.25px;">Transformer</a> <a href="/tags/VAE/" style="font-size: 10px;">VAE</a> <a href="/tags/Variational-Generation/" style="font-size: 10px;">Variational Generation</a> <a href="/tags/YOLO/" style="font-size: 10px;">YOLO</a> <a href="/tags/Zero-shot-Learning/" style="font-size: 10px;">Zero-shot Learning</a> <a href="/tags/domain-adaptation/" style="font-size: 10px;">domain adaptation</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="https://helicqin.github.io/about/index.html">Resume</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Helic He</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'helic';
+    
+    
+    var disqus_url = 'https://helicqin.github.io/2021/07/07/Prompt-based Language Models/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
