@@ -3,25 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Chinese Spelling Check | Helic</title>
+    <title>Conversations Are Not Flat Modeling the Dynamic Information Flow across Dialogue Utterances | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="Search" />
+        <meta name="keywords" content="CONTRASTIVE LEARNING" />
     
-    <meta name="description" content="Chinese Spelling Check (CSC)相关论文">
-<meta name="keywords" content="Search">
+    <meta name="description" content="本文提出了建模对话动态信息流的方法DialoFlow，引入dynamic flow 动态流机制通过处理每个话语带来的语义影响来模拟整个对话历史中的动态信息流。">
+<meta name="keywords" content="CONTRASTIVE LEARNING">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Chinese Spelling Check">
-<meta property="og:url" content="https://helicqin.github.io/2020/11/25/Chinese Spelling Check/index.html">
+<meta property="og:title" content="Conversations Are Not Flat Modeling the Dynamic Information Flow across Dialogue Utterances">
+<meta property="og:url" content="https://helicqin.github.io/2021/07/19/Conversations Are Not Flat Modeling the Dynamic Information Flow across Dialogue Utterances/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="Chinese Spelling Check (CSC)相关论文">
+<meta property="og:description" content="本文提出了建模对话动态信息流的方法DialoFlow，引入dynamic flow 动态流机制通过处理每个话语带来的语义影响来模拟整个对话历史中的动态信息流。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://user-images.githubusercontent.com/21177644/100177899-e223a800-2f0d-11eb-926e-49cfba661a12.png">
-<meta property="og:updated_time" content="2020-11-30T14:55:14.631Z">
+<meta property="og:image" content="https://user-images.githubusercontent.com/21177644/126156574-a3b76f15-7c85-4b9c-b70d-78e7c5b56990.png">
+<meta property="og:updated_time" content="2021-07-20T15:11:57.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chinese Spelling Check">
-<meta name="twitter:description" content="Chinese Spelling Check (CSC)相关论文">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/21177644/100177899-e223a800-2f0d-11eb-926e-49cfba661a12.png">
+<meta name="twitter:title" content="Conversations Are Not Flat Modeling the Dynamic Information Flow across Dialogue Utterances">
+<meta name="twitter:description" content="本文提出了建模对话动态信息流的方法DialoFlow，引入dynamic flow 动态流机制通过处理每个话语带来的语义影响来模拟整个对话历史中的动态信息流。">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/21177644/126156574-a3b76f15-7c85-4b9c-b70d-78e7c5b56990.png">
     
 
     
@@ -146,18 +146,18 @@ ga('send', 'pageview');
                         <div class="main-body-header">
     <h1 class="header">
     
-    <a class="page-title-link" href="/categories/NLP/">NLP</a>
+    <a class="page-title-link" href="/categories/NLP/">NLP</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/NLP/NLG/">NLG</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-Chinese Spelling Check" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Conversations Are Not Flat Modeling the Dynamic Information Flow across Dialogue Utterances" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        Chinese Spelling Check
+        Conversations Are Not Flat Modeling the Dynamic Information Flow across Dialogue Utterances
         </h1>
     
 
@@ -167,76 +167,34 @@ ga('send', 'pageview');
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2020/11/25/Chinese Spelling Check/" class="article-date">
-            <time datetime="2020-11-25T02:59:00.000Z" itemprop="datePublished">2020-11-25</time>
+        <a href="/2021/07/19/Conversations Are Not Flat Modeling the Dynamic Information Flow across Dialogue Utterances/" class="article-date">
+            <time datetime="2021-07-19T11:57:00.000Z" itemprop="datePublished">2021-07-19</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Search/">Search</a>
+        <a class="tag-link" href="/tags/CONTRASTIVE-LEARNING/">CONTRASTIVE LEARNING</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>Chinese Spelling Check (CSC)相关论文<br><a id="more"></a></p>
-<h3 id="Spelling-Error-Correction-with-Soft-Masked-BERT"><a href="#Spelling-Error-Correction-with-Soft-Masked-BERT" class="headerlink" title="Spelling Error Correction with Soft-Masked BERT"></a>Spelling Error Correction with Soft-Masked BERT</h3><ol>
-<li><p>ACL 2020，字节AI LAB</p>
-</li>
-<li><p>本文提出了一种新的神经结构，称为SoftMasked BERT。软屏蔽BERT包含两个网络，一个检测网络和一个基于BERT的校正网络。校正网络与单纯使用BERT的方法相似。检测网络是Bi-GRU网络，可以预测字符在每个位置出现错误的概率。然后利用该概率进行在该位置嵌入字符的软掩蔽。软掩蔽是传统的“硬掩蔽”的延伸，当误差概率等于1时，前者退化为后者。然后将每个位置的软掩蔽嵌入信息输入到校正网络中。校正网络使用BERT进行误差校正。该方法可以在端到端联合训练过程中，在检测网络的帮助下，强制模型学习正确的上下文进行错误纠正。</p>
-</li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177894-e059e480-2f0d-11eb-8a2d-008c7a1d11c2.png" alt=""></p>
-</li>
-<li><p>具体细节：如图所示，软掩蔽BERT由一个基于Bi-GRU的检测网络和一个基于BERT的校正网络组成。检测网络预测误差的概率，修正网络预测误差修正的概率，而检测网络利用软掩蔽将预测结果传递给修正网络。更具体地说，首先为输入语句中的每个字符创建嵌入，称为输入嵌入。接下来，它使用检测网络以嵌入序列作为输入和输出字符序列(嵌入)的错误概率。然后计算输入嵌入和[MASK]嵌入的加权和，并根据误差概率进行加权。计算得到的嵌入以一种软的方式掩盖了序列中可能出现的错误。然后，以软屏蔽嵌入序列作为输入，使用修正网络输出误差修正的概率，这是一个BERT模型，它的最后一层由一个针对所有字符的softmax函数组成。在输入嵌入项和最终层的嵌入项之间还有剩余的连接。</p>
-</li>
-<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177896-e223a800-2f0d-11eb-9b72-6643a60ca43f.png" alt=""></p>
-</li>
-<li><p>soft-mask的意义：纠错模型不仅要学习正确的上下文，还要给定上下文条件下学习（错字-正字）之间的映射关系（比如正确的字一般都为错字的音近形近字），mask掉错字，很有可能一开始就已经南辕北辙了。</p>
-</li>
-</ol>
-<h3 id="SpellGCN-Incorporating-Phonological-and-Visual-Similarities-into-Language-Models-for-Chinese-Spelling-Check"><a href="#SpellGCN-Incorporating-Phonological-and-Visual-Similarities-into-Language-Models-for-Chinese-Spelling-Check" class="headerlink" title="SpellGCN: Incorporating Phonological and Visual Similarities into Language Models for Chinese Spelling Check"></a>SpellGCN: Incorporating Phonological and Visual Similarities into Language Models for Chinese Spelling Check</h3><ol>
-<li><p>ACL 2020，蚂蚁金服，<a href="https://github.com/ACL2020SpellGCN/SpellGCN，https://kami.app/QSPxJ4pKJcwC" target="_blank" rel="noopener">https://github.com/ACL2020SpellGCN/SpellGCN，https://kami.app/QSPxJ4pKJcwC</a></p>
-</li>
-<li><p>本工作的亮点，在于把混淆集做成了“图”，又加到了单字的embedding里。把混淆集做成GCN，每个字不仅是它自己融合上下文特征后的embedding，在embedding里也加入了音近、形近字的影子。于是进行多分类的时候，每个混淆集里的字都更倾向于分为混淆集里的其他字。具体实现上，分别基于已知混淆集建立音似图和形似图，使用BERT作为GCN初始化，两个图之间使用注意力聚合，最后使用GCN的输出做分类。</p>
-</li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177899-e223a800-2f0d-11eb-926e-49cfba661a12.png" alt=""></p>
-</li>
-<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177900-e2bc3e80-2f0d-11eb-87e6-809230bbe836.png" alt=""></p>
-</li>
-</ol>
-<h3 id="Confusionset-guided-Pointer-Networks-for-Chinese-Spelling-Check"><a href="#Confusionset-guided-Pointer-Networks-for-Chinese-Spelling-Check" class="headerlink" title="Confusionset-guided Pointer Networks for Chinese Spelling Check"></a>Confusionset-guided Pointer Networks for Chinese Spelling Check</h3><ol>
-<li><p>ACL 2019，Tencent Cloud AI</p>
-</li>
-<li><p>seq2seq模式，结合指针网络，从混淆集生成以及原句中copy得到最终的纠错结果。</p>
-</li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177901-e354d500-2f0d-11eb-918b-9977316125b8.png" alt=""></p>
-</li>
-<li><p>实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177903-e3ed6b80-2f0d-11eb-9f62-25599c931aa4.png" alt=""></p>
-</li>
-</ol>
-<h3 id="A-Hybrid-Approach-to-Automatic-Corpus-Generation-for-Chinese-Spelling-Check"><a href="#A-Hybrid-Approach-to-Automatic-Corpus-Generation-for-Chinese-Spelling-Check" class="headerlink" title="A Hybrid Approach to Automatic Corpus Generation for Chinese Spelling Check"></a>A Hybrid Approach to Automatic Corpus Generation for Chinese Spelling Check</h3><ol>
-<li><p>EMNLP 2018，Tencent AI</p>
-</li>
-<li><p>中文错字的自动检查是一个富有挑战又十分有意义的任务，该任务不仅用于许多自然语言处理应用的预处理阶段，而且可以极大促进人们的日常读写。数据驱动的方法在中文错字检查十分有效，然而却面临着标注数据缺乏的挑战。本工作提出了一种自动构造用于拼写检查数据集的方法，分别通过基于 OCR 和 SR 的方法构造视觉上和听觉上相似的字来模拟错字。利用本文提出的方法，研究人员构造了一个大规模的数据集用于训练不同的错字自动检查模型，在三个标准的测试集上的实验结果证明了本文自动构造数据集方法的合理性和有效性。</p>
-</li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177904-e4860200-2f0d-11eb-8e01-29127c1d97b5.png" alt=""></p>
-</li>
-<li><p>实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177907-e51e9880-2f0d-11eb-93de-d3e0fb188600.png" alt=""></p>
-</li>
-</ol>
-<h3 id="Adversarial-Semantic-Decoupling-for-Recognizing-Open-Vocabulary-Slots"><a href="#Adversarial-Semantic-Decoupling-for-Recognizing-Open-Vocabulary-Slots" class="headerlink" title="Adversarial Semantic Decoupling for Recognizing Open-Vocabulary Slots"></a>Adversarial Semantic Decoupling for Recognizing Open-Vocabulary Slots</h3><ol>
-<li><p>EMNLP 2020，Keqing</p>
-</li>
-<li><p>本文是作者发表在EMNLP2020上的工作，主要解决罕见实体识别问题，核心思想是利用对抗攻击来做数据增强。可以借鉴到我们的线上纠错数据集，增强模型的鲁棒性。</p>
-</li>
-<li><p>模型结构：<img src="https://user-images.githubusercontent.com/21177644/100177908-e51e9880-2f0d-11eb-8540-f650d59f4a84.png" alt=""></p>
-</li>
-<li><p>主实验结果：<img src="https://user-images.githubusercontent.com/21177644/100177909-e5b72f00-2f0d-11eb-8f6a-a21b76c372ec.png" alt=""></p>
-</li>
-</ol>
+            <p>本文提出了建模对话动态信息流的方法DialoFlow，引入dynamic flow 动态流机制通过处理每个话语带来的语义影响来模拟整个对话历史中的动态信息流。<br><a id="more"></a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>现有的建模对话历史的方法主要分为两种。一种是直接拼接对话历史，这种方法在某种程度上忽略了对话历史中跨句子的对话动态。另外一种是多层次建模，首先对每句话做表示，再对整个对话做表示，这种方法在对每句话做表示时忽略了其他句子的作用。</p>
+<p>本文提出了建模对话动态信息流的方法DialoFlow，引入dynamic flow 动态流机制通过处理每个话语带来的语义影响来模拟整个对话历史中的动态信息流。在Reddit上进行了预训练，实验表明，DialoFlow在对话生成任务（Reddit multi-reference、DailyDialog multi-reference）上明显优于DialoGPT。此外，本文还提出了Flow score，一种基于预训练的DialoFlow的评价人机交互对话质量的有效自动度量，在DSTC9交互式对话评估数据集上的评估结果与人工评估一致性达到0.9。</p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>设 $D = u_{1},u_{2}, … ,u_{N}$ 表示整个对话，对于每一条话语 $u_{k}=\left\{u_{k}^{1}, u_{k}^{2}, \ldots, u_{k}^{T}\right\}$，其中$u_{k}^{t}$表示第k条话语中的第t个单词，$u_{&lt;k}=\left\{u_{1}, u_{2}, \ldots, u_{k-1}\right\}$为第k条话语的历史对话，也就是上下文$C_{k}$, $C_{k + 1}$ 和 $C_{k}$ 间的差异定义为semantic influence $I_{k}$：<br>$$<br>\mathbf{I}_{k}=\mathbf{C}_{k+1}-\mathbf{C}_{k}<br>$$<br>DialoFlow首先对对话历史进行编码，并根据历史上下文$C_{1},…,C_{k}$预测未来的上下文$C^{‘}_{k+1}$。然后在回复生成阶段，模型预测 semantic influence $I^{‘}_{k}$，并结合$I^{‘}_{k}$和历史子句生成目标回复$u_{k}$。</p>
+<p><img src="https://user-images.githubusercontent.com/21177644/126156574-a3b76f15-7c85-4b9c-b70d-78e7c5b56990.png" alt=""></p>
+<p>为了捕获对话话语中的动态信息流，本文设计了一个Flow模块来模拟语境变化。Flow模块的结构与一层transformer block相同，接受前面所有的上下文$C_{1},…,C_{k}$作为输入，并预测第(k+1)条话语的上下文$C_{k + 1}^{‘}$:<br>$$<br>\mathbf{C}_{k+1}^{\prime}=\operatorname{Flow}\left(\mathbf{C}_{1}, \mathbf{C}_{2}, \ldots, \mathbf{C}_{k}\right)<br>$$<br>以及预测第k个话语引起的语义影响$I^{‘}_{k}$:<br>$$<br>\mathbf{I}_{k}^{\prime}=\mathbf{C}_{k+1}^{\prime}-\mathbf{C}_{k}<br>$$<br>与传统的上下文-回复的训练方法不同，DialoFlow是用包含N个话语的整个对话进行训练，相应地设计了三个训练任务来优化模型：</p>
+<ul>
+<li>Context  Flow  Modeling: $$<br>\mathcal{L}_{C F M}=\sum_{k=1}^{N}\left|\mathbf{C}_{k}-\mathbf{C}_{k}^{\prime}\right|_{2}^{2}<br>$$</li>
+<li>Semantic  Influence  Modeling: $$<br>\begin{aligned}<br>\mathcal{L}_{S I M} &amp;=-\sum_{k=1}^{N} \sum_{t=1}^{T} \log p\left(u_{k}^{t} \mid \mathbf{I}_{k}^{\prime}\right) \\<br>&amp;=-\sum_{k=1}^{N} \sum_{t=1}^{T} \log f_{u_{k}^{t}}<br>\end{aligned}<br>$$<br>$$<br>f=\operatorname{softmax}\left(W_{2} \mathbf{I}_{k}^{\prime}+b_{2}\right) \in \mathbb{R}^{|V|}<br>$$</li>
+<li>$$<br>\begin{aligned}<br>\mathcal{L}_{R G M} &amp;=-\sum_{k=1}^{N} \log p\left(u_{k} \mid \mathbf{I}_{k}^{\prime}, u_{&lt;k}\right) \\<br>&amp;=-\sum_{k=1}^{N} \sum_{t=1}^{T} \log p\left(u_{k}^{t} \mid \mathbf{I}_{k}^{\prime}, u_{&lt;k}, u_{k}^{&lt;t}\right)<br>\end{aligned}<br>$$</li>
+</ul>
+<h2 id="Flow-Score"><a href="#Flow-Score" class="headerlink" title="Flow Score"></a>Flow Score</h2><p>聊天机器人的话语所带来的语义影响与期望之间的差距越小，就越像人类。本文提出了一种基于DialoFlow的交互式对话评价的自动无参考指标Flow score，当机器人生成一个新的话语$u_{k}$时，测量$u_{k}$所带来的预测语义影响$I^{‘}_{k}$与真实语义影响$I_{k}$之间的相似度作为该话语与人类相似的概率：<br>$$<br>\begin{aligned}<br>s_{k} &amp;=\cos \left(\left\langle\mathbf{I}_{k}^{\prime}, \mathbf{I}_{k}\right\rangle\right) \cdot \operatorname{length}\left(\mathbf{I}_{k}^{\prime}, \mathbf{I}_{k}\right) \\<br>&amp;=\frac{\mathbf{I}_{k}^{\prime} \cdot \mathbf{I}_{k}}{\left|\mathbf{I}_{k}^{\prime}\right|\left|\mathbf{I}_{k}\right|} \cdot \frac{\min \left(\left|\mathbf{I}_{k}^{\prime}\right|,\left|\mathbf{I}_{k}\right|\right)}{\max \left(\left|\mathbf{I}_{k}^{\prime}\right|,\left|\mathbf{I}_{k}\right|\right)}<br>\end{aligned}<br>$$<br>引入长度相似度是为了考虑长度差异对语义相似度的影响。对于聊天机器人在对话中的整体质量，本文设计的Flow score，可以视为对话级困惑度：<br>$$<br>\text { Flow score }=2^{-\frac{1}{M} \sum_{k}^{M} \log \left(\frac{s_{k}+1}{2}\right)}<br>$$</p>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2><p><img src="https://user-images.githubusercontent.com/21177644/126162736-2fec8cde-b651-4347-9bf3-c5c256e8e004.png" alt=""><br>​</p>
 
         </div>
         <footer class="article-footer">
@@ -374,20 +332,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2020/12/26/对比学习综述/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            对比学习综述
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2020/09/04/Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2021/07/07/Prompt-based Language Models/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Beyond Synthetic Noise：Deep Learning on Controlled Noisy Labels</p>
+        <p class="article-nav-title">Prompt-based Language Models</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -594,7 +542,7 @@ ga('send', 'pageview');
     var disqus_shortname = 'helic';
     
     
-    var disqus_url = 'https://helicqin.github.io/2020/11/25/Chinese Spelling Check/';
+    var disqus_url = 'https://helicqin.github.io/2021/07/19/Conversations Are Not Flat Modeling the Dynamic Information Flow across Dialogue Utterances/';
     
     (function() {
     var dsq = document.createElement('script');
