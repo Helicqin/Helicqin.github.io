@@ -6,17 +6,17 @@
     <title>About Me | Helic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="description" content="News 2022.8: We have three papers accepted by COLING2022, including Generalized Intent Discovery: Learning from Open World Dialogue System; Distribution Calibration for Out-of-Domain Detection with Ba">
+    <meta name="description" content="News 2022.12: We have four papers accepted by EMNLP2022, including UniNL: Aligning Representation Learning with Scoring Function for OOD Detection via Unified Neighborhood Learning; Watch the Neighbor">
 <meta property="og:type" content="website">
 <meta property="og:title" content="About Me">
 <meta property="og:url" content="https://helicqin.github.io/about/index.html">
 <meta property="og:site_name" content="Helic">
-<meta property="og:description" content="News 2022.8: We have three papers accepted by COLING2022, including Generalized Intent Discovery: Learning from Open World Dialogue System; Distribution Calibration for Out-of-Domain Detection with Ba">
+<meta property="og:description" content="News 2022.12: We have four papers accepted by EMNLP2022, including UniNL: Aligning Representation Learning with Scoring Function for OOD Detection via Unified Neighborhood Learning; Watch the Neighbor">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-09-18T14:30:33.850Z">
+<meta property="og:updated_time" content="2023-01-10T16:19:07.660Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About Me">
-<meta name="twitter:description" content="News 2022.8: We have three papers accepted by COLING2022, including Generalized Intent Discovery: Learning from Open World Dialogue System; Distribution Calibration for Out-of-Domain Detection with Ba">
+<meta name="twitter:description" content="News 2022.12: We have four papers accepted by EMNLP2022, including UniNL: Aligning Representation Learning with Scoring Function for OOD Detection via Unified Neighborhood Learning; Watch the Neighbor">
     
 
     
@@ -162,6 +162,7 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
             <h2 id="News"><a href="#News" class="headerlink" title="News"></a>News</h2><ul>
+<li>2022.12: <strong>We have four papers accepted by EMNLP2022, including <code>UniNL: Aligning Representation Learning with Scoring Function for OOD Detection via Unified Neighborhood Learning</code>; <code>Watch the Neighbors: A Unified K-Nearest Neighbor Contrastive Learning Framework for OOD Intent Discovery</code>; <code>Semi-Supervised Knowledge-Grounded Pre-training for Task-Oriented Dialog Systems</code>; <code>Disentangling Confidence Score Distribution for Out-of-Domain Intent Detection with Energy-Based Learning</code></strong></li>
 <li>2022.8: <strong>We have three papers accepted by COLING2022, including <code>Generalized Intent Discovery: Learning from Open World Dialogue System</code>; <code>Distribution Calibration for Out-of-Domain Detection with Bayesian Approximation</code>; <code>PSSAT: A Perturbed Semantic Structure Awareness Transferring Method for Perturbation-Robust Slot Filling</code></strong></li>
 <li>2022.8: <strong>We have one paper accepted by CIKM2022, including <code>Unified Knowledge Prompt Pretraining for Customer Service Dialogues</code></strong></li>
 <li>2022.4: <strong>We have two papers accepted by NAACL2022, including <code>Revisit Overconfidence for OOD Detection: Reassigned Contrastive Learning with Adaptive Class-dependent Threshold</code>; <code>Domain-Oriented Prefix-Tuning: Towards Efficient and Generalizable Fine-tuning for Zero-Shot Dialogue Summarization</code></strong>.</li>
@@ -221,11 +222,32 @@ ga('send', 'pageview');
 </li>
 </ol>
 <h2 id="Publication"><a href="#Publication" class="headerlink" title="Publication"></a>Publication</h2><ol>
-<li><p><strong>Generalized Intent Discovery: Learning from Open World Dialogue System</strong>, COLING2022</p>
+<li><p><strong>UniNL: Aligning Representation Learning with Scoring Function for OOD Detection via Unified Neighborhood Learning</strong>, EMNLP2022</p>
 <ul>
-<li>Yutao Mou*, <strong>Keqing He</strong>*, Yanan Wu, Pei Wang, Jingang Wang, Wei Wu, Yi Huang, Junlan Feng, Weiran Xu</li>
+<li>Yutao Mou*, Pei Wang*, <strong>Keqing He</strong>*, Yanan Wu, Jingang Wang, Wei Wu, Weiran Xu</li>
+<li>Abstract: Detecting out-of-domain (OOD) intents from user queries is essential for avoiding wrong operations in task-oriented dialogue systems. The key challenge is how to distinguish in-domain (IND) and OOD intents. Previous methods ignore the alignment between representation learning and scoring function, limit-ing the OOD detection performance. In this paper, we propose a uniﬁed neighborhood learning framework (UniNL) to detect OOD intents. Speciﬁcally, we design a K-nearest neighbor contrastive learning (KNCL) objective for representation learning and introduce a KNN-based scoring function for OOD detection. We aim to align representation learning with scoring function. Experiments and analysis on two benchmark datasets show the effectiveness of our method.</li>
+<li><a href="https://arxiv.org/pdf/2210.10722.pdf" target="_blank" rel="noopener">paper</a>, <a href="https://github.com/Yupei-Wang/UniNL" target="_blank" rel="noopener">code</a></li>
+</ul>
+</li>
+<li><p><strong>Watch the Neighbors: A Unified K-Nearest Neighbor Contrastive Learning Framework for OOD Intent Discovery</strong>, EMNLP2022 oral</p>
+<ul>
+<li>Yutao Mou*, <strong>Keqing He</strong>*, Pei Wang, Yanan Wu, Jingang Wang, Wei Wu, Weiran Xu</li>
+<li>Abstract: Discovering out-of-domain (OOD) intent is important for developing new skills in task-oriented dialogue systems. The key challenges lie in how to transfer prior in-domain (IND) knowledge to OOD clustering, as well as jointly learn OOD representations and cluster assignments. Previous methods suffer from in-domain overﬁtting problem, and there is a natural gap between representation learning and clustering objectives. In this paper, we propose a uniﬁed K-nearest neighbor contrastive learning framework to discover OOD intents. Speciﬁcally, for IND pre-training stage, we propose a KCL objective to learn inter-class discriminative features, while maintaining intra-class diversity, which alleviates the in-domain overﬁtting problem. For OOD clustering stage, we propose a KCC method to form compact clusters by mining true hard negative samples, which bridges the gap between clustering and representation learning. Extensive experiments on three benchmark datasets show that our method achieves substantial improvements over the state-of-the-art methods.</li>
+<li><a href="https://arxiv.org/pdf/2210.08909.pdf" target="_blank" rel="noopener">paper</a>, <a href="https://github.com/myt517/KCOD" target="_blank" rel="noopener">code</a></li>
+</ul>
+</li>
+<li><p><strong>Semi-Supervised Knowledge-Grounded Pre-training for Task-Oriented Dialog Systems</strong>, EMNLP2022 SereTOD Workshop (Championship of Track II)</p>
+<ul>
+<li>Weihao Zeng*, <strong>Keqing He</strong>*, Zechen Wang*, Dayuan Fu, Guanting Dong, Ruotong Geng, Pei Wang, Jingang Wang, Chaobo Sun, Wei Wu, Weiran Xu</li>
 <li>Abstract: Traditional intent classification models are based on a pre-defined intent set and only recognize limited in-domain (IND) intent classes. But users may input out-of-domain (OOD) queries in a practical dialogue system. Such OOD queries can provide directions for future improvement. In this paper, we define a new task, Generalized Intent Discovery (GID), which aims to extend an IND intent classifier to an open-world intent set including IND and OOD intents. We hope to simultaneously classify a set of labeled IND intent classes while discovering and recognizing new unlabeled OOD types incrementally. We construct three public datasets for different application scenarios and propose two kinds of frameworks, pipeline-based and end-to-end for future work. Further, we conduct exhaustive experiments and qualitative analysis to comprehend key challenges and provide new guidance for future GID research.</li>
-<li><a href="https://arxiv.org/abs/2209.06030" target="_blank" rel="noopener">paper</a>, <a href="https://github.com/pris-nlp/COLING2022_Bayesian-for-OOD/" target="_blank" rel="noopener">code</a></li>
+<li><a href="https://arxiv.org/pdf/2210.08873.pdf" target="_blank" rel="noopener">paper</a>, <a href="https://github.com/Zeng-WH/S2KG" target="_blank" rel="noopener">code</a></li>
+</ul>
+</li>
+<li><p><strong>Disentangling Confidence Score Distribution for Out-of-Domain Intent Detection with Energy-Based Learning</strong>, EMNLP2022 SereTOD Workshop</p>
+<ul>
+<li>Yanan Wu*, Zhiyuan Zeng*, <strong>Keqing He</strong>*, Yutao Mou, Pei Wang, Yuanmeng Yan, Weiran Xu</li>
+<li>Abstract: Out-of-Domain (OOD) detection is a key component in a task-oriented dialog system, which aims to identify whether a query falls outside the predefined supported intent set. Previous softmax-based detection algorithms are proved to be overconfident for OOD samples. In this paper, we analyze overconfident OOD comes from distribution uncertainty due to the mismatch between the training and test distributions, which makes the model can’t confidently make predictions thus probably causes abnormal softmax scores. We propose a Bayesian OOD detection framework to calibrate distribution uncertainty using Monte-Carlo Dropout. Our method is flexible and easily pluggable to existing softmax-based baselines and gains 33.33% OOD F1 improvements with increasing only 0.41% inference time compared to MSP. Further analyses show the effectiveness of Bayesian learning for OOD detection</li>
+<li><a href="https://arxiv.org/pdf/2210.08830.pdf" target="_blank" rel="noopener">paper</a>, <a href="https://github.com/pris-nlp/EMNLP2022-energy_for_OOD/" target="_blank" rel="noopener">code</a></li>
 </ul>
 </li>
 <li><p><strong>Distribution Calibration for Out-of-Domain Detection with Bayesian Approximation</strong>, COLING2022</p>
@@ -245,14 +267,14 @@ ga('send', 'pageview');
 <li><p><strong>Unified Knowledge Prompt Pretraining for Customer Service Dialogues</strong>, CIKM2022</p>
 <ul>
 <li><strong>Keqing He</strong>, Jingang Wang, Chaobo Sun, Wei Wu</li>
-<li>Abstract: Dialogue bots have been widely applied in customer service scenarios to provide timely and user-friendly experience. These bots must classify the appropriate domain of a dialogue, understand the intent of users, and generate proper responses. Existing dialogue pre-training models are designed only for several dialogue tasks and ignore weakly-supervised expert knowledge in customer service dialogues. In this paper, we propose a novel unified knowledge prompt pre-training framework, UFA (\textbf{U}nified Model \textbf{F}or \textbf{A}ll Tasks), for customer service dialogues. We formulate all the tasks of customer service dialogues as a unified text-to-text generation task and introduce a knowledge-driven prompt strategy to jointly learn from a mixture of distinct dialogue tasks. We pre-train UFA on a large-scale Chinese customer service corpus collected from practical scenarios and get significant improvements on both natural language understanding (NLU) and natural language generation (NLG) benchmarks.</li>
+<li>Abstract: Dialogue bots have been widely applied in customer service scenarios to provide timely and user-friendly experience. These bots must classify the appropriate domain of a dialogue, understand the intent of users, and generate proper responses. Existing dialogue pre-training models are designed only for several dialogue tasks and ignore weakly-supervised expert knowledge in customer service dialogues. In this paper, we propose a novel unified knowledge prompt pre-training framework, UFA (<strong>U</strong>nified Model <strong>F</strong>or <strong>A</strong>ll Tasks), for customer service dialogues. We formulate all the tasks of customer service dialogues as a unified text-to-text generation task and introduce a knowledge-driven prompt strategy to jointly learn from a mixture of distinct dialogue tasks. We pre-train UFA on a large-scale Chinese customer service corpus collected from practical scenarios and get significant improvements on both natural language understanding (NLU) and natural language generation (NLG) benchmarks.</li>
 <li><a href="https://arxiv.org/abs/2208.14652" target="_blank" rel="noopener">paper</a></li>
 </ul>
 </li>
-<li><p><strong>Domain-Oriented Prefix-Tuning: Towards Efficient and Generalizable Fine-tuning for Zero-Shot Dialogue Summarization</strong>, NAACL2022</p>
+<li><p><strong>Domain-Oriented Prefix-Tuning: Towards Efficient and Generalizable Fine-tuning for Zero-Shot Dialogue Summarization</strong>, NAACL2022 oral</p>
 <ul>
 <li>Lulu Zhao*, Fujia Zheng*, Weihao Zeng, <strong>Keqing He</strong>, Weiran Xu, Huixing Jiang, Wei Wu, Yanan Wu</li>
-<li>Abstract: The most advanced abstractive dialogue summarizers lack generalization ability on new domains and the existing researches for domain adaptation in summarization generally rely on large-scale pre-trainings. To explore the lightweight fine-tuning methods for domain adaptation of dialogue summarization, in this paper, we propose an efficient and generalizable \textbf{D}omain-\textbf{O}riented \textbf{P}refix-tuning model, which utilizes a domain word initialized prefix module to alleviate domain entanglement and adopts discrete prompts to guide the model to focus on key contents of dialogues and enhance model generalization. We conduct zero-shot experiments and build domain adaptation benchmarks on two multi-domain dialogue summarization datasets, TODSum and QMSum. Adequate experiments and qualitative analysis prove the effectiveness of our methods.</li>
+<li>Abstract: The most advanced abstractive dialogue summarizers lack generalization ability on new domains and the existing researches for domain adaptation in summarization generally rely on large-scale pre-trainings. To explore the lightweight fine-tuning methods for domain adaptation of dialogue summarization, in this paper, we propose an efficient and generalizable Domain-Oriented Prefix-tuning model, which utilizes a domain word initialized prefix module to alleviate domain entanglement and adopts discrete prompts to guide the model to focus on key contents of dialogues and enhance model generalization. We conduct zero-shot experiments and build domain adaptation benchmarks on two multi-domain dialogue summarization datasets, TODSum and QMSum. Adequate experiments and qualitative analysis prove the effectiveness of our methods.</li>
 <li><a href="https://aclanthology.org/2022.naacl-main.357/" target="_blank" rel="noopener">paper</a>, <a href="https://github.com/Zeng-WH/DOP-Tuning" target="_blank" rel="noopener">code</a></li>
 </ul>
 </li>
@@ -266,7 +288,7 @@ ga('send', 'pageview');
 <li><p><strong>ADPL: Adversarial Prompt-based Domain Adaptation for Dialogue Summarization with Knowledge Disentanglement</strong>, SIGIR2022</p>
 <ul>
 <li>Lulu Zhao*, Fujia Zheng*, Weihao Zeng, <strong>Keqing He</strong>, Ruotong Geng, Huixing Jiang, Wei Wu, Weiran Xu</li>
-<li>Abstract: Traditional dialogue summarization models rely on a large-scale manually-labeled corpus, lacking generalization ability to new domains, and domain adaptation from a labeled source domain to an unlabeled target domain is important in practical summarization scenarios. However, existing domain adaptation works in dialogue summarization generally require large-scale pre-training using extensive external data. To explore the lightweight fine-tuning methods, in this paper, we propose an efficient \textbf{A}dversarial \textbf{D}isentangled \textbf{P}rompt \textbf{L}earning (ADPL) model for domain adaptation in dialogue summarization. We introduce three kinds of prompts including domain-invariant prompt (DIP), domain-specific prompt (DSP), and task-oriented prompt (TOP). DIP aims to disentangle and transfer the shared knowledge from the source domain and target domain in an adversarial way, which improves the accuracy of prediction about domain-invariant information and enhances the ability for generalization to new domains. DSP is designed to guide our model to focus on domain-specific knowledge using domain-related features. TOP is to capture task-oriented knowledge to generate high-quality summaries. Instead of fine-tuning the whole pre-trained language model (PLM), we only update the prompt networks but keep PLM fixed. We conduct zero-shot experiments and build domain adaptation benchmarks on two multi-domain dialogue summarization datasets, TODSum and QMSum. Adequate experiments and analysis prove our method significantly outperforms full-parameter fine-tuning with even fewer parameters.</li>
+<li>Abstract: Traditional dialogue summarization models rely on a large-scale manually-labeled corpus, lacking generalization ability to new domains, and domain adaptation from a labeled source domain to an unlabeled target domain is important in practical summarization scenarios. However, existing domain adaptation works in dialogue summarization generally require large-scale pre-training using extensive external data. To explore the lightweight fine-tuning methods, in this paper, we propose an efficient Adversarial Disentangled Prompt Learning (ADPL) model for domain adaptation in dialogue summarization. We introduce three kinds of prompts including domain-invariant prompt (DIP), domain-specific prompt (DSP), and task-oriented prompt (TOP). DIP aims to disentangle and transfer the shared knowledge from the source domain and target domain in an adversarial way, which improves the accuracy of prediction about domain-invariant information and enhances the ability for generalization to new domains. DSP is designed to guide our model to focus on domain-specific knowledge using domain-related features. TOP is to capture task-oriented knowledge to generate high-quality summaries. Instead of fine-tuning the whole pre-trained language model (PLM), we only update the prompt networks but keep PLM fixed. We conduct zero-shot experiments and build domain adaptation benchmarks on two multi-domain dialogue summarization datasets, TODSum and QMSum. Adequate experiments and analysis prove our method significantly outperforms full-parameter fine-tuning with even fewer parameters.</li>
 <li><a href="https://dl.acm.org/doi/10.1145/3477495.3531933" target="_blank" rel="noopener">paper</a></li>
 </ul>
 </li>
@@ -710,7 +732,7 @@ ga('send', 'pageview');
                 <h1 class="logo-wrap">
                     <a href="/" class="logo"></a>
                 </h1>
-                <p>&copy; 2022 Helic He</p>
+                <p>&copy; 2023 Helic He</p>
                 <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
             </div>
         </div>
