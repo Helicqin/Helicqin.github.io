@@ -8,12 +8,12 @@ redirect_from:
 ---
 
 
-I'm Keqing, currently workig at Meituan LLM Team. My professional experience includes reasoning models(like o1), mixture of experts(MOE) and LLM alignment. Before that, I also participate in dialogue systems, including end2end dialogue system and dialogue pretrain. My research interests focus on reinforcement learning in real-world settings, complex reasoning and efficient LLM architectures. 
+I'm Keqing, currently workig at Meituan LLM Team. My professional experience includes reasoning models(like o1), mixture of experts(MOE) and LLM alignment. Before that, I also participate in dialogue systems, including end2end dialogue system and dialogue pretrain. 
 
-## <span id="contact">Contact</span>
-* Address: Beijing, China
-* Email: helicbupt@gmail.com
-* Blog: https://helicqin.github.io
+My research interests focus on LLM, including:
+* complex reasoning: Complex reasoning abilities are a key milestone in the development of LLMs, and the rise of reasoning models has rapidly advanced the field. My focus is on the evolution of foundational models and the optimization of Long-COT RL. For reasoning models, we need to build new technical pipelines—innovating from pre-training to post-training, from data to algorithms—to push the boundaries of what's possible.
+* reinforcement learning in real-world settings: While LLMs have made impressive strides in reasoning tasks like code and math, they’ve yet to translate into real-world productivity. LLM-driven end-to-end agent systems — such as DeepResearch, GUI Agent, and Embodied Agent — offer an exciting and imaginative path forward. My core interest lies in reinforcement learning in real-world settings, pushing the limits of intelligence through interaction with dynamic environments.
+* LLM alignment: Alignment is an essential process when working with LLMs to ensure that models align with human values. My primary focus is on scalable alignment learning, including data evaluation and optimization, as well as preference learning algorithms. This work is crucial for shaping models that are not only powerful but also ethically sound and aligned with our goals.
 
 ## News
 * 2025.1: **We have one papers accepted by ICLR2025**
@@ -28,11 +28,6 @@ I'm Keqing, currently workig at Meituan LLM Team. My professional experience inc
 * 2022.4: **We have two papers accepted by NAACL2022**
 * 2022.3: **We have one paper accepted by SIGIR2022**
 * 2022.2: **We have one paper accepted by ACL2022**
-* 2021.9: **We have two papers accepted by EMNLP2021**
-* 2021.5: **We have three papers accepted by ACL2021**
-* 2021.3: **We have two papers accepted by NAACL2021**
-
-
 
 
 ## Experience
@@ -62,6 +57,27 @@ I'm Keqing, currently workig at Meituan LLM Team. My professional experience inc
 
 ## Publication
 Please see the full paper list in [Semantic Scholar](https://www.semanticscholar.org/author/Keqing-He/2058349088)
+
+1. **SimpleRL-Zoo: Investigating and Taming Zero Reinforcement Learning for Open Base Models in the Wild**, Arxiv
+	* Weihao Zeng, Yuzhen Huang, Qian Liu, Wei Liu, \textbf{Keqing He}, Zejun Ma, Junxian He
+	* [paper](https://arxiv.org/pdf/2503.18892), [code](https://github.com/hkust-nlp/simpleRL-reason)
+
+1. **AgentRefine: Enhancing Agent Generalization through Refinement Tuning**, ICLR2025
+	* Dayuan Fu*, \textbf{Keqing He*}, Wei Wang, Jingang Wang, Xunliang Cai, Weiran Xu, etc
+	* [paper](https://arxiv.org/pdf/2501.01702), [code](https://github.com/Fu-Dayuan/AgentRefine)
+
+1. **DolphCoder: Echo-Locating Code Large Language Models with Diverse and Multi-Objective Instruction Tuning**, ACL2024
+	* Yejie Wang*, \textbf{Keqing He*}, Mengdi Zhang, Jingang Wang, Xunliang Cai, Weiran Xu, etc
+	* [paper](https://aclanthology.org/2024.acl-long.259.pdf)
+
+1. **How Do Your Code LLMs perform? Empowering Code Instruction Tuning with Really Good Data**, EMNLP2024
+	* Yejie Wang*, \textbf{Keqing He*}, Jingang Wang, Mengdi Zhang, Xunliang Cai, Weiran Xu, etc
+	* [paper](https://aclanthology.org/2024.emnlp-main.777.pdf)
+
+1. **Scaling Laws Across Model Architectures: A Comparative Analysis of Dense and MoE Models in Large Language Models**, EMNLP2024
+	* Siqi Wang, Zhengyu Chen, Bei Li, \textbf{Keqing He}, Min Zhang, Jingang Wang
+	* [paper](https://aclanthology.org/2024.emnlp-main.319.pdf)
+
 1. **What Makes Good Data for Alignment? A Comprehensive Study of Automatic Data Selection in Instruction Tuning**, ICLR2023
 	* Wei Liu\*, Weihao Zeng\*, **Keqing He**, Yong Jiang, Junxian He
 	* [paper](https://arxiv.org/pdf/2312.15685.pdf), [code](https://github.com/hkust-nlp/deita)
@@ -169,14 +185,6 @@ Please see the full paper list in [Semantic Scholar](https://www.semanticscholar
 2. **Dynamically Disentangling Social Bias from Task-Oriented Representations with Adversarial Attack**, NAACL2021
 	* Liwen Wang\*, Yuanmeng Yan\*, **Keqing He**, Yanan Wu, Weiran Xu
 	* [paper](https://www.aclweb.org/anthology/2021.naacl-main.293.pdf), [code](https://github.com/W-lw/debias_adv)
-
-3. **Hierarchical Speaker-Aware Sequence-to-Sequence Model for Dialogue Summarization**, ICASSP2021
-	* Yuejie Lei, Yuanmeng Yan, Zhiyuan Zeng, **Keqing He**, Ximing Zhang, Weiran Xu
-	* [paper](https://ieeexplore.ieee.org/document/9414547)
-
-4. **Adversarial Generative Distance-Based Classifier for Robust Out-of-Domain Detection**, ICASSP2021
-	* Zhiyuan Zeng\*, Hong Xu\*, **Keqing He**, Yuanmeng Yan, Sihong Liu, Zijun Liu, Weiran Xu
-	* [paper](https://ieeexplore.ieee.org/document/9413908)
 	
 5. **Contrastive Zero-Shot Learning for Cross-Domain Slot Filling with Adversarial Attack**, COLING2020 oral
 	* **Keqing He**, Jinchao Zhang, Yuanmeng Yan, Weiran XU, Cheng Niu, Jie Zhou
@@ -198,9 +206,8 @@ Please see the full paper list in [Semantic Scholar](https://www.semanticscholar
 	* **Keqing He**, Yuanmeng Yan, Hong Xu, Sihong Liu, Weiran Xu
 	* [paper](https://www.aclweb.org/anthology/2020.acl-main.58/)
 
-10. **Learning Label-Relational Output Structure for Adaptive Sequence Labeling**, IJCNN2020
-	* **Keqing He**, Yuanmeng Yan, Hong Xu, Weiran Xu
-	* [paper](http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/IEEE_WCCI_2020/IJCNN/Papers/N-20791.pdf)
 
-
-
+## Contact
+* Address: Beijing, China
+* Email: helicbupt@gmail.com
+* Blog: https://helicqin.github.io
