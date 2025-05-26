@@ -8,7 +8,7 @@ redirect_from:
 ---
 
 
-I'm Keqing, currently workig at Meituan LLM Team. My professional experience includes reasoning models(like o1), mixture of experts(MOE) and LLM alignment. Before that, I also participate in dialogue systems, including end2end dialogue system and dialogue pretrain. 
+I'm Keqing, currently working at Meituan LLM Team. My professional experience includes reasoning models(like o1), mixture of experts(MOE) and LLM alignment. Before that, I also participate in dialogue systems, including end2end dialogue system and dialogue pretrain. 
 
 My research interests focus on LLM, including:
 * complex reasoning: Complex reasoning abilities are a key milestone in the development of LLMs, and the rise of reasoning models has rapidly advanced the field. My focus is on the evolution of foundational models and the optimization of Long-COT RL. For reasoning models, we need to build new technical pipelines—innovating from pre-training to post-training, from data to algorithms—to push the boundaries of what's possible.
