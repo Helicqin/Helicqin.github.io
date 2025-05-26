@@ -59,23 +59,23 @@ My research interests focus on LLM, including:
 Please see the full paper list in [Semantic Scholar](https://www.semanticscholar.org/author/Keqing-He/2058349088)
 
 1. **SimpleRL-Zoo: Investigating and Taming Zero Reinforcement Learning for Open Base Models in the Wild**, Arxiv
-	* Weihao Zeng, Yuzhen Huang, Qian Liu, Wei Liu, \textbf{Keqing He}, Zejun Ma, Junxian He
+	* Weihao Zeng, Yuzhen Huang, Qian Liu, Wei Liu, **Keqing He**, Zejun Ma, Junxian He
 	* [paper](https://arxiv.org/pdf/2503.18892), [code](https://github.com/hkust-nlp/simpleRL-reason)
 
 1. **AgentRefine: Enhancing Agent Generalization through Refinement Tuning**, ICLR2025
-	* Dayuan Fu*, \textbf{Keqing He*}, Wei Wang, Jingang Wang, Xunliang Cai, Weiran Xu, etc
+	* Dayuan Fu*, **Keqing He**\*, Wei Wang, Jingang Wang, Xunliang Cai, Weiran Xu, etc
 	* [paper](https://arxiv.org/pdf/2501.01702), [code](https://github.com/Fu-Dayuan/AgentRefine)
 
 1. **DolphCoder: Echo-Locating Code Large Language Models with Diverse and Multi-Objective Instruction Tuning**, ACL2024
-	* Yejie Wang*, \textbf{Keqing He*}, Mengdi Zhang, Jingang Wang, Xunliang Cai, Weiran Xu, etc
+	* Yejie Wang*, **Keqing He**\*, Mengdi Zhang, Jingang Wang, Xunliang Cai, Weiran Xu, etc
 	* [paper](https://aclanthology.org/2024.acl-long.259.pdf)
 
 1. **How Do Your Code LLMs perform? Empowering Code Instruction Tuning with Really Good Data**, EMNLP2024
-	* Yejie Wang*, \textbf{Keqing He*}, Jingang Wang, Mengdi Zhang, Xunliang Cai, Weiran Xu, etc
+	* Yejie Wang*, **Keqing He**\*, Jingang Wang, Mengdi Zhang, Xunliang Cai, Weiran Xu, etc
 	* [paper](https://aclanthology.org/2024.emnlp-main.777.pdf)
 
 1. **Scaling Laws Across Model Architectures: A Comparative Analysis of Dense and MoE Models in Large Language Models**, EMNLP2024
-	* Siqi Wang, Zhengyu Chen, Bei Li, \textbf{Keqing He}, Min Zhang, Jingang Wang
+	* Siqi Wang, Zhengyu Chen, Bei Li, **Keqing He**, Min Zhang, Jingang Wang
 	* [paper](https://aclanthology.org/2024.emnlp-main.319.pdf)
 
 1. **What Makes Good Data for Alignment? A Comprehensive Study of Automatic Data Selection in Instruction Tuning**, ICLR2023
