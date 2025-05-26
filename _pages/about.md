@@ -8,7 +8,7 @@ redirect_from:
 ---
 
 
-I'm Keqing, currently workig at Meituan LLM Team. My professional experience includes reasoing models(like o1), mixture of experts(MOE) and LLM aligment. Before that, I also participate in dialogue systems, including end2end dialogue system and dialogue pretrain. My research interests focus on reinforcement learning in real-world settings, complex reasoning and efficient LLM architectures. 
+I'm Keqing, currently workig at Meituan LLM Team. My professional experience includes reasoning models(like o1), mixture of experts(MOE) and LLM alignment. Before that, I also participate in dialogue systems, including end2end dialogue system and dialogue pretrain. My research interests focus on reinforcement learning in real-world settings, complex reasoning and efficient LLM architectures. 
 
 ## <span id="contact">Contact</span>
 * Address: Beijing, China

@@ -9,10 +9,10 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Keqing's Website"
+title                    : "Keqing's Homepage"
 title_separator          : "-"
 name                     : &name "Keqing"
-description              : &description "Keqing's Website"
+description              : &description "Keqing's Homepage"
 url                      : https://helicqin.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "Helicqin/Helicqin.github.io"
@@ -23,9 +23,9 @@ repository               : "Helicqin/Helicqin.github.io"
 author:
   # Biographic information
   avatar           : "profile.png"
-  name             : "Keqing's Website"
+  name             : "Keqing's Homepage"
   pronouns         : # example: "she/her"  
-  bio              : "Welcome to Keqing's Website"
+  bio              : "Stay curious about LLMs"
   location         : "Beijing, China"
   # employer         : "Red Brick University"
   uri              : "https://helicqin.github.io"# URL
@@ -256,23 +256,23 @@ defaults:
       author_profile: true
       share: true
       comments: true
-  # _portfolio
-  # - scope:
-  #     path: ""
-  #     type: portfolio
-  #   values:
-  #     layout: single
-  #     author_profile: true
-  #     share: true
-  #     comment: true
-  # _talks
-  # - scope:
-  #     path: ""
-  #     type: talks
-  #   values:
-  #     layout: talk
-  #     author_profile: true
-  #     share: true
+  _portfolio
+  - scope:
+      path: ""
+      type: portfolio
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comment: true
+  _talks
+  - scope:
+      path: ""
+      type: talks
+    values:
+      layout: talk
+      author_profile: true
+      share: true
 
 
 # Sass/SCSS
